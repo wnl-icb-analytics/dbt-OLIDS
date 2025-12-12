@@ -8,14 +8,15 @@
 Base OBSERVATION View
 Filters to NCL practices and excludes sensitive patients.
 Pattern: Clinical table with patient_id + record_owner_organisation_code
-Note: person_id replaced with fabricated version from patient_person mapping
+Uses native person_id from source table.
+Simplified concept mapping using CONCEPT_MAP columns directly.
 */
 
 SELECT
     src.lds_record_id,
     src.id,
     src.patient_id,
-    pp.person_id,
+    src.person_id,
     src.encounter_id,
     src.practitioner_id,
     src.parent_observation_id,
@@ -23,17 +24,21 @@ SELECT
     src.date_precision_concept_id,
     src.result_value,
     src.result_value_units_concept_id,
-    unit_concept.code AS result_unit_code,
-    unit_concept.display AS result_unit_display,
+    unit_concept_map.target_code AS result_unit_code,
+    unit_concept_map.target_display AS result_unit_display,
     src.result_date,
     src.result_text,
     src.is_problem,
     src.is_review,
     src.problem_end_date,
     src.observation_source_concept_id,
-    mapped_concept.id AS mapped_concept_id,
-    mapped_concept.code AS mapped_concept_code,
-    mapped_concept.display AS mapped_concept_display,
+    concept_map.target_code_id AS mapped_concept_id,
+    concept_map.target_code AS mapped_concept_code,
+    concept_map.target_display AS mapped_concept_display,
+    concept_map.source_code AS source_code,
+    concept_map.source_display AS source_display,
+    concept_map.source_system AS source_system,
+    concept_map.target_system AS target_system,
     src.age_at_event,
     src.age_at_event_baby,
     src.age_at_event_neonate,
@@ -42,6 +47,7 @@ SELECT
     src.date_recorded,
     src.is_problem_deleted,
     src.is_confidential,
+    src.lds_is_deleted,
     src.lds_id,
     src.lds_business_key,
     src.lds_dataset_id,
@@ -56,16 +62,12 @@ SELECT
 FROM {{ source('olids_common', 'OBSERVATION') }} src
 INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
-INNER JOIN {{ ref('base_olids_patient_person') }} pp
-    ON src.patient_id = pp.patient_id
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.record_owner_organisation_code = ncl_practices.practice_code
 LEFT JOIN {{ ref('base_olids_concept_map') }} concept_map
     ON src.observation_source_concept_id = concept_map.source_code_id
-LEFT JOIN {{ ref('base_olids_concept') }} mapped_concept
-    ON concept_map.target_code_id = mapped_concept.id
-LEFT JOIN {{ ref('base_olids_concept') }} unit_concept
-    ON src.result_value_units_concept_id = unit_concept.id
+LEFT JOIN {{ ref('base_olids_concept_map') }} unit_concept_map
+    ON src.result_value_units_concept_id = unit_concept_map.source_code_id
 WHERE src.observation_source_concept_id IS NOT NULL
     AND src.lds_start_date_time IS NOT NULL
-QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY mapped_concept.display NULLS LAST, unit_concept.display NULLS LAST) = 1
+QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, unit_concept_map.target_display NULLS LAST) = 1

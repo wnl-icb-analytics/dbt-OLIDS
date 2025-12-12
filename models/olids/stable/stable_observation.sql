@@ -36,6 +36,7 @@ select
     date_recorded,
     is_problem_deleted,
     is_confidential,
+    lds_is_deleted,
     lds_id,
     lds_business_key,
     lds_dataset_id,
@@ -50,6 +51,10 @@ select
     mapped_concept_id,
     mapped_concept_code,
     mapped_concept_display,
+    source_code,
+    source_display,
+    source_system,
+    target_system,
     result_unit_code,
     result_unit_display
 from {{ ref('base_olids_observation') }}

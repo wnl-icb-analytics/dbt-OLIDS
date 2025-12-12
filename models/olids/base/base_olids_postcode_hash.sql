@@ -18,6 +18,6 @@ SELECT
     is_latest,
     lds_is_deleted,
     lds_start_date_time,
-    lakehousedateprocessed,
+    lakehouse_date_processed,
     high_watermark_date_time
 FROM {{ source('olids_reference', 'POSTCODE_HASH') }}

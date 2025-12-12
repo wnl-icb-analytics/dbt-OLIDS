@@ -8,13 +8,13 @@
 Base PROCEDURE_REQUEST View
 Filters to NCL practices and excludes sensitive patients.
 Pattern: Clinical table with patient_id + record_owner_organisation_code
-Note: person_id replaced with fabricated version from patient_person mapping
+Uses native person_id from source table.
 */
 
 SELECT
     src.lds_record_id,
     src.id,
-    pp.person_id,
+    src.person_id,
     src.patient_id,
     src.encounter_id,
     src.practitioner_id,
@@ -44,8 +44,6 @@ SELECT
 FROM {{ source('olids_common', 'PROCEDURE_REQUEST') }} src
 INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
-INNER JOIN {{ ref('base_olids_patient_person') }} pp
-    ON src.patient_id = pp.patient_id
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.record_owner_organisation_code = ncl_practices.practice_code
 WHERE src.lds_start_date_time IS NOT NULL

@@ -14,6 +14,69 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: encounter_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_encounter')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: clinical_effective_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: allergy_intolerance_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+    - name: date_precision_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_appointment
   description: 'Filtered Appointment base view.
 
@@ -28,6 +91,76 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: organisation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_in_role_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner_in_role')
+              field: id
+              tolerance_percent: 1.0
+    - name: schedule_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_schedule')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: appointment_status_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: booking_method_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: contact_mode_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_appointment_practitioner
   description: 'Filtered Appointment Practitioner base view.
 
@@ -40,6 +173,21 @@ models:
 
 
     Filtering method: Inner join to int_ncl_practices on record_owner_organisation_code'
+  columns:
+    - name: appointment_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_appointment')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
 - name: base_olids_diagnostic_order
   description: 'Filtered Diagnostic Order base view.
 
@@ -54,6 +202,95 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: encounter_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_encounter')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: parent_observation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_observation')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: clinical_effective_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: diagnostic_order_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: result_value_units_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: date_precision_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: episodicity_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_encounter
   description: 'Filtered Encounter base view.
 
@@ -68,6 +305,48 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: clinical_effective_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: encounter_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: date_precision_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_episode_of_care
   description: 'Filtered Episode Of Care base view.
 
@@ -82,6 +361,72 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: organisation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
+    - name: care_manager_practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: episode_of_care_start_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: episode_type_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: episode_status_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_flag
   description: 'Filtered Flag base view.
 
@@ -110,6 +455,14 @@ models:
     No filters applied - reference data used as-is.
 
     Direct passthrough from source table with explicit column selection for interface consistency.'
+  columns:
+    - name: location_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_location')
+              field: id
+              tolerance_percent: 1.0
 - name: base_olids_medication_order
   description: 'Filtered Medication Order base view.
 
@@ -124,6 +477,114 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: organisation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
+    - name: medication_statement_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_medication_statement')
+              field: id
+              tolerance_percent: 1.0
+    - name: encounter_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_encounter')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: observation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_observation')
+              field: id
+              tolerance_percent: 1.0
+    - name: allergy_intolerance_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_allergy_intolerance')
+              field: id
+              tolerance_percent: 1.0
+    - name: diagnostic_order_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_diagnostic_order')
+              field: id
+              tolerance_percent: 1.0
+    - name: referral_request_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_referral_request')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: clinical_effective_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: medication_order_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 3.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: date_precision_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 3.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_medication_statement
   description: 'Filtered Medication Statement base view.
 
@@ -138,6 +599,115 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: organisation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
+    - name: encounter_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_encounter')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: observation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_observation')
+              field: id
+              tolerance_percent: 1.0
+    - name: allergy_intolerance_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_allergy_intolerance')
+              field: id
+              tolerance_percent: 1.0
+    - name: diagnostic_order_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_diagnostic_order')
+              field: id
+              tolerance_percent: 1.0
+    - name: referral_request_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_referral_request')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: clinical_effective_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: medication_statement_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 3.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: authorisation_type_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 3.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: date_precision_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 3.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_observation
   description: 'Filtered Observation base view.
 
@@ -152,6 +722,95 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: encounter_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_encounter')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: parent_observation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_observation')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: clinical_effective_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: observation_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: result_value_units_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: date_precision_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: episodicity_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_organisation
   description: 'Unfiltered Organisation reference view.
 
@@ -164,6 +823,34 @@ models:
     - is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients)\
     \ \n- is_dummy_patient = FALSE (excludes test/dummy patients)\n\nRestricts to NCL practices:\n- record_owner_organisation_code\
     \ IN (NCL practice codes with STPCode = 'QMJ')"
+  columns:
+    - name: sk_patient_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 5.0
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: lds_record_id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: gender_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+    - name: registered_practice_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
 - name: base_olids_patient_address
   description: 'Filtered Patient Address base view.
 
@@ -178,6 +865,39 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: address_type_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_patient_contact
   description: 'Filtered Patient Contact base view.
 
@@ -192,6 +912,39 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: contact_type_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_patient_person
   description: 'Generated Patient Person base view.
 
@@ -204,6 +957,21 @@ models:
 
 
     Filtering method: Filtered through relationships to base_olids_patient'
+  columns:
+    - name: patient_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
 - name: base_olids_patient_registered_practitioner_in_role
   description: 'Filtered Patient Registered Practitioner In Role base view.
 
@@ -261,6 +1029,21 @@ models:
 
 
     Filtering method: Inner join to int_ncl_practices on record_owner_organisation_code'
+  columns:
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: organisation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
 - name: base_olids_procedure_request
   description: 'Filtered Procedure Request base view.
 
@@ -275,6 +1058,74 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: encounter_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_encounter')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: clinical_effective_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: procedure_request_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: date_precision_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: status_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_referral_request
   description: 'Filtered Referral Request base view.
 
@@ -289,6 +1140,111 @@ models:
 
 
     Filtering method: Inner join to base_olids_patient and int_ncl_practices'
+  columns:
+    - name: id
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: patient_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_patient')
+              field: id
+              tolerance_percent: 1.0
+    - name: person_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_person')
+              field: id
+              tolerance_percent: 1.0
+    - name: organisation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
+    - name: encounter_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_encounter')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
+    - name: requester_organisation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
+    - name: recipient_organisation_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
+    - name: lds_start_date_time
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: clinical_effective_date
+      tests:
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: referral_request_source_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: date_precision_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: referral_request_priority_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: referral_request_type_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
+    - name: referral_request_specialty_concept_id
+      tests:
+        - concept_mapping_integrity:
+            arguments:
+              tolerance_percent: 1.0
+        - column_completeness:
+            arguments:
+              tolerance_percent: 1.0
 - name: base_olids_schedule
   description: 'Filtered Schedule base view.
 
@@ -313,6 +1269,21 @@ models:
 
 
     Filtering method: Inner join to int_ncl_practices on record_owner_organisation_code'
+  columns:
+    - name: schedule_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_schedule')
+              field: id
+              tolerance_percent: 1.0
+    - name: practitioner_id
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_practitioner')
+              field: id
+              tolerance_percent: 1.0
 - name: base_olids_concept
   description: 'Unfiltered OLIDS terminology concept reference view.
 

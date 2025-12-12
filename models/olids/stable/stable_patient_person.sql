@@ -11,16 +11,20 @@
 }}
 
 select
-    lakehousedateprocessed,
-    lakehousedatetimeupdated,
     lds_record_id,
-    lds_id,
+    lds_record_id_person,
     id,
-    lds_datetime_data_acquired,
-    lds_start_date_time,
-    lds_dataset_id,
     patient_id,
-    person_id
+    person_id,
+    lds_id,
+    lds_business_key,
+    lds_dataset_id,
+    lds_cdm_event_id,
+    lds_datetime_data_acquired,
+    lds_is_deleted,
+    lds_start_date_time,
+    lds_lakehouse_date_processed,
+    lds_lakehouse_datetime_updated
 from {{ ref('base_olids_patient_person') }}
 
 {% if is_incremental() %}

@@ -25,6 +25,10 @@ select
     referral_request_id,
     clinical_effective_date,
     date_precision_concept_id,
+    date_precision_source_code,
+    date_precision_source_display,
+    date_precision_code,
+    date_precision_display,
     dose,
     quantity_value,
     quantity_unit,
@@ -56,7 +60,11 @@ select
     statement_medication_name,
     mapped_concept_id,
     mapped_concept_code,
-    mapped_concept_display
+    mapped_concept_display,
+    source_code,
+    source_display,
+    source_system,
+    target_system
 from {{ ref('base_olids_medication_order') }}
 
 {% if is_incremental() %}
