@@ -24,7 +24,7 @@ select
     is_latest,
     lds_is_deleted,
     lds_start_date_time,
-    lakehousedateprocessed,
+    lakehouse_date_processed,
     high_watermark_date_time
 from {{ ref('base_olids_postcode_hash') }}
 

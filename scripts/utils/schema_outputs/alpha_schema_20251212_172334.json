@@ -1,0 +1,6374 @@
+{
+  "MONITORING": {
+    "BATCH_PROGRESS_SUMMARY": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "CUSTOMER_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTICE_ODS_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTICE_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "EXTRACT_GROUP_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "DATA_SET_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "DATA_SET_VERSION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "EXTRACT_GROUP",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "EXTRACT_DATE_TIME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "FIRST_LOAD_FLAG",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "FILE_REGISTER_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "FILE_REGISTER_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "PREPROCESSOR_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "PREPROCESSOR_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "FILE_COMBINER_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "FILE_COMBINER_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "VERSIONER_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "VERSIONER_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "MASKER_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "MASKER_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "COMMON_MODEL_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "COMMON_MODEL_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "TRANSMIT_FLAG",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "HIGH_WATERMARK_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        }
+      ],
+      "column_count": 27
+    },
+    "LDS_RELEASE_DETAILS": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "BATCH_PROGRESS_SUMMARY",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "COMMON_MODEL_LAST_TRANSMIT",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "HIGH_WATERMARK_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        }
+      ],
+      "column_count": 7
+    }
+  },
+  "OLIDS_COMMON": {
+    "ALLERGY_INTOLERANCE": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "ENCOUNTER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "VERIFICATION_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "CATEGORY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_PRECISION_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "IS_REVIEW",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "MEDICATION_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "MULTI_LEX_ACTION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "ALLERGY_INTOLERANCE_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_RECORDED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "IS_CONFIDENTIAL",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 32,
+          "comment": null
+        }
+      ],
+      "column_count": 32
+    },
+    "APPOINTMENT": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_IN_ROLE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "SCHEDULE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "START_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "PLANNED_DURATION",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "ACTUAL_DURATION",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "APPOINTMENT_STATUS_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_WAIT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_DELAY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_TIME_BOOKED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_TIME_SENT_IN",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_TIME_LEFT",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "CANCELLED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "TYPE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "BOOKING_METHOD_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "CONTACT_MODE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "IS_BLOCKED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "NATIONAL_SLOT_CATEGORY_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "CONTEXT_TYPE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "SERVICE_SETTING",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "NATIONAL_SLOT_CATEGORY_DESCRIPTION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "CSDS_CARE_CONTACT_IDENTIFIER",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 32,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 33,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 34,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 35,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 36,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 37,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 38,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 39,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 40,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 41,
+          "comment": null
+        }
+      ],
+      "column_count": 41
+    },
+    "APPOINTMENT_PRACTITIONER": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "APPOINTMENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_RECORD_ID_USER",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        }
+      ],
+      "column_count": 18
+    },
+    "DIAGNOSTIC_ORDER": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "ENCOUNTER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "PARENT_OBSERVATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_PRECISION_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "RESULT_VALUE",
+          "data_type": "FLOAT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "RESULT_VALUE_UNITS_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "RESULT_DATE",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "RESULT_TEXT",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PROBLEM",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "IS_REVIEW",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "PROBLEM_END_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "DIAGNOSTIC_ORDER_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "EPISODICITY_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PRIMARY",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_RECORDED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 32,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 33,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 34,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 35,
+          "comment": null
+        }
+      ],
+      "column_count": 35
+    },
+    "ENCOUNTER": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "APPOINTMENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "EPISODE_OF_CARE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "SERVICE_PROVIDER_ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_PRECISION_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LOCATION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "ENCOUNTER_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "TYPE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "SUB_TYPE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "ADMISSION_METHOD",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "END_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_RECORDED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 32,
+          "comment": null
+        }
+      ],
+      "column_count": 32
+    },
+    "EPISODE_OF_CARE": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "EPISODE_TYPE_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "EPISODE_STATUS_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "EPISODE_OF_CARE_START_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "EPISODE_OF_CARE_END_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "CARE_MANAGER_PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        }
+      ],
+      "column_count": 22
+    },
+    "FLAG": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "EXPIRED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "IS_ACTIVE",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "FLAG_TEXT",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        }
+      ],
+      "column_count": 20
+    },
+    "LOCATION": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "TYPE_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "TYPE_DESC",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PRIMARY_LOCATION",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "HOUSE_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "HOUSE_NUMBER",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "HOUSE_NAME_FLAT_NUMBER",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "STREET",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "ADDRESS_LINE_1",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "ADDRESS_LINE_2",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "ADDRESS_LINE_3",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "ADDRESS_LINE_4",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "POSTCODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "MANAGING_ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "OPEN_DATE",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "CLOSE_DATE",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "IS_OBSOLETE",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        }
+      ],
+      "column_count": 31
+    },
+    "LOCATION_CONTACT": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "LOCATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PRIMARY_CONTACT",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "CONTACT_TYPE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "CONTACT_TYPE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "VALUE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        }
+      ],
+      "column_count": 18
+    },
+    "MEDICATION_ORDER": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "MEDICATION_STATEMENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "ENCOUNTER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "OBSERVATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "ALLERGY_INTOLERANCE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "DIAGNOSTIC_ORDER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "REFERRAL_REQUEST_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_PRECISION_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "DOSE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "QUANTITY_VALUE",
+          "data_type": "FLOAT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "QUANTITY_UNIT",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "DURATION_DAYS",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "ESTIMATED_COST",
+          "data_type": "FLOAT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "MEDICATION_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "MEDICATION_ORDER_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "BNF_REFERENCE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "ISSUE_METHOD",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_RECORDED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "IS_CONFIDENTIAL",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "ISSUE_METHOD_DESCRIPTION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 32,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 33,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 34,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 35,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 36,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 37,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 38,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 39,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 40,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 41,
+          "comment": null
+        }
+      ],
+      "column_count": 41
+    },
+    "MEDICATION_STATEMENT": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "ENCOUNTER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "OBSERVATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "ALLERGY_INTOLERANCE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "DIAGNOSTIC_ORDER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "REFERRAL_REQUEST_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "AUTHORISATION_TYPE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_PRECISION_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "MEDICATION_STATEMENT_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "CANCELLATION_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "DOSE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "QUANTITY_VALUE_DESCRIPTION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "QUANTITY_VALUE",
+          "data_type": "FLOAT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "QUANTITY_UNIT",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "MEDICATION_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "BNF_REFERENCE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "ISSUE_METHOD",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_RECORDED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "IS_ACTIVE",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "IS_CONFIDENTIAL",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "EXPIRY_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 32,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 33,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 34,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 35,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 36,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 37,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 38,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 39,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 40,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 41,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 42,
+          "comment": null
+        }
+      ],
+      "column_count": 42
+    },
+    "OBSERVATION": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "ENCOUNTER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "PARENT_OBSERVATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_PRECISION_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "RESULT_VALUE",
+          "data_type": "FLOAT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "RESULT_VALUE_UNITS_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "RESULT_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "RESULT_TEXT",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PROBLEM",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "IS_REVIEW",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "PROBLEM_END_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "OBSERVATION_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "EPISODICITY_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PRIMARY",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_RECORDED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PROBLEM_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "IS_CONFIDENTIAL",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 32,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 33,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 34,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 35,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 36,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 37,
+          "comment": null
+        }
+      ],
+      "column_count": 37
+    },
+    "ORGANISATION": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "ASSIGNING_AUTHORITY_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "TYPE_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "TYPE_DESC",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "POSTCODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "PARENT_ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "OPEN_DATE",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "CLOSE_DATE",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "IS_OBSOLETE",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        }
+      ],
+      "column_count": 24
+    },
+    "PATIENT_PERSON": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_RECORD_ID_PERSON",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        }
+      ],
+      "column_count": 14
+    },
+    "PATIENT_REGISTERED_PRACTITIONER_IN_ROLE": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "EPISODE_OF_CARE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "START_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "END_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        }
+      ],
+      "column_count": 21
+    },
+    "PRACTITIONER": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "GMC_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "TITLE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "FIRST_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "LAST_NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "IS_OBSOLETE",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        }
+      ],
+      "column_count": 21
+    },
+    "PRACTITIONER_IN_ROLE": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "ROLE_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "ROLE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_EMPLOYMENT_START",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_EMPLOYMENT_END",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        }
+      ],
+      "column_count": 20
+    },
+    "PROCEDURE_REQUEST": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "ENCOUNTER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_PRECISION_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_RECORDED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "DESCRIPTION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "PROCEDURE_REQUEST_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "STATUS_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "IS_CONFIDENTIAL",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_END_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        }
+      ],
+      "column_count": 29
+    },
+    "REFERRAL_REQUEST": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "ENCOUNTER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "UNIQUE_BOOKING_REFERENCE_NUMBER",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "CLINICAL_EFFECTIVE_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_PRECISION_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "REQUESTER_ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "RECIPIENT_ORGANISATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "REFERRAL_REQUEST_PRIORITY_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "REFERRAL_REQUEST_TYPE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "REFERRAL_REQUEST_SPECIALTY_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "MODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "IS_OUTGOING_REFERRAL",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "IS_REVIEW",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "REFERRAL_REQUEST_SOURCE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_BABY",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "AGE_AT_EVENT_NEONATE",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "DATE_RECORDED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 32,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 33,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 34,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 35,
+          "comment": null
+        }
+      ],
+      "column_count": 35
+    },
+    "SCHEDULE": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "LOCATION_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "LOCATION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "START_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "END_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "TYPE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "NAME",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PRIVATE",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        }
+      ],
+      "column_count": 22
+    },
+    "SCHEDULE_PRACTITIONER": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "SCHEDULE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PRACTITIONER_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        }
+      ],
+      "column_count": 16
+    }
+  },
+  "OLIDS_MASKED": {
+    "PATIENT": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "NHS_NUMBER_HASH",
+          "data_type": "BINARY",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "SK_PATIENT_ID",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "TITLE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "GENDER_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "REGISTERED_PRACTICE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "BIRTH_YEAR",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "BIRTH_MONTH",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "DEATH_YEAR",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "DEATH_MONTH",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "IS_CONFIDENTIAL",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "IS_DUMMY_PATIENT",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "IS_SPINE_SENSITIVE",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        }
+      ],
+      "column_count": 26
+    },
+    "PATIENT_ADDRESS": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "ADDRESS_TYPE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "POSTCODE_HASH",
+          "data_type": "BINARY",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "START_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "END_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        }
+      ],
+      "column_count": 20
+    },
+    "PATIENT_CONTACT": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PERSON_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "PATIENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "DESCRIPTION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "CONTACT_TYPE_CONCEPT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "START_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "END_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_VERSIONER_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        }
+      ],
+      "column_count": 20
+    },
+    "PATIENT_UPRN": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "REGISTRAR_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "MASKED_UPRN",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "MASKED_USRN",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "MASKED_POSTCODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "ADDRESS_FORMAT_QUALITY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "POST_CODE_QUALITY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "MATCHED_WITH_ASSIGN",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "QUALIFIER",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "UPRN_PROPERTY_CLASSIFICATION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "ALGORITHM",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "MATCH_PATTERN",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_REGISTRAR_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "RECORD_OWNER_ORGANISATION_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        }
+      ],
+      "column_count": 25
+    },
+    "PERSON": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "LDS_RECORD_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "COMPOSITE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "MATCHED_NHS_NO_HASH",
+          "data_type": "BINARY",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "GENDER",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "BIRTH_YEAR",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "BIRTH_MONTH",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "DEATH_YEAR",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "DEATH_MONTH",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "DEATH_NOTIFICATION_STATUS",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "POSTCODE_HASH",
+          "data_type": "BINARY",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "PREFERRED_CONTACT_METHOD",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "NOMINATED_PHARMACY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "DISPENSING_DOCTOR",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "MEDICAL_APPLIANCE_SUPPLIER",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "GP_PRACTICE_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "GP_REGISTRATION_DATE",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "AS_AT_DATE",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "SENSITIVITY_FLAG",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "ERROR_SUCCESS_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 21,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 22,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 23,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_CDM_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 24,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_REGISTRAR_EVENT_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 25,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATETIME_DATA_ACQUIRED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 26,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_INITIAL_DATA_RECEIVED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 27,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 28,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 29,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 30,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_LAKEHOUSE_DATETIME_UPDATED",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 31,
+          "comment": null
+        }
+      ],
+      "column_count": 31
+    }
+  },
+  "OLIDS_TERMINOLOGY": {
+    "CONCEPT": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "SYSTEM",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "DISPLAY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "IS_MAPPED",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "USE_COUNT",
+          "data_type": "NUMBER",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        }
+      ],
+      "column_count": 10
+    },
+    "CONCEPT_MAP": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_BUSINESS_KEY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_DATASET_ID",
+          "data_type": "TEXT",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "CONCEPT_MAP_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "CONCEPT_MAP_RESOURCE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "CONCEPT_MAP_URL",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "CONCEPT_MAP_VERSION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "SOURCE_CODE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "SOURCE_SYSTEM",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "SOURCE_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "SOURCE_DISPLAY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "TARGET_CODE_ID",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "TARGET_SYSTEM",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "TARGET_CODE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        },
+        {
+          "column_name": "TARGET_DISPLAY",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 16,
+          "comment": null
+        },
+        {
+          "column_name": "IS_PRIMARY",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 17,
+          "comment": null
+        },
+        {
+          "column_name": "IS_ACTIVE",
+          "data_type": "BOOLEAN",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 18,
+          "comment": null
+        },
+        {
+          "column_name": "EQUIVALENCE",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 19,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 20,
+          "comment": null
+        }
+      ],
+      "column_count": 20
+    }
+  },
+  "REFERENCE": {
+    "POSTCODE_HASH": {
+      "table_type": "BASE TABLE",
+      "columns": [
+        {
+          "column_name": "ID",
+          "data_type": "BINARY",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 1,
+          "comment": null
+        },
+        {
+          "column_name": "POSTCODE_HASH",
+          "data_type": "BINARY",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 2,
+          "comment": null
+        },
+        {
+          "column_name": "PRIMARY_CARE_ORGANISATION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 3,
+          "comment": null
+        },
+        {
+          "column_name": "LOCAL_AUTHORITY_ORGANISATION",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 4,
+          "comment": null
+        },
+        {
+          "column_name": "YR2011_LSOA",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 5,
+          "comment": null
+        },
+        {
+          "column_name": "YR2011_MSOA",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 6,
+          "comment": null
+        },
+        {
+          "column_name": "YR2021_LSOA",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 7,
+          "comment": null
+        },
+        {
+          "column_name": "YR2021_MSOA",
+          "data_type": "TEXT",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 8,
+          "comment": null
+        },
+        {
+          "column_name": "EFFECTIVE_FROM",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 9,
+          "comment": null
+        },
+        {
+          "column_name": "EFFECTIVE_TO",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": true,
+          "column_default": null,
+          "ordinal_position": 10,
+          "comment": null
+        },
+        {
+          "column_name": "IS_LATEST",
+          "data_type": "NUMBER",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 11,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_IS_DELETED",
+          "data_type": "BOOLEAN",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 12,
+          "comment": null
+        },
+        {
+          "column_name": "LDS_START_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 13,
+          "comment": null
+        },
+        {
+          "column_name": "LAKEHOUSE_DATE_PROCESSED",
+          "data_type": "DATE",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 14,
+          "comment": null
+        },
+        {
+          "column_name": "HIGH_WATERMARK_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "is_nullable": false,
+          "column_default": null,
+          "ordinal_position": 15,
+          "comment": null
+        }
+      ],
+      "column_count": 15
+    }
+  }
+}

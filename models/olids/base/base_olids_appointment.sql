@@ -8,7 +8,7 @@
 Base APPOINTMENT View
 Filters to NCL practices and excludes sensitive patients.
 Pattern: Clinical table with patient_id + record_owner_organisation_code
-Note: person_id replaced with fabricated version from patient_person mapping
+Uses native person_id from source table.
 */
 
 SELECT
@@ -16,12 +16,17 @@ SELECT
     src.id,
     src.organisation_id,
     src.patient_id,
+    src.person_id,
     src.practitioner_in_role_id,
     src.schedule_id,
     src.start_date,
     src.planned_duration,
     src.actual_duration,
     src.appointment_status_concept_id,
+    appointment_status_map.source_code AS appointment_status_source_code,
+    appointment_status_map.source_display AS appointment_status_source_display,
+    appointment_status_map.target_code AS appointment_status_code,
+    appointment_status_map.target_display AS appointment_status_display,
     src.patient_wait,
     src.patient_delay,
     src.date_time_booked,
@@ -33,14 +38,21 @@ SELECT
     src.age_at_event_baby,
     src.age_at_event_neonate,
     src.booking_method_concept_id,
+    booking_method_map.source_code AS booking_method_source_code,
+    booking_method_map.source_display AS booking_method_source_display,
+    booking_method_map.target_code AS booking_method_code,
+    booking_method_map.target_display AS booking_method_display,
     src.contact_mode_concept_id,
+    contact_mode_map.source_code AS contact_mode_source_code,
+    contact_mode_map.source_display AS contact_mode_source_display,
+    contact_mode_map.target_code AS contact_mode_code,
+    contact_mode_map.target_display AS contact_mode_display,
     src.is_blocked,
     src.national_slot_category_name,
     src.context_type,
     src.service_setting,
     src.national_slot_category_description,
     src.csds_care_contact_identifier,
-    pp.person_id,
     src.lds_id,
     src.lds_business_key,
     src.lds_dataset_id,
@@ -56,10 +68,14 @@ SELECT
 FROM {{ source('olids_common', 'APPOINTMENT') }} src
 INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
-INNER JOIN {{ ref('base_olids_patient_person') }} pp
-    ON src.patient_id = pp.patient_id
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.record_owner_organisation_code = ncl_practices.practice_code
+LEFT JOIN {{ ref('base_olids_concept_map') }} appointment_status_map
+    ON src.appointment_status_concept_id = appointment_status_map.source_code_id
+LEFT JOIN {{ ref('base_olids_concept_map') }} booking_method_map
+    ON src.booking_method_concept_id = booking_method_map.source_code_id
+LEFT JOIN {{ ref('base_olids_concept_map') }} contact_mode_map
+    ON src.contact_mode_concept_id = contact_mode_map.source_code_id
 WHERE src.patient_id IS NOT NULL
     AND src.start_date IS NOT NULL
     AND src.lds_start_date_time IS NOT NULL

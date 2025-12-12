@@ -8,13 +8,14 @@
 Base DIAGNOSTIC_ORDER View
 Filters to NCL practices and excludes sensitive patients.
 Pattern: Clinical table with patient_id + record_owner_organisation_code
-Note: person_id replaced with fabricated version from patient_person mapping
+Uses native person_id from source table.
 */
 
 SELECT
     src.lds_record_id,
     src.id,
     src.patient_id,
+    src.person_id,
     src.encounter_id,
     src.practitioner_id,
     src.parent_observation_id,
@@ -34,7 +35,6 @@ SELECT
     src.episodicity_concept_id,
     src.is_primary,
     src.date_recorded,
-    pp.person_id,
     src.lds_id,
     src.lds_business_key,
     src.lds_dataset_id,
@@ -50,8 +50,6 @@ SELECT
 FROM {{ source('olids_common', 'DIAGNOSTIC_ORDER') }} src
 INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
-INNER JOIN {{ ref('base_olids_patient_person') }} pp
-    ON src.patient_id = pp.patient_id
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.record_owner_organisation_code = ncl_practices.practice_code
 WHERE src.lds_start_date_time IS NOT NULL

@@ -1,0 +1,884 @@
+Data_Store_OLIDS_Alpha Schema Report
+Generated: 2025-12-12 17:23:34
+================================================================================
+
+Schema: MONITORING
+--------------------------------------------------------------------------------
+
+  Table: BATCH_PROGRESS_SUMMARY (BASE TABLE)
+    Columns (27):
+        1. ID                                       TEXT                 NULL
+        2. CUSTOMER_NAME                            TEXT                 NULL
+        3. PRACTICE_ODS_CODE                        TEXT                 NULL
+        4. PRACTICE_NAME                            TEXT                 NULL
+        5. EXTRACT_GROUP_NAME                       TEXT                 NULL
+        6. DATA_SET_NAME                            TEXT                 NULL
+        7. DATA_SET_VERSION                         TEXT                 NULL
+        8. EXTRACT_GROUP                            TEXT                 NULL
+        9. EXTRACT_DATE_TIME                        TEXT                 NULL
+       10. FIRST_LOAD_FLAG                          BOOLEAN              NULL
+       11. FILE_REGISTER_STATUS                     TEXT                 NULL
+       12. FILE_REGISTER_END_DATE_TIME              TIMESTAMP_NTZ        NULL
+       13. PREPROCESSOR_STATUS                      TEXT                 NULL
+       14. PREPROCESSOR_END_DATE_TIME               TIMESTAMP_NTZ        NULL
+       15. FILE_COMBINER_STATUS                     TEXT                 NULL
+       16. FILE_COMBINER_END_DATE_TIME              TIMESTAMP_NTZ        NULL
+       17. VERSIONER_STATUS                         TEXT                 NULL
+       18. VERSIONER_END_DATE_TIME                  TIMESTAMP_NTZ        NULL
+       19. MASKER_STATUS                            TEXT                 NULL
+       20. MASKER_END_DATE_TIME                     TIMESTAMP_NTZ        NULL
+       21. COMMON_MODEL_STATUS                      TEXT                 NULL
+       22. COMMON_MODEL_END_DATE_TIME               TIMESTAMP_NTZ        NULL
+       23. TRANSMIT_FLAG                            BOOLEAN              NULL
+       24. LDS_IS_DELETED                           BOOLEAN              NOT NULL
+       25. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NOT NULL
+       26. LAKEHOUSE_DATE_PROCESSED                 DATE                 NOT NULL
+       27. HIGH_WATERMARK_DATE_TIME                 TIMESTAMP_NTZ        NOT NULL
+
+  Table: LDS_RELEASE_DETAILS (BASE TABLE)
+    Columns (7):
+        1. ID                                       TEXT                 NOT NULL
+        2. BATCH_PROGRESS_SUMMARY                   TIMESTAMP_NTZ        NULL
+        3. COMMON_MODEL_LAST_TRANSMIT               TIMESTAMP_NTZ        NULL
+        4. LDS_IS_DELETED                           BOOLEAN              NOT NULL
+        5. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NOT NULL
+        6. LAKEHOUSE_DATE_PROCESSED                 DATE                 NOT NULL
+        7. HIGH_WATERMARK_DATE_TIME                 TIMESTAMP_NTZ        NOT NULL
+
+Schema: OLIDS_COMMON
+--------------------------------------------------------------------------------
+
+  Table: ALLERGY_INTOLERANCE (BASE TABLE)
+    Columns (32):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PATIENT_ID                               TEXT                 NULL
+        4. PRACTITIONER_ID                          TEXT                 NULL
+        5. ENCOUNTER_ID                             TEXT                 NULL
+        6. CLINICAL_STATUS                          TEXT                 NULL
+        7. VERIFICATION_STATUS                      TEXT                 NULL
+        8. CATEGORY                                 TEXT                 NULL
+        9. CLINICAL_EFFECTIVE_DATE                  TIMESTAMP_NTZ        NULL
+       10. DATE_PRECISION_CONCEPT_ID                TEXT                 NULL
+       11. IS_REVIEW                                BOOLEAN              NULL
+       12. MEDICATION_NAME                          TEXT                 NULL
+       13. MULTI_LEX_ACTION                         TEXT                 NULL
+       14. ALLERGY_INTOLERANCE_SOURCE_CONCEPT_ID    TEXT                 NULL
+       15. AGE_AT_EVENT                             NUMBER               NULL
+       16. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       17. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       18. DATE_RECORDED                            TIMESTAMP_NTZ        NULL
+       19. IS_CONFIDENTIAL                          BOOLEAN              NULL
+       20. PERSON_ID                                TEXT                 NULL
+       21. LDS_ID                                   TEXT                 NULL
+       22. LDS_BUSINESS_KEY                         TEXT                 NULL
+       23. LDS_DATASET_ID                           TEXT                 NULL
+       24. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       25. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       26. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       27. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       28. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       29. LDS_IS_DELETED                           BOOLEAN              NULL
+       30. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       31. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       32. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: APPOINTMENT (BASE TABLE)
+    Columns (41):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. ORGANISATION_ID                          TEXT                 NULL
+        4. PATIENT_ID                               TEXT                 NULL
+        5. PRACTITIONER_IN_ROLE_ID                  TEXT                 NULL
+        6. SCHEDULE_ID                              TEXT                 NULL
+        7. START_DATE                               TIMESTAMP_NTZ        NULL
+        8. PLANNED_DURATION                         NUMBER               NULL
+        9. ACTUAL_DURATION                          NUMBER               NULL
+       10. APPOINTMENT_STATUS_CONCEPT_ID            TEXT                 NULL
+       11. PATIENT_WAIT                             NUMBER               NULL
+       12. PATIENT_DELAY                            NUMBER               NULL
+       13. DATE_TIME_BOOKED                         TIMESTAMP_NTZ        NULL
+       14. DATE_TIME_SENT_IN                        TIMESTAMP_NTZ        NULL
+       15. DATE_TIME_LEFT                           TIMESTAMP_NTZ        NULL
+       16. CANCELLED_DATE                           TIMESTAMP_NTZ        NULL
+       17. TYPE                                     TEXT                 NULL
+       18. AGE_AT_EVENT                             NUMBER               NULL
+       19. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       20. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       21. BOOKING_METHOD_CONCEPT_ID                TEXT                 NULL
+       22. CONTACT_MODE_CONCEPT_ID                  TEXT                 NULL
+       23. IS_BLOCKED                               BOOLEAN              NULL
+       24. NATIONAL_SLOT_CATEGORY_NAME              TEXT                 NULL
+       25. CONTEXT_TYPE                             TEXT                 NULL
+       26. SERVICE_SETTING                          TEXT                 NULL
+       27. NATIONAL_SLOT_CATEGORY_DESCRIPTION       TEXT                 NULL
+       28. CSDS_CARE_CONTACT_IDENTIFIER             TEXT                 NULL
+       29. PERSON_ID                                TEXT                 NULL
+       30. LDS_ID                                   TEXT                 NULL
+       31. LDS_BUSINESS_KEY                         TEXT                 NULL
+       32. LDS_DATASET_ID                           TEXT                 NULL
+       33. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       34. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       35. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       36. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       37. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       38. LDS_IS_DELETED                           BOOLEAN              NULL
+       39. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       40. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       41. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: APPOINTMENT_PRACTITIONER (BASE TABLE)
+    Columns (18):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. APPOINTMENT_ID                           TEXT                 NULL
+        4. PRACTITIONER_ID                          TEXT                 NULL
+        5. LDS_END_DATE_TIME                        TIMESTAMP_NTZ        NULL
+        6. LDS_ID                                   TEXT                 NULL
+        7. LDS_BUSINESS_KEY                         TEXT                 NULL
+        8. LDS_DATASET_ID                           TEXT                 NULL
+        9. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       10. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       11. LDS_RECORD_ID_USER                       TEXT                 NULL
+       12. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       13. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       14. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       15. LDS_IS_DELETED                           BOOLEAN              NULL
+       16. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       17. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       18. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: DIAGNOSTIC_ORDER (BASE TABLE)
+    Columns (35):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PATIENT_ID                               TEXT                 NULL
+        4. ENCOUNTER_ID                             TEXT                 NULL
+        5. PRACTITIONER_ID                          TEXT                 NULL
+        6. PARENT_OBSERVATION_ID                    TEXT                 NULL
+        7. CLINICAL_EFFECTIVE_DATE                  TIMESTAMP_NTZ        NULL
+        8. DATE_PRECISION_CONCEPT_ID                TEXT                 NULL
+        9. RESULT_VALUE                             FLOAT                NULL
+       10. RESULT_VALUE_UNITS_CONCEPT_ID            TEXT                 NULL
+       11. RESULT_DATE                              DATE                 NULL
+       12. RESULT_TEXT                              TEXT                 NULL
+       13. IS_PROBLEM                               BOOLEAN              NULL
+       14. IS_REVIEW                                BOOLEAN              NULL
+       15. PROBLEM_END_DATE                         TIMESTAMP_NTZ        NULL
+       16. DIAGNOSTIC_ORDER_SOURCE_CONCEPT_ID       TEXT                 NULL
+       17. AGE_AT_EVENT                             NUMBER               NULL
+       18. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       19. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       20. EPISODICITY_CONCEPT_ID                   TEXT                 NULL
+       21. IS_PRIMARY                               BOOLEAN              NULL
+       22. DATE_RECORDED                            TIMESTAMP_NTZ        NULL
+       23. PERSON_ID                                TEXT                 NULL
+       24. LDS_ID                                   TEXT                 NULL
+       25. LDS_BUSINESS_KEY                         TEXT                 NULL
+       26. LDS_DATASET_ID                           TEXT                 NULL
+       27. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       28. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       29. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       30. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       31. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       32. LDS_IS_DELETED                           BOOLEAN              NULL
+       33. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       34. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       35. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: ENCOUNTER (BASE TABLE)
+    Columns (32):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PERSON_ID                                TEXT                 NULL
+        4. PATIENT_ID                               TEXT                 NULL
+        5. PRACTITIONER_ID                          TEXT                 NULL
+        6. APPOINTMENT_ID                           TEXT                 NULL
+        7. EPISODE_OF_CARE_ID                       TEXT                 NULL
+        8. SERVICE_PROVIDER_ORGANISATION_ID         TEXT                 NULL
+        9. CLINICAL_EFFECTIVE_DATE                  TIMESTAMP_NTZ        NULL
+       10. DATE_PRECISION_CONCEPT_ID                TEXT                 NULL
+       11. LOCATION                                 TEXT                 NULL
+       12. ENCOUNTER_SOURCE_CONCEPT_ID              TEXT                 NULL
+       13. AGE_AT_EVENT                             NUMBER               NULL
+       14. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       15. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       16. TYPE                                     TEXT                 NULL
+       17. SUB_TYPE                                 TEXT                 NULL
+       18. ADMISSION_METHOD                         TEXT                 NULL
+       19. END_DATE                                 TIMESTAMP_NTZ        NULL
+       20. DATE_RECORDED                            TIMESTAMP_NTZ        NULL
+       21. LDS_ID                                   TEXT                 NULL
+       22. LDS_BUSINESS_KEY                         TEXT                 NULL
+       23. LDS_DATASET_ID                           TEXT                 NULL
+       24. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       25. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       26. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       27. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       28. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       29. LDS_IS_DELETED                           BOOLEAN              NULL
+       30. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       31. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       32. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: EPISODE_OF_CARE (BASE TABLE)
+    Columns (22):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. ORGANISATION_ID                          TEXT                 NULL
+        4. PATIENT_ID                               TEXT                 NULL
+        5. PERSON_ID                                TEXT                 NULL
+        6. EPISODE_TYPE_SOURCE_CONCEPT_ID           TEXT                 NULL
+        7. EPISODE_STATUS_SOURCE_CONCEPT_ID         TEXT                 NULL
+        8. EPISODE_OF_CARE_START_DATE               TIMESTAMP_NTZ        NULL
+        9. EPISODE_OF_CARE_END_DATE                 TIMESTAMP_NTZ        NULL
+       10. CARE_MANAGER_PRACTITIONER_ID             TEXT                 NULL
+       11. LDS_ID                                   TEXT                 NULL
+       12. LDS_BUSINESS_KEY                         TEXT                 NULL
+       13. LDS_DATASET_ID                           TEXT                 NULL
+       14. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       15. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       16. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       17. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       18. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       19. LDS_IS_DELETED                           BOOLEAN              NULL
+       20. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       21. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       22. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: FLAG (BASE TABLE)
+    Columns (20):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PERSON_ID                                TEXT                 NULL
+        4. PATIENT_ID                               TEXT                 NULL
+        5. EFFECTIVE_DATE                           TIMESTAMP_NTZ        NULL
+        6. EXPIRED_DATE                             TIMESTAMP_NTZ        NULL
+        7. IS_ACTIVE                                BOOLEAN              NULL
+        8. FLAG_TEXT                                TEXT                 NULL
+        9. LDS_ID                                   TEXT                 NULL
+       10. LDS_BUSINESS_KEY                         TEXT                 NULL
+       11. LDS_DATASET_ID                           TEXT                 NULL
+       12. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       13. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       14. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       15. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       16. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       17. LDS_IS_DELETED                           BOOLEAN              NULL
+       18. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       19. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       20. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: LOCATION (BASE TABLE)
+    Columns (31):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. NAME                                     TEXT                 NULL
+        4. TYPE_CODE                                TEXT                 NULL
+        5. TYPE_DESC                                TEXT                 NULL
+        6. IS_PRIMARY_LOCATION                      BOOLEAN              NULL
+        7. HOUSE_NAME                               TEXT                 NULL
+        8. HOUSE_NUMBER                             TEXT                 NULL
+        9. HOUSE_NAME_FLAT_NUMBER                   TEXT                 NULL
+       10. STREET                                   TEXT                 NULL
+       11. ADDRESS_LINE_1                           TEXT                 NULL
+       12. ADDRESS_LINE_2                           TEXT                 NULL
+       13. ADDRESS_LINE_3                           TEXT                 NULL
+       14. ADDRESS_LINE_4                           TEXT                 NULL
+       15. POSTCODE                                 TEXT                 NULL
+       16. MANAGING_ORGANISATION_ID                 TEXT                 NULL
+       17. OPEN_DATE                                DATE                 NULL
+       18. CLOSE_DATE                               DATE                 NULL
+       19. IS_OBSOLETE                              BOOLEAN              NULL
+       20. LDS_ID                                   TEXT                 NULL
+       21. LDS_BUSINESS_KEY                         TEXT                 NULL
+       22. LDS_DATASET_ID                           TEXT                 NULL
+       23. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       24. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       25. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       26. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       27. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       28. LDS_IS_DELETED                           BOOLEAN              NULL
+       29. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       30. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       31. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: LOCATION_CONTACT (BASE TABLE)
+    Columns (18):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. LOCATION_ID                              TEXT                 NULL
+        4. IS_PRIMARY_CONTACT                       BOOLEAN              NULL
+        5. CONTACT_TYPE                             TEXT                 NULL
+        6. CONTACT_TYPE_CONCEPT_ID                  TEXT                 NULL
+        7. VALUE                                    TEXT                 NULL
+        8. LDS_ID                                   TEXT                 NULL
+        9. LDS_BUSINESS_KEY                         TEXT                 NULL
+       10. LDS_DATASET_ID                           TEXT                 NULL
+       11. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       12. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       13. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       14. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       15. LDS_IS_DELETED                           BOOLEAN              NULL
+       16. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       17. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       18. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: MEDICATION_ORDER (BASE TABLE)
+    Columns (41):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. ORGANISATION_ID                          TEXT                 NULL
+        4. PERSON_ID                                TEXT                 NULL
+        5. PATIENT_ID                               TEXT                 NULL
+        6. MEDICATION_STATEMENT_ID                  TEXT                 NULL
+        7. ENCOUNTER_ID                             TEXT                 NULL
+        8. PRACTITIONER_ID                          TEXT                 NULL
+        9. OBSERVATION_ID                           TEXT                 NULL
+       10. ALLERGY_INTOLERANCE_ID                   TEXT                 NULL
+       11. DIAGNOSTIC_ORDER_ID                      TEXT                 NULL
+       12. REFERRAL_REQUEST_ID                      TEXT                 NULL
+       13. CLINICAL_EFFECTIVE_DATE                  TIMESTAMP_NTZ        NULL
+       14. DATE_PRECISION_CONCEPT_ID                TEXT                 NULL
+       15. DOSE                                     TEXT                 NULL
+       16. QUANTITY_VALUE                           FLOAT                NULL
+       17. QUANTITY_UNIT                            TEXT                 NULL
+       18. DURATION_DAYS                            NUMBER               NULL
+       19. ESTIMATED_COST                           FLOAT                NULL
+       20. MEDICATION_NAME                          TEXT                 NULL
+       21. MEDICATION_ORDER_SOURCE_CONCEPT_ID       TEXT                 NULL
+       22. BNF_REFERENCE                            TEXT                 NULL
+       23. AGE_AT_EVENT                             NUMBER               NULL
+       24. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       25. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       26. ISSUE_METHOD                             TEXT                 NULL
+       27. DATE_RECORDED                            TIMESTAMP_NTZ        NULL
+       28. IS_CONFIDENTIAL                          BOOLEAN              NULL
+       29. ISSUE_METHOD_DESCRIPTION                 TEXT                 NULL
+       30. LDS_ID                                   TEXT                 NULL
+       31. LDS_BUSINESS_KEY                         TEXT                 NULL
+       32. LDS_DATASET_ID                           TEXT                 NULL
+       33. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       34. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       35. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       36. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       37. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       38. LDS_IS_DELETED                           BOOLEAN              NULL
+       39. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       40. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       41. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: MEDICATION_STATEMENT (BASE TABLE)
+    Columns (42):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. ORGANISATION_ID                          TEXT                 NULL
+        4. PERSON_ID                                TEXT                 NULL
+        5. PATIENT_ID                               TEXT                 NULL
+        6. ENCOUNTER_ID                             TEXT                 NULL
+        7. PRACTITIONER_ID                          TEXT                 NULL
+        8. OBSERVATION_ID                           TEXT                 NULL
+        9. ALLERGY_INTOLERANCE_ID                   TEXT                 NULL
+       10. DIAGNOSTIC_ORDER_ID                      TEXT                 NULL
+       11. REFERRAL_REQUEST_ID                      TEXT                 NULL
+       12. AUTHORISATION_TYPE_CONCEPT_ID            TEXT                 NULL
+       13. DATE_PRECISION_CONCEPT_ID                TEXT                 NULL
+       14. MEDICATION_STATEMENT_SOURCE_CONCEPT_ID   TEXT                 NULL
+       15. CLINICAL_EFFECTIVE_DATE                  TIMESTAMP_NTZ        NULL
+       16. CANCELLATION_DATE                        TIMESTAMP_NTZ        NULL
+       17. DOSE                                     TEXT                 NULL
+       18. QUANTITY_VALUE_DESCRIPTION               TEXT                 NULL
+       19. QUANTITY_VALUE                           FLOAT                NULL
+       20. QUANTITY_UNIT                            TEXT                 NULL
+       21. MEDICATION_NAME                          TEXT                 NULL
+       22. BNF_REFERENCE                            TEXT                 NULL
+       23. AGE_AT_EVENT                             NUMBER               NULL
+       24. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       25. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       26. ISSUE_METHOD                             TEXT                 NULL
+       27. DATE_RECORDED                            TIMESTAMP_NTZ        NULL
+       28. IS_ACTIVE                                BOOLEAN              NULL
+       29. IS_CONFIDENTIAL                          BOOLEAN              NULL
+       30. EXPIRY_DATE                              TIMESTAMP_NTZ        NULL
+       31. LDS_ID                                   TEXT                 NULL
+       32. LDS_BUSINESS_KEY                         TEXT                 NULL
+       33. LDS_DATASET_ID                           TEXT                 NULL
+       34. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       35. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       36. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       37. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       38. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       39. LDS_IS_DELETED                           BOOLEAN              NULL
+       40. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       41. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       42. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: OBSERVATION (BASE TABLE)
+    Columns (37):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PATIENT_ID                               TEXT                 NULL
+        4. PERSON_ID                                TEXT                 NULL
+        5. ENCOUNTER_ID                             TEXT                 NULL
+        6. PRACTITIONER_ID                          TEXT                 NULL
+        7. PARENT_OBSERVATION_ID                    TEXT                 NULL
+        8. CLINICAL_EFFECTIVE_DATE                  TIMESTAMP_NTZ        NULL
+        9. DATE_PRECISION_CONCEPT_ID                TEXT                 NULL
+       10. RESULT_VALUE                             FLOAT                NULL
+       11. RESULT_VALUE_UNITS_CONCEPT_ID            TEXT                 NULL
+       12. RESULT_DATE                              TIMESTAMP_NTZ        NULL
+       13. RESULT_TEXT                              TEXT                 NULL
+       14. IS_PROBLEM                               BOOLEAN              NULL
+       15. IS_REVIEW                                BOOLEAN              NULL
+       16. PROBLEM_END_DATE                         TIMESTAMP_NTZ        NULL
+       17. OBSERVATION_SOURCE_CONCEPT_ID            TEXT                 NULL
+       18. AGE_AT_EVENT                             NUMBER               NULL
+       19. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       20. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       21. EPISODICITY_CONCEPT_ID                   TEXT                 NULL
+       22. IS_PRIMARY                               BOOLEAN              NULL
+       23. DATE_RECORDED                            TIMESTAMP_NTZ        NULL
+       24. IS_PROBLEM_DELETED                       BOOLEAN              NULL
+       25. IS_CONFIDENTIAL                          BOOLEAN              NULL
+       26. LDS_ID                                   TEXT                 NULL
+       27. LDS_BUSINESS_KEY                         TEXT                 NULL
+       28. LDS_DATASET_ID                           TEXT                 NULL
+       29. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       30. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       31. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       32. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       33. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       34. LDS_IS_DELETED                           BOOLEAN              NULL
+       35. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       36. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       37. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: ORGANISATION (BASE TABLE)
+    Columns (24):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. ORGANISATION_CODE                        TEXT                 NULL
+        4. ASSIGNING_AUTHORITY_CODE                 TEXT                 NULL
+        5. NAME                                     TEXT                 NULL
+        6. TYPE_CODE                                TEXT                 NULL
+        7. TYPE_DESC                                TEXT                 NULL
+        8. POSTCODE                                 TEXT                 NULL
+        9. PARENT_ORGANISATION_ID                   TEXT                 NULL
+       10. OPEN_DATE                                DATE                 NULL
+       11. CLOSE_DATE                               DATE                 NULL
+       12. IS_OBSOLETE                              BOOLEAN              NULL
+       13. LDS_ID                                   TEXT                 NULL
+       14. LDS_BUSINESS_KEY                         TEXT                 NULL
+       15. LDS_DATASET_ID                           TEXT                 NULL
+       16. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       17. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       18. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       19. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       20. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       21. LDS_IS_DELETED                           BOOLEAN              NULL
+       22. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       23. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       24. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PATIENT_PERSON (BASE TABLE)
+    Columns (14):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. LDS_RECORD_ID_PERSON                     TEXT                 NULL
+        3. ID                                       TEXT                 NULL
+        4. PATIENT_ID                               TEXT                 NULL
+        5. PERSON_ID                                TEXT                 NULL
+        6. LDS_ID                                   TEXT                 NULL
+        7. LDS_BUSINESS_KEY                         TEXT                 NULL
+        8. LDS_DATASET_ID                           TEXT                 NULL
+        9. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       10. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       11. LDS_IS_DELETED                           BOOLEAN              NULL
+       12. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       13. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       14. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PATIENT_REGISTERED_PRACTITIONER_IN_ROLE (BASE TABLE)
+    Columns (21):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PERSON_ID                                TEXT                 NULL
+        4. PATIENT_ID                               TEXT                 NULL
+        5. ORGANISATION_ID                          TEXT                 NULL
+        6. PRACTITIONER_ID                          TEXT                 NULL
+        7. EPISODE_OF_CARE_ID                       TEXT                 NULL
+        8. START_DATE                               TIMESTAMP_NTZ        NULL
+        9. END_DATE                                 TIMESTAMP_NTZ        NULL
+       10. LDS_ID                                   TEXT                 NULL
+       11. LDS_BUSINESS_KEY                         TEXT                 NULL
+       12. LDS_DATASET_ID                           TEXT                 NULL
+       13. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       14. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       15. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       16. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       17. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       18. LDS_IS_DELETED                           BOOLEAN              NULL
+       19. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       20. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       21. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PRACTITIONER (BASE TABLE)
+    Columns (21):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. GMC_CODE                                 TEXT                 NULL
+        4. TITLE                                    TEXT                 NULL
+        5. FIRST_NAME                               TEXT                 NULL
+        6. LAST_NAME                                TEXT                 NULL
+        7. NAME                                     TEXT                 NULL
+        8. IS_OBSOLETE                              BOOLEAN              NULL
+        9. LDS_END_DATE_TIME                        TIMESTAMP_NTZ        NULL
+       10. LDS_ID                                   TEXT                 NULL
+       11. LDS_BUSINESS_KEY                         TEXT                 NULL
+       12. LDS_DATASET_ID                           TEXT                 NULL
+       13. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       14. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       15. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       16. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       17. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       18. LDS_IS_DELETED                           BOOLEAN              NULL
+       19. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       20. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       21. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PRACTITIONER_IN_ROLE (BASE TABLE)
+    Columns (20):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PRACTITIONER_ID                          TEXT                 NULL
+        4. ORGANISATION_ID                          TEXT                 NULL
+        5. ROLE_CODE                                TEXT                 NULL
+        6. ROLE                                     TEXT                 NULL
+        7. DATE_EMPLOYMENT_START                    TIMESTAMP_NTZ        NULL
+        8. DATE_EMPLOYMENT_END                      TIMESTAMP_NTZ        NULL
+        9. LDS_ID                                   TEXT                 NULL
+       10. LDS_BUSINESS_KEY                         TEXT                 NULL
+       11. LDS_DATASET_ID                           TEXT                 NULL
+       12. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       13. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       14. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       15. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       16. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       17. LDS_IS_DELETED                           BOOLEAN              NULL
+       18. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       19. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       20. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PROCEDURE_REQUEST (BASE TABLE)
+    Columns (29):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PERSON_ID                                TEXT                 NULL
+        4. PATIENT_ID                               TEXT                 NULL
+        5. ENCOUNTER_ID                             TEXT                 NULL
+        6. PRACTITIONER_ID                          TEXT                 NULL
+        7. CLINICAL_EFFECTIVE_DATE                  TIMESTAMP_NTZ        NULL
+        8. DATE_PRECISION_CONCEPT_ID                TEXT                 NULL
+        9. DATE_RECORDED                            TIMESTAMP_NTZ        NULL
+       10. DESCRIPTION                              TEXT                 NULL
+       11. PROCEDURE_REQUEST_SOURCE_CONCEPT_ID      TEXT                 NULL
+       12. STATUS_CONCEPT_ID                        TEXT                 NULL
+       13. AGE_AT_EVENT                             NUMBER               NULL
+       14. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       15. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       16. IS_CONFIDENTIAL                          BOOLEAN              NULL
+       17. LDS_END_DATE_TIME                        TIMESTAMP_NTZ        NULL
+       18. LDS_ID                                   TEXT                 NULL
+       19. LDS_BUSINESS_KEY                         TEXT                 NULL
+       20. LDS_DATASET_ID                           TEXT                 NULL
+       21. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       22. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       23. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       24. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       25. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       26. LDS_IS_DELETED                           BOOLEAN              NULL
+       27. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       28. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       29. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: REFERRAL_REQUEST (BASE TABLE)
+    Columns (35):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. ORGANISATION_ID                          TEXT                 NULL
+        4. PERSON_ID                                TEXT                 NULL
+        5. PATIENT_ID                               TEXT                 NULL
+        6. ENCOUNTER_ID                             TEXT                 NULL
+        7. PRACTITIONER_ID                          TEXT                 NULL
+        8. UNIQUE_BOOKING_REFERENCE_NUMBER          TEXT                 NULL
+        9. CLINICAL_EFFECTIVE_DATE                  TIMESTAMP_NTZ        NULL
+       10. DATE_PRECISION_CONCEPT_ID                TEXT                 NULL
+       11. REQUESTER_ORGANISATION_ID                TEXT                 NULL
+       12. RECIPIENT_ORGANISATION_ID                TEXT                 NULL
+       13. REFERRAL_REQUEST_PRIORITY_CONCEPT_ID     TEXT                 NULL
+       14. REFERRAL_REQUEST_TYPE_CONCEPT_ID         TEXT                 NULL
+       15. REFERRAL_REQUEST_SPECIALTY_CONCEPT_ID    TEXT                 NULL
+       16. MODE                                     TEXT                 NULL
+       17. IS_OUTGOING_REFERRAL                     BOOLEAN              NULL
+       18. IS_REVIEW                                BOOLEAN              NULL
+       19. REFERRAL_REQUEST_SOURCE_CONCEPT_ID       TEXT                 NULL
+       20. AGE_AT_EVENT                             NUMBER               NULL
+       21. AGE_AT_EVENT_BABY                        NUMBER               NULL
+       22. AGE_AT_EVENT_NEONATE                     NUMBER               NULL
+       23. DATE_RECORDED                            TIMESTAMP_NTZ        NULL
+       24. LDS_ID                                   TEXT                 NULL
+       25. LDS_BUSINESS_KEY                         TEXT                 NULL
+       26. LDS_DATASET_ID                           TEXT                 NULL
+       27. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       28. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       29. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       30. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       31. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       32. LDS_IS_DELETED                           BOOLEAN              NULL
+       33. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       34. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       35. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: SCHEDULE (BASE TABLE)
+    Columns (22):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. LOCATION_ID                              TEXT                 NULL
+        4. LOCATION                                 TEXT                 NULL
+        5. PRACTITIONER_ID                          TEXT                 NULL
+        6. START_DATE                               TIMESTAMP_NTZ        NULL
+        7. END_DATE                                 TIMESTAMP_NTZ        NULL
+        8. TYPE                                     TEXT                 NULL
+        9. NAME                                     TEXT                 NULL
+       10. IS_PRIVATE                               BOOLEAN              NULL
+       11. LDS_ID                                   TEXT                 NULL
+       12. LDS_BUSINESS_KEY                         TEXT                 NULL
+       13. LDS_DATASET_ID                           TEXT                 NULL
+       14. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       15. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       16. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       17. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       18. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       19. LDS_IS_DELETED                           BOOLEAN              NULL
+       20. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       21. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       22. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: SCHEDULE_PRACTITIONER (BASE TABLE)
+    Columns (16):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. SCHEDULE_ID                              TEXT                 NULL
+        4. PRACTITIONER_ID                          TEXT                 NULL
+        5. LDS_ID                                   TEXT                 NULL
+        6. LDS_BUSINESS_KEY                         TEXT                 NULL
+        7. LDS_DATASET_ID                           TEXT                 NULL
+        8. LDS_CDM_EVENT_ID                         TEXT                 NULL
+        9. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       10. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       11. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       12. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       13. LDS_IS_DELETED                           BOOLEAN              NULL
+       14. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       15. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       16. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+Schema: OLIDS_MASKED
+--------------------------------------------------------------------------------
+
+  Table: PATIENT (BASE TABLE)
+    Columns (26):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. NHS_NUMBER_HASH                          BINARY               NULL
+        4. SK_PATIENT_ID                            NUMBER               NULL
+        5. TITLE                                    TEXT                 NULL
+        6. GENDER_CONCEPT_ID                        TEXT                 NULL
+        7. REGISTERED_PRACTICE_ID                   TEXT                 NULL
+        8. BIRTH_YEAR                               NUMBER               NULL
+        9. BIRTH_MONTH                              NUMBER               NULL
+       10. DEATH_YEAR                               NUMBER               NULL
+       11. DEATH_MONTH                              NUMBER               NULL
+       12. IS_CONFIDENTIAL                          BOOLEAN              NULL
+       13. IS_DUMMY_PATIENT                         BOOLEAN              NULL
+       14. IS_SPINE_SENSITIVE                       BOOLEAN              NULL
+       15. LDS_ID                                   TEXT                 NULL
+       16. LDS_BUSINESS_KEY                         TEXT                 NULL
+       17. LDS_DATASET_ID                           TEXT                 NULL
+       18. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       19. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       20. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       21. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       22. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       23. LDS_IS_DELETED                           BOOLEAN              NULL
+       24. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       25. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       26. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PATIENT_ADDRESS (BASE TABLE)
+    Columns (20):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PATIENT_ID                               TEXT                 NULL
+        4. PERSON_ID                                TEXT                 NULL
+        5. ADDRESS_TYPE_CONCEPT_ID                  TEXT                 NULL
+        6. POSTCODE_HASH                            BINARY               NULL
+        7. START_DATE                               TIMESTAMP_NTZ        NULL
+        8. END_DATE                                 TIMESTAMP_NTZ        NULL
+        9. LDS_ID                                   TEXT                 NULL
+       10. LDS_BUSINESS_KEY                         TEXT                 NULL
+       11. LDS_DATASET_ID                           TEXT                 NULL
+       12. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       13. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       14. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       15. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       16. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       17. LDS_IS_DELETED                           BOOLEAN              NULL
+       18. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       19. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       20. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PATIENT_CONTACT (BASE TABLE)
+    Columns (20):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. PERSON_ID                                TEXT                 NULL
+        4. PATIENT_ID                               TEXT                 NULL
+        5. DESCRIPTION                              TEXT                 NULL
+        6. CONTACT_TYPE_CONCEPT_ID                  TEXT                 NULL
+        7. START_DATE                               TIMESTAMP_NTZ        NULL
+        8. END_DATE                                 TIMESTAMP_NTZ        NULL
+        9. LDS_ID                                   TEXT                 NULL
+       10. LDS_BUSINESS_KEY                         TEXT                 NULL
+       11. LDS_DATASET_ID                           TEXT                 NULL
+       12. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       13. LDS_VERSIONER_EVENT_ID                   TEXT                 NULL
+       14. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       15. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       16. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       17. LDS_IS_DELETED                           BOOLEAN              NULL
+       18. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       19. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       20. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PATIENT_UPRN (BASE TABLE)
+    Columns (25):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. REGISTRAR_EVENT_ID                       TEXT                 NULL
+        4. MASKED_UPRN                              TEXT                 NULL
+        5. MASKED_USRN                              TEXT                 NULL
+        6. MASKED_POSTCODE                          TEXT                 NULL
+        7. ADDRESS_FORMAT_QUALITY                   TEXT                 NULL
+        8. POST_CODE_QUALITY                        TEXT                 NULL
+        9. MATCHED_WITH_ASSIGN                      TEXT                 NULL
+       10. QUALIFIER                                TEXT                 NULL
+       11. UPRN_PROPERTY_CLASSIFICATION             TEXT                 NULL
+       12. ALGORITHM                                TEXT                 NULL
+       13. MATCH_PATTERN                            TEXT                 NULL
+       14. LDS_ID                                   TEXT                 NULL
+       15. LDS_BUSINESS_KEY                         TEXT                 NULL
+       16. LDS_DATASET_ID                           TEXT                 NULL
+       17. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       18. LDS_REGISTRAR_EVENT_ID                   TEXT                 NULL
+       19. RECORD_OWNER_ORGANISATION_CODE           TEXT                 NULL
+       20. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       21. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       22. LDS_IS_DELETED                           BOOLEAN              NULL
+       23. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       24. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       25. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+  Table: PERSON (BASE TABLE)
+    Columns (31):
+        1. LDS_RECORD_ID                            TEXT                 NULL
+        2. ID                                       TEXT                 NULL
+        3. COMPOSITE_ID                             TEXT                 NULL
+        4. MATCHED_NHS_NO_HASH                      BINARY               NULL
+        5. GENDER                                   TEXT                 NULL
+        6. BIRTH_YEAR                               NUMBER               NULL
+        7. BIRTH_MONTH                              NUMBER               NULL
+        8. DEATH_YEAR                               NUMBER               NULL
+        9. DEATH_MONTH                              NUMBER               NULL
+       10. DEATH_NOTIFICATION_STATUS                TEXT                 NULL
+       11. POSTCODE_HASH                            BINARY               NULL
+       12. PREFERRED_CONTACT_METHOD                 TEXT                 NULL
+       13. NOMINATED_PHARMACY                       TEXT                 NULL
+       14. DISPENSING_DOCTOR                        TEXT                 NULL
+       15. MEDICAL_APPLIANCE_SUPPLIER               TEXT                 NULL
+       16. GP_PRACTICE_CODE                         TEXT                 NULL
+       17. GP_REGISTRATION_DATE                     DATE                 NULL
+       18. AS_AT_DATE                               DATE                 NULL
+       19. SENSITIVITY_FLAG                         TEXT                 NULL
+       20. ERROR_SUCCESS_CODE                       TEXT                 NULL
+       21. LDS_ID                                   TEXT                 NULL
+       22. LDS_BUSINESS_KEY                         TEXT                 NULL
+       23. LDS_DATASET_ID                           TEXT                 NULL
+       24. LDS_CDM_EVENT_ID                         TEXT                 NULL
+       25. LDS_REGISTRAR_EVENT_ID                   TEXT                 NULL
+       26. LDS_DATETIME_DATA_ACQUIRED               TIMESTAMP_NTZ        NULL
+       27. LDS_INITIAL_DATA_RECEIVED_DATE           TIMESTAMP_NTZ        NULL
+       28. LDS_IS_DELETED                           BOOLEAN              NULL
+       29. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+       30. LDS_LAKEHOUSE_DATE_PROCESSED             DATE                 NULL
+       31. LDS_LAKEHOUSE_DATETIME_UPDATED           TIMESTAMP_NTZ        NULL
+
+Schema: OLIDS_TERMINOLOGY
+--------------------------------------------------------------------------------
+
+  Table: CONCEPT (BASE TABLE)
+    Columns (10):
+        1. ID                                       TEXT                 NULL
+        2. LDS_ID                                   TEXT                 NULL
+        3. LDS_BUSINESS_KEY                         TEXT                 NULL
+        4. LDS_DATASET_ID                           TEXT                 NOT NULL
+        5. SYSTEM                                   TEXT                 NULL
+        6. CODE                                     TEXT                 NULL
+        7. DISPLAY                                  TEXT                 NULL
+        8. IS_MAPPED                                BOOLEAN              NULL
+        9. USE_COUNT                                NUMBER               NULL
+       10. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+
+  Table: CONCEPT_MAP (BASE TABLE)
+    Columns (20):
+        1. ID                                       TEXT                 NULL
+        2. LDS_ID                                   TEXT                 NULL
+        3. LDS_BUSINESS_KEY                         TEXT                 NULL
+        4. LDS_DATASET_ID                           TEXT                 NOT NULL
+        5. CONCEPT_MAP_ID                           TEXT                 NULL
+        6. CONCEPT_MAP_RESOURCE_ID                  TEXT                 NULL
+        7. CONCEPT_MAP_URL                          TEXT                 NULL
+        8. CONCEPT_MAP_VERSION                      TEXT                 NULL
+        9. SOURCE_CODE_ID                           TEXT                 NULL
+       10. SOURCE_SYSTEM                            TEXT                 NULL
+       11. SOURCE_CODE                              TEXT                 NULL
+       12. SOURCE_DISPLAY                           TEXT                 NULL
+       13. TARGET_CODE_ID                           TEXT                 NULL
+       14. TARGET_SYSTEM                            TEXT                 NULL
+       15. TARGET_CODE                              TEXT                 NULL
+       16. TARGET_DISPLAY                           TEXT                 NULL
+       17. IS_PRIMARY                               BOOLEAN              NULL
+       18. IS_ACTIVE                                BOOLEAN              NULL
+       19. EQUIVALENCE                              TEXT                 NULL
+       20. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NULL
+
+Schema: REFERENCE
+--------------------------------------------------------------------------------
+
+  Table: POSTCODE_HASH (BASE TABLE)
+    Columns (15):
+        1. ID                                       BINARY               NULL
+        2. POSTCODE_HASH                            BINARY               NULL
+        3. PRIMARY_CARE_ORGANISATION                TEXT                 NULL
+        4. LOCAL_AUTHORITY_ORGANISATION             TEXT                 NULL
+        5. YR2011_LSOA                              TEXT                 NULL
+        6. YR2011_MSOA                              TEXT                 NULL
+        7. YR2021_LSOA                              TEXT                 NULL
+        8. YR2021_MSOA                              TEXT                 NULL
+        9. EFFECTIVE_FROM                           TIMESTAMP_NTZ        NULL
+       10. EFFECTIVE_TO                             TIMESTAMP_NTZ        NULL
+       11. IS_LATEST                                NUMBER               NOT NULL
+       12. LDS_IS_DELETED                           BOOLEAN              NOT NULL
+       13. LDS_START_DATE_TIME                      TIMESTAMP_NTZ        NOT NULL
+       14. LAKEHOUSE_DATE_PROCESSED                 DATE                 NOT NULL
+       15. HIGH_WATERMARK_DATE_TIME                 TIMESTAMP_NTZ        NOT NULL
+

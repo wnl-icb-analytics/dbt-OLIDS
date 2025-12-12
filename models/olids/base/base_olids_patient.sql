@@ -22,6 +22,10 @@ SELECT
     src.sk_patient_id,
     src.title,
     src.gender_concept_id,
+    gender_map.source_code AS gender_source_code,
+    gender_map.source_display AS gender_source_display,
+    gender_map.target_code AS gender_code,
+    gender_map.target_display AS gender_display,
     src.registered_practice_id,
     src.birth_year,
     src.birth_month,
@@ -45,6 +49,8 @@ SELECT
 FROM {{ source('olids_masked', 'PATIENT') }} src
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.record_owner_organisation_code = ncl_practices.practice_code
+LEFT JOIN {{ ref('base_olids_concept_map') }} gender_map
+    ON src.gender_concept_id = gender_map.source_code_id
 WHERE src.sk_patient_id IS NOT NULL
     AND src.is_spine_sensitive = FALSE
     AND src.is_confidential = FALSE

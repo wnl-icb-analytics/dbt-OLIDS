@@ -831,6 +831,37 @@ sources:
       data_type: TEXT
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
+  - name: PATIENT_PERSON
+    identifier: '"PATIENT_PERSON"'
+    columns:
+    - name: lds_record_id
+      data_type: TEXT
+    - name: lds_record_id_person
+      data_type: TEXT
+    - name: id
+      data_type: TEXT
+    - name: patient_id
+      data_type: TEXT
+    - name: person_id
+      data_type: TEXT
+    - name: lds_id
+      data_type: TEXT
+    - name: lds_business_key
+      data_type: TEXT
+    - name: lds_dataset_id
+      data_type: TEXT
+    - name: lds_cdm_event_id
+      data_type: TEXT
+    - name: lds_datetime_data_acquired
+      data_type: TIMESTAMP_NTZ
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: lds_start_date_time
+      data_type: TIMESTAMP_NTZ
+    - name: lds_lakehouse_date_processed
+      data_type: DATE
+    - name: lds_lakehouse_datetime_updated
+      data_type: TIMESTAMP_NTZ
   - name: PATIENT_REGISTERED_PRACTITIONER_IN_ROLE
     identifier: '"PATIENT_REGISTERED_PRACTITIONER_IN_ROLE"'
     columns:
@@ -1376,7 +1407,7 @@ sources:
       data_type: TIMESTAMP_NTZ
 - name: olids_reference
   database: '"Data_Store_OLIDS_Alpha"'
-  schema: '"OLIDS_REFERENCE"'
+  schema: '"REFERENCE"'
   description: OLIDS reference data including postcode lookups
   tables:
   - name: POSTCODE_HASH
@@ -1408,7 +1439,7 @@ sources:
       data_type: BOOLEAN
     - name: LDS_START_DATE_TIME
       data_type: TIMESTAMP_NTZ
-    - name: LAKEHOUSEDATEPROCESSED
+    - name: LAKEHOUSE_DATE_PROCESSED
       data_type: DATE
     - name: HIGH_WATERMARK_DATE_TIME
       data_type: TIMESTAMP_NTZ
@@ -1453,11 +1484,31 @@ sources:
       data_type: TEXT
     - name: concept_map_id
       data_type: TEXT
+    - name: concept_map_resource_id
+      data_type: TEXT
+    - name: concept_map_url
+      data_type: TEXT
+    - name: concept_map_version
+      data_type: TEXT
     - name: source_code_id
+      data_type: TEXT
+    - name: source_system
+      data_type: TEXT
+    - name: source_code
+      data_type: TEXT
+    - name: source_display
       data_type: TEXT
     - name: target_code_id
       data_type: TEXT
+    - name: target_system
+      data_type: TEXT
+    - name: target_code
+      data_type: TEXT
+    - name: target_display
+      data_type: TEXT
     - name: is_primary
+      data_type: BOOLEAN
+    - name: is_active
       data_type: BOOLEAN
     - name: equivalence
       data_type: TEXT

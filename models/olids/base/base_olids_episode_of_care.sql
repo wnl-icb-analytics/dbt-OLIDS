@@ -8,7 +8,7 @@
 Base EPISODE_OF_CARE View
 Filters to NCL practices and excludes sensitive patients.
 Pattern: Clinical table with patient_id + record_owner_organisation_code
-Note: person_id replaced with fabricated version from patient_person mapping
+Uses native person_id from source table.
 */
 
 SELECT
@@ -16,9 +16,17 @@ SELECT
     src.id,
     src.organisation_id,
     src.patient_id,
-    pp.person_id,
+    src.person_id,
     src.episode_type_source_concept_id,
+    episode_type_map.source_code AS episode_type_source_code,
+    episode_type_map.source_display AS episode_type_source_display,
+    episode_type_map.target_code AS episode_type_code,
+    episode_type_map.target_display AS episode_type_display,
     src.episode_status_source_concept_id,
+    episode_status_map.source_code AS episode_status_source_code,
+    episode_status_map.source_display AS episode_status_source_display,
+    episode_status_map.target_code AS episode_status_code,
+    episode_status_map.target_display AS episode_status_display,
     src.episode_of_care_start_date,
     src.episode_of_care_end_date,
     src.care_manager_practitioner_id,
@@ -37,9 +45,11 @@ SELECT
 FROM {{ source('olids_common', 'EPISODE_OF_CARE') }} src
 INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
-INNER JOIN {{ ref('base_olids_patient_person') }} pp
-    ON src.patient_id = pp.patient_id
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.record_owner_organisation_code = ncl_practices.practice_code
+LEFT JOIN {{ ref('base_olids_concept_map') }} episode_type_map
+    ON src.episode_type_source_concept_id = episode_type_map.source_code_id
+LEFT JOIN {{ ref('base_olids_concept_map') }} episode_status_map
+    ON src.episode_status_source_concept_id = episode_status_map.source_code_id
 WHERE src.patient_id IS NOT NULL
     AND src.lds_start_date_time IS NOT NULL
