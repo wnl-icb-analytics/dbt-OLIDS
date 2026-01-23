@@ -6,6 +6,7 @@
         cluster_by=['patient_id', 'person_id'],
         alias='patient_person',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

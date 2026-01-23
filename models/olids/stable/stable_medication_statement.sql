@@ -6,6 +6,7 @@
         cluster_by=['medication_statement_source_concept_id', 'clinical_effective_date'],
         alias='medication_statement',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

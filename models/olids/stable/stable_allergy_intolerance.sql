@@ -6,6 +6,7 @@
         cluster_by=['allergy_intolerance_source_concept_id', 'clinical_effective_date'],
         alias='allergy_intolerance',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

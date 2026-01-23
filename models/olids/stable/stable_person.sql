@@ -8,6 +8,7 @@
         cluster_by=['id'],
         alias='person',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

@@ -12,7 +12,8 @@ from snowflake.snowpark import Session
 load_dotenv()
 
 # Configuration
-SOURCE_DATABASE = '"Data_Store_OLIDS_Alpha"'  # Database containing OLIDS_COMMON, OLIDS_MASKED, and OLIDS_TERMINOLOGY schemas
+SOURCE_DATABASE = '"Data_Store_OLIDS_Alpha"'  # Database containing OLIDS_COMMON and OLIDS_MASKED schemas
+TERMINOLOGY_DATABASE = '"Data_Store_OLIDS_Alpha"'  # Database containing OLIDS_TERMINOLOGY schema (using old concept map as current one is broken)
 WAREHOUSE = os.getenv('SNOWFLAKE_WAREHOUSE')
 ACCOUNT = os.getenv('SNOWFLAKE_ACCOUNT')
 USER = os.getenv('SNOWFLAKE_USER')
@@ -79,9 +80,9 @@ def generate_concept_check_query(schema_name, table_name, concept_field):
         COUNT(DISTINCT CASE WHEN cm.source_code_id IS NOT NULL AND c.id IS NOT NULL AND c.display IS NULL THEN base.{concept_field} END) AS null_display,
         SUM(CASE WHEN cm.source_code_id IS NOT NULL AND c.id IS NOT NULL AND c.display IS NULL THEN 1 ELSE 0 END) AS affected_rows_null_display
     FROM {SOURCE_DATABASE}.{schema_name}.{table_name} base
-    LEFT JOIN {SOURCE_DATABASE}.OLIDS_TERMINOLOGY.CONCEPT_MAP cm
+    LEFT JOIN {TERMINOLOGY_DATABASE}.OLIDS_TERMINOLOGY.CONCEPT_MAP cm
         ON base.{concept_field} = cm.source_code_id
-    LEFT JOIN {SOURCE_DATABASE}.OLIDS_TERMINOLOGY.CONCEPT c
+    LEFT JOIN {TERMINOLOGY_DATABASE}.OLIDS_TERMINOLOGY.CONCEPT c
         ON cm.target_code_id = c.id
     WHERE base.{concept_field} IS NOT NULL
     """
@@ -131,7 +132,8 @@ def main():
     print(f"\n{'='*100}")
     print(f"CONCEPT MAPPING INTEGRITY CHECK")
     print(f"{'='*100}")
-    print(f"Database: {SOURCE_DATABASE}")
+    print(f"Source database: {SOURCE_DATABASE}")
+    print(f"Terminology database: {TERMINOLOGY_DATABASE}")
     print(f"Total checks configured: {len(CONCEPT_CHECKS)}")
 
     print(f"\nConnecting to Snowflake...")
@@ -167,11 +169,17 @@ def main():
         if not failed.empty:
             print(f"\n⚠️  FAILED MAPPINGS ({len(failed)} fields):\n")
             for _, row in failed.iterrows():
+                mapped_concepts_percentage = 100.0 - row['FAILURE_PERCENTAGE']
+                total_rows = row['TOTAL_ROWS_WITH_CONCEPT']
+                affected_rows = row['TOTAL_AFFECTED_ROWS']
+                mapped_rows_percentage = (100.0 * (total_rows - affected_rows) / total_rows) if total_rows > 0 else 0.0
                 print(f"  {row['TABLE_NAME']}.{row['CONCEPT_FIELD']}")
                 print(f"    Total distinct concepts: {int(row['TOTAL_DISTINCT_CONCEPTS']):,}")
                 print(f"    Total rows with concept: {int(row['TOTAL_ROWS_WITH_CONCEPT']):,}")
                 print(f"    Failed concepts: {int(row['TOTAL_FAILURES']):,} ({int(row['FAILURE_PERCENTAGE'])}%)")
+                print(f"    Mapped concepts: {mapped_concepts_percentage:.4f}%")
                 print(f"    Affected rows: {int(row['TOTAL_AFFECTED_ROWS']):,}")
+                print(f"    Mapped rows: {mapped_rows_percentage:.4f}%")
                 if row['FAILED_CONCEPT_MAP_LOOKUP'] > 0:
                     print(f"    ↳ Missing in CONCEPT_MAP: {int(row['FAILED_CONCEPT_MAP_LOOKUP']):,} concepts ({int(row['AFFECTED_ROWS_CONCEPT_MAP']):,} rows)")
                 if row['FAILED_TARGET_CONCEPT_LOOKUP'] > 0:

@@ -6,6 +6,7 @@
         cluster_by=['location_id'],
         alias='location_contact',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

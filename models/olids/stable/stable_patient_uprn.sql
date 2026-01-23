@@ -6,6 +6,7 @@
         cluster_by=['masked_uprn'],
         alias='patient_uprn',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

@@ -6,6 +6,7 @@
         cluster_by=['encounter_source_concept_id', 'clinical_effective_date'],
         alias='encounter',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

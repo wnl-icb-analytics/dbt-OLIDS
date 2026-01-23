@@ -168,14 +168,18 @@ def main():
             print(f"  Checking {i}/{len(relationships)}: {rel['child_table']}.{rel['fk_column']} → {rel['parent_table']}.{rel['pk_column']}")
             result = check_referential_integrity(session, rel)
             if result:
+                total_distinct_fk = int(result['TOTAL_DISTINCT_FK_VALUES'])
+                orphaned_fk = int(result['ORPHANED_FK_VALUES'])
+                failure_pct = (orphaned_fk / total_distinct_fk * 100) if total_distinct_fk > 0 else 0
                 results.append({
                     'child_table': result['CHILD_TABLE'],
                     'fk_column': result['FK_COLUMN'],
                     'parent_table': result['PARENT_TABLE'],
-                    'total_distinct_fk': int(result['TOTAL_DISTINCT_FK_VALUES']),
+                    'total_distinct_fk': total_distinct_fk,
                     'total_rows_with_fk': int(result['TOTAL_ROWS_WITH_FK']),
-                    'orphaned_fk': int(result['ORPHANED_FK_VALUES']),
-                    'orphaned_rows': int(result['ORPHANED_ROWS'])
+                    'orphaned_fk': orphaned_fk,
+                    'orphaned_rows': int(result['ORPHANED_ROWS']),
+                    'failure_pct': failure_pct
                 })
 
         print("✓ Checks completed\n")
@@ -190,11 +194,10 @@ def main():
         if broken:
             print(f"\n⚠️  BROKEN REFERENCES ({len(broken)} relationships):\n")
             for r in broken:
-                orphan_pct = (r['orphaned_fk'] / r['total_distinct_fk'] * 100) if r['total_distinct_fk'] > 0 else 0
                 print(f"  {r['child_table']}.{r['fk_column']} → {r['parent_table']}.ID")
                 print(f"    Total distinct FK values: {r['total_distinct_fk']:,}")
                 print(f"    Total rows with FK: {r['total_rows_with_fk']:,}")
-                print(f"    Orphaned FK values: {r['orphaned_fk']:,} ({orphan_pct:.2f}%)")
+                print(f"    Orphaned FK values: {r['orphaned_fk']:,} ({r['failure_pct']:.2f}%)")
                 print(f"    Orphaned rows: {r['orphaned_rows']:,}")
                 print()
         else:
@@ -218,10 +221,12 @@ def main():
         total_valid = len(valid)
         total_orphaned_values = sum(r['orphaned_fk'] for r in results)
         total_orphaned_rows = sum(r['orphaned_rows'] for r in results)
+        low_failure_count = len([r for r in results if r['failure_pct'] < 1.0])
 
         print(f"Total relationships checked: {total_relationships:,}")
         print(f"Broken references: {total_broken:,}")
         print(f"Valid references: {total_valid:,}")
+        print(f"Relationships with < 1% failures: {low_failure_count:,}")
         print(f"Total orphaned FK values: {total_orphaned_values:,}")
         print(f"Total orphaned rows: {total_orphaned_rows:,}")
 

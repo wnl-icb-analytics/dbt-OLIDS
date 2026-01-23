@@ -20,8 +20,8 @@ SCRIPT_DIR = Path(__file__).parent
 OUTPUT_DIR = SCRIPT_DIR / "output"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-PDS_EMIS_QUERY_FILE = SCRIPT_DIR / "registration_comparison_native_query.sql"
-OLIDS_EMIS_QUERY_FILE = SCRIPT_DIR / "olids_emis_comparison_native_query.sql"
+PDS_EMIS_QUERY_FILE = SCRIPT_DIR / "registrations_comparison_of_methods/registration_comparison_native_query.sql"
+OLIDS_EMIS_QUERY_FILE = SCRIPT_DIR / "registrations_comparison_of_methods/olids_emis_comparison_native_query.sql"
 WAREHOUSE = os.getenv('SNOWFLAKE_WAREHOUSE')
 ACCOUNT = os.getenv('SNOWFLAKE_ACCOUNT')
 USER = os.getenv('SNOWFLAKE_USER')

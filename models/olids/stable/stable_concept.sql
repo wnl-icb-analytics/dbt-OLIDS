@@ -6,6 +6,7 @@
         cluster_by=['id'],
         alias='concept',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}
