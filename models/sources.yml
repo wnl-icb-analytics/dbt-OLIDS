@@ -1444,7 +1444,7 @@ sources:
     - name: HIGH_WATERMARK_DATE_TIME
       data_type: TIMESTAMP_NTZ
 - name: olids_terminology
-  database: '"Data_Store_OLIDS_Alpha"'
+  database: '"Data_Store_OLIDS_Clinical_Validation"'
   schema: '"OLIDS_TERMINOLOGY"'
   description: OLIDS-specific terminology and code mappings
   tables:
