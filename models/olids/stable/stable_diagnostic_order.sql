@@ -6,6 +6,7 @@
         cluster_by=['diagnostic_order_source_concept_id', 'clinical_effective_date'],
         alias='diagnostic_order',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

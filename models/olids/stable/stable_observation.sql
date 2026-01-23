@@ -6,6 +6,7 @@
         cluster_by=['observation_source_concept_id', 'clinical_effective_date'],
         alias='observation',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

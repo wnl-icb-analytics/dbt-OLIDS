@@ -6,6 +6,7 @@
         cluster_by=['episode_type_source_concept_id', 'episode_of_care_start_date'],
         alias='episode_of_care',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

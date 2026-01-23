@@ -6,6 +6,7 @@
         cluster_by=['source_code_id', 'target_code_id'],
         alias='concept_map',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

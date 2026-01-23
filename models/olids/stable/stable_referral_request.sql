@@ -6,6 +6,7 @@
         cluster_by=['referral_request_source_concept_id', 'clinical_effective_date'],
         alias='referral_request',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

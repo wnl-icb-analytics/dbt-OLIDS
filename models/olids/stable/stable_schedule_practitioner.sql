@@ -6,6 +6,7 @@
         cluster_by=['schedule_id', 'practitioner_id'],
         alias='schedule_practitioner',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}

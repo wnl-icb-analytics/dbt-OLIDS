@@ -6,6 +6,7 @@
         cluster_by=['id', 'postcode_hash'],
         alias='postcode_hash',
         incremental_strategy='merge',
+        transient=false,
         tags=['stable', 'incremental']
     )
 }}
