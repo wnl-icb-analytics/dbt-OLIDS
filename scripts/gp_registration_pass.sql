@@ -31,7 +31,7 @@ DATA SOURCES:
     - Data_Store_OLIDS_Alpha.OLIDS_MASKED.PATIENT
     - Data_Store_OLIDS_Alpha.OLIDS_COMMON.PATIENT_PERSON
     - Data_Store_OLIDS_Alpha.OLIDS_COMMON.ORGANISATION
-    - Data_Store_OLIDS_Clinical_Validation.OLIDS_TERMINOLOGY.CONCEPT_MAP
+    - Data_Store_OLIDS_Alpha.OLIDS_TERMINOLOGY.CONCEPT_MAP
 
 VERSION: 1.0
 DATE: 2026-02-02
@@ -179,13 +179,13 @@ Episode statuses include:
 
 episode_type_map AS (
     SELECT source_code_id, source_code
-    FROM "Data_Store_OLIDS_Clinical_Validation".OLIDS_TERMINOLOGY.CONCEPT_MAP
+    FROM "Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP
     WHERE source_code = 'Regular'
 ),
 
 episode_status_map AS (
     SELECT source_code_id, source_code
-    FROM "Data_Store_OLIDS_Clinical_Validation".OLIDS_TERMINOLOGY.CONCEPT_MAP
+    FROM "Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP
     WHERE source_code = 'Left'
 ),
 
