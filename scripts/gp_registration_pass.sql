@@ -31,7 +31,7 @@ DATA SOURCES:
     - Data_Store_OLIDS_Alpha.OLIDS_MASKED.PATIENT
     - Data_Store_OLIDS_Alpha.OLIDS_COMMON.PATIENT_PERSON
     - Data_Store_OLIDS_Alpha.OLIDS_COMMON.ORGANISATION
-    - Data_Store_OLIDS_Alpha.OLIDS_TERMINOLOGY.CONCEPT (for episode type lookup)
+    - Data_Store_OLIDS_Clinical_Validation.OLIDS_TERMINOLOGY.CONCEPT_MAP
 
 VERSION: 1.0
 DATE: 2026-02-02
@@ -50,13 +50,23 @@ USE WAREHOUSE "WH_NCL_OLIDS_M";
 
 /*
 ================================================================================
+QUERY START
+================================================================================
+*/
+
+WITH 
+
+/*
+================================================================================
 STEP 1: DEFINE SNAPSHOT DATE
 ================================================================================
 The snapshot date determines which registrations are considered "active".
 Change this to match your comparison dataset (e.g., EMIS extract date, PDS date).
 */
 
-SET snapshot_date = '2025-11-04';  -- Adjust to your target date
+config AS (
+    SELECT DATE '2025-11-04' AS snapshot_date  -- Adjust to your target date
+),
 
 /*
 ================================================================================
@@ -73,7 +83,7 @@ These exclusions align with NHS data protection requirements and ensure
 we only count real, non-sensitive patients.
 */
 
-WITH eligible_patients AS (
+eligible_patients AS (
     SELECT
         id AS patient_id,
         sk_patient_id,
@@ -81,9 +91,9 @@ WITH eligible_patients AS (
         death_month
     FROM "Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
     WHERE sk_patient_id IS NOT NULL           -- Must have valid pseudo ID
-      AND is_spine_sensitive = FALSE          -- Not Spine sensitive
-      AND is_confidential = FALSE             -- Not confidential
-      AND is_dummy_patient = FALSE            -- Not a test patient
+        AND is_spine_sensitive = FALSE        -- Not Spine sensitive
+        AND is_confidential = FALSE           -- Not confidential
+        AND is_dummy_patient = FALSE          -- Not a test patient
 ),
 
 /*
@@ -109,15 +119,15 @@ patient_death_dates AS (
         death_year IS NOT NULL AS is_deceased,
         CASE
             -- If we have both year and month, use midpoint of month
-            WHEN death_year IS NOT NULL AND death_month IS NOT NULL 
-            THEN DATEADD(
-                DAY,
-                FLOOR(DAY(LAST_DAY(TO_DATE(death_year || '-' || LPAD(death_month, 2, '0') || '-01'))) / 2),
-                TO_DATE(death_year || '-' || LPAD(death_month, 2, '0') || '-01')
-            )
+            WHEN death_year IS NOT NULL AND death_month IS NOT NULL
+                THEN DATEADD(
+                    DAY,
+                    FLOOR(DAY(LAST_DAY(TO_DATE(death_year || '-' || LPAD(death_month, 2, '0') || '-01'))) / 2),
+                    TO_DATE(death_year || '-' || LPAD(death_month, 2, '0') || '-01')
+                )
             -- If only year, use July 1st (midpoint of year)
-            WHEN death_year IS NOT NULL 
-            THEN TO_DATE(death_year || '-07-01')
+            WHEN death_year IS NOT NULL
+                THEN TO_DATE(death_year || '-07-01')
             ELSE NULL
         END AS death_date_approx
     FROM eligible_patients
@@ -141,37 +151,42 @@ patient_to_person AS (
         person_id
     FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.PATIENT_PERSON
     WHERE patient_id IS NOT NULL
-      AND person_id IS NOT NULL
+        AND person_id IS NOT NULL
 ),
 
 /*
 ================================================================================
-STEP 5: EPISODE TYPE AND STATUS LOOKUP
+STEP 5: EPISODE TYPE AND STATUS MAPPINGS
 ================================================================================
-Episode types and statuses in EPISODE_OF_CARE are stored as concept IDs. 
-We need to resolve these to their display names for filtering.
+Episode types and statuses in EPISODE_OF_CARE are stored as concept IDs.
+The CONCEPT_MAP table provides source_code mappings for these concepts.
 
-Registration types in EMIS include:
-  - Regular          : Standard GP registration (what we want)
-  - Temporary        : Short-term registration (excluded)
-  - Emergency        : Emergency access (excluded)
-  - Immediately Necessary : Urgent care (excluded)
-  - Private          : Private patients (excluded)
-  - Pre Registration : Not yet registered (excluded)
-  - Others...        : Various clinical services (excluded)
+Registration types include:
+  - Regular              : Standard GP registration (what we want)
+  - Temporary            : Short-term registration (excluded)
+  - Emergency            : Emergency access (excluded)
+  - Immediately Necessary: Urgent care (excluded)
+  - Private              : Private patients (excluded)
+  - Pre Registration     : Not yet registered (excluded)
+  - Others...            : Various clinical services (excluded)
 
 Only "Regular" registrations count towards official list size.
 
 Episode statuses include:
   - Active, Left, etc.
-  - We specifically exclude "Left" status with no end date (data quality issue)
+  - We exclude "Left" status with no end date (data quality issue)
 */
 
-concept_lookup AS (
-    SELECT
-        id AS concept_id,
-        UPPER(display) AS concept_display
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT
+episode_type_map AS (
+    SELECT source_code_id, source_code
+    FROM "Data_Store_OLIDS_Clinical_Validation".OLIDS_TERMINOLOGY.CONCEPT_MAP
+    WHERE source_code = 'Regular'
+),
+
+episode_status_map AS (
+    SELECT source_code_id, source_code
+    FROM "Data_Store_OLIDS_Clinical_Validation".OLIDS_TERMINOLOGY.CONCEPT_MAP
+    WHERE source_code = 'Left'
 ),
 
 /*
@@ -213,53 +228,51 @@ filtered_episodes AS (
         eoc.episode_of_care_start_date,
         eoc.episode_of_care_end_date
     FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE eoc
-    
+    CROSS JOIN config
+
     -- Join to eligible patients (applies patient-level filters)
     INNER JOIN patient_death_dates pdd
         ON eoc.patient_id = pdd.patient_id
-    
+
     -- Join to get canonical person_id
     INNER JOIN patient_to_person ptp
         ON eoc.patient_id = ptp.patient_id
-    
-    -- Join to get episode type display name
-    INNER JOIN concept_lookup episode_type
-        ON eoc.episode_type_source_concept_id = episode_type.concept_id
-    
-    -- Join to get episode status display name
-    LEFT JOIN concept_lookup episode_status
-        ON eoc.episode_status_source_concept_id = episode_status.concept_id
-    
-    WHERE 
+
+    -- Join to verify episode type is Regular
+    INNER JOIN episode_type_map etm
+        ON eoc.episode_type_source_concept_id = etm.source_code_id
+
+    -- Left join to check for "Left" status
+    LEFT JOIN episode_status_map esm
+        ON eoc.episode_status_source_concept_id = esm.source_code_id
+
+    WHERE
         -- Data quality filters
         COALESCE(eoc.lds_is_deleted, FALSE) = FALSE
         AND eoc.lds_start_date_time IS NOT NULL
         AND eoc.episode_of_care_start_date IS NOT NULL
         AND eoc.patient_id IS NOT NULL
         AND eoc.organisation_id IS NOT NULL
-        
-        -- Only Regular registration type
-        AND episode_type.concept_display = 'REGULAR'
-        
+
         -- Exclude "Left" episodes with no end date (data quality issue)
         -- These are registrations marked as ended but never properly closed
         AND NOT (
-            episode_status.concept_display = 'LEFT'
+            esm.source_code IS NOT NULL  -- Status is "Left"
             AND eoc.episode_of_care_end_date IS NULL
         )
-        
+
         -- Episode active as of snapshot date
-        AND eoc.episode_of_care_start_date <= $snapshot_date
+        AND eoc.episode_of_care_start_date <= config.snapshot_date
         AND (
             eoc.episode_of_care_end_date IS NULL
-            OR eoc.episode_of_care_end_date > $snapshot_date
+            OR eoc.episode_of_care_end_date > config.snapshot_date
         )
-        
+
         -- Patient alive as of snapshot date
         AND (
             pdd.is_deceased = FALSE
             OR pdd.death_date_approx IS NULL
-            OR pdd.death_date_approx > $snapshot_date
+            OR pdd.death_date_approx > config.snapshot_date
         )
 ),
 
@@ -316,7 +329,7 @@ practice_registration_counts AS (
         dr.practice_code,
         pd.practice_name,
         COUNT(DISTINCT dr.person_id) AS registered_patient_count,
-        $snapshot_date AS snapshot_date
+        (SELECT snapshot_date FROM config) AS snapshot_date
     FROM deduplicated_registrations dr
     LEFT JOIN practice_details pd
         ON dr.organisation_id = pd.organisation_id
@@ -378,7 +391,7 @@ When comparing to PDS or EMIS list sizes:
 
 ADAPTING FOR YOUR ICB:
 1. Change the USE ROLE/WAREHOUSE statements to match your access
-2. Set $snapshot_date to match your comparison dataset
+2. Change the snapshot_date in the config CTE to match your comparison dataset
 3. Add ICB-specific practice filters if needed (see example in final SELECT)
 
 ================================================================================
