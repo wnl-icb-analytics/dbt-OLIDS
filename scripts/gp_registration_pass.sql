@@ -305,16 +305,20 @@ deduplicated_registrations AS (
 ================================================================================
 STEP 8: GET PRACTICE DETAILS
 ================================================================================
-Join to Organisation table to get practice names for the output.
+Get one canonical name per practice code from Organisation table.
+Uses the most recent record (by lds_start_date_time) for each practice.
 */
 
 practice_details AS (
     SELECT
-        id AS organisation_id,
         organisation_code AS practice_code,
         name AS practice_name
     FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ORGANISATION
     WHERE organisation_code IS NOT NULL
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY organisation_code
+        ORDER BY lds_start_date_time DESC NULLS LAST
+    ) = 1
 ),
 
 /*
@@ -332,7 +336,7 @@ practice_registration_counts AS (
         (SELECT snapshot_date FROM config) AS snapshot_date
     FROM deduplicated_registrations dr
     LEFT JOIN practice_details pd
-        ON dr.organisation_id = pd.organisation_id
+        ON dr.practice_code = pd.practice_code
     WHERE dr.practice_code IS NOT NULL
     GROUP BY dr.practice_code, pd.practice_name
 )
