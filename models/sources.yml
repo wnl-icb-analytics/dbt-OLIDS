@@ -533,9 +533,9 @@ sources:
       data_type: TEXT
     - name: organisation_code_managing
       data_type: TEXT
-    - name: lds_datetime_source_record_acquired
+    - name: lds_datetime_first_acquired
       data_type: TIMESTAMP_NTZ
-    - name: lds_datetime_source_record_updated
+    - name: lds_datetime_update_acquired
       data_type: TIMESTAMP_NTZ
     - name: lds_is_deleted
       data_type: BOOLEAN
