@@ -36,7 +36,7 @@ WITH patient_death_date AS (
 patient_episodes_with_type AS (
     SELECT
         EOC.PATIENT_ID,
-        EOC.ORGANISATION_ID,
+        EOC.ORGANISATION_ID_PUBLISHER,
         P.SK_PATIENT_ID,
         EOC.EPISODE_OF_CARE_START_DATE,
         EOC.EPISODE_OF_CARE_END_DATE,
@@ -50,7 +50,7 @@ patient_episodes_with_type AS (
     WHERE
         EOC.EPISODE_OF_CARE_START_DATE IS NOT NULL
         AND EOC.PATIENT_ID IS NOT NULL
-        AND EOC.ORGANISATION_ID IS NOT NULL
+        AND EOC.ORGANISATION_ID_PUBLISHER IS NOT NULL
         AND P.SK_PATIENT_ID IS NOT NULL
         -- Episode active on target date
         AND EOC.EPISODE_OF_CARE_START_DATE <= DATE '2025-11-04'
@@ -66,7 +66,7 @@ patient_episodes_with_type AS (
         )
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY P.SK_PATIENT_ID,
-        EOC.ORGANISATION_ID
+        EOC.ORGANISATION_ID_PUBLISHER
         ORDER BY
             EOC.EPISODE_OF_CARE_START_DATE DESC,
             EOC.ID
@@ -79,7 +79,7 @@ olids_by_type AS (
         COUNT(DISTINCT PE.SK_PATIENT_ID) AS PATIENT_COUNT
     FROM
         patient_episodes_with_type PE
-        INNER JOIN "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ORGANISATION O ON PE.ORGANISATION_ID = O.ID
+        INNER JOIN "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ORGANISATION O ON PE.ORGANISATION_ID_PUBLISHER = O.ID
     WHERE
         O.ORGANISATION_CODE IS NOT NULL
     GROUP BY

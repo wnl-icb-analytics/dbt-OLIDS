@@ -497,11 +497,13 @@ sources:
   - name: EPISODE_OF_CARE
     identifier: '"EPISODE_OF_CARE"'
     columns:
-    - name: lds_record_id
+    - name: lds_source_record_id
       data_type: TEXT
     - name: id
       data_type: TEXT
-    - name: organisation_id
+    - name: organisation_id_publisher
+      data_type: TEXT
+    - name: organisation_id_managing
       data_type: TEXT
     - name: patient_id
       data_type: TEXT
@@ -521,17 +523,19 @@ sources:
       data_type: TEXT
     - name: lds_business_key
       data_type: TEXT
-    - name: lds_dataset_id
+    - name: lds_source_dataset_id
       data_type: TEXT
     - name: lds_cdm_event_id
       data_type: TEXT
     - name: lds_versioner_event_id
       data_type: TEXT
-    - name: record_owner_organisation_code
+    - name: organisation_code_publisher
       data_type: TEXT
-    - name: lds_datetime_data_acquired
+    - name: organisation_code_managing
+      data_type: TEXT
+    - name: lds_datetime_source_record_acquired
       data_type: TIMESTAMP_NTZ
-    - name: lds_initial_data_received_date
+    - name: lds_datetime_source_record_updated
       data_type: TIMESTAMP_NTZ
     - name: lds_is_deleted
       data_type: BOOLEAN

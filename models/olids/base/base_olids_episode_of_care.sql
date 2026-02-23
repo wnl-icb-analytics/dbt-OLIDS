@@ -7,14 +7,15 @@
 /*
 Base EPISODE_OF_CARE View
 Filters to NCL practices and excludes sensitive patients.
-Pattern: Clinical table with patient_id + record_owner_organisation_code
+Pattern: Clinical table with patient_id + organisation_code_publisher
 Uses native person_id from source table.
 */
 
 SELECT
-    src.lds_record_id,
+    src.lds_source_record_id,
     src.id,
-    src.organisation_id,
+    src.organisation_id_publisher,
+    src.organisation_id_managing,
     src.patient_id,
     src.person_id,
     src.episode_type_source_concept_id,
@@ -32,12 +33,13 @@ SELECT
     src.care_manager_practitioner_id,
     src.lds_id,
     src.lds_business_key,
-    src.lds_dataset_id,
+    src.lds_source_dataset_id,
     src.lds_cdm_event_id,
     src.lds_versioner_event_id,
-    src.record_owner_organisation_code,
-    src.lds_datetime_data_acquired,
-    src.lds_initial_data_received_date,
+    src.organisation_code_publisher,
+    src.organisation_code_managing,
+    src.lds_datetime_source_record_acquired,
+    src.lds_datetime_source_record_updated,
     src.lds_is_deleted,
     src.lds_start_date_time,
     src.lds_lakehouse_date_processed,
@@ -46,7 +48,7 @@ FROM {{ source('olids_common', 'EPISODE_OF_CARE') }} src
 INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
-    ON src.record_owner_organisation_code = ncl_practices.practice_code
+    ON src.organisation_code_publisher = ncl_practices.practice_code
 LEFT JOIN {{ ref('base_olids_concept_map') }} episode_type_map
     ON src.episode_type_source_concept_id = episode_type_map.source_code_id
 LEFT JOIN {{ ref('base_olids_concept_map') }} episode_status_map
