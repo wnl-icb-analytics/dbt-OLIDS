@@ -387,7 +387,14 @@ models:
               to: ref('base_olids_person')
               field: id
               tolerance_percent: 1.0
-    - name: organisation_id
+    - name: organisation_id_publisher
+      tests:
+        - referential_integrity:
+            arguments:
+              to: ref('base_olids_organisation')
+              field: id
+              tolerance_percent: 1.0
+    - name: organisation_id_managing
       tests:
         - referential_integrity:
             arguments:
