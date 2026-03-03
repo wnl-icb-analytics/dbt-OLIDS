@@ -57,7 +57,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: PATIENT_ADDRESS
@@ -95,10 +95,12 @@ sources:
       data_type: TIMESTAMP_NTZ
     - name: lds_initial_data_received_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_is_deleted
+      data_type: BOOLEAN
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: PATIENT_CONTACT
@@ -117,9 +119,9 @@ sources:
     - name: contact_type_concept_id
       data_type: TEXT
     - name: start_date
-      data_type: TEXT
+      data_type: TIMESTAMP_NTZ
     - name: end_date
-      data_type: TEXT
+      data_type: TIMESTAMP_NTZ
     - name: lds_id
       data_type: TEXT
     - name: lds_business_key
@@ -141,7 +143,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: PATIENT_UPRN
@@ -194,7 +196,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
 - name: olids_common
@@ -266,7 +268,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: APPOINTMENT
@@ -351,7 +353,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: DIAGNOSTIC_ORDER
@@ -378,7 +380,7 @@ sources:
     - name: result_value_units_concept_id
       data_type: TEXT
     - name: result_date
-      data_type: DATE
+      data_type: TIMESTAMP_NTZ
     - name: result_text
       data_type: TEXT
     - name: is_problem
@@ -424,7 +426,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: ENCOUNTER
@@ -491,12 +493,14 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: EPISODE_OF_CARE
     identifier: '"EPISODE_OF_CARE"'
     columns:
+    - name: lds_record_id
+      data_type: TEXT
     - name: lds_source_record_id
       data_type: TEXT
     - name: id
@@ -533,16 +537,22 @@ sources:
       data_type: TEXT
     - name: organisation_code_managing
       data_type: TEXT
-    - name: lds_datetime_first_acquired
+    - name: record_owner_organisation_code
+      data_type: TEXT
+    - name: lds_datetime_source_record_acquired
       data_type: TIMESTAMP_NTZ
-    - name: lds_datetime_update_acquired
+    - name: lds_datetime_source_record_updated
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_record_binary_id
+      data_type: BINARY
+    - name: lds_source_record_shard_id
+      data_type: NUMBER
     - name: lds_is_deleted
       data_type: BOOLEAN
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: FLAG
@@ -585,7 +595,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: MEDICATION_ORDER
@@ -670,7 +680,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: MEDICATION_STATEMENT
@@ -757,7 +767,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: OBSERVATION
@@ -786,7 +796,7 @@ sources:
     - name: result_value_units_concept_id
       data_type: TEXT
     - name: result_date
-      data_type: DATE
+      data_type: TIMESTAMP_NTZ
     - name: result_text
       data_type: TEXT
     - name: is_problem
@@ -829,10 +839,12 @@ sources:
       data_type: TIMESTAMP_NTZ
     - name: lds_initial_data_received_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_is_deleted
+      data_type: BOOLEAN
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: PATIENT_PERSON
@@ -908,7 +920,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: PROCEDURE_REQUEST
@@ -969,7 +981,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: REFERRAL_REQUEST
@@ -1042,7 +1054,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: APPOINTMENT_PRACTITIONER
@@ -1081,7 +1093,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: LOCATION
@@ -1120,9 +1132,9 @@ sources:
     - name: managing_organisation_id
       data_type: TEXT
     - name: open_date
-      data_type: DATE
+      data_type: TIMESTAMP_NTZ
     - name: close_date
-      data_type: DATE
+      data_type: TIMESTAMP_NTZ
     - name: is_obsolete
       data_type: BOOLEAN
     - name: lds_id
@@ -1146,7 +1158,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: LOCATION_CONTACT
@@ -1185,7 +1197,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: ORGANISATION
@@ -1210,9 +1222,9 @@ sources:
     - name: parent_organisation_id
       data_type: TEXT
     - name: open_date
-      data_type: DATE
+      data_type: TIMESTAMP_NTZ
     - name: close_date
-      data_type: DATE
+      data_type: TIMESTAMP_NTZ
     - name: is_obsolete
       data_type: BOOLEAN
     - name: lds_id
@@ -1236,7 +1248,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: PRACTITIONER
@@ -1281,7 +1293,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: PRACTITIONER_IN_ROLE
@@ -1324,7 +1336,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: SCHEDULE
@@ -1371,7 +1383,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
   - name: SCHEDULE_PRACTITIONER
@@ -1406,7 +1418,7 @@ sources:
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
     - name: lds_lakehouse_date_processed
-      data_type: TEXT
+      data_type: DATE
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
 - name: olids_reference
