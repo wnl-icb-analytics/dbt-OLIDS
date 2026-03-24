@@ -6,12 +6,13 @@
 
 /*
 Base PERSON View
-Generated person dimension from filtered patients with fabricated person_id.
+Generated person dimension from filtered patients with numeric person_id.
 Pattern: Dimension generated from patient_person bridge
 */
 
 SELECT DISTINCT
     pp.person_id AS id,
+    pp.person_uuid,
     p.nhs_number_hash,
     p.title,
     p.gender_concept_id,
