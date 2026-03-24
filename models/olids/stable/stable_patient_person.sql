@@ -17,6 +17,7 @@ select
     id,
     patient_id,
     person_id,
+    person_uuid,
     lds_id,
     lds_business_key,
     lds_dataset_id,

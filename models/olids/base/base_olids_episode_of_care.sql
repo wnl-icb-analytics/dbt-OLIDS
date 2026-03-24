@@ -17,7 +17,7 @@ SELECT
     src.organisation_id_publisher,
     src.organisation_id_managing,
     src.patient_id,
-    src.person_id,
+    {{ generate_person_id('src.person_id') }} AS person_id,
     src.episode_type_source_concept_id,
     episode_type_map.source_code AS episode_type_source_code,
     episode_type_map.source_display AS episode_type_source_display,

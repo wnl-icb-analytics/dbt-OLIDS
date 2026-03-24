@@ -48,6 +48,8 @@ models:
         +tags: ["stable", "incremental"]
       intermediate:
         +materialized: table
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "olids_base"
         +post-hook: ["{{ add_model_comment() }}"]
         +tags: ["intermediate"]
 

@@ -15,7 +15,7 @@ SELECT
     src.lds_record_id,
     src.id,
     src.patient_id,
-    src.person_id,
+    {{ generate_person_id('src.person_id') }} AS person_id,
     src.address_type_concept_id,
     src.postcode_hash,
     src.start_date,

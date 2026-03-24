@@ -15,6 +15,7 @@
 
 select distinct
     id,
+    person_uuid,
     nhs_number_hash,
     title,
     gender_concept_id,

@@ -7,7 +7,7 @@
 /*
 Base PATIENT_PERSON View
 Filters to NCL practices through patient relationships.
-Pattern: Bridge table with native person_id values from source
+Pattern: Bridge table with numeric person_id hashed from source UUID
 */
 
 SELECT
@@ -15,7 +15,8 @@ SELECT
     src.lds_record_id_person,
     src.id,
     src.patient_id,
-    src.person_id,
+    {{ generate_person_id('src.person_id') }} AS person_id,
+    src.person_id AS person_uuid,
     src.lds_id,
     src.lds_business_key,
     src.lds_dataset_id,

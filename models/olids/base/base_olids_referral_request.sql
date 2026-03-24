@@ -15,7 +15,7 @@ SELECT
     src.lds_record_id,
     src.id,
     src.organisation_id,
-    src.person_id,
+    {{ generate_person_id('src.person_id') }} AS person_id,
     src.patient_id,
     src.encounter_id,
     src.practitioner_id,
