@@ -21,7 +21,7 @@ WITH source_persons AS (
     SELECT DISTINCT
         person_id AS person_uuid,
         ABS(MOD(MD5_NUMBER_LOWER64(person_id), 9 * POWER(10, 13)::NUMBER)) + POWER(10, 13)::NUMBER AS person_id_numeric
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.PATIENT_PERSON
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.PATIENT_PERSON
     WHERE person_id IS NOT NULL
 ),
 

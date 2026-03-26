@@ -38,7 +38,7 @@ WITH org_freshness AS (
         record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
     WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
     
@@ -50,7 +50,7 @@ WITH org_freshness AS (
         record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
     WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
     
@@ -62,7 +62,7 @@ WITH org_freshness AS (
         record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
     WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
     
@@ -74,7 +74,7 @@ WITH org_freshness AS (
         record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
     WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
     
@@ -86,7 +86,7 @@ WITH org_freshness AS (
         record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.DIAGNOSTIC_ORDER
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.DIAGNOSTIC_ORDER
     WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
     
@@ -98,7 +98,7 @@ WITH org_freshness AS (
         record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE
     WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
     
@@ -110,7 +110,7 @@ WITH org_freshness AS (
         record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.PROCEDURE_REQUEST
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.PROCEDURE_REQUEST
     WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
     
@@ -122,7 +122,7 @@ WITH org_freshness AS (
         record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.REFERRAL_REQUEST
+    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.REFERRAL_REQUEST
     WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 ),

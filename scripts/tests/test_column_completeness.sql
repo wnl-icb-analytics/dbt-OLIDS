@@ -26,15 +26,15 @@ WITH patient_checks AS (
         null_count,
         ROUND(100.0 * null_count / NULLIF(total_rows, 0), 4) AS null_pct
     FROM (
-        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
+        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
         UNION ALL
-        SELECT 'sk_patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN sk_patient_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
+        SELECT 'sk_patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN sk_patient_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
         UNION ALL
-        SELECT 'birth_year', $null_threshold_pct, COUNT(*), SUM(CASE WHEN birth_year IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
+        SELECT 'birth_year', $null_threshold_pct, COUNT(*), SUM(CASE WHEN birth_year IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
         UNION ALL
-        SELECT 'birth_month', $null_threshold_pct, COUNT(*), SUM(CASE WHEN birth_month IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
+        SELECT 'birth_month', $null_threshold_pct, COUNT(*), SUM(CASE WHEN birth_month IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
         UNION ALL
-        SELECT 'gender_concept_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN gender_concept_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
+        SELECT 'gender_concept_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN gender_concept_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT
     )
 ),
 
@@ -47,15 +47,15 @@ observation_checks AS (
         null_count,
         ROUND(100.0 * null_count / NULLIF(total_rows, 0), 4) AS null_pct
     FROM (
-        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
+        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
         UNION ALL
-        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
+        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
         UNION ALL
-        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
+        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
         UNION ALL
-        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
+        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
         UNION ALL
-        SELECT 'observation_source_concept_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN observation_source_concept_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
+        SELECT 'observation_source_concept_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN observation_source_concept_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION
     )
 ),
 
@@ -68,13 +68,13 @@ encounter_checks AS (
         null_count,
         ROUND(100.0 * null_count / NULLIF(total_rows, 0), 4) AS null_pct
     FROM (
-        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
+        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
         UNION ALL
-        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
+        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
         UNION ALL
-        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
+        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
         UNION ALL
-        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
+        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER
     )
 ),
 
@@ -87,13 +87,13 @@ medication_order_checks AS (
         null_count,
         ROUND(100.0 * null_count / NULLIF(total_rows, 0), 4) AS null_pct
     FROM (
-        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
+        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
         UNION ALL
-        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
+        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
         UNION ALL
-        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
+        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
         UNION ALL
-        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
+        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER
     )
 ),
 
@@ -106,13 +106,13 @@ medication_statement_checks AS (
         null_count,
         ROUND(100.0 * null_count / NULLIF(total_rows, 0), 4) AS null_pct
     FROM (
-        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
+        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
         UNION ALL
-        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
+        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
         UNION ALL
-        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
+        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
         UNION ALL
-        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
+        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT
     )
 ),
 
@@ -125,13 +125,13 @@ episode_of_care_checks AS (
         null_count,
         ROUND(100.0 * null_count / NULLIF(total_rows, 0), 4) AS null_pct
     FROM (
-        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE
+        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE
         UNION ALL
-        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE
+        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE
         UNION ALL
-        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE
+        SELECT 'person_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN person_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE
         UNION ALL
-        SELECT 'episode_of_care_start_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN episode_of_care_start_date IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE
+        SELECT 'episode_of_care_start_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN episode_of_care_start_date IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.EPISODE_OF_CARE
     )
 ),
 
@@ -144,11 +144,11 @@ allergy_intolerance_checks AS (
         null_count,
         ROUND(100.0 * null_count / NULLIF(total_rows, 0), 4) AS null_pct
     FROM (
-        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE
+        SELECT 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE
         UNION ALL
-        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE
+        SELECT 'patient_id', $null_threshold_pct, COUNT(*), SUM(CASE WHEN patient_id IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE
         UNION ALL
-        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE
+        SELECT 'clinical_effective_date', $null_threshold_pct, COUNT(*), SUM(CASE WHEN clinical_effective_date IS NULL THEN 1 ELSE 0 END) FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE
     )
 ),
 

@@ -26,9 +26,9 @@ print(f"Connected as {session.get_current_user()}")
 
 # Databases and schemas to query
 targets = [
-    ("Data_Store_OLIDS_Alpha", "OLIDS_REFERENCE"),
-    ("Data_Store_OLIDS_Alpha", "OLIDS_MASKED"),
-    ("Data_Store_OLIDS_Alpha", "OLIDS_TERMINOLOGY"),
+    ("NCL_Data_Store_OLIDS_Alpha", "OLIDS_REFERENCE"),
+    ("NCL_Data_Store_OLIDS_Alpha", "OLIDS_MASKED"),
+    ("NCL_Data_Store_OLIDS_Alpha", "OLIDS_TERMINOLOGY"),
     ("Dictionary", "dbo"),
 ]
 

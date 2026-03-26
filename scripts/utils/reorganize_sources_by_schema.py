@@ -51,7 +51,7 @@ def reorganize_sources():
     # Create new OLIDS_MASKED source
     olids_masked = {
         'name': 'olids_masked',
-        'database': '"Data_Store_OLIDS_Alpha"',
+        'database': '"NCL_Data_Store_OLIDS_Alpha"',
         'schema': '"OLIDS_MASKED"',
         'description': 'OLIDS patient entity data (masked)',
         'tables': masked_tables
@@ -60,7 +60,7 @@ def reorganize_sources():
     # Create new OLIDS_COMMON source
     olids_common = {
         'name': 'olids_common',
-        'database': '"Data_Store_OLIDS_Alpha"',
+        'database': '"NCL_Data_Store_OLIDS_Alpha"',
         'schema': '"OLIDS_COMMON"',
         'description': 'OLIDS clinical events and reference data',
         'tables': common_tables

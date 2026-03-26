@@ -1,7 +1,7 @@
 -- Check data freshness by finding max lds_start_date_time for each table
 -- Identifies the most recent data loaded into OLIDS_MASKED tables
 
-USE DATABASE "Data_Store_OLIDS_Alpha";
+USE DATABASE "NCL_Data_Store_OLIDS_Alpha";
 
 EXECUTE IMMEDIATE $$
 DECLARE

@@ -74,7 +74,7 @@ dbt debug  # Test connection
 
 **Prerequisites:**
 - Snowflake access with the ISL-USERGROUP-SECONDEES-NCL role
-- Access to DATA_LAB_OLIDS_NCL and Data_Store_OLIDS_Alpha databases
+- Access to DATA_LAB_OLIDS_NCL and NCL_Data_Store_OLIDS_Alpha databases
 
 Never commit `.env` or `profiles.yml`.
 
@@ -95,7 +95,7 @@ All models are built in the database specified by `SNOWFLAKE_TARGET_DATABASE` in
 - **Stable layer**: `DATA_LAB_OLIDS_NCL.olids.*` (tables)
 - **Intermediate**: `DATA_LAB_OLIDS_NCL.DBT_STABLE.*` (tables)
 
-The stable layer reads from `Data_Store_OLIDS_Alpha` source tables.
+The stable layer reads from `NCL_Data_Store_OLIDS_Alpha` source tables.
 
 ## Contributing
 

@@ -12,7 +12,7 @@ from snowflake.snowpark import Session
 load_dotenv()
 
 # Configuration
-OLIDS_DATABASE = '"Data_Store_OLIDS_Alpha"'
+OLIDS_DATABASE = '"NCL_Data_Store_OLIDS_Alpha"'
 PDS_DATABASE = '"Data_Store_Registries"'
 DICTIONARY_DATABASE = '"Dictionary"'
 TARGET_DATE = '2025-11-20'
