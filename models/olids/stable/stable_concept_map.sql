@@ -32,7 +32,7 @@ select
     is_active,
     equivalence,
     lds_start_date_time
-from {{ ref('base_olids_concept_map') }}
+from {{ ref('int_enriched_concept_map') }}
 
 {% if is_incremental() %}
     where lds_start_date_time > (select max(lds_start_date_time) from {{ this }})

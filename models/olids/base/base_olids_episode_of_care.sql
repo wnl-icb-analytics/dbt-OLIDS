@@ -49,9 +49,9 @@ INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.organisation_code_publisher = ncl_practices.practice_code
-LEFT JOIN {{ ref('base_olids_concept_map') }} episode_type_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} episode_type_map
     ON src.episode_type_source_concept_id = episode_type_map.source_code_id
-LEFT JOIN {{ ref('base_olids_concept_map') }} episode_status_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} episode_status_map
     ON src.episode_status_source_concept_id = episode_status_map.source_code_id
 WHERE src.patient_id IS NOT NULL
     AND src.lds_start_date_time IS NOT NULL
