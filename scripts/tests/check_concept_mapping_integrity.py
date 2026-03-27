@@ -12,8 +12,8 @@ from snowflake.snowpark import Session
 load_dotenv()
 
 # Configuration
-SOURCE_DATABASE = '"Data_Store_OLIDS_Alpha"'  # Database containing OLIDS_COMMON and OLIDS_MASKED schemas
-TERMINOLOGY_DATABASE = '"Data_Store_OLIDS_Alpha"'  # Database containing OLIDS_TERMINOLOGY schema (using old concept map as current one is broken)
+SOURCE_DATABASE = '"NCL_Data_Store_OLIDS_Alpha"'  # Database containing OLIDS_COMMON and OLIDS_MASKED schemas
+TERMINOLOGY_DATABASE = '"NCL_Data_Store_OLIDS_Alpha"'  # Database containing OLIDS_TERMINOLOGY schema (using old concept map as current one is broken)
 WAREHOUSE = os.getenv('SNOWFLAKE_WAREHOUSE')
 ACCOUNT = os.getenv('SNOWFLAKE_ACCOUNT')
 USER = os.getenv('SNOWFLAKE_USER')

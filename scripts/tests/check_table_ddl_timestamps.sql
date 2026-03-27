@@ -1,7 +1,7 @@
 -- Check last DDL timestamps for tables in OLIDS_COMMON schema
 -- Identifies when tables were last modified
 
-USE DATABASE "Data_Store_OLIDS_Alpha";
+USE DATABASE "NCL_Data_Store_OLIDS_Alpha";
 USE ROLE "ISL-USERGROUP-SECONDEES-NCL";
 
 EXECUTE IMMEDIATE $$

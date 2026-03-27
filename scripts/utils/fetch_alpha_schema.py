@@ -1,5 +1,5 @@
 """
-Fetch current schema definitions from Data_Store_OLIDS_Alpha database.
+Fetch current schema definitions from NCL_Data_Store_OLIDS_Alpha database.
 Used to align base and stable models with actual database structure.
 Uses SNOWFLAKE_ROLE from .env to access the alpha database.
 """
@@ -15,7 +15,7 @@ import pandas as pd
 load_dotenv()
 
 # Database to query (quoted mixed case)
-DATABASE = '"Data_Store_OLIDS_Alpha"'
+DATABASE = '"NCL_Data_Store_OLIDS_Alpha"'
 
 # Create Snowflake session with SSO
 connection_parameters = {
@@ -133,7 +133,7 @@ print(f"Schema information saved to: {json_file}")
 # Generate summary report
 report_file = os.path.join(output_dir, f"alpha_schema_report_{timestamp}.txt")
 with open(report_file, 'w') as f:
-    f.write(f"Data_Store_OLIDS_Alpha Schema Report\n")
+    f.write(f"NCL_Data_Store_OLIDS_Alpha Schema Report\n")
     f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
     f.write(f"{'='*80}\n\n")
     

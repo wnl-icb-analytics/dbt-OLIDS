@@ -12,7 +12,7 @@ from snowflake.snowpark import Session
 load_dotenv()
 
 # Configuration
-SOURCE_DATABASE = '"Data_Store_OLIDS_Alpha"'
+SOURCE_DATABASE = '"NCL_Data_Store_OLIDS_Alpha"'
 WAREHOUSE = os.getenv('SNOWFLAKE_WAREHOUSE')
 ACCOUNT = os.getenv('SNOWFLAKE_ACCOUNT')
 USER = os.getenv('SNOWFLAKE_USER')

@@ -1,7 +1,7 @@
 version: 2
 sources:
 - name: olids_masked
-  database: '"Data_Store_OLIDS_Alpha"'
+  database: '"NCL_Data_Store_OLIDS_Alpha"'
   schema: '"OLIDS_MASKED"'
   description: OLIDS patient entity data (masked)
   tables:
@@ -200,7 +200,7 @@ sources:
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
 - name: olids_common
-  database: '"Data_Store_OLIDS_Alpha"'
+  database: '"NCL_Data_Store_OLIDS_Alpha"'
   schema: '"OLIDS_COMMON"'
   description: OLIDS clinical events and reference data
   tables:
@@ -1422,7 +1422,7 @@ sources:
     - name: lds_lakehouse_datetime_updated
       data_type: TIMESTAMP_NTZ
 - name: olids_reference
-  database: '"Data_Store_OLIDS_Alpha"'
+  database: '"NCL_Data_Store_OLIDS_Alpha"'
   schema: '"REFERENCE"'
   description: OLIDS reference data including postcode lookups
   tables:
