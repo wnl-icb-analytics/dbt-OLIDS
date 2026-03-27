@@ -60,9 +60,9 @@ INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.record_owner_organisation_code = ncl_practices.practice_code
-LEFT JOIN {{ ref('base_olids_concept_map') }} concept_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} concept_map
     ON src.allergy_intolerance_source_concept_id = concept_map.source_code_id
-LEFT JOIN {{ ref('base_olids_concept_map') }} date_precision_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} date_precision_map
     ON src.date_precision_concept_id = date_precision_map.source_code_id
 WHERE src.lds_start_date_time IS NOT NULL
 QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, date_precision_map.target_display NULLS LAST) = 1

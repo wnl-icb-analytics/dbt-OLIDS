@@ -1460,7 +1460,7 @@ sources:
     - name: HIGH_WATERMARK_DATE_TIME
       data_type: TIMESTAMP_NTZ
 - name: olids_terminology
-  database: '"Data_Store_OLIDS_Clinical_Validation"'
+  database: '"NCL_Data_Store_OLIDS_Alpha"'
   schema: '"OLIDS_TERMINOLOGY"'
   description: OLIDS-specific terminology and code mappings
   tables:
@@ -1530,6 +1530,47 @@ sources:
       data_type: TEXT
     - name: lds_start_date_time
       data_type: TIMESTAMP_NTZ
+- name: nhsd_snomed
+  database: '"Dictionary"'
+  schema: '"NHSD_SnomedReportingModel"'
+  description: NHS Digital SNOMED CT reporting model
+  tables:
+  - name: SCT_Concept
+    identifier: '"SCT_Concept"'
+    columns:
+    - name: Id
+      data_type: NUMBER
+    - name: EffectiveTime
+      data_type: TIMESTAMP_NTZ
+    - name: Active
+      data_type: BOOLEAN
+    - name: ModuleId
+      data_type: NUMBER
+    - name: DefinitionStatusId
+      data_type: NUMBER
+  - name: SCT_History
+    identifier: '"SCT_History"'
+    columns:
+    - name: OldConceptId
+      data_type: NUMBER
+    - name: OldConceptStatus
+      data_type: NUMBER
+    - name: NewConceptId
+      data_type: NUMBER
+    - name: NewConceptStatus
+      data_type: NUMBER
+    - name: Path
+      data_type: TEXT
+    - name: IsAmbiguous
+      data_type: BOOLEAN
+    - name: Iterations
+      data_type: NUMBER
+    - name: OldConceptFullySpecifiedName
+      data_type: TEXT
+    - name: NewConceptFullySpecifiedName
+      data_type: TEXT
+    - name: NewConceptFullySpecifiedNameStatus
+      data_type: NUMBER
 - name: dictionary
   database: '"Dictionary"'
   schema: '"dbo"'
@@ -1562,3 +1603,58 @@ sources:
       data_type: TEXT
     - name: STPName
       data_type: TEXT
+- name: emis_reference
+  database: '"Data_Store_OLIDS_Clinical_Validation"'
+  schema: '"REFERENCE"'
+  description: EMIS-provided reference tables for clinical and drug code lookups
+  tables:
+  - name: PRIMARY_CARE_EMIS_CLINICAL_CODE
+    identifier: '"PRIMARY_CARE_EMIS_CLINICAL_CODE"'
+    columns:
+    - name: EMIS_CODE_ID
+      data_type: NUMBER
+    - name: OLIDS_EMIS_CODE_CONCEPT_ID
+      data_type: TEXT
+    - name: OLIDS_EMIS_CODE_CONCEPT_BINARY_ID
+      data_type: BINARY
+    - name: TERM
+      data_type: TEXT
+    - name: READ_TERM_ID
+      data_type: TEXT
+    - name: SNOMED_CT_CONCEPT_ID
+      data_type: NUMBER
+    - name: OLIDS_SNOMED_CONCEPT_ID
+      data_type: TEXT
+    - name: OLIDS_SNOMED_CONCEPT_BINARY_ID
+      data_type: BINARY
+    - name: SNOMED_CT_DESCRIPTION_ID
+      data_type: NUMBER
+    - name: NATIONAL_CODE
+      data_type: TEXT
+    - name: NATIONAL_CODE_CATEGORY
+      data_type: TEXT
+    - name: NATIONAL_DESCRIPTION
+      data_type: TEXT
+    - name: EMIS_CODE_CATEGORY
+      data_type: TEXT
+    - name: EMIS_PARENT_CODE_ID
+      data_type: NUMBER
+    - name: LDS_START_DATE_TIME
+      data_type: TIMESTAMP_NTZ
+  - name: PRIMARY_CARE_EMIS_DRUG_CODE
+    identifier: '"PRIMARY_CARE_EMIS_DRUG_CODE"'
+    columns:
+    - name: EMIS_DRUG_CODE_ID
+      data_type: NUMBER
+    - name: OLIDS_EMIS_DRUG_CODE_CONCEPT_ID
+      data_type: TEXT
+    - name: OLIDS_EMIS_DRUG_CODE_CONCEPT_BINARY_ID
+      data_type: BINARY
+    - name: TERM
+      data_type: TEXT
+    - name: DMD_PRODUCT_CODE_ID
+      data_type: NUMBER
+    - name: BNF_CHAPTER_REF
+      data_type: TEXT
+    - name: LDS_START_DATE_TIME
+      data_type: TIMESTAMP_NTZ

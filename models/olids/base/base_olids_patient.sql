@@ -49,7 +49,7 @@ SELECT
 FROM {{ source('olids_masked', 'PATIENT') }} src
 INNER JOIN {{ ref('int_ncl_practices') }} ncl_practices
     ON src.record_owner_organisation_code = ncl_practices.practice_code
-LEFT JOIN {{ ref('base_olids_concept_map') }} gender_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} gender_map
     ON src.gender_concept_id = gender_map.source_code_id
 WHERE src.sk_patient_id IS NOT NULL
     AND src.is_spine_sensitive = FALSE
