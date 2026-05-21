@@ -14,8 +14,10 @@
 select
     lds_source_record_id,
     id,
-    organisation_id_publisher,
-    organisation_id_managing,
+    publisher_organisation_id,
+    provider_organisation_id,
+    author_organisation_id,
+    care_manager_organisation_id,
     patient_id,
     person_id,
     episode_type_source_concept_id,
@@ -30,22 +32,25 @@ select
     episode_status_display,
     episode_of_care_start_date,
     episode_of_care_end_date,
-    care_manager_practitioner_id,
+    care_manager_practitioner_in_role_id,
+    publisher_organisation_code,
+    care_manager_organisation_code,
+    patient_shard_id,
+    person_shard_id,
+    lds_source_record_shard_id,
     lds_id,
     lds_business_key,
     lds_source_dataset_id,
     lds_cdm_event_id,
     lds_versioner_event_id,
-    organisation_code_publisher,
-    organisation_code_managing,
-    lds_datetime_source_record_acquired,
-    lds_datetime_source_record_updated,
+    lds_datetime_first_acquired,
+    lds_datetime_update_acquired,
     lds_is_deleted,
-    lds_start_date_time,
+    lds_start_datetime,
     lds_lakehouse_date_processed,
     lds_lakehouse_datetime_updated
 from {{ ref('base_olids_episode_of_care') }}
 
 {% if is_incremental() %}
-    where lds_start_date_time > (select max(lds_start_date_time) from {{ this }})
+    where lds_start_datetime > (select max(lds_start_datetime) from {{ this }})
 {% endif %}
