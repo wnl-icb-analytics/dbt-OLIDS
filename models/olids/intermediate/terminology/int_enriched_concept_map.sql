@@ -117,6 +117,34 @@ missing_emis_mappings AS (
     LEFT JOIN {{ ref('base_olids_concept_map') }} cm
         ON emis_ref.olids_emis_code_concept_id = cm.source_concept_id
     WHERE cm.source_concept_id IS NULL
+),
+
+/*
+local_backfills: explicit row-by-row backfills for concepts known to be
+missing from the upstream CONCEPT_MAP. Append a new SELECT for each.
+*/
+local_backfills AS (
+    -- Episode-of-care registration status "Deceased" — upstream concept map
+    -- has no row for this UUID; downstream consumers were getting NULL
+    -- status for ~46k episodes. Maps to GP22 deregistration - death.
+    SELECT
+        'LOCAL_BACKFILL_DECEASED_EPISODE_STATUS'::VARCHAR AS mapped_item_id,
+        NULL::VARCHAR AS concept_map_id,
+        NULL::VARCHAR AS concept_map_resource_id,
+        'http://LDS.nhs/local-backfill/cm' AS concept_map_url,
+        NULL::VARCHAR AS concept_map_version,
+        '5a8a5445-b192-671c-fba0-24048a06fcf4'::VARCHAR AS source_concept_id,
+        'http://LDS.nhs/EMIS/RegistrationStatus/cs' AS source_system,
+        'Deceased' AS source_code,
+        'Deceased' AS source_display,
+        NULL::VARCHAR AS target_concept_id,
+        'http://snomed.info/sct' AS target_system,
+        '725951000000101' AS target_code,
+        'GP22 deregistration - death' AS target_display,
+        TRUE AS is_primary,
+        TRUE AS is_active,
+        'local-backfill' AS equivalence,
+        CURRENT_TIMESTAMP()::TIMESTAMP_NTZ AS lds_start_datetime
 )
 
 SELECT
@@ -160,3 +188,25 @@ SELECT
     equivalence,
     lds_start_datetime
 FROM missing_emis_mappings
+
+UNION ALL
+
+SELECT
+    mapped_item_id,
+    concept_map_id,
+    concept_map_resource_id,
+    concept_map_url,
+    concept_map_version,
+    source_concept_id,
+    source_system,
+    source_code,
+    source_display,
+    target_concept_id,
+    target_system,
+    target_code,
+    target_display,
+    is_primary,
+    is_active,
+    equivalence,
+    lds_start_datetime
+FROM local_backfills
