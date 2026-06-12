@@ -7,15 +7,15 @@
 /*
 Base LOCATION View
 Reference data - no filtering applied.
-Pattern: Global reference table
+Pattern: Global reference table.
 */
 
 SELECT
-    src.lds_record_id,
+    src.lds_source_record_id,
     src.id,
     src.name,
-    src.type_code,
-    src.type_desc,
+    src.location_type_source_concept_id,
+    src.type_description,
     src.is_primary_location,
     src.house_name,
     src.house_number,
@@ -30,16 +30,17 @@ SELECT
     src.open_date,
     src.close_date,
     src.is_obsolete,
+    src.publisher_organisation_code,
+    src.lds_source_record_shard_id,
     src.lds_id,
     src.lds_business_key,
-    src.lds_dataset_id,
+    src.lds_source_dataset_id,
     src.lds_cdm_event_id,
     src.lds_versioner_event_id,
-    src.record_owner_organisation_code,
-    src.lds_datetime_data_acquired,
-    src.lds_initial_data_received_date,
+    src.lds_datetime_first_acquired,
+    src.lds_datetime_update_acquired,
     src.lds_is_deleted,
-    src.lds_start_date_time,
+    src.lds_start_datetime,
     src.lds_lakehouse_date_processed,
     src.lds_lakehouse_datetime_updated
 FROM {{ source('olids_common', 'LOCATION') }} src

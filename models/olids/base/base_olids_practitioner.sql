@@ -6,32 +6,36 @@
 
 /*
 Base PRACTITIONER View
-Filters to NCL practices only.
-Pattern: Infrastructure table with record_owner_organisation_code
+Filters to practitioners employed by WNL practices via PRACTITIONER_IN_ROLE.
+The source-side record_owner_organisation_code field was removed in the latest
+OLIDS release, so we filter by practitioner_id appearing in our WNL-filtered
+PRACTITIONER_IN_ROLE.
 */
 
 SELECT
-    src.lds_record_id,
+    src.lds_source_record_id,
     src.id,
     src.gmc_code,
     src.title,
     src.first_name,
-    src.last_name,
+    src.surname,
     src.name,
     src.is_obsolete,
-    src.lds_end_date_time,
+    src.lds_source_record_shard_id,
     src.lds_id,
     src.lds_business_key,
-    src.lds_dataset_id,
+    src.lds_source_dataset_id,
     src.lds_cdm_event_id,
     src.lds_versioner_event_id,
-    src.record_owner_organisation_code,
-    src.lds_datetime_data_acquired,
-    src.lds_initial_data_received_date,
+    src.lds_datetime_first_acquired,
+    src.lds_datetime_update_acquired,
     src.lds_is_deleted,
-    src.lds_start_date_time,
+    src.lds_start_datetime,
     src.lds_lakehouse_date_processed,
     src.lds_lakehouse_datetime_updated
 FROM {{ source('olids_common', 'PRACTITIONER') }} src
-INNER JOIN {{ ref('int_wnl_practices') }} wnl_practices
-    ON src.record_owner_organisation_code = wnl_practices.practice_code
+WHERE src.id IN (
+    SELECT DISTINCT practitioner_id
+    FROM {{ ref('base_olids_practitioner_in_role') }}
+    WHERE practitioner_id IS NOT NULL
+)

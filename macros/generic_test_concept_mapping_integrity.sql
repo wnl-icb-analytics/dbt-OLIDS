@@ -4,7 +4,7 @@
         Generic test to check concept mapping integrity with tolerance threshold.
         
         Similar to dbt_utils.relationships_where but with tolerance - checks that concept_id values 
-        exist in base_olids_concept_map.source_code_id.
+        exist in base_olids_concept_map.source_concept_id.
         Fails if failure rate exceeds tolerance_percent.
         
         Default tolerance: 1.0%
@@ -30,9 +30,9 @@
         where {{ column_name }} is not null
     ),
     right_table as (
-        select distinct source_code_id as id
+        select distinct source_concept_id as id
         from {{ ref('base_olids_concept_map') }}
-        where source_code_id is not null
+        where source_concept_id is not null
     ),
     exceptions as (
         select

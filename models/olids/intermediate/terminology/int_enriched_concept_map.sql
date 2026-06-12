@@ -3,7 +3,7 @@
         materialized='table',
         schema='olids',
         tags=['intermediate', 'terminology'],
-        cluster_by=['source_code_id', 'target_code_id'],
+        cluster_by=['source_concept_id', 'target_concept_id'],
         alias='enriched_concept_map')
 }}
 
@@ -44,15 +44,12 @@ emis_clinical AS (
 
 enriched_existing AS (
     SELECT
-        cm.id,
-        cm.lds_id,
-        cm.lds_business_key,
-        cm.lds_dataset_id,
+        cm.mapped_item_id::VARCHAR AS mapped_item_id,
         cm.concept_map_id,
         cm.concept_map_resource_id,
         cm.concept_map_url,
         cm.concept_map_version,
-        cm.source_code_id,
+        cm.source_concept_id,
         cm.source_system,
         cm.source_code,
         cm.source_display,
@@ -60,8 +57,8 @@ enriched_existing AS (
             WHEN cm.target_code = '138875005'
                 AND emis_ref.olids_snomed_concept_id IS NOT NULL
                 THEN emis_ref.olids_snomed_concept_id
-            ELSE cm.target_code_id
-        END AS target_code_id,
+            ELSE cm.target_concept_id
+        END AS target_concept_id,
         cm.target_system,
         COALESCE(
             CASE
@@ -84,10 +81,10 @@ enriched_existing AS (
         cm.is_primary,
         cm.is_active,
         cm.equivalence,
-        cm.lds_start_date_time
+        cm.lds_start_datetime
     FROM {{ ref('base_olids_concept_map') }} cm
     LEFT JOIN emis_clinical emis_ref
-        ON cm.source_code_id = emis_ref.olids_emis_code_concept_id
+        ON cm.source_concept_id = emis_ref.olids_emis_code_concept_id
         AND cm.target_code = '138875005'
     LEFT JOIN {{ source('nhsd_snomed', 'SCT_Concept') }} sct
         ON TRY_CAST(cm.target_code AS NUMBER(38,0)) = sct."Id"
@@ -99,76 +96,117 @@ enriched_existing AS (
 
 missing_emis_mappings AS (
     SELECT
-        'EMIS_BACKFILL_' || emis_ref.olids_emis_code_concept_id AS id,
-        NULL::VARCHAR AS lds_id,
-        NULL::VARCHAR AS lds_business_key,
-        NULL::VARCHAR AS lds_dataset_id,
+        ('EMIS_BACKFILL_' || emis_ref.olids_emis_code_concept_id)::VARCHAR AS mapped_item_id,
         NULL::VARCHAR AS concept_map_id,
         NULL::VARCHAR AS concept_map_resource_id,
         'http://LDS.nhs/EMIStoSNOMED/CodeID/cm' AS concept_map_url,
         NULL::VARCHAR AS concept_map_version,
-        emis_ref.olids_emis_code_concept_id AS source_code_id,
+        emis_ref.olids_emis_code_concept_id AS source_concept_id,
         'http://LDS.nhs/EMIS/CodeID/cs' AS source_system,
         emis_ref.emis_code_id::VARCHAR AS source_code,
         emis_ref.term AS source_display,
-        emis_ref.olids_snomed_concept_id AS target_code_id,
+        emis_ref.olids_snomed_concept_id AS target_concept_id,
         'http://snomed.info/sct' AS target_system,
         emis_ref.snomed_ct_concept_id::VARCHAR AS target_code,
         emis_ref.term AS target_display,
         TRUE AS is_primary,
         TRUE AS is_active,
         'emis-reference-backfill' AS equivalence,
-        emis_ref.lds_start_date_time
+        emis_ref.lds_start_date_time AS lds_start_datetime
     FROM emis_clinical emis_ref
     LEFT JOIN {{ ref('base_olids_concept_map') }} cm
-        ON emis_ref.olids_emis_code_concept_id = cm.source_code_id
-    WHERE cm.source_code_id IS NULL
+        ON emis_ref.olids_emis_code_concept_id = cm.source_concept_id
+    WHERE cm.source_concept_id IS NULL
+),
+
+/*
+local_backfills: explicit row-by-row backfills for concepts known to be
+missing from the upstream CONCEPT_MAP. Append a new SELECT for each.
+*/
+local_backfills AS (
+    -- Episode-of-care registration status "Deceased" — upstream concept map
+    -- has no row for this UUID; downstream consumers were getting NULL
+    -- status for ~46k episodes. Maps to GP22 deregistration - death.
+    SELECT
+        'LOCAL_BACKFILL_DECEASED_EPISODE_STATUS'::VARCHAR AS mapped_item_id,
+        NULL::VARCHAR AS concept_map_id,
+        NULL::VARCHAR AS concept_map_resource_id,
+        'http://LDS.nhs/local-backfill/cm' AS concept_map_url,
+        NULL::VARCHAR AS concept_map_version,
+        '5a8a5445-b192-671c-fba0-24048a06fcf4'::VARCHAR AS source_concept_id,
+        'http://LDS.nhs/EMIS/RegistrationStatus/cs' AS source_system,
+        'Deceased' AS source_code,
+        'Deceased' AS source_display,
+        NULL::VARCHAR AS target_concept_id,
+        'http://snomed.info/sct' AS target_system,
+        '725951000000101' AS target_code,
+        'GP22 deregistration - death' AS target_display,
+        TRUE AS is_primary,
+        TRUE AS is_active,
+        'local-backfill' AS equivalence,
+        CURRENT_TIMESTAMP()::TIMESTAMP_NTZ AS lds_start_datetime
 )
 
 SELECT
-    id,
-    lds_id,
-    lds_business_key,
-    lds_dataset_id,
+    mapped_item_id,
     concept_map_id,
     concept_map_resource_id,
     concept_map_url,
     concept_map_version,
-    source_code_id,
+    source_concept_id,
     source_system,
     source_code,
     source_display,
-    target_code_id,
+    target_concept_id,
     target_system,
     target_code,
     target_display,
     is_primary,
     is_active,
     equivalence,
-    lds_start_date_time
+    lds_start_datetime
 FROM enriched_existing
 
 UNION ALL
 
 SELECT
-    id,
-    lds_id,
-    lds_business_key,
-    lds_dataset_id,
+    mapped_item_id,
     concept_map_id,
     concept_map_resource_id,
     concept_map_url,
     concept_map_version,
-    source_code_id,
+    source_concept_id,
     source_system,
     source_code,
     source_display,
-    target_code_id,
+    target_concept_id,
     target_system,
     target_code,
     target_display,
     is_primary,
     is_active,
     equivalence,
-    lds_start_date_time
+    lds_start_datetime
 FROM missing_emis_mappings
+
+UNION ALL
+
+SELECT
+    mapped_item_id,
+    concept_map_id,
+    concept_map_resource_id,
+    concept_map_url,
+    concept_map_version,
+    source_concept_id,
+    source_system,
+    source_code,
+    source_display,
+    target_concept_id,
+    target_system,
+    target_code,
+    target_display,
+    is_primary,
+    is_active,
+    equivalence,
+    lds_start_datetime
+FROM local_backfills

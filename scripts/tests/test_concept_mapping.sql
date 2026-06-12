@@ -1,9 +1,9 @@
 /*
     Test: Concept Mapping Integrity
-    
+
     Validates that concept_id fields correctly map through:
-    concept_id → CONCEPT_MAP.source_code_id → CONCEPT_MAP.target_code_id → CONCEPT.id
-    
+    concept_id → CONCEPT_MAP.source_concept_id → CONCEPT_MAP.target_concept_id → CONCEPT.concept_id
+
     Returns standardised test results with PASS/FAIL status.
     Threshold: 100% mapping required (any unmapped = FAIL)
 */
@@ -14,54 +14,54 @@ WITH observation_obs_src AS (
         'observation_source_concept_id' AS concept_field,
         COUNT(DISTINCT base.observation_source_concept_id) AS total_distinct,
         SUM(CASE WHEN base.observation_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.observation_source_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.observation_source_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.observation_source_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.observation_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.observation_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_COMMON.OBSERVATION base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.observation_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
     WHERE base.observation_source_concept_id IS NOT NULL
 ),
 
 observation_units AS (
     SELECT
         'OBSERVATION' AS table_name,
-        'result_value_units_concept_id' AS concept_field,
-        COUNT(DISTINCT base.result_value_units_concept_id) AS total_distinct,
-        SUM(CASE WHEN base.result_value_units_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.result_value_units_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.result_value_units_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.result_value_units_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.result_value_units_concept_id IS NOT NULL
+        'result_units_source_concept_id' AS concept_field,
+        COUNT(DISTINCT base.result_units_source_concept_id) AS total_distinct,
+        SUM(CASE WHEN base.result_units_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.result_units_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.result_units_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_COMMON.OBSERVATION base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.result_units_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
+    WHERE base.result_units_source_concept_id IS NOT NULL
 ),
 
 observation_precision AS (
     SELECT
         'OBSERVATION' AS table_name,
-        'date_precision_concept_id' AS concept_field,
-        COUNT(DISTINCT base.date_precision_concept_id) AS total_distinct,
-        SUM(CASE WHEN base.date_precision_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.date_precision_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.date_precision_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.date_precision_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.date_precision_concept_id IS NOT NULL
+        'clinical_effective_date_precision_source_concept_id' AS concept_field,
+        COUNT(DISTINCT base.clinical_effective_date_precision_source_concept_id) AS total_distinct,
+        SUM(CASE WHEN base.clinical_effective_date_precision_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.clinical_effective_date_precision_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.clinical_effective_date_precision_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_COMMON.OBSERVATION base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.clinical_effective_date_precision_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
+    WHERE base.clinical_effective_date_precision_source_concept_id IS NOT NULL
 ),
 
 observation_episodicity AS (
     SELECT
         'OBSERVATION' AS table_name,
-        'episodicity_concept_id' AS concept_field,
-        COUNT(DISTINCT base.episodicity_concept_id) AS total_distinct,
-        SUM(CASE WHEN base.episodicity_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.episodicity_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.episodicity_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.OBSERVATION base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.episodicity_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.episodicity_concept_id IS NOT NULL
+        'episodicity_source_concept_id' AS concept_field,
+        COUNT(DISTINCT base.episodicity_source_concept_id) AS total_distinct,
+        SUM(CASE WHEN base.episodicity_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.episodicity_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.episodicity_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_COMMON.OBSERVATION base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.episodicity_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
+    WHERE base.episodicity_source_concept_id IS NOT NULL
 ),
 
 medication_statement_src AS (
@@ -70,11 +70,11 @@ medication_statement_src AS (
         'medication_statement_source_concept_id' AS concept_field,
         COUNT(DISTINCT base.medication_statement_source_concept_id) AS total_distinct,
         SUM(CASE WHEN base.medication_statement_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.medication_statement_source_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.medication_statement_source_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_STATEMENT base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.medication_statement_source_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.medication_statement_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.medication_statement_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_COMMON.MEDICATION_STATEMENT base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.medication_statement_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
     WHERE base.medication_statement_source_concept_id IS NOT NULL
 ),
 
@@ -84,11 +84,11 @@ medication_order_src AS (
         'medication_order_source_concept_id' AS concept_field,
         COUNT(DISTINCT base.medication_order_source_concept_id) AS total_distinct,
         SUM(CASE WHEN base.medication_order_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.medication_order_source_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.medication_order_source_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.MEDICATION_ORDER base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.medication_order_source_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.medication_order_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.medication_order_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_COMMON.MEDICATION_ORDER base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.medication_order_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
     WHERE base.medication_order_source_concept_id IS NOT NULL
 ),
 
@@ -98,11 +98,11 @@ encounter_src AS (
         'encounter_source_concept_id' AS concept_field,
         COUNT(DISTINCT base.encounter_source_concept_id) AS total_distinct,
         SUM(CASE WHEN base.encounter_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.encounter_source_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.encounter_source_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ENCOUNTER base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.encounter_source_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.encounter_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.encounter_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_COMMON.ENCOUNTER base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.encounter_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
     WHERE base.encounter_source_concept_id IS NOT NULL
 ),
 
@@ -112,26 +112,26 @@ allergy_src AS (
         'allergy_intolerance_source_concept_id' AS concept_field,
         COUNT(DISTINCT base.allergy_intolerance_source_concept_id) AS total_distinct,
         SUM(CASE WHEN base.allergy_intolerance_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.allergy_intolerance_source_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.allergy_intolerance_source_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_COMMON.ALLERGY_INTOLERANCE base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.allergy_intolerance_source_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.allergy_intolerance_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.allergy_intolerance_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_COMMON.ALLERGY_INTOLERANCE base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.allergy_intolerance_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
     WHERE base.allergy_intolerance_source_concept_id IS NOT NULL
 ),
 
 patient_gender AS (
     SELECT
         'PATIENT' AS table_name,
-        'gender_concept_id' AS concept_field,
-        COUNT(DISTINCT base.gender_concept_id) AS total_distinct,
-        SUM(CASE WHEN base.gender_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
-        COUNT(DISTINCT CASE WHEN cm.source_code_id IS NULL THEN base.gender_concept_id END) AS unmapped_concepts,
-        SUM(CASE WHEN base.gender_concept_id IS NOT NULL AND cm.source_code_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
-    FROM "NCL_Data_Store_OLIDS_Alpha".OLIDS_MASKED.PATIENT base
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.gender_concept_id = cm.source_code_id
-    LEFT JOIN "NCL_Data_Store_OLIDS_Alpha".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.gender_concept_id IS NOT NULL
+        'gender_source_concept_id' AS concept_field,
+        COUNT(DISTINCT base.gender_source_concept_id) AS total_distinct,
+        SUM(CASE WHEN base.gender_source_concept_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows,
+        COUNT(DISTINCT CASE WHEN cm.source_concept_id IS NULL THEN base.gender_source_concept_id END) AS unmapped_concepts,
+        SUM(CASE WHEN base.gender_source_concept_id IS NOT NULL AND cm.source_concept_id IS NULL THEN 1 ELSE 0 END) AS unmapped_rows
+    FROM "Data_Store_OLIDS".OLIDS_MASKED.PATIENT base
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.gender_source_concept_id = cm.source_concept_id
+    LEFT JOIN "Data_Store_OLIDS".OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_concept_id = c.concept_id
+    WHERE base.gender_source_concept_id IS NOT NULL
 ),
 
 all_results AS (
@@ -150,7 +150,7 @@ SELECT
     'concept_mapping' AS test_name,
     table_name,
     concept_field AS test_subject,
-    CASE 
+    CASE
         WHEN unmapped_concepts = 0 THEN 'PASS'
         ELSE 'FAIL'
     END AS status,

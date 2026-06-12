@@ -42,13 +42,6 @@ models:
     Provides stable interface between source data and analytical models.
 
     Uses incremental materialisation for efficient updates.'
-- name: stable_flag
-  description: 'Incremental flag table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
 - name: stable_location
   description: 'Incremental location entity table.
 
