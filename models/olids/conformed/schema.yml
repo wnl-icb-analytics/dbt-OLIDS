@@ -400,7 +400,7 @@ models:
         tests:
           - referential_integrity:
               arguments:
-                to: ref('conformed_practitioner')
+                to: ref('conformed_practitioner_in_role')
                 field: id
                 tolerance_percent: 1.0
       - name: episode_of_care_start_date
@@ -904,7 +904,7 @@ models:
 
       - Patient filtering: Inherits filtering from underlying patient relationships
 
-      - Practice filtering: Inherits NCL practice restriction through patient associations
+      - Practice filtering: Inherits WNL practice restriction through patient associations
 
 
       Filtering method: Filtered through relationships to conformed_patient'

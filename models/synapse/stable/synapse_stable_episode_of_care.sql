@@ -1,0 +1,48 @@
+{{
+    config(
+        cluster_by=['episode_of_care_start_date'],
+        alias='episode_of_care',
+        transient=false,
+        tags=['stable']
+    )
+}}
+
+SELECT
+    lds_source_record_id,
+    id,
+    publisher_organisation_id,
+    provider_organisation_id,
+    author_organisation_id,
+    care_manager_organisation_id,
+    patient_id,
+    person_id,
+    episode_type_source_concept_id,
+    episode_type_source_code,
+    episode_type_source_display,
+    episode_type_code,
+    episode_type_display,
+    episode_status_source_concept_id,
+    episode_status_source_code,
+    episode_status_source_display,
+    episode_status_code,
+    episode_status_display,
+    episode_of_care_start_date,
+    episode_of_care_end_date,
+    care_manager_practitioner_in_role_id,
+    publisher_organisation_code,
+    care_manager_organisation_code,
+    patient_shard_id,
+    person_shard_id,
+    lds_source_record_shard_id,
+    lds_id,
+    lds_business_key,
+    lds_source_dataset_id,
+    lds_cdm_event_id,
+    lds_versioner_event_id,
+    lds_datetime_first_acquired,
+    lds_datetime_update_acquired,
+    lds_is_deleted,
+    lds_start_datetime,
+    lds_lakehouse_date_processed,
+    lds_lakehouse_datetime_updated
+FROM {{ ref('synapse_base_olids_episode_of_care') }}

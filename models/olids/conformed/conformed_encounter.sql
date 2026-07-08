@@ -57,4 +57,4 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} concept_map
     ON src.encounter_source_concept_id = concept_map.source_concept_id
 LEFT JOIN {{ ref('int_enriched_concept_map') }} date_precision_map
     ON src.clinical_effective_date_precision_source_concept_id = date_precision_map.source_concept_id
-QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, date_precision_map.target_display NULLS LAST) = 1
+QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, concept_map.target_concept_id NULLS LAST, date_precision_map.target_display NULLS LAST, date_precision_map.target_concept_id NULLS LAST) = 1

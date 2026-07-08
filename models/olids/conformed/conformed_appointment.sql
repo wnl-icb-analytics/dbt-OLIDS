@@ -71,3 +71,4 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} contact_mode_map
     ON src.contact_mode_source_concept_id = contact_mode_map.source_concept_id
 WHERE src.patient_id IS NOT NULL
     AND src.start_date IS NOT NULL
+QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY appointment_status_map.target_display NULLS LAST, appointment_status_map.target_concept_id NULLS LAST, booking_method_map.target_display NULLS LAST, booking_method_map.target_concept_id NULLS LAST, contact_mode_map.target_display NULLS LAST, contact_mode_map.target_concept_id NULLS LAST) = 1

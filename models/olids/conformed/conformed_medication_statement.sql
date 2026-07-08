@@ -79,4 +79,4 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} date_precision_map
 LEFT JOIN DATA_LAB_OLIDS_NCL.REFERENCE.BNF_LATEST bnf
     ON concept_map.target_code = bnf.snomed_code
 WHERE src.medication_statement_source_concept_id IS NOT NULL
-QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, auth_concept_map.target_display NULLS LAST, date_precision_map.target_display NULLS LAST) = 1
+QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, concept_map.target_concept_id NULLS LAST, auth_concept_map.target_display NULLS LAST, auth_concept_map.target_concept_id NULLS LAST, date_precision_map.target_display NULLS LAST, date_precision_map.target_concept_id NULLS LAST) = 1

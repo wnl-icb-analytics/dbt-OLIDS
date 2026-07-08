@@ -57,4 +57,22 @@ models:
         +schema: "olids_conformed"
         +post-hook: ["{{ add_model_comment() }}"]
         +tags: ["intermediate"]
+    synapse:
+      +tags: ["synapse"]
+      base:
+        +materialized: view
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "synapse_base"
+        +post-hook: ["{{ add_model_comment() }}"]
+      stable:
+        +materialized: table
+        +transient: false
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "synapse_stable"
+        +post-hook: ["{{ add_model_comment() }}"]
+      intermediate:
+        +materialized: table
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "synapse_base"
+        +post-hook: ["{{ add_model_comment() }}"]
 

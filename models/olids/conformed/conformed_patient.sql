@@ -47,8 +47,9 @@ INNER JOIN {{ ref('int_wnl_practices') }} wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
 LEFT JOIN {{ ref('int_enriched_concept_map') }} gender_map
     ON src.gender_source_concept_id = gender_map.source_concept_id
-WHERE src.sk_patient_id IS NOT NULL
+WHERE TRY_TO_NUMBER(src.sk_patient_id) IS NOT NULL
     -- strict = FALSE: rows with NULL flags are excluded (unknown sensitivity treated as sensitive)
     AND src.is_spine_sensitive = FALSE
     AND src.is_confidential = FALSE
     AND src.is_test_patient = FALSE
+QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY gender_map.target_display NULLS LAST, gender_map.target_concept_id NULLS LAST) = 1

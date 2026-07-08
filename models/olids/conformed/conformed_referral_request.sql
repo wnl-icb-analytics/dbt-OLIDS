@@ -78,4 +78,4 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} type_map
     ON src.referral_request_type_source_concept_id = type_map.source_concept_id
 LEFT JOIN {{ ref('int_enriched_concept_map') }} specialty_map
     ON src.referral_request_specialty_source_concept_id = specialty_map.source_concept_id
-QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, date_precision_map.target_display NULLS LAST, priority_map.target_display NULLS LAST, type_map.target_display NULLS LAST, specialty_map.target_display NULLS LAST) = 1
+QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, concept_map.target_concept_id NULLS LAST, date_precision_map.target_display NULLS LAST, date_precision_map.target_concept_id NULLS LAST, priority_map.target_display NULLS LAST, priority_map.target_concept_id NULLS LAST, type_map.target_display NULLS LAST, type_map.target_concept_id NULLS LAST, specialty_map.target_display NULLS LAST, specialty_map.target_concept_id NULLS LAST) = 1

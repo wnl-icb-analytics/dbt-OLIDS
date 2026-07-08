@@ -60,6 +60,11 @@ enriched_existing AS (
                 cm.target_code = '138875005'
                 AND root_target.concept_id IS NOT NULL
                 THEN root_target.concept_id
+            -- successor rewrite: repoint the concept id alongside the code
+            WHEN
+                sct_history.new_concept_id IS NOT NULL
+                AND successor_target.concept_id IS NOT NULL
+                THEN successor_target.concept_id
             ELSE cm.target_concept_id
         END AS target_concept_id,
         COALESCE(
@@ -100,6 +105,9 @@ enriched_existing AS (
             TRY_CAST(cm.target_code AS NUMBER(38, 0))
             = sct_history.old_concept_id
             AND sct."Id" IS NOT NULL
+    -- falls back to cm.target_concept_id when the successor code has no OLIDS concept row
+    LEFT JOIN snomed_concepts AS successor_target
+        ON sct_history.new_concept_id::VARCHAR = successor_target.code
 ),
 
 missing_emis_mappings AS (

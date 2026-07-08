@@ -2,6 +2,20 @@
 
 Foundational data layers for OLIDS (One London Integrated Data Set).
 
+## Two Pipelines
+
+| Tree | Feed | Coverage | Refresh | Publishes to |
+|---|---|---|---|---|
+| `models/olids` | `Data_Store_OLIDS_WNL` (experimental) | ~15 practices | Nightly | `OLIDS_EXPERIMENTAL_*` schemas |
+| `models/synapse` | `Data_Store_OLIDS` (legacy Synapse) | Full NCL | Upstream refreshes fortnightly | `OLIDS` / `OLIDS_BASE` schemas |
+
+Run selectors:
+
+```bash
+dbt build --exclude tag:synapse  # nightly (new pipeline)
+dbt build -s tag:synapse         # legacy refresh
+```
+
 ## What This Project Does
 
 Builds two data layers:

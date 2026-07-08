@@ -47,3 +47,4 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} episode_type_map
 LEFT JOIN {{ ref('int_enriched_concept_map') }} episode_status_map
     ON src.episode_status_source_concept_id = episode_status_map.source_concept_id
 WHERE src.patient_id IS NOT NULL
+QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY episode_type_map.target_display NULLS LAST, episode_type_map.target_concept_id NULLS LAST, episode_status_map.target_display NULLS LAST, episode_status_map.target_concept_id NULLS LAST) = 1
