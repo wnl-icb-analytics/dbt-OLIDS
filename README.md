@@ -6,8 +6,8 @@ Foundational data layers for OLIDS (One London Integrated Data Set).
 
 | Tree | Feed | Coverage | Refresh | Publishes to |
 |---|---|---|---|---|
-| `models/olids` | `Data_Store_OLIDS_WNL` (experimental) | ~15 practices | Nightly | `OLIDS_EXPERIMENTAL_*` schemas |
-| `models/synapse` | `Data_Store_OLIDS` (legacy Synapse) | Full NCL | Upstream refreshes fortnightly | `OLIDS` / `OLIDS_BASE` schemas |
+| `models/olids` | `Data_Store_OLIDS_WNL` (experimental) | ~15 practices | Nightly | `OLIDS_ENGINEERING` database (`LANDING`/`CONFORMED`/`STABLE`) |
+| `models/synapse` | `Data_Store_OLIDS` (legacy Synapse) | Full NCL | Upstream refreshes fortnightly | `OLIDS_ENGINEERING` database (`SYNAPSE_BASE`/`SYNAPSE_STABLE`); `DATA_LAB_OLIDS_NCL.OLIDS` serves data_lake until the swap |
 
 Run selectors:
 
@@ -106,10 +106,10 @@ models/olids/
 
 All models are built in the database specified by `SNOWFLAKE_TARGET_DATABASE` in your `.env` file (typically `DATA_LAB_OLIDS_NCL`):
 
-- **Landing**: `OLIDS_EXPERIMENTAL_LANDING.*` (tables)
-- **Conformed layer**: `OLIDS_EXPERIMENTAL_CONFORMED.*` (views)
-- **Stable layer**: `OLIDS_EXPERIMENTAL_STABLE.*` (tables)
-- **Intermediate**: `OLIDS_EXPERIMENTAL_CONFORMED.*` (tables)
+- **Landing**: `LANDING.*` (tables)
+- **Conformed layer**: `CONFORMED.*` (views)
+- **Stable layer**: `STABLE.*` (tables)
+- **Intermediate**: `CONFORMED.*` (tables)
 
 The stable layer reads from `Data_Store_OLIDS_Clinical_Validation` source tables.
 

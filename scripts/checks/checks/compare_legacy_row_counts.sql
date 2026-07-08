@@ -6,10 +6,10 @@
 
 WITH counts AS (
     SELECT 'ALLERGY_INTOLERANCE' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."ALLERGY_INTOLERANCE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."ALLERGY_INTOLERANCE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."ALLERGY_INTOLERANCE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -17,10 +17,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'APPOINTMENT' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."APPOINTMENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."APPOINTMENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."APPOINTMENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -28,10 +28,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'APPOINTMENT_PRACTITIONER' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."APPOINTMENT_PRACTITIONER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."APPOINTMENT_PRACTITIONER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."APPOINTMENT_PRACTITIONER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -39,10 +39,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'DIAGNOSTIC_ORDER' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."DIAGNOSTIC_ORDER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."DIAGNOSTIC_ORDER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."DIAGNOSTIC_ORDER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -50,10 +50,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'ENCOUNTER' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."ENCOUNTER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."ENCOUNTER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."ENCOUNTER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -61,10 +61,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'EPISODE_OF_CARE' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."EPISODE_OF_CARE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."EPISODE_OF_CARE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."EPISODE_OF_CARE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -72,10 +72,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'MEDICATION_ORDER' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."MEDICATION_ORDER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."MEDICATION_ORDER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."MEDICATION_ORDER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -83,10 +83,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'MEDICATION_STATEMENT' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."MEDICATION_STATEMENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."MEDICATION_STATEMENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."MEDICATION_STATEMENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -94,10 +94,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'OBSERVATION' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."OBSERVATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."OBSERVATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."OBSERVATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -105,10 +105,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'ORGANISATION' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."ORGANISATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."ORGANISATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."ORGANISATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -116,10 +116,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'PATIENT' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PATIENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_MASKED"."PATIENT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -127,10 +127,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'PATIENT_ADDRESS' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT_ADDRESS" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PATIENT_ADDRESS" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_MASKED"."PATIENT_ADDRESS" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -138,10 +138,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'PATIENT_CONTACT' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT_CONTACT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PATIENT_CONTACT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_MASKED"."PATIENT_CONTACT" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -149,10 +149,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'PATIENT_UPRN' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT_UPRN" WHERE publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PATIENT_UPRN" WHERE publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_MASKED"."PATIENT_UPRN" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -161,24 +161,24 @@ WITH counts AS (
 
     -- legacy PRACTITIONER tables have no publisher_organisation_code; full counts, INFO only
     SELECT 'PRACTITIONER' AS table_name, 'full population (legacy not practice-scoped)' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PRACTITIONER" WHERE lds_is_deleted = FALSE) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PRACTITIONER" WHERE lds_is_deleted = FALSE) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."PRACTITIONER" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         TRUE AS is_info
 
     UNION ALL
 
     SELECT 'PRACTITIONER_IN_ROLE' AS table_name, 'full population (legacy not practice-scoped)' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PRACTITIONER_IN_ROLE" WHERE lds_is_deleted = FALSE) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PRACTITIONER_IN_ROLE" WHERE lds_is_deleted = FALSE) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."PRACTITIONER_IN_ROLE" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         TRUE AS is_info
 
     UNION ALL
 
     SELECT 'PROCEDURE_REQUEST' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PROCEDURE_REQUEST" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PROCEDURE_REQUEST" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."PROCEDURE_REQUEST" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -186,10 +186,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'REFERRAL_REQUEST' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."REFERRAL_REQUEST" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."REFERRAL_REQUEST" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."REFERRAL_REQUEST" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -197,10 +197,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'SCHEDULE' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."SCHEDULE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."SCHEDULE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."SCHEDULE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -208,10 +208,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'SCHEDULE_PRACTITIONER' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."SCHEDULE_PRACTITIONER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."SCHEDULE_PRACTITIONER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."SCHEDULE_PRACTITIONER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -219,10 +219,10 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'LOCATION' AS table_name, 'legacy restricted to new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."LOCATION" WHERE lds_is_deleted = FALSE) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."LOCATION" WHERE lds_is_deleted = FALSE) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."LOCATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
     SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     )) AS legacy_rows,
         FALSE AS is_info
@@ -230,56 +230,56 @@ WITH counts AS (
     UNION ALL
 
     SELECT 'CONCEPT' AS table_name, 'full population' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."CONCEPT") AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."CONCEPT") AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_TERMINOLOGY"."CONCEPT" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 
     UNION ALL
 
     SELECT 'CONCEPT_MAP' AS table_name, 'full population' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."CONCEPT_MAP") AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."CONCEPT_MAP") AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_TERMINOLOGY"."CONCEPT_MAP" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 
     UNION ALL
 
     SELECT 'EMIS_CLINICAL_CODE' AS table_name, 'full population' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."EMIS_CLINICAL_CODE") AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."EMIS_CLINICAL_CODE") AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."REFERENCE"."PRIMARY_CARE_EMIS_CODING_CLINICAL_CODE" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 
     UNION ALL
 
     SELECT 'EMIS_DRUG_CODE' AS table_name, 'full population' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."EMIS_DRUG_CODE") AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."EMIS_DRUG_CODE") AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."REFERENCE"."PRIMARY_CARE_EMIS_CODING_DRUG_CODE" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 
     UNION ALL
 
     SELECT 'POSTCODE_HASH' AS table_name, 'full population' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."POSTCODE_HASH") AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."POSTCODE_HASH") AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."REFERENCE"."POSTCODE_HASH" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 
     UNION ALL
 
     SELECT 'PERSON' AS table_name, 'full population' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PERSON" WHERE lds_is_deleted = FALSE) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PERSON" WHERE lds_is_deleted = FALSE) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_MASKED"."PERSON" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 
     UNION ALL
 
     SELECT 'PATIENT_PERSON' AS table_name, 'full population' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT_PERSON" WHERE lds_is_deleted = FALSE) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."PATIENT_PERSON" WHERE lds_is_deleted = FALSE) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."PATIENT_PERSON" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 
     UNION ALL
 
     SELECT 'NATIONAL_DATA_OPT_OUT' AS table_name, 'full population' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."NATIONAL_DATA_OPT_OUT" WHERE lds_is_deleted = FALSE) AS new_rows,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."NATIONAL_DATA_OPT_OUT" WHERE lds_is_deleted = FALSE) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."NDOO_MASKED"."PATIENT_HASH" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 

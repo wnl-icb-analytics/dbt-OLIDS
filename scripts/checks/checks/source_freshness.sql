@@ -7,7 +7,7 @@ WITH freshness AS (
     SELECT 'ALLERGY_INTOLERANCE' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."ALLERGY_INTOLERANCE"
+    FROM {TARGET_DATABASE}.LANDING."ALLERGY_INTOLERANCE"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -15,7 +15,7 @@ WITH freshness AS (
     SELECT 'APPOINTMENT' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."APPOINTMENT"
+    FROM {TARGET_DATABASE}.LANDING."APPOINTMENT"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -23,7 +23,7 @@ WITH freshness AS (
     SELECT 'APPOINTMENT_PRACTITIONER' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."APPOINTMENT_PRACTITIONER"
+    FROM {TARGET_DATABASE}.LANDING."APPOINTMENT_PRACTITIONER"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -31,7 +31,7 @@ WITH freshness AS (
     SELECT 'DIAGNOSTIC_ORDER' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."DIAGNOSTIC_ORDER"
+    FROM {TARGET_DATABASE}.LANDING."DIAGNOSTIC_ORDER"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -39,7 +39,7 @@ WITH freshness AS (
     SELECT 'ENCOUNTER' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."ENCOUNTER"
+    FROM {TARGET_DATABASE}.LANDING."ENCOUNTER"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -47,7 +47,7 @@ WITH freshness AS (
     SELECT 'EPISODE_OF_CARE' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."EPISODE_OF_CARE"
+    FROM {TARGET_DATABASE}.LANDING."EPISODE_OF_CARE"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -55,7 +55,7 @@ WITH freshness AS (
     SELECT 'MEDICATION_ORDER' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."MEDICATION_ORDER"
+    FROM {TARGET_DATABASE}.LANDING."MEDICATION_ORDER"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -63,7 +63,7 @@ WITH freshness AS (
     SELECT 'MEDICATION_STATEMENT' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."MEDICATION_STATEMENT"
+    FROM {TARGET_DATABASE}.LANDING."MEDICATION_STATEMENT"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -71,7 +71,7 @@ WITH freshness AS (
     SELECT 'OBSERVATION' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."OBSERVATION"
+    FROM {TARGET_DATABASE}.LANDING."OBSERVATION"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -79,7 +79,7 @@ WITH freshness AS (
     SELECT 'ORGANISATION' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."ORGANISATION"
+    FROM {TARGET_DATABASE}.LANDING."ORGANISATION"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -87,7 +87,7 @@ WITH freshness AS (
     SELECT 'PATIENT' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -95,7 +95,7 @@ WITH freshness AS (
     SELECT 'PATIENT_ADDRESS' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT_ADDRESS"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT_ADDRESS"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -103,7 +103,7 @@ WITH freshness AS (
     SELECT 'PATIENT_CONTACT' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PATIENT_CONTACT"
+    FROM {TARGET_DATABASE}.LANDING."PATIENT_CONTACT"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -111,7 +111,7 @@ WITH freshness AS (
     SELECT 'PRACTITIONER' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PRACTITIONER"
+    FROM {TARGET_DATABASE}.LANDING."PRACTITIONER"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -119,7 +119,7 @@ WITH freshness AS (
     SELECT 'PRACTITIONER_IN_ROLE' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PRACTITIONER_IN_ROLE"
+    FROM {TARGET_DATABASE}.LANDING."PRACTITIONER_IN_ROLE"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -127,7 +127,7 @@ WITH freshness AS (
     SELECT 'PROCEDURE_REQUEST' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PROCEDURE_REQUEST"
+    FROM {TARGET_DATABASE}.LANDING."PROCEDURE_REQUEST"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -135,7 +135,7 @@ WITH freshness AS (
     SELECT 'REFERRAL_REQUEST' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."REFERRAL_REQUEST"
+    FROM {TARGET_DATABASE}.LANDING."REFERRAL_REQUEST"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -143,7 +143,7 @@ WITH freshness AS (
     SELECT 'SCHEDULE' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."SCHEDULE"
+    FROM {TARGET_DATABASE}.LANDING."SCHEDULE"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -151,7 +151,7 @@ WITH freshness AS (
     SELECT 'SCHEDULE_PRACTITIONER' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."SCHEDULE_PRACTITIONER"
+    FROM {TARGET_DATABASE}.LANDING."SCHEDULE_PRACTITIONER"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -159,7 +159,7 @@ WITH freshness AS (
     SELECT 'LOCATION' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."LOCATION"
+    FROM {TARGET_DATABASE}.LANDING."LOCATION"
     WHERE lds_is_deleted = FALSE
 
     UNION ALL
@@ -167,7 +167,7 @@ WITH freshness AS (
     SELECT 'PERSON' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction
-    FROM {TARGET_DATABASE}.OLIDS_EXPERIMENTAL_LANDING."PERSON"
+    FROM {TARGET_DATABASE}.LANDING."PERSON"
     WHERE lds_is_deleted = FALSE
 )
 

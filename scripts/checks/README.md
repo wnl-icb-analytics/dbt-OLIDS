@@ -22,7 +22,7 @@ By default only `WARN`/`FAIL` rows print. The runner exits `1` if any check retu
 Credentials come from `.env` at the repo root: `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_USER`,
 `SNOWFLAKE_PASSWORD` (or external browser SSO if unset), `SNOWFLAKE_AUTHENTICATOR`,
 `SNOWFLAKE_ROLE`, `SNOWFLAKE_WAREHOUSE`, `SNOWFLAKE_TARGET_DATABASE`. The checks read
-the new feed from the landing cache `<TARGET_DATABASE>.OLIDS_EXPERIMENTAL_LANDING`, so
+the new feed from the landing cache `<TARGET_DATABASE>.LANDING`, so
 build it first: `dbt build -s tag:landing`.
 
 ## Output contract
