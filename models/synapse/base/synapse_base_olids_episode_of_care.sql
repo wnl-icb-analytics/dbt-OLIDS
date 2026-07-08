@@ -19,7 +19,7 @@ SELECT
     src.author_organisation_id,
     src.care_manager_organisation_id,
     src.patient_id,
-    {{ generate_person_id_legacy('src.person_id') }} AS person_id,
+    {{ generate_person_id('src.person_id') }} AS person_id,
     src.episode_type_source_concept_id,
     episode_type_map.source_code AS episode_type_source_code,
     episode_type_map.source_display AS episode_type_source_display,

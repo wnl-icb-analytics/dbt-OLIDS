@@ -36,7 +36,7 @@ WITH gender_fallback AS (
 )
 
 SELECT
-    {{ generate_person_id_legacy('per.id') }} AS id,
+    {{ generate_person_id('per.id') }} AS id,
     per.id AS person_uuid,
     per.person_version_id,
     per.person_record_type,
