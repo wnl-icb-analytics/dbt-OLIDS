@@ -21,3 +21,5 @@ SELECT
     -- cast matches base_olids_patient.sk_patient_id so opt-out joins stay type-consistent
     TRY_TO_NUMBER(src.sk_patient_id) AS sk_patient_id
 FROM {{ ref('landing_national_data_opt_out') }} AS src
+-- opt-out rows without a patient key cannot be joined; upstream carries a handful
+WHERE src.sk_patient_id IS NOT NULL

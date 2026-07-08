@@ -23,3 +23,5 @@ SELECT
     src.equivalence_rank,
     src.is_primary
 FROM {{ ref('landing_concept_map') }} AS src
+-- mappings without a source concept cannot be joined; upstream carries a handful
+WHERE src.source_concept_id IS NOT NULL
