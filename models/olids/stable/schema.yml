@@ -80,7 +80,7 @@ models:
   - name: stable_national_data_opt_out
     description: Stable national_data_opt_out table.
     columns:
-      - name: lds_business_id
+      - name: lds_record_id
         tests:
           - unique
           - not_null

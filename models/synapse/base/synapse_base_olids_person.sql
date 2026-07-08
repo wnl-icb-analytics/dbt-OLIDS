@@ -74,8 +74,17 @@ LEFT JOIN gender_fallback AS gf
     ON per.id = gf.person_uuid
 LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON per.id = person_idx.source_person_id
-WHERE EXISTS (
-    SELECT 1
-    FROM {{ ref('synapse_base_olids_patient_person') }} AS pp
-    WHERE pp.person_uuid = per.id
-)
+WHERE
+    EXISTS (
+        SELECT 1
+        FROM {{ ref('synapse_base_olids_patient_person') }} AS pp
+        WHERE pp.person_uuid = per.id
+    )
+-- legacy PERSON carries versioned duplicate ids; the old incremental merge
+-- deduplicated implicitly, full replace must do it explicitly (keep latest)
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY per.id
+    ORDER BY
+        per.lds_start_datetime DESC NULLS LAST,
+        per.lds_datetime_update_acquired_person DESC NULLS LAST
+) = 1

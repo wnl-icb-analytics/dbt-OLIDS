@@ -23,3 +23,8 @@ SELECT
 FROM {{ ref('landing_national_data_opt_out') }} AS src
 -- opt-out rows without a patient key cannot be joined; upstream carries a handful
 WHERE TRY_TO_NUMBER(src.sk_patient_id) IS NOT NULL
+-- upstream carries a couple of duplicated record ids; keep the latest
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY src.lds_record_id
+    ORDER BY src.effective_from DESC NULLS LAST
+) = 1
