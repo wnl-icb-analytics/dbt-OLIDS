@@ -43,7 +43,8 @@ snomed_concepts AS (
         concept_id,
         code
     FROM {{ ref('conformed_concept') }}
-    WHERE system = 'http://snomed.info/sct'
+    -- new feed uses identifier-style system names, not URIs
+    WHERE system = 'snomed_info_sct'
 ),
 
 enriched_existing AS (
@@ -115,11 +116,11 @@ missing_emis_mappings AS (
         emis_ref.concept_id AS source_concept_id,
         emis_ref.code_id::VARCHAR AS source_code,
         emis_ref.term AS source_display,
-        'http://LDS.nhs/EMIS/CodeID/cs' AS source_system,
+        'EMIS_CodeID_cs' AS source_system,
         target.concept_id AS target_concept_id,
         emis_ref.snomed_ct_concept_id::VARCHAR AS target_code,
         emis_ref.term AS target_display,
-        'http://snomed.info/sct' AS target_system,
+        'snomed_info_sct' AS target_system,
         TRUE AS is_primary,
         'emis-reference-backfill' AS equivalence,
         1 AS equivalence_rank
@@ -137,11 +138,11 @@ local_backfills AS (
         '5a8a5445-b192-671c-fba0-24048a06fcf4'::VARCHAR AS source_concept_id,
         'Deceased' AS source_code,
         'Deceased' AS source_display,
-        'http://LDS.nhs/EMIS/RegistrationStatus/cs' AS source_system,
+        'EMIS_RegistrationStatus_cs' AS source_system,
         NULL::VARCHAR AS target_concept_id,
         '725951000000101' AS target_code,
         'GP22 deregistration - death' AS target_display,
-        'http://snomed.info/sct' AS target_system,
+        'snomed_info_sct' AS target_system,
         TRUE AS is_primary,
         'local-backfill' AS equivalence,
         1 AS equivalence_rank
