@@ -58,9 +58,9 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
 INNER JOIN {{ ref('synapse_int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
-LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS episode_type_map
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS episode_type_map
     ON src.episode_type_source_concept_id = episode_type_map.source_concept_id
-LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS episode_status_map
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS episode_status_map
     ON
         src.episode_status_source_concept_id
         = episode_status_map.source_concept_id

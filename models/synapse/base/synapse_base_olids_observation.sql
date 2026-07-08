@@ -73,9 +73,9 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
 INNER JOIN {{ ref('synapse_int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
-LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS concept_map
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS concept_map
     ON src.observation_source_concept_id = concept_map.source_concept_id
-LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS unit_concept_map
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS unit_concept_map
     ON src.result_units_source_concept_id = unit_concept_map.source_concept_id
 WHERE
     src.observation_source_concept_id IS NOT NULL

@@ -8,7 +8,9 @@
 }}
 
 /*
-Enriched concept map.
+Enriched concept map: local source codes (EMIS/TPP and enumeration families)
+mapped to their canonical targets, one row per source concept - join-safe
+without any downstream dedupe. Snomed-as-source rows (OPCS, cluster maps) are excluded.
 Replaces retired SNOMED targets, repairs root targets and backfills missing EMIS mappings.
 */
 
@@ -109,6 +111,9 @@ enriched_existing AS (
     -- falls back to cm.target_concept_id when the successor code has no OLIDS concept row
     LEFT JOIN snomed_concepts AS successor_target
         ON sct_history.new_concept_id::VARCHAR = successor_target.code
+    -- local-code and enumeration families only; snomed-as-source rows
+    -- (OPCS, cluster maps) are a different artefact, not this lookup
+    WHERE cm.source_system NOT IN ('http:__snomed.info_sct', 'snomed_info_sct')
 ),
 
 missing_emis_mappings AS (
@@ -146,50 +151,61 @@ local_backfills AS (
         TRUE AS is_primary,
         'local-backfill' AS equivalence,
         1 AS equivalence_rank
+),
+
+unioned AS (
+
+    SELECT
+        source_concept_id,
+        source_code,
+        source_display,
+        source_system,
+        target_concept_id,
+        target_code,
+        target_display,
+        target_system,
+        is_primary,
+        equivalence,
+        equivalence_rank
+    FROM enriched_existing
+
+    UNION ALL
+
+    SELECT
+        source_concept_id,
+        source_code,
+        source_display,
+        source_system,
+        target_concept_id,
+        target_code,
+        target_display,
+        target_system,
+        is_primary,
+        equivalence,
+        equivalence_rank
+    FROM missing_emis_mappings
+
+    UNION ALL
+
+    SELECT
+        source_concept_id,
+        source_code,
+        source_display,
+        source_system,
+        target_concept_id,
+        target_code,
+        target_display,
+        target_system,
+        is_primary,
+        equivalence,
+        equivalence_rank
+    FROM local_backfills
 )
 
-SELECT
-    source_concept_id,
-    source_code,
-    source_display,
-    source_system,
-    target_concept_id,
-    target_code,
-    target_display,
-    target_system,
-    is_primary,
-    equivalence,
-    equivalence_rank
-FROM enriched_existing
-
-UNION ALL
-
-SELECT
-    source_concept_id,
-    source_code,
-    source_display,
-    source_system,
-    target_concept_id,
-    target_code,
-    target_display,
-    target_system,
-    is_primary,
-    equivalence,
-    equivalence_rank
-FROM missing_emis_mappings
-
-UNION ALL
-
-SELECT
-    source_concept_id,
-    source_code,
-    source_display,
-    source_system,
-    target_concept_id,
-    target_code,
-    target_display,
-    target_system,
-    is_primary,
-    equivalence,
-    equivalence_rank
-FROM local_backfills
+SELECT *
+FROM unioned
+-- one row per source concept: a local code has exactly one canonical mapping
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY source_concept_id
+    ORDER BY target_display NULLS LAST, target_concept_id NULLS LAST
+) = 1

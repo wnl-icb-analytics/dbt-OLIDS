@@ -8,11 +8,10 @@
 }}
 
 /*
-Enriched Concept Map
-Enhances the OLIDS concept map by:
-1. Replacing retired SNOMED target codes with their active successor (via SCT_History)
-2. Replacing root concept 138875005 targets with real SNOMED codes (via EMIS reference)
-3. Adding missing EMIS->SNOMED mappings not present in the concept map (via EMIS reference)
+Enriched concept map: local source codes (EMIS/TPP and enumeration families)
+mapped to their canonical targets, one row per source concept - join-safe
+without any downstream dedupe. Snomed-as-source rows are excluded.
+Replaces retired SNOMED targets, repairs root targets and backfills missing EMIS mappings.
 */
 
 WITH sct_history AS (
@@ -100,6 +99,9 @@ enriched_existing AS (
             TRY_CAST(cm.target_code AS NUMBER(38, 0))
             = sct_history.old_concept_id
             AND sct."Id" IS NOT NULL
+    -- local-code and enumeration families only; snomed-as-source rows
+    -- (OPCS, cluster maps) are a different artefact, not this lookup
+    WHERE cm.source_system NOT IN ('http://snomed.info/sct')
 ),
 
 missing_emis_mappings AS (
@@ -154,68 +156,79 @@ local_backfills AS (
         TRUE AS is_active,
         'local-backfill' AS equivalence,
         CURRENT_TIMESTAMP()::TIMESTAMP_NTZ AS lds_start_datetime
+),
+
+unioned AS (
+
+    SELECT
+        mapped_item_id,
+        concept_map_id,
+        concept_map_resource_id,
+        concept_map_url,
+        concept_map_version,
+        source_concept_id,
+        source_system,
+        source_code,
+        source_display,
+        target_concept_id,
+        target_system,
+        target_code,
+        target_display,
+        is_primary,
+        is_active,
+        equivalence,
+        lds_start_datetime
+    FROM enriched_existing
+
+    UNION ALL
+
+    SELECT
+        mapped_item_id,
+        concept_map_id,
+        concept_map_resource_id,
+        concept_map_url,
+        concept_map_version,
+        source_concept_id,
+        source_system,
+        source_code,
+        source_display,
+        target_concept_id,
+        target_system,
+        target_code,
+        target_display,
+        is_primary,
+        is_active,
+        equivalence,
+        lds_start_datetime
+    FROM missing_emis_mappings
+
+    UNION ALL
+
+    SELECT
+        mapped_item_id,
+        concept_map_id,
+        concept_map_resource_id,
+        concept_map_url,
+        concept_map_version,
+        source_concept_id,
+        source_system,
+        source_code,
+        source_display,
+        target_concept_id,
+        target_system,
+        target_code,
+        target_display,
+        is_primary,
+        is_active,
+        equivalence,
+        lds_start_datetime
+    FROM local_backfills
 )
 
-SELECT
-    mapped_item_id,
-    concept_map_id,
-    concept_map_resource_id,
-    concept_map_url,
-    concept_map_version,
-    source_concept_id,
-    source_system,
-    source_code,
-    source_display,
-    target_concept_id,
-    target_system,
-    target_code,
-    target_display,
-    is_primary,
-    is_active,
-    equivalence,
-    lds_start_datetime
-FROM enriched_existing
-
-UNION ALL
-
-SELECT
-    mapped_item_id,
-    concept_map_id,
-    concept_map_resource_id,
-    concept_map_url,
-    concept_map_version,
-    source_concept_id,
-    source_system,
-    source_code,
-    source_display,
-    target_concept_id,
-    target_system,
-    target_code,
-    target_display,
-    is_primary,
-    is_active,
-    equivalence,
-    lds_start_datetime
-FROM missing_emis_mappings
-
-UNION ALL
-
-SELECT
-    mapped_item_id,
-    concept_map_id,
-    concept_map_resource_id,
-    concept_map_url,
-    concept_map_version,
-    source_concept_id,
-    source_system,
-    source_code,
-    source_display,
-    target_concept_id,
-    target_system,
-    target_code,
-    target_display,
-    is_primary,
-    is_active,
-    equivalence,
-    lds_start_datetime
-FROM local_backfills
+SELECT *
+FROM unioned
+-- one row per source concept: a local code has exactly one canonical mapping
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY source_concept_id
+    ORDER BY target_display NULLS LAST, target_concept_id NULLS LAST
+) = 1

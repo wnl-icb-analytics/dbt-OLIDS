@@ -61,7 +61,7 @@ LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
     ON src.id = patient_idx.source_patient_id
 LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
-LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS gender_map
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS gender_map
     ON src.gender_source_concept_id = gender_map.source_concept_id
 WHERE
     src.sk_patient_id IS NOT NULL

@@ -79,13 +79,13 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
 INNER JOIN {{ ref('synapse_int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
 LEFT JOIN
-    {{ ref('synapse_int_concept_map_best') }} AS appointment_status_map
+    {{ ref('synapse_int_enriched_concept_map') }} AS appointment_status_map
     ON src.status_source_concept_id = appointment_status_map.source_concept_id
-LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS booking_method_map
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS booking_method_map
     ON
         src.booking_method_source_concept_id
         = booking_method_map.source_concept_id
-LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS contact_mode_map
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS contact_mode_map
     ON src.contact_mode_source_concept_id = contact_mode_map.source_concept_id
 WHERE
     src.patient_id IS NOT NULL

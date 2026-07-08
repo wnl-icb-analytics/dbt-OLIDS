@@ -72,19 +72,19 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
 INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
-LEFT JOIN {{ ref('int_concept_map_best') }} AS concept_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} AS concept_map
     ON src.referral_request_source_concept_id = concept_map.source_concept_id
-LEFT JOIN {{ ref('int_concept_map_best') }} AS date_precision_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} AS date_precision_map
     ON
         src.clinical_effective_date_precision_source_concept_id
         = date_precision_map.source_concept_id
-LEFT JOIN {{ ref('int_concept_map_best') }} AS priority_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} AS priority_map
     ON
         src.referral_request_priority_source_concept_id
         = priority_map.source_concept_id
-LEFT JOIN {{ ref('int_concept_map_best') }} AS type_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} AS type_map
     ON src.referral_request_type_source_concept_id = type_map.source_concept_id
-LEFT JOIN {{ ref('int_concept_map_best') }} AS specialty_map
+LEFT JOIN {{ ref('int_enriched_concept_map') }} AS specialty_map
     ON
         src.referral_request_specialty_source_concept_id
         = specialty_map.source_concept_id
