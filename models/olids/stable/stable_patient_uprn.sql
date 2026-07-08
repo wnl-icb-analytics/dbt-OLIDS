@@ -18,4 +18,4 @@ SELECT
     match_pattern,
     error_message,
     publisher_organisation_code
-FROM {{ ref('base_olids_patient_uprn') }}
+FROM {{ ref('conformed_patient_uprn') }}

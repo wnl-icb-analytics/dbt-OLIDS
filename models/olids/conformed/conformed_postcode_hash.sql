@@ -5,7 +5,7 @@
 }}
 
 /*
-POSTCODE_HASH base view.
+Conformed POSTCODE_HASH view.
 Uses the landing cache for the WNL pseudonymised feed.
 */
 

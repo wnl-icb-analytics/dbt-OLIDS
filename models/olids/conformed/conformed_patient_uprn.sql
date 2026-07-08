@@ -5,7 +5,7 @@
 }}
 
 /*
-PATIENT_UPRN base view.
+Conformed PATIENT_UPRN view.
 Uses the landing cache for the WNL pseudonymised feed.
 */
 

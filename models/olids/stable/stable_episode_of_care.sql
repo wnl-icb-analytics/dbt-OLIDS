@@ -34,4 +34,4 @@ SELECT
     publisher_organisation_code,
     source_extraction_date,
     lds_transform_datetime
-FROM {{ ref('base_olids_episode_of_care') }}
+FROM {{ ref('conformed_episode_of_care') }}

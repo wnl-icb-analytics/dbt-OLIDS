@@ -18,4 +18,4 @@ SELECT
     ward,
     version,
     last_updated
-FROM {{ ref('base_olids_postcode_hash') }}
+FROM {{ ref('conformed_postcode_hash') }}

@@ -5,7 +5,7 @@
 }}
 
 /*
-EMIS_DRUG_CODE base view.
+Conformed EMIS_DRUG_CODE view.
 Uses the landing cache for the WNL pseudonymised feed.
 */
 

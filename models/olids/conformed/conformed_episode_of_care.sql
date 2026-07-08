@@ -5,7 +5,7 @@
 }}
 
 /*
-Base EPISODE_OF_CARE view.
+Conformed EPISODE_OF_CARE view.
 Filters to WNL practices and excludes patients outside the filtered spine.
 */
 
@@ -38,7 +38,7 @@ SELECT
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_episode_of_care') }} src
-INNER JOIN {{ ref('base_olids_patient') }} patients
+INNER JOIN {{ ref('conformed_patient') }} patients
     ON src.patient_id = patients.id
 INNER JOIN {{ ref('int_wnl_practices') }} wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code

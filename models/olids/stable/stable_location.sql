@@ -29,4 +29,4 @@ SELECT
     lds_is_deleted,
     source_extraction_date,
     lds_transform_datetime
-FROM {{ ref('base_olids_location') }}
+FROM {{ ref('conformed_location') }}

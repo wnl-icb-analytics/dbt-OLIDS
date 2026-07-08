@@ -1,11 +1,11 @@
 {{
     config(
         secure=true,
-        alias='observation')
+        alias='procedure_request')
 }}
 
 /*
-Base OBSERVATION view.
+Conformed PROCEDURE_REQUEST view.
 Filters to WNL practices and excludes patients outside the filtered spine.
 */
 
@@ -17,27 +17,17 @@ SELECT
     src.publisher_organisation_id,
     src.provider_organisation_id,
     src.author_organisation_id,
-    src.encounter_id,
     src.practitioner_id,
-    src.parent_observation_id,
+    src.encounter_id,
     src.clinical_effective_date,
     src.clinical_effective_date_precision_source_concept_id,
     date_precision_map.source_code AS date_precision_source_code,
     date_precision_map.source_display AS date_precision_source_display,
     date_precision_map.target_code AS date_precision_code,
     date_precision_map.target_display AS date_precision_display,
-    src.result_value,
-    src.result_value_units_source_concept_id,
-    result_unit_map.source_code AS result_unit_source_code,
-    result_unit_map.source_display AS result_unit_source_display,
-    result_unit_map.target_code AS result_unit_code,
-    result_unit_map.target_display AS result_unit_display,
-    src.result_date,
-    src.result_text,
-    src.is_problem,
-    src.is_review,
-    src.problem_end_date,
-    src.observation_source_concept_id,
+    src.date_recorded,
+    src.description,
+    src.procedure_request_source_concept_id,
     concept_map.source_code AS source_code,
     concept_map.source_display AS source_display,
     concept_map.source_system AS source_system,
@@ -48,25 +38,25 @@ SELECT
     src.age_at_event,
     src.age_at_event_baby,
     src.age_at_event_neonate,
-    src.episodicity_source_concept_id,
-    src.is_primary,
-    src.date_recorded,
-    src.is_problem_deleted,
     src.is_confidential,
+    src.status_source_concept_id,
+    status_map.source_code AS status_source_code,
+    status_map.source_display AS status_source_display,
+    status_map.target_code AS status_code,
+    status_map.target_display AS status_display,
     src.lds_is_deleted,
     src.publisher_organisation_code,
     src.source_extraction_date,
     src.lds_transform_datetime
-FROM {{ ref('landing_observation') }} src
-INNER JOIN {{ ref('base_olids_patient') }} patients
+FROM {{ ref('landing_procedure_request') }} src
+INNER JOIN {{ ref('conformed_patient') }} patients
     ON src.patient_id = patients.id
 INNER JOIN {{ ref('int_wnl_practices') }} wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
 LEFT JOIN {{ ref('int_enriched_concept_map') }} concept_map
-    ON src.observation_source_concept_id = concept_map.source_concept_id
+    ON src.procedure_request_source_concept_id = concept_map.source_concept_id
 LEFT JOIN {{ ref('int_enriched_concept_map') }} date_precision_map
     ON src.clinical_effective_date_precision_source_concept_id = date_precision_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} result_unit_map
-    ON src.result_value_units_source_concept_id = result_unit_map.source_concept_id
-WHERE src.observation_source_concept_id IS NOT NULL
-QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, date_precision_map.target_display NULLS LAST, result_unit_map.target_display NULLS LAST) = 1
+LEFT JOIN {{ ref('int_enriched_concept_map') }} status_map
+    ON src.status_source_concept_id = status_map.source_concept_id
+QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, date_precision_map.target_display NULLS LAST, status_map.target_display NULLS LAST) = 1

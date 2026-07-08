@@ -21,4 +21,4 @@ SELECT
     publisher_organisation_code,
     source_extraction_date,
     lds_transform_datetime
-FROM {{ ref('base_olids_patient_contact') }}
+FROM {{ ref('conformed_patient_contact') }}

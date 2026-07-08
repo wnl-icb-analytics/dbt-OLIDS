@@ -5,7 +5,7 @@
 }}
 
 /*
-Base patient-person bridge.
+Conformed patient-person bridge.
 Keeps only links for the filtered patient spine.
 */
 
@@ -21,5 +21,5 @@ SELECT
     src.lds_is_deleted,
     src.lds_transform_datetime
 FROM {{ ref('landing_patient_person') }} src
-INNER JOIN {{ ref('base_olids_patient') }} patients
+INNER JOIN {{ ref('conformed_patient') }} patients
     ON src.patient_id = patients.id

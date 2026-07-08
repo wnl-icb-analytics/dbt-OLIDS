@@ -5,7 +5,7 @@
 }}
 
 /*
-Base PRACTITIONER view.
+Conformed PRACTITIONER view.
 Keeps practitioners linked to WNL roles.
 */
 
@@ -27,6 +27,6 @@ SELECT
 FROM {{ ref('landing_practitioner') }} AS src
 WHERE src.id IN (
     SELECT DISTINCT practitioner_id
-    FROM {{ ref('base_olids_practitioner_in_role') }}
+    FROM {{ ref('conformed_practitioner_in_role') }}
     WHERE practitioner_id IS NOT NULL
 )

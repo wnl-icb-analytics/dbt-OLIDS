@@ -5,7 +5,7 @@
 }}
 
 /*
-CONCEPT base view.
+Conformed CONCEPT view.
 Uses the landing cache for the WNL pseudonymised feed.
 */
 

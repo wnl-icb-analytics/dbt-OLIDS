@@ -16,4 +16,4 @@ SELECT
     effective_from,
     effective_to,
     is_latest
-FROM {{ ref('base_olids_national_data_opt_out') }}
+FROM {{ ref('conformed_national_data_opt_out') }}

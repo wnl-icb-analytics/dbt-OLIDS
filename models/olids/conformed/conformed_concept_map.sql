@@ -5,7 +5,7 @@
 }}
 
 /*
-CONCEPT_MAP base view.
+Conformed CONCEPT_MAP view.
 Uses the landing cache for the WNL pseudonymised feed.
 */
 

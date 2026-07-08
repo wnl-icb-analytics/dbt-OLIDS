@@ -38,23 +38,23 @@ models:
         +schema: "olids_landing"
         +post-hook: ["{{ add_model_comment() }}"]
         +tags: ["landing"]
-      base:
+      conformed:
         +materialized: view
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
-        +schema: "olids_base"
+        +schema: "olids_conformed"
         +post-hook: ["{{ add_model_comment() }}"]
-        +tags: ["base"]
+        +tags: ["conformed"]
       stable:
         +materialized: table
         +transient: false
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
-        +schema: "olids"
+        +schema: "olids_stable"
         +post-hook: ["{{ add_model_comment() }}"]
         +tags: ["stable"]
       intermediate:
         +materialized: table
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
-        +schema: "olids_base"
+        +schema: "olids_conformed"
         +post-hook: ["{{ add_model_comment() }}"]
         +tags: ["intermediate"]
 

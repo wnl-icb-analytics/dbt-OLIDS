@@ -1,6 +1,7 @@
 {{
     config(
         materialized='table',
+        schema='olids_stable',
         tags=['intermediate', 'terminology'],
         cluster_by=['source_concept_id', 'target_concept_id'],
         alias='enriched_concept_map')
@@ -30,7 +31,7 @@ emis_clinical AS (
         code_id,
         term,
         snomed_ct_concept_id
-    FROM {{ ref('base_emis_clinical_code') }}
+    FROM {{ ref('conformed_emis_clinical_code') }}
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY concept_id
         ORDER BY code_id, snomed_ct_concept_id
@@ -41,7 +42,7 @@ snomed_concepts AS (
     SELECT
         concept_id,
         code
-    FROM {{ ref('base_olids_concept') }}
+    FROM {{ ref('conformed_concept') }}
     WHERE system = 'http://snomed.info/sct'
 ),
 
@@ -82,7 +83,7 @@ enriched_existing AS (
             cm.target_display
         ) AS target_display,
         cm.is_primary = 1 AS is_primary
-    FROM {{ ref('base_olids_concept_map') }} AS cm
+    FROM {{ ref('conformed_concept_map') }} AS cm
     LEFT JOIN emis_clinical AS emis_ref
         ON
             cm.source_concept_id = emis_ref.concept_id
@@ -115,7 +116,7 @@ missing_emis_mappings AS (
         'emis-reference-backfill' AS equivalence,
         1 AS equivalence_rank
     FROM emis_clinical AS emis_ref
-    LEFT JOIN {{ ref('base_olids_concept_map') }} AS cm
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
         ON emis_ref.concept_id = cm.source_concept_id
     -- REVIEW: target_concept_id is resolved by SNOMED code because OLIDS no longer supplies it in EMIS reference.
     LEFT JOIN snomed_concepts AS target

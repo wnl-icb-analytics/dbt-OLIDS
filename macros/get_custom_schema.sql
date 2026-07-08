@@ -6,12 +6,10 @@
         {{ default_schema }}
     {%- elif custom_schema_name == 'olids_landing' -%}
         OLIDS_EXPERIMENTAL_LANDING
-    {%- elif custom_schema_name == 'olids_base' -%}
-        OLIDS_EXPERIMENTAL_BASE
-    {%- elif custom_schema_name == 'olids' -%}
-        OLIDS_EXPERIMENTAL
-    {%- elif custom_schema_name == 'dbt_base' -%}
-        OLIDS_EXPERIMENTAL_BASE
+    {%- elif custom_schema_name == 'olids_conformed' -%}
+        OLIDS_EXPERIMENTAL_CONFORMED
+    {%- elif custom_schema_name == 'olids_stable' -%}
+        OLIDS_EXPERIMENTAL_STABLE
     {%- else -%}
         {{ default_schema }}_{{ custom_schema_name | trim }}
     {%- endif -%}

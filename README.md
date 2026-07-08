@@ -6,7 +6,7 @@ Foundational data layers for OLIDS (One London Integrated Data Set).
 
 Builds two data layers:
 
-**Base Layer**
+**Conformed Layer**
 Filtered views of OLIDS source tables applying:
 - NCL practice filtering
 - Sensitive patient exclusion
@@ -51,7 +51,7 @@ dbt build  # Builds and tests all models
 ```bash
 # Regular development runs (use XS-sized warehouse)
 dbt build              # Build and test everything
-dbt build -s tag:base  # Base layer only
+dbt build -s tag:conformed  # Conformed layer only
 
 # Full refresh of stable layer (use L-sized warehouse)
 dbt build --full-refresh
@@ -82,18 +82,20 @@ Never commit `.env` or `profiles.yml`.
 
 ```
 models/olids/
-├── base/           # Filtered views
+├── landing/        # Source cache tables
+├── conformed/      # Filtered views
 ├── stable/         # Incremental tables
-└── intermediate/   # NCL practices lookup
+└── intermediate/   # Practices lookup, enriched concept map
 ```
 
 ## Where Objects Are Built
 
 All models are built in the database specified by `SNOWFLAKE_TARGET_DATABASE` in your `.env` file (typically `DATA_LAB_OLIDS_NCL`):
 
-- **Base layer**: `DATA_LAB_OLIDS_NCL.olids_base.*` (views)
-- **Stable layer**: `DATA_LAB_OLIDS_NCL.olids.*` (tables)
-- **Intermediate**: `DATA_LAB_OLIDS_NCL.DBT_STABLE.*` (tables)
+- **Landing**: `OLIDS_EXPERIMENTAL_LANDING.*` (tables)
+- **Conformed layer**: `OLIDS_EXPERIMENTAL_CONFORMED.*` (views)
+- **Stable layer**: `OLIDS_EXPERIMENTAL_STABLE.*` (tables)
+- **Intermediate**: `OLIDS_EXPERIMENTAL_CONFORMED.*` (tables)
 
 The stable layer reads from `Data_Store_OLIDS_Clinical_Validation` source tables.
 

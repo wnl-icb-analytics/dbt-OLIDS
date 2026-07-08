@@ -5,7 +5,7 @@
 }}
 
 /*
-Base ORGANISATION view.
+Conformed ORGANISATION view.
 Restricts to WNL organisations using publisher organisation code.
 */
 

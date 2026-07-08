@@ -21,4 +21,4 @@ SELECT
     publisher_organisation_code,
     source_extraction_date,
     lds_transform_datetime
-FROM {{ ref('base_olids_appointment_practitioner') }}
+FROM {{ ref('conformed_appointment_practitioner') }}

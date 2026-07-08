@@ -5,7 +5,7 @@
 }}
 
 /*
-LOCATION base view.
+Conformed LOCATION view.
 Uses the landing cache for the WNL pseudonymised feed.
 */
 

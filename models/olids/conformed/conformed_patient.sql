@@ -5,7 +5,7 @@
 }}
 
 /*
-Base filtered patient view.
+Conformed filtered patient view.
 Excludes sensitive, confidential and test patients, then restricts to WNL practices.
 */
 

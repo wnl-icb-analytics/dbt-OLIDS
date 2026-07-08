@@ -60,4 +60,4 @@ SELECT
     publisher_organisation_code,
     source_extraction_date,
     lds_transform_datetime
-FROM {{ ref('base_olids_referral_request') }}
+FROM {{ ref('conformed_referral_request') }}

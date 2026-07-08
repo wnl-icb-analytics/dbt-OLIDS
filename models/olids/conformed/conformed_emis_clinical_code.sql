@@ -5,7 +5,7 @@
 }}
 
 /*
-EMIS_CLINICAL_CODE base view.
+Conformed EMIS_CLINICAL_CODE view.
 Uses the landing cache for the WNL pseudonymised feed.
 */
 

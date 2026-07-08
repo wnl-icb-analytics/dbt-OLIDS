@@ -17,4 +17,4 @@ SELECT
     gp_practice_code,
     lds_is_deleted,
     lds_transform_datetime
-FROM {{ ref('base_olids_patient_person') }}
+FROM {{ ref('conformed_patient_person') }}

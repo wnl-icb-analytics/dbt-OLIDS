@@ -5,7 +5,7 @@
 }}
 
 /*
-Base PERSON view.
+Conformed PERSON view.
 Keeps people linked to the filtered patient spine and passes pseudonymised fields through.
 */
 
@@ -13,10 +13,10 @@ WITH gender_fallback AS (
     SELECT
         pp.person_uuid,
         c.display AS gender
-    FROM {{ ref('base_olids_patient_person') }} pp
-    INNER JOIN {{ ref('base_olids_patient') }} pat
+    FROM {{ ref('conformed_patient_person') }} pp
+    INNER JOIN {{ ref('conformed_patient') }} pat
         ON pp.patient_id = pat.id
-    LEFT JOIN {{ ref('base_olids_concept') }} c
+    LEFT JOIN {{ ref('conformed_concept') }} c
         ON pat.gender_source_concept_id = c.concept_id
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY pp.person_uuid
@@ -64,6 +64,6 @@ LEFT JOIN gender_fallback gf
     ON gf.person_uuid = src.id
 WHERE EXISTS (
     SELECT 1
-    FROM {{ ref('base_olids_patient_person') }} pp
+    FROM {{ ref('conformed_patient_person') }} pp
     WHERE pp.person_uuid = src.id
 )
