@@ -74,10 +74,13 @@ assigned AS (
     SELECT
         source_person_id,
         {% if is_incremental() %}
-            COALESCE((SELECT MAX(person_seq) FROM {{ this }}), 0)
-            + ROW_NUMBER() OVER (ORDER BY source_person_id) AS person_seq,
+            (
+                COALESCE((SELECT MAX(person_seq) FROM {{ this }}), 0)
+                + ROW_NUMBER() OVER (ORDER BY source_person_id)
+            )::NUMBER(38, 0
+            ) AS person_seq,
         {% else %}
-        ROW_NUMBER() OVER (ORDER BY source_person_id) AS person_seq,
+        ROW_NUMBER() OVER (ORDER BY source_person_id)::NUMBER(38, 0) AS person_seq,
         {% endif %}
         source_feed,
         CURRENT_TIMESTAMP()::TIMESTAMP_NTZ AS first_seen_at

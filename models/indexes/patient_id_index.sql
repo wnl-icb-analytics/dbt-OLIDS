@@ -53,10 +53,10 @@ assigned AS (
     SELECT
         source_patient_id,
         {% if is_incremental() %}
-        COALESCE((SELECT MAX(patient_seq) FROM {{ this }}), 0)
-            + ROW_NUMBER() OVER (ORDER BY source_patient_id) AS patient_seq,
+        (COALESCE((SELECT MAX(patient_seq) FROM {{ this }}), 0)
+            + ROW_NUMBER() OVER (ORDER BY source_patient_id))::NUMBER(38, 0) AS patient_seq,
         {% else %}
-        ROW_NUMBER() OVER (ORDER BY source_patient_id) AS patient_seq,
+        ROW_NUMBER() OVER (ORDER BY source_patient_id)::NUMBER(38, 0) AS patient_seq,
         {% endif %}
         source_feed,
         CURRENT_TIMESTAMP()::TIMESTAMP_NTZ AS first_seen_at
@@ -66,7 +66,7 @@ assigned AS (
 SELECT
     source_patient_id,
     patient_seq,
-    'PT' || {{ encode_crockford32('patient_seq') }} AS patient_id,
+    ('PT' || {{ encode_crockford32('patient_seq') }})::VARCHAR(8) AS patient_id,
     source_feed,
     first_seen_at
 FROM assigned
