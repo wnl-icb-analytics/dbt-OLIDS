@@ -14,7 +14,7 @@ Uses native person_id from source table.
 SELECT
     src.lds_source_record_id,
     src.id,
-    {{ generate_person_id('src.person_id') }} AS person_id,
+    {{ generate_person_id_legacy('src.person_id') }} AS person_id,
     src.patient_id,
     src.practitioner_id,
     src.appointment_id,

@@ -15,7 +15,7 @@ SELECT
     src.lds_source_record_id,
     src.id,
     src.patient_id,
-    {{ generate_person_id('src.person_id') }} AS person_id,
+    {{ generate_person_id_legacy('src.person_id') }} AS person_id,
     src.patient_address_id,
     src.publisher_organisation_id,
     src.provider_organisation_id,

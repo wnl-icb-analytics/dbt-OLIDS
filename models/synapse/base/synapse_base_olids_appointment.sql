@@ -17,7 +17,7 @@ SELECT
     src.provider_organisation_id,
     src.publisher_organisation_id,
     src.patient_id,
-    {{ generate_person_id('src.person_id') }} AS person_id,
+    {{ generate_person_id_legacy('src.person_id') }} AS person_id,
     src.practitioner_in_role_id,
     src.schedule_id,
     src.start_date,
