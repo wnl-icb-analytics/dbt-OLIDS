@@ -1,1310 +1,1287 @@
 version: 2
 models:
-- name: base_olids_allergy_intolerance
-  description: 'Filtered Allergy Intolerance base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: encounter_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_encounter')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: allergy_intolerance_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date_precision_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_appointment
-  description: 'Filtered Appointment base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: provider_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_in_role_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner_in_role')
-              field: id
-              tolerance_percent: 1.0
-    - name: schedule_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_schedule')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: status_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: booking_method_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: contact_mode_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_appointment_practitioner
-  description: 'Filtered Appointment Practitioner base view.
-
-
-    Applied filters:
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner join ensures only records with valid organisation references
-
-
-    Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
-  columns:
-    - name: appointment_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_appointment')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-- name: base_olids_diagnostic_order
-  description: 'Filtered Diagnostic Order base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: encounter_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_encounter')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: parent_observation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_observation')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: diagnostic_order_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: result_measurement_units_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date_precision_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: episodicity_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_encounter
-  description: 'Filtered Encounter base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: encounter_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date_precision_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_episode_of_care
-  description: 'Filtered Episode Of Care base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: publisher_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-    - name: provider_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-    - name: care_manager_practitioner_in_role_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: episode_of_care_start_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: episode_type_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: episode_status_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_location
-  description: 'Unfiltered Location reference view.
-
-
-    No filters applied - reference data used as-is.
-
-    Direct passthrough from source table with explicit column selection for interface consistency.'
-- name: base_olids_location_contact
-  description: 'Unfiltered Location Contact reference view.
-
-
-    No filters applied - reference data used as-is.
-
-    Direct passthrough from source table with explicit column selection for interface consistency.'
-  columns:
-    - name: location_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_location')
-              field: id
-              tolerance_percent: 1.0
-- name: base_olids_medication_order
-  description: 'Filtered Medication Order base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: provider_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-    - name: medication_statement_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_medication_statement')
-              field: id
-              tolerance_percent: 1.0
-    - name: encounter_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_encounter')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: observation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_observation')
-              field: id
-              tolerance_percent: 1.0
-    - name: allergy_intolerance_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_allergy_intolerance')
-              field: id
-              tolerance_percent: 1.0
-    - name: diagnostic_order_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_diagnostic_order')
-              field: id
-              tolerance_percent: 1.0
-    - name: referral_request_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_referral_request')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: medication_order_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 3.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date_precision_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 3.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_medication_statement
-  description: 'Filtered Medication Statement base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: provider_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-    - name: encounter_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_encounter')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: observation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_observation')
-              field: id
-              tolerance_percent: 1.0
-    - name: allergy_intolerance_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_allergy_intolerance')
-              field: id
-              tolerance_percent: 1.0
-    - name: diagnostic_order_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_diagnostic_order')
-              field: id
-              tolerance_percent: 1.0
-    - name: referral_request_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_referral_request')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: medication_statement_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 3.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: authorisation_type_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 3.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date_precision_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 3.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_observation
-  description: 'Filtered Observation base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: encounter_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_encounter')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: parent_observation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_observation')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: observation_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: result_units_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date_precision_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: episodicity_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_organisation
-  description: 'Unfiltered Organisation reference view.
-
-
-    No filters applied - reference data used as-is.
-
-    Direct passthrough from source table with explicit column selection for interface consistency.'
-- name: base_olids_patient
-  description: "Base filtered patient view. Foundation for all patient-related filtering.\n\nExcludes sensitive patients:\n\
-    - is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients)\
-    \ \n- is_test_patient = FALSE (excludes test patients)\n\nRestricts to WNL practices:\n- publisher_organisation_code\
-    \ IN (WNL practice codes via int_wnl_practices)"
-  columns:
-    - name: sk_patient_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 5.0
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: lds_source_record_id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: gender_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-    - name: registered_practice_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-- name: base_olids_patient_address
-  description: 'Filtered Patient Address base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: address_type_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_patient_contact
-  description: 'Filtered Patient Contact base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: contact_type_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_patient_person
-  description: 'Generated Patient Person base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Inherits filtering from underlying patient relationships
-
-    - Practice filtering: Inherits NCL practice restriction through patient associations
-
-
-    Filtering method: Filtered through relationships to base_olids_patient'
-  columns:
-    - name: patient_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-- name: base_olids_patient_registered_practitioner_in_role
-  description: 'Filtered Patient Registered Practitioner In Role base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-- name: base_olids_patient_uprn
-  description: 'Unfiltered Patient Uprn reference view.
-
-
-    No filters applied - reference data used as-is.
-
-    Direct passthrough from source table with explicit column selection for interface consistency.'
-- name: base_olids_person
-  description: 'Filtered Person base view sourced from native OLIDS_MASKED.PERSON.
-
-
-    Applied filters:
-
-    - Patient filtering: Restricted to persons linked to NCL patients via PATIENT_PERSON
-
-
-    Filtering method: WHERE EXISTS against base_olids_patient_person on person_uuid.
-
-
-    Identifiers: id is the numeric person_id (hashed from native UUID); person_uuid
-    holds the original native UUID.'
-- name: base_olids_practitioner
-  description: 'Filtered Practitioner base view.
-
-
-    Applied filters:
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner join ensures only records with valid organisation references
-
-
-    Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
-- name: base_olids_practitioner_in_role
-  description: 'Filtered Practitioner In Role base view.
-
-
-    Applied filters:
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner join ensures only records with valid organisation references
-
-
-    Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
-  columns:
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: employer_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-- name: base_olids_procedure_request
-  description: 'Filtered Procedure Request base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: encounter_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_encounter')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: procedure_request_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date_precision_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: status_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_referral_request
-  description: 'Filtered Referral Request base view.
-
-
-    Applied filters:
-
-    - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-    Filtering method: Inner join to base_olids_patient and int_wnl_practices'
-  columns:
-    - name: id
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: patient_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_patient')
-              field: id
-              tolerance_percent: 1.0
-    - name: person_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_person')
-              field: id
-              tolerance_percent: 1.0
-    - name: publisher_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-    - name: encounter_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_encounter')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-    - name: requester_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-    - name: recipient_organisation_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_organisation')
-              field: id
-              tolerance_percent: 1.0
-    - name: lds_start_datetime
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date
-      tests:
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: referral_request_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: clinical_effective_date_precision_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: referral_request_priority_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: referral_request_type_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-    - name: referral_request_specialty_source_concept_id
-      tests:
-        - concept_mapping_integrity:
-            arguments:
-              tolerance_percent: 1.0
-        - column_completeness:
-            arguments:
-              tolerance_percent: 1.0
-- name: base_olids_schedule
-  description: 'Filtered Schedule base view.
-
-
-    Applied filters:
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner join ensures only records with valid organisation references
-
-
-    Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
-- name: base_olids_schedule_practitioner
-  description: 'Filtered Schedule Practitioner base view.
-
-
-    Applied filters:
-
-    - Practice filtering: Restricts to WNL practices only
-
-    - Data integrity: Inner join ensures only records with valid organisation references
-
-
-    Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
-  columns:
-    - name: schedule_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_schedule')
-              field: id
-              tolerance_percent: 1.0
-    - name: practitioner_id
-      tests:
-        - referential_integrity:
-            arguments:
-              to: ref('base_olids_practitioner')
-              field: id
-              tolerance_percent: 1.0
-- name: base_olids_concept
-  description: 'Unfiltered OLIDS terminology concept reference view.
-
-
-    No filters applied - reference data used as-is.
-
-    Direct passthrough from source table with explicit column selection for interface consistency.'
-- name: base_olids_concept_map
-  description: 'Unfiltered OLIDS terminology concept map reference view.
-
-
-    No filters applied - reference data used as-is.
-
-    Direct passthrough from source table with explicit column selection for interface consistency.'
-- name: base_olids_postcode_hash
-  description: 'Unfiltered postcode hash reference view linking postcodes to geographical areas.
-
-
-    No filters applied - reference data used as-is.
-
-    Direct passthrough from source table with explicit column selection for interface consistency.'
-- name: base_olids_ndoo_hashed
-  description: 'Unfiltered NDOO (National Data Opt-Out) preferences keyed by hashed
-    NHS number.
-
-
-    No filters applied - reference data used as-is.
-
-    Direct passthrough from NDOO_MASKED.PATIENT_HASH; surfaced downstream as ndoo_hashed.'
+  - name: base_emis_clinical_code
+    description: base emis clinical code model.
+    columns:
+      - name: concept_id
+        tests:
+          - not_null
+  - name: base_emis_drug_code
+    description: base emis drug code model.
+    columns:
+      - name: concept_id
+        tests:
+          - not_null
+  - name: base_olids_allergy_intolerance
+    description: 'Filtered Allergy Intolerance base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: encounter_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_encounter')
+                field: id
+                tolerance_percent: 1.0
+      - name: clinical_effective_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: allergy_intolerance_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date_precision_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_appointment
+    description: 'Filtered Appointment base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: provider_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_in_role_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner_in_role')
+                field: id
+                tolerance_percent: 1.0
+      - name: schedule_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_schedule')
+                field: id
+                tolerance_percent: 1.0
+      - name: appointment_status_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: booking_method_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: contact_mode_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_appointment_practitioner
+    description: 'Filtered Appointment Practitioner base view.
+
+
+      Applied filters:
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner join ensures only records with valid organisation references
+
+
+      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+    columns:
+      - name: appointment_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_appointment')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_diagnostic_order
+    description: 'Filtered Diagnostic Order base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: encounter_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_encounter')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: parent_observation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_observation')
+                field: id
+                tolerance_percent: 1.0
+      - name: clinical_effective_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: diagnostic_order_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: result_measurement_units_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date_precision_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: episodicity_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_encounter
+    description: 'Filtered Encounter base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: encounter_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date_precision_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_episode_of_care
+    description: 'Filtered Episode Of Care base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: publisher_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: managing_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: usual_gp_practitioner_in_role_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: episode_of_care_start_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: episode_type_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: episode_status_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_location
+    description: 'Unfiltered Location reference view.
+
+
+      No filters applied - reference data used as-is.
+
+      Direct passthrough from source table with explicit column selection for interface consistency.'
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_medication_order
+    description: 'Filtered Medication Order base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: provider_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: medication_statement_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_medication_statement')
+                field: id
+                tolerance_percent: 1.0
+      - name: encounter_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_encounter')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: observation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_observation')
+                field: id
+                tolerance_percent: 1.0
+      - name: allergy_intolerance_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_allergy_intolerance')
+                field: id
+                tolerance_percent: 1.0
+      - name: diagnostic_order_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_diagnostic_order')
+                field: id
+                tolerance_percent: 1.0
+      - name: referral_request_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_referral_request')
+                field: id
+                tolerance_percent: 1.0
+      - name: clinical_effective_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: medication_order_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 3.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date_precision_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 3.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_medication_statement
+    description: 'Filtered Medication Statement base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: provider_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: encounter_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_encounter')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: observation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_observation')
+                field: id
+                tolerance_percent: 1.0
+      - name: allergy_intolerance_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_allergy_intolerance')
+                field: id
+                tolerance_percent: 1.0
+      - name: diagnostic_order_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_diagnostic_order')
+                field: id
+                tolerance_percent: 1.0
+      - name: referral_request_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_referral_request')
+                field: id
+                tolerance_percent: 1.0
+      - name: clinical_effective_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: medication_statement_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 3.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: authorisation_type_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 3.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date_precision_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 3.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_observation
+    description: 'Filtered Observation base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: encounter_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_encounter')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: parent_observation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_observation')
+                field: id
+                tolerance_percent: 1.0
+      - name: clinical_effective_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: observation_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: result_value_units_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date_precision_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: episodicity_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_organisation
+    description: 'Unfiltered Organisation reference view.
+
+
+      No filters applied - reference data used as-is.
+
+      Direct passthrough from source table with explicit column selection for interface consistency.'
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_patient
+    description: "Base filtered patient view. Foundation for all patient-related filtering.\n\nExcludes sensitive patients:\n\
+      - is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients)\
+      \ \n- is_test_patient = FALSE (excludes test patients)\n\nRestricts to WNL practices:\n- publisher_organisation_code\
+      \ IN (WNL practice codes via int_wnl_practices)"
+    columns:
+      - name: sk_patient_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 5.0
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: lds_source_record_id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: gender_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+      - name: registered_practice_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+  - name: base_olids_patient_address
+    description: 'Filtered Patient Address base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: address_type_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_patient_contact
+    description: 'Filtered Patient Contact base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: contact_type_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_patient_person
+    description: 'Generated Patient Person base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Inherits filtering from underlying patient relationships
+
+      - Practice filtering: Inherits NCL practice restriction through patient associations
+
+
+      Filtering method: Filtered through relationships to base_olids_patient'
+    columns:
+      - name: patient_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_patient_uprn
+    description: 'Unfiltered Patient Uprn reference view.
+
+
+      No filters applied - reference data used as-is.
+
+      Direct passthrough from source table with explicit column selection for interface consistency.'
+    columns:
+      - name: patient_address_id
+        tests:
+          - not_null
+  - name: base_olids_person
+    description: 'Filtered Person base view sourced from the pseudonymised PERSON feed.
+
+
+      Applied filters:
+
+      - Patient filtering: Restricted to people linked to WNL patients via PATIENT_PERSON
+
+
+      Filtering method: WHERE EXISTS against base_olids_patient_person on person_uuid.
+
+
+      Identifiers: id is generated from the native UUID; person_uuid holds the native UUID.'
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_practitioner
+    description: 'Filtered Practitioner base view.
+
+
+      Applied filters:
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner join ensures only records with valid organisation references
+
+
+      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_practitioner_in_role
+    description: 'Filtered Practitioner In Role base view.
+
+
+      Applied filters:
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner join ensures only records with valid organisation references
+
+
+      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+    columns:
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: employer_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_procedure_request
+    description: 'Filtered Procedure Request base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: encounter_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_encounter')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: clinical_effective_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: procedure_request_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date_precision_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: status_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_referral_request
+    description: 'Filtered Referral Request base view.
+
+
+      Applied filters:
+
+      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner joins ensure only records with valid patient and organisation references
+
+
+      Filtering method: Inner join to base_olids_patient and int_wnl_practices'
+    columns:
+      - name: id
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: patient_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_patient')
+                field: id
+                tolerance_percent: 1.0
+      - name: person_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_person')
+                field: id
+                tolerance_percent: 1.0
+      - name: publisher_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: encounter_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_encounter')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: requester_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: recipient_organisation_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_organisation')
+                field: id
+                tolerance_percent: 1.0
+      - name: clinical_effective_date
+        tests:
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: referral_request_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: clinical_effective_date_precision_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: referral_request_priority_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: referral_request_type_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+      - name: referral_request_specialty_source_concept_id
+        tests:
+          - concept_mapping_integrity:
+              arguments:
+                tolerance_percent: 1.0
+          - column_completeness:
+              arguments:
+                tolerance_percent: 1.0
+  - name: base_olids_schedule
+    description: 'Filtered Schedule base view.
+
+
+      Applied filters:
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner join ensures only records with valid organisation references
+
+
+      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_schedule_practitioner
+    description: 'Filtered Schedule Practitioner base view.
+
+
+      Applied filters:
+
+      - Practice filtering: Restricts to WNL practices only
+
+      - Data integrity: Inner join ensures only records with valid organisation references
+
+
+      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+    columns:
+      - name: schedule_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_schedule')
+                field: id
+                tolerance_percent: 1.0
+      - name: practitioner_id
+        tests:
+          - referential_integrity:
+              arguments:
+                to: ref('base_olids_practitioner')
+                field: id
+                tolerance_percent: 1.0
+      - name: id
+        tests:
+          - not_null
+  - name: base_olids_concept
+    description: 'Unfiltered OLIDS terminology concept reference view.
+
+
+      No filters applied - reference data used as-is.
+
+      Direct passthrough from source table with explicit column selection for interface consistency.'
+    columns:
+      - name: concept_id
+        tests:
+          - not_null
+  - name: base_olids_concept_map
+    description: 'Unfiltered OLIDS terminology concept map reference view.
+
+
+      No filters applied - reference data used as-is.
+
+      Direct passthrough from source table with explicit column selection for interface consistency.'
+    columns:
+      - name: source_concept_id
+        tests:
+          - not_null
+  - name: base_olids_postcode_hash
+    description: 'Unfiltered postcode hash reference view linking postcodes to geographical areas.
+
+
+      No filters applied - reference data used as-is.
+
+      Direct passthrough from source table with explicit column selection for interface consistency.'
+    columns:
+      - name: postcode_hash
+        tests:
+          - not_null
+  - name: base_olids_national_data_opt_out
+    description: 'Filtered National Data Opt-Out base view.
+
+
+      Uses the landing national data opt-out feed and keeps the patient key used for stable joins.'
+    columns:
+      - name: sk_patient_id
+        tests:
+          - not_null
+      - name: is_latest
+        tests:
+          - not_null
+      - name: lds_business_id
+        tests:
+          - not_null

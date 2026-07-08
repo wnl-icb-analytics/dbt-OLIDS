@@ -1,0 +1,37 @@
+{{
+    config(alias='ENCOUNTER')
+}}
+
+/*
+Single daily scan through source policies. Downstream models read this cache.
+*/
+
+SELECT
+    id,
+    lds_source_record_id,
+    patient_id,
+    person_id,
+    publisher_organisation_id,
+    provider_organisation_id,
+    author_organisation_id,
+    episode_of_care_id,
+    appointment_id,
+    practitioner_id,
+    location,
+    encounter_source_concept_id,
+    clinical_effective_date_precision_source_concept_id,
+    consultation_type,
+    clinical_effective_date,
+    date_recorded,
+    is_confidential,
+    age_at_event,
+    age_at_event_baby,
+    age_at_event_neonate,
+    type,
+    subtype,
+    admission_method,
+    lds_is_deleted,
+    publisher_organisation_code,
+    source_extraction_date,
+    lds_transform_datetime
+FROM {{ source('olids_pseudo', 'ENCOUNTER') }}

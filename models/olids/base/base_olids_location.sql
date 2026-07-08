@@ -5,14 +5,13 @@
 }}
 
 /*
-Base LOCATION View
-Reference data - no filtering applied.
-Pattern: Global reference table.
+LOCATION base view.
+Uses the landing cache for the WNL pseudonymised feed.
 */
 
 SELECT
-    src.lds_source_record_id,
     src.id,
+    src.lds_source_record_id,
     src.name,
     src.location_type_source_concept_id,
     src.type_description,
@@ -30,17 +29,7 @@ SELECT
     src.open_date,
     src.close_date,
     src.is_obsolete,
-    src.publisher_organisation_code,
-    src.lds_source_record_shard_id,
-    src.lds_id,
-    src.lds_business_key,
-    src.lds_source_dataset_id,
-    src.lds_cdm_event_id,
-    src.lds_versioner_event_id,
-    src.lds_datetime_first_acquired,
-    src.lds_datetime_update_acquired,
     src.lds_is_deleted,
-    src.lds_start_datetime,
-    src.lds_lakehouse_date_processed,
-    src.lds_lakehouse_datetime_updated
-FROM {{ source('olids_common', 'LOCATION') }} src
+    src.source_extraction_date,
+    src.lds_transform_datetime
+FROM {{ ref('landing_location') }} AS src

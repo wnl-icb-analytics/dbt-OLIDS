@@ -1,29 +1,26 @@
 {{
     config(
-        materialized='incremental',
-        unique_key='id',
-        on_schema_change='fail',
-        cluster_by=['start_date', 'patient_id'],
-        alias='appointment',
-        incremental_strategy='merge',
+        cluster_by=['start_date'],
         transient=false,
-        tags=['stable', 'incremental']
+        alias='appointment'
     )
 }}
 
-select
-    lds_source_record_id,
+SELECT
     id,
-    provider_organisation_id,
-    publisher_organisation_id,
+    lds_source_record_id,
     patient_id,
     person_id,
+    publisher_organisation_id,
+    provider_organisation_id,
+    author_organisation_id,
+    slot_id,
     practitioner_in_role_id,
     schedule_id,
     start_date,
     planned_duration_mins,
     actual_duration_mins,
-    status_source_concept_id,
+    appointment_status_source_concept_id,
     appointment_status_source_code,
     appointment_status_source_display,
     appointment_status_code,
@@ -54,23 +51,8 @@ select
     service_setting,
     national_slot_category_description,
     csds_care_contact_identifier,
-    publisher_organisation_code,
-    patient_shard_id,
-    person_shard_id,
-    lds_source_record_shard_id,
-    lds_id,
-    lds_business_key,
-    lds_source_dataset_id,
-    lds_cdm_event_id,
-    lds_versioner_event_id,
-    lds_datetime_first_acquired,
-    lds_datetime_update_acquired,
     lds_is_deleted,
-    lds_start_datetime,
-    lds_lakehouse_date_processed,
-    lds_lakehouse_datetime_updated
-from {{ ref('base_olids_appointment') }}
-
-{% if is_incremental() %}
-    where lds_start_datetime > (select max(lds_start_datetime) from {{ this }})
-{% endif %}
+    publisher_organisation_code,
+    source_extraction_date,
+    lds_transform_datetime
+FROM {{ ref('base_olids_appointment') }}

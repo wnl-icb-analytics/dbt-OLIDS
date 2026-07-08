@@ -1,23 +1,24 @@
+{{
+    config(
+        secure=true,
+        alias='postcode_hash')
+}}
+
 /*
-POSTCODE_HASH Base View
-OLIDS reference data linking postcode hashes to geographical areas.
-Passthrough view with standard column naming applied.
+POSTCODE_HASH base view.
+Uses the landing cache for the WNL pseudonymised feed.
 */
 
 SELECT
-    id,
-    postcode_hash,
-    primary_care_organisation,
-    local_authority_organisation,
-    yr2011_lsoa,
-    yr2011_msoa,
-    yr2021_lsoa,
-    yr2021_msoa,
-    effective_from,
-    effective_to,
-    is_latest,
-    lds_is_deleted,
-    lds_start_date_time,
-    lakehouse_date_processed,
-    high_watermark_date_time
-FROM {{ source('olids_reference', 'POSTCODE_HASH') }}
+    src.postcode_hash,
+    src.outcode,
+    src.local_authority_organisation,
+    src.primary_care_organisation,
+    src.yr2011_lsoa,
+    src.yr2021_lsoa,
+    src.yr2011_msoa,
+    src.yr2021_msoa,
+    src.ward,
+    src.version,
+    src.last_updated
+FROM {{ ref('landing_postcode_hash') }} AS src

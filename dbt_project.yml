@@ -32,6 +32,12 @@ models:
     +persist_docs:
       columns: true
     olids:
+      landing:
+        +materialized: table
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "olids_landing"
+        +post-hook: ["{{ add_model_comment() }}"]
+        +tags: ["landing"]
       base:
         +materialized: view
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
@@ -39,13 +45,12 @@ models:
         +post-hook: ["{{ add_model_comment() }}"]
         +tags: ["base"]
       stable:
-        +materialized: incremental
+        +materialized: table
         +transient: false
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
         +schema: "olids"
-        +on_schema_change: fail
         +post-hook: ["{{ add_model_comment() }}"]
-        +tags: ["stable", "incremental"]
+        +tags: ["stable"]
       intermediate:
         +materialized: table
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"

@@ -5,24 +5,20 @@
 }}
 
 /*
-EMIS Clinical Code Reference
-EMIS-provided lookup mapping EMIS codes to SNOMED concepts.
-Used to enrich the concept map where mappings are missing or point to root concept.
+EMIS_CLINICAL_CODE base view.
+Uses the landing cache for the WNL pseudonymised feed.
 */
 
 SELECT
-    emis_code_id,
-    olids_emis_code_concept_id,
-    term,
-    read_term_id,
-    snomed_ct_concept_id,
-    olids_snomed_concept_id,
-    snomed_ct_description_id,
-    national_code,
-    national_code_category,
-    national_description,
-    emis_code_category,
-    emis_parent_code_id,
-    lds_start_date_time
-FROM {{ source('emis_reference', 'PRIMARY_CARE_EMIS_CLINICAL_CODE') }}
-WHERE snomed_ct_concept_id IS NOT NULL
+    src.concept_id,
+    src.code_id,
+    src.term,
+    src.read_term_id,
+    src.snomed_ct_concept_id,
+    src.snomed_ct_description_id,
+    src.national_code,
+    src.national_code_category,
+    src.national_description,
+    src.emis_code_category_description
+FROM {{ ref('landing_emis_clinical_code') }} AS src
+WHERE src.snomed_ct_concept_id IS NOT NULL

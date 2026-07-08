@@ -5,17 +5,18 @@
 }}
 
 /*
-Base ALLERGY_INTOLERANCE View
-Filters to WNL practices and excludes sensitive patients.
-Pattern: Clinical table with patient_id + publisher_organisation_code
-Uses native person_id from source table.
+Base ALLERGY_INTOLERANCE view.
+Filters to WNL practices and excludes patients outside the filtered spine.
 */
 
 SELECT
-    src.lds_source_record_id,
     src.id,
+    src.lds_source_record_id,
     src.patient_id,
     {{ generate_person_id('src.person_id') }} AS person_id,
+    src.publisher_organisation_id,
+    src.provider_organisation_id,
+    src.author_organisation_id,
     src.practitioner_id,
     src.encounter_id,
     src.clinical_status,
@@ -43,25 +44,11 @@ SELECT
     src.age_at_event_neonate,
     src.date_recorded,
     src.is_confidential,
-    src.publisher_organisation_id,
-    src.provider_organisation_id,
-    src.author_organisation_id,
-    src.publisher_organisation_code,
-    src.patient_shard_id,
-    src.person_shard_id,
-    src.lds_source_record_shard_id,
-    src.lds_id,
-    src.lds_business_key,
-    src.lds_source_dataset_id,
-    src.lds_cdm_event_id,
-    src.lds_versioner_event_id,
-    src.lds_datetime_first_acquired,
-    src.lds_datetime_update_acquired,
     src.lds_is_deleted,
-    src.lds_start_datetime,
-    src.lds_lakehouse_date_processed,
-    src.lds_lakehouse_datetime_updated
-FROM {{ source('olids_common', 'ALLERGY_INTOLERANCE') }} src
+    src.publisher_organisation_code,
+    src.source_extraction_date,
+    src.lds_transform_datetime
+FROM {{ ref('landing_allergy_intolerance') }} src
 INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
 INNER JOIN {{ ref('int_wnl_practices') }} wnl_practices
@@ -70,5 +57,4 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} concept_map
     ON src.allergy_intolerance_source_concept_id = concept_map.source_concept_id
 LEFT JOIN {{ ref('int_enriched_concept_map') }} date_precision_map
     ON src.clinical_effective_date_precision_source_concept_id = date_precision_map.source_concept_id
-WHERE src.lds_start_datetime IS NOT NULL
 QUALIFY ROW_NUMBER() OVER (PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST, date_precision_map.target_display NULLS LAST) = 1

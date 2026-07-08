@@ -5,19 +5,8 @@
 }}
 
 /*
-Base PERSON View
-Sources native OLIDS_MASKED.PERSON, filtered to persons linked to NCL patients
-via the PATIENT_PERSON bridge.
-Pattern: id = numeric hash of native UUID (matches person_id on all other base
-tables); person_uuid = native UUID.
-
-Gender backfill: native PERSON.gender is currently 100% null upstream, so we
-fall back to the gender_source_concept_id from the person's most recently
-registered PATIENT row, resolved via OLIDS_TERMINOLOGY.CONCEPT.display. When
-native gender is populated upstream it takes precedence via COALESCE.
-
-Note: as_at_date / gp_registration_date are TIMESTAMP_NTZ at source — passed
-through unchanged.
+Base PERSON view.
+Keeps people linked to the filtered patient spine and passes pseudonymised fields through.
 */
 
 WITH gender_fallback AS (
@@ -31,50 +20,50 @@ WITH gender_fallback AS (
         ON pat.gender_source_concept_id = c.concept_id
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY pp.person_uuid
-        ORDER BY pat.lds_start_datetime DESC NULLS LAST
+        ORDER BY pat.lds_transform_datetime DESC NULLS LAST
     ) = 1
 )
 
 SELECT
-    {{ generate_person_id('per.id') }} AS id,
-    per.id AS person_uuid,
-    per.person_version_id,
-    per.person_record_type,
-    per.matched_nhs_no_hash,
-    per.sk_patient_id,
-    COALESCE(per.gender, gf.gender) AS gender,
-    per.birth_year,
-    per.birth_month,
-    per.death_year,
-    per.death_month,
-    per.death_notification_status,
-    per.postcode_hash,
-    per.preferred_contact_method,
-    per.nominated_pharmacy,
-    per.dispensing_doctor,
-    per.medical_appliance_supplier,
-    per.gp_practice_code,
-    per.gp_registration_date,
-    per.as_at_date,
-    per.sensitivity_flag,
-    per.error_success_code,
-    per.person_shard_id,
-    per.lds_source_record_id,
-    per.lds_source_record_shard_id,
-    per.lds_id,
-    per.lds_source_dataset_id,
-    per.lds_cdm_event_id,
-    per.lds_datetime_first_acquired_person,
-    per.lds_datetime_update_acquired_person,
-    per.lds_is_deleted,
-    per.lds_start_datetime,
-    per.lds_lakehouse_date_processed,
-    per.lds_lakehouse_datetime_updated
-FROM {{ source('olids_masked', 'PERSON') }} per
+    {{ generate_person_id('src.id') }} AS id,
+    src.id AS person_uuid,
+    src.lds_source_record_id,
+    src.req_nhs_number,
+    src.matched_nhs_no,
+    COALESCE(src.gender, gf.gender) AS gender,
+    src.date_of_birth,
+    src.date_of_birth_year,
+    src.date_of_birth_month,
+    src.date_of_birth_day,
+    src.date_of_birth_time,
+    src.date_of_death,
+    src.date_of_death_year,
+    src.date_of_death_month,
+    src.date_of_death_day,
+    src.date_of_death_time,
+    src.death_notification_status,
+    src.postcode,
+    src.preferred_contact_method,
+    src.nominated_pharmacy,
+    src.dispensing_doctor,
+    src.medical_appliance_supplier,
+    src.gp_practice_code,
+    src.gp_registration_date,
+    src.nhais_posting_id,
+    src.as_at_date,
+    src.local_patient_id,
+    src.internal_id,
+    src.mps_id,
+    src.patient_flagged_sensitive,
+    src.error_success_code,
+    src.lds_is_deleted,
+    src.source_extraction_date,
+    src.lds_transform_datetime
+FROM {{ ref('landing_person') }} src
 LEFT JOIN gender_fallback gf
-    ON gf.person_uuid = per.id
+    ON gf.person_uuid = src.id
 WHERE EXISTS (
     SELECT 1
     FROM {{ ref('base_olids_patient_person') }} pp
-    WHERE pp.person_uuid = per.id
+    WHERE pp.person_uuid = src.id
 )

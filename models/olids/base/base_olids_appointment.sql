@@ -5,25 +5,25 @@
 }}
 
 /*
-Base APPOINTMENT View
-Filters to WNL practices and excludes sensitive patients.
-Pattern: Clinical table with patient_id + publisher_organisation_code
-Uses native person_id from source table.
+Base APPOINTMENT view.
+Filters to WNL practices and excludes patients outside the filtered spine.
 */
 
 SELECT
-    src.lds_source_record_id,
     src.id,
-    src.provider_organisation_id,
-    src.publisher_organisation_id,
+    src.lds_source_record_id,
     src.patient_id,
     {{ generate_person_id('src.person_id') }} AS person_id,
+    src.publisher_organisation_id,
+    src.provider_organisation_id,
+    src.author_organisation_id,
+    src.slot_id,
     src.practitioner_in_role_id,
     src.schedule_id,
     src.start_date,
     src.planned_duration_mins,
     src.actual_duration_mins,
-    src.status_source_concept_id,
+    src.appointment_status_source_concept_id,
     appointment_status_map.source_code AS appointment_status_source_code,
     appointment_status_map.source_display AS appointment_status_source_display,
     appointment_status_map.target_code AS appointment_status_code,
@@ -54,32 +54,20 @@ SELECT
     src.service_setting,
     src.national_slot_category_description,
     src.csds_care_contact_identifier,
-    src.publisher_organisation_code,
-    src.patient_shard_id,
-    src.person_shard_id,
-    src.lds_source_record_shard_id,
-    src.lds_id,
-    src.lds_business_key,
-    src.lds_source_dataset_id,
-    src.lds_cdm_event_id,
-    src.lds_versioner_event_id,
-    src.lds_datetime_first_acquired,
-    src.lds_datetime_update_acquired,
     src.lds_is_deleted,
-    src.lds_start_datetime,
-    src.lds_lakehouse_date_processed,
-    src.lds_lakehouse_datetime_updated
-FROM {{ source('olids_common', 'APPOINTMENT') }} src
+    src.publisher_organisation_code,
+    src.source_extraction_date,
+    src.lds_transform_datetime
+FROM {{ ref('landing_appointment') }} src
 INNER JOIN {{ ref('base_olids_patient') }} patients
     ON src.patient_id = patients.id
 INNER JOIN {{ ref('int_wnl_practices') }} wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
 LEFT JOIN {{ ref('int_enriched_concept_map') }} appointment_status_map
-    ON src.status_source_concept_id = appointment_status_map.source_concept_id
+    ON src.appointment_status_source_concept_id = appointment_status_map.source_concept_id
 LEFT JOIN {{ ref('int_enriched_concept_map') }} booking_method_map
     ON src.booking_method_source_concept_id = booking_method_map.source_concept_id
 LEFT JOIN {{ ref('int_enriched_concept_map') }} contact_mode_map
     ON src.contact_mode_source_concept_id = contact_mode_map.source_concept_id
 WHERE src.patient_id IS NOT NULL
     AND src.start_date IS NOT NULL
-    AND src.lds_start_datetime IS NOT NULL

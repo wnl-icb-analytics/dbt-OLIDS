@@ -4,14 +4,15 @@
 
     {%- if custom_schema_name is none -%}
         {{ default_schema }}
+    {%- elif custom_schema_name == 'olids_landing' -%}
+        OLIDS_EXPERIMENTAL_LANDING
     {%- elif custom_schema_name == 'olids_base' -%}
-        OLIDS_BASE
+        OLIDS_EXPERIMENTAL_BASE
     {%- elif custom_schema_name == 'olids' -%}
-        OLIDS
+        OLIDS_EXPERIMENTAL
     {%- elif custom_schema_name == 'dbt_base' -%}
-        OLIDS_BASE
+        OLIDS_EXPERIMENTAL_BASE
     {%- else -%}
-        {#- Default behavior for other custom schemas -#}
         {{ default_schema }}_{{ custom_schema_name | trim }}
     {%- endif -%}
 
