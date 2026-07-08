@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: person_id_index
+    description: Append-only person id assignment table. Loss rotates surfaced person ids; `full_refresh=false` protects the state.
+    columns:
+      - name: source_person_id
+        description: Raw source person UUID.
+        tests:
+          - not_null
+          - unique
+      - name: person_seq
+        description: Assignment order, starting at 1.
+        tests:
+          - not_null
+      - name: person_id
+        description: Nine-digit surfaced person key.
+        tests:
+          - not_null
+          - unique
+      - name: source_feed
+        description: First feed that introduced the source id.
+      - name: first_seen_at
+        description: Assignment timestamp.
+
+  - name: patient_id_index
+    description: Append-only patient id assignment table. Loss rotates surfaced patient ids; `full_refresh=false` protects the state.
+    columns:
+      - name: source_patient_id
+        description: Raw source patient UUID.
+        tests:
+          - not_null
+          - unique
+      - name: patient_seq
+        description: Assignment order, starting at 1.
+        tests:
+          - not_null
+      - name: patient_id
+        description: Surfaced patient key.
+        tests:
+          - not_null
+          - unique
+      - name: source_feed
+        description: First feed that introduced the source id.
+      - name: first_seen_at
+        description: Assignment timestamp.

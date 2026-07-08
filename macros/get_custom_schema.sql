@@ -14,6 +14,8 @@
         SYNAPSE_BASE
     {%- elif custom_schema_name == 'synapse_stable' -%}
         SYNAPSE_STABLE
+    {%- elif custom_schema_name == 'pseudonymisation' -%}
+        PSEUDONYMISATION
     {%- else -%}
         {{ default_schema }}_{{ custom_schema_name | trim }}
     {%- endif -%}

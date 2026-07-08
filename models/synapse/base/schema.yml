@@ -998,8 +998,7 @@ models:
     Filtering method: WHERE EXISTS against synapse_base_olids_patient_person on person_uuid.
 
 
-    Identifiers: id is the numeric person_id (hashed from native UUID); person_uuid
-    holds the original native UUID.'
+    Identifiers: id is the indexed person id; person_uuid holds the source UUID.'
 - name: synapse_base_olids_practitioner
   description: 'Filtered Practitioner base view.
 

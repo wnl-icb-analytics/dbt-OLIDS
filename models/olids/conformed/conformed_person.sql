@@ -13,10 +13,10 @@ WITH gender_fallback AS (
     SELECT
         pp.person_uuid,
         c.display AS gender
-    FROM {{ ref('conformed_patient_person') }} pp
-    INNER JOIN {{ ref('conformed_patient') }} pat
+    FROM {{ ref('conformed_patient_person') }} AS pp
+    INNER JOIN {{ ref('conformed_patient') }} AS pat
         ON pp.patient_id = pat.id
-    LEFT JOIN {{ ref('conformed_concept') }} c
+    LEFT JOIN {{ ref('conformed_concept') }} AS c
         ON pat.gender_source_concept_id = c.concept_id
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY pp.person_uuid
@@ -25,12 +25,11 @@ WITH gender_fallback AS (
 )
 
 SELECT
-    {{ generate_person_id('src.id') }} AS id,
+    person_idx.person_id AS id,
     src.id AS person_uuid,
     src.lds_source_record_id,
     src.req_nhs_number,
     src.matched_nhs_no,
-    COALESCE(src.gender, gf.gender) AS gender,
     src.date_of_birth,
     src.date_of_birth_year,
     src.date_of_birth_month,
@@ -58,12 +57,15 @@ SELECT
     src.error_success_code,
     src.lds_is_deleted,
     src.source_extraction_date,
-    src.lds_transform_datetime
-FROM {{ ref('landing_person') }} src
-LEFT JOIN gender_fallback gf
-    ON gf.person_uuid = src.id
+    src.lds_transform_datetime,
+    COALESCE(src.gender, gf.gender) AS gender
+FROM {{ ref('landing_person') }} AS src
+LEFT JOIN gender_fallback AS gf
+    ON src.id = gf.person_uuid
+LEFT JOIN {{ ref('person_id_index') }} AS person_idx
+    ON src.id = person_idx.source_person_id
 WHERE EXISTS (
     SELECT 1
-    FROM {{ ref('conformed_patient_person') }} pp
+    FROM {{ ref('conformed_patient_person') }} AS pp
     WHERE pp.person_uuid = src.id
 )

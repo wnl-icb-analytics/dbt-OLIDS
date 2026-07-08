@@ -949,7 +949,7 @@ models:
       Filtering method: WHERE EXISTS against conformed_patient_person on person_uuid.
 
 
-      Identifiers: id is generated from the native UUID; person_uuid holds the native UUID.'
+      Identifiers: id is the indexed person id; person_uuid holds the source UUID.'
     columns:
       - name: id
         tests:

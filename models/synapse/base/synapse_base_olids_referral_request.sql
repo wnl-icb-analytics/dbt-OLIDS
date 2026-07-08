@@ -8,7 +8,7 @@
 Base REFERRAL_REQUEST View
 Filters to WNL practices and excludes sensitive patients.
 Pattern: Clinical table with patient_id + publisher_organisation_code
-Uses native person_id from source table.
+Surfaces indexed person and patient keys.
 */
 
 SELECT
@@ -16,8 +16,8 @@ SELECT
     src.id,
     src.publisher_organisation_id,
     src.author_organisation_id,
-    {{ generate_person_id('src.person_id') }} AS person_id,
-    src.patient_id,
+    person_idx.person_id,
+    patient_idx.patient_id,
     src.encounter_id,
     src.practitioner_id,
     src.unique_booking_reference_number,
@@ -51,9 +51,13 @@ SELECT
     src.lds_start_datetime,
     src.lds_lakehouse_date_processed,
     src.lds_lakehouse_datetime_updated
-FROM {{ source('olids_common', 'REFERRAL_REQUEST') }} src
-INNER JOIN {{ ref('synapse_base_olids_patient') }} patients
-    ON src.patient_id = patients.id
-INNER JOIN {{ ref('synapse_int_wnl_practices') }} wnl_practices
+FROM {{ source('olids_common', 'REFERRAL_REQUEST') }} AS src
+INNER JOIN {{ ref('synapse_base_olids_patient') }} AS patients
+    ON src.patient_id = patients.source_id
+LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
+    ON src.patient_id = patient_idx.source_patient_id
+LEFT JOIN {{ ref('person_id_index') }} AS person_idx
+    ON src.person_id = person_idx.source_person_id
+INNER JOIN {{ ref('synapse_int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
 WHERE src.lds_start_datetime IS NOT NULL

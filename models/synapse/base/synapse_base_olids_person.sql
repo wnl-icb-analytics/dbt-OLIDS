@@ -8,8 +8,7 @@
 Base PERSON View
 Sources native OLIDS_MASKED.PERSON, filtered to persons linked to NCL patients
 via the PATIENT_PERSON bridge.
-Pattern: id = numeric hash of native UUID (matches person_id on all other base
-tables); person_uuid = native UUID.
+Pattern: id is assigned by the person id index; person_uuid = native UUID.
 
 Gender backfill: native PERSON.gender is currently 100% null upstream, so we
 fall back to the gender_source_concept_id from the person's most recently
@@ -24,10 +23,10 @@ WITH gender_fallback AS (
     SELECT
         pp.person_uuid,
         c.display AS gender
-    FROM {{ ref('synapse_base_olids_patient_person') }} pp
-    INNER JOIN {{ ref('synapse_base_olids_patient') }} pat
+    FROM {{ ref('synapse_base_olids_patient_person') }} AS pp
+    INNER JOIN {{ ref('synapse_base_olids_patient') }} AS pat
         ON pp.patient_id = pat.id
-    LEFT JOIN {{ ref('synapse_base_olids_concept') }} c
+    LEFT JOIN {{ ref('synapse_base_olids_concept') }} AS c
         ON pat.gender_source_concept_id = c.concept_id
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY pp.person_uuid
@@ -36,13 +35,12 @@ WITH gender_fallback AS (
 )
 
 SELECT
-    {{ generate_person_id('per.id') }} AS id,
+    person_idx.person_id AS id,
     per.id AS person_uuid,
     per.person_version_id,
     per.person_record_type,
     per.matched_nhs_no_hash,
     per.sk_patient_id,
-    COALESCE(per.gender, gf.gender) AS gender,
     per.birth_year,
     per.birth_month,
     per.death_year,
@@ -69,12 +67,15 @@ SELECT
     per.lds_is_deleted,
     per.lds_start_datetime,
     per.lds_lakehouse_date_processed,
-    per.lds_lakehouse_datetime_updated
-FROM {{ source('olids_masked', 'PERSON') }} per
-LEFT JOIN gender_fallback gf
-    ON gf.person_uuid = per.id
+    per.lds_lakehouse_datetime_updated,
+    COALESCE(per.gender, gf.gender) AS gender
+FROM {{ source('olids_masked', 'PERSON') }} AS per
+LEFT JOIN gender_fallback AS gf
+    ON per.id = gf.person_uuid
+LEFT JOIN {{ ref('person_id_index') }} AS person_idx
+    ON per.id = person_idx.source_person_id
 WHERE EXISTS (
     SELECT 1
-    FROM {{ ref('synapse_base_olids_patient_person') }} pp
+    FROM {{ ref('synapse_base_olids_patient_person') }} AS pp
     WHERE pp.person_uuid = per.id
 )

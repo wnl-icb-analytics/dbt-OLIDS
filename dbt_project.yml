@@ -31,6 +31,12 @@ models:
     +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
     +persist_docs:
       columns: true
+    indexes:
+      +materialized: incremental
+      +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+      +schema: "pseudonymisation"
+      +post-hook: ["{{ add_model_comment() }}"]
+      +tags: ["index"]
     olids:
       landing:
         +materialized: table

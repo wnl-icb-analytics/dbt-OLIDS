@@ -27,12 +27,10 @@ Filtered views of OLIDS source tables applying:
 - Concept mapping for clinical codes
 
 **Stable Layer**
-Incrementally updated tables providing stability whilst the One London team develops the OLIDS data. Uses merge strategy to process only new/changed records based on `lds_start_date_time`, tracking historical changes (SCD Type 2). Includes:
-- Incremental updates (processes only changes since last run)
-- `person_id` workaround (hashed from `sk_patient_id` and cascaded throughout, addressing poor population in upstream OLIDS until ISL fixes at source)
-- Clustering (physically organises data by key columns for faster queries)
-
-**Full refresh required when ISL truncates/reloads or reprocesses upstream data.**
+Tables that expose the stable analytical interface. Includes:
+- Indexed patient and person ids
+- WNL patient filtering
+- Clustering on key columns where useful
 
 Analytical models built on the stable layer: [dbt-ncl-analytics](https://github.com/ncl-icb-analytics/dbt-ncl-analytics)
 
@@ -98,7 +96,7 @@ Never commit `.env` or `profiles.yml`.
 models/olids/
 ├── landing/        # Source cache tables
 ├── conformed/      # Filtered views
-├── stable/         # Incremental tables
+├── stable/         # Published tables
 └── intermediate/   # Practices lookup, enriched concept map
 ```
 
@@ -120,5 +118,4 @@ See [Contributing Guide](CONTRIBUTING.md) for workflow details.
 ## License
 
 Dual licensed under Open Government v3 & MIT. All code outputs subject to Crown Copyright.
-
 

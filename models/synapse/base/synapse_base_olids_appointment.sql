@@ -8,7 +8,7 @@
 Base APPOINTMENT View
 Filters to WNL practices and excludes sensitive patients.
 Pattern: Clinical table with patient_id + publisher_organisation_code
-Uses native person_id from source table.
+Surfaces indexed person and patient keys.
 */
 
 SELECT
@@ -16,8 +16,8 @@ SELECT
     src.id,
     src.provider_organisation_id,
     src.publisher_organisation_id,
-    src.patient_id,
-    {{ generate_person_id('src.person_id') }} AS person_id,
+    patient_idx.patient_id,
+    person_idx.person_id,
     src.practitioner_in_role_id,
     src.schedule_id,
     src.start_date,
@@ -69,17 +69,25 @@ SELECT
     src.lds_start_datetime,
     src.lds_lakehouse_date_processed,
     src.lds_lakehouse_datetime_updated
-FROM {{ source('olids_common', 'APPOINTMENT') }} src
-INNER JOIN {{ ref('synapse_base_olids_patient') }} patients
-    ON src.patient_id = patients.id
-INNER JOIN {{ ref('synapse_int_wnl_practices') }} wnl_practices
+FROM {{ source('olids_common', 'APPOINTMENT') }} AS src
+INNER JOIN {{ ref('synapse_base_olids_patient') }} AS patients
+    ON src.patient_id = patients.source_id
+LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
+    ON src.patient_id = patient_idx.source_patient_id
+LEFT JOIN {{ ref('person_id_index') }} AS person_idx
+    ON src.person_id = person_idx.source_person_id
+INNER JOIN {{ ref('synapse_int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
-LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} appointment_status_map
+LEFT JOIN
+    {{ ref('synapse_int_enriched_concept_map') }} AS appointment_status_map
     ON src.status_source_concept_id = appointment_status_map.source_concept_id
-LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} booking_method_map
-    ON src.booking_method_source_concept_id = booking_method_map.source_concept_id
-LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} contact_mode_map
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS booking_method_map
+    ON
+        src.booking_method_source_concept_id
+        = booking_method_map.source_concept_id
+LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS contact_mode_map
     ON src.contact_mode_source_concept_id = contact_mode_map.source_concept_id
-WHERE src.patient_id IS NOT NULL
+WHERE
+    src.patient_id IS NOT NULL
     AND src.start_date IS NOT NULL
     AND src.lds_start_datetime IS NOT NULL

@@ -18,8 +18,9 @@ Exclusions:
 
 SELECT
     src.lds_source_record_id,
-    src.id,
-    src.person_id,
+    patient_idx.patient_id AS id,
+    src.id AS source_id,
+    person_idx.person_id,
     src.nhs_number_hash,
     src.sk_patient_id,
     src.local_patient_id,
@@ -56,6 +57,10 @@ SELECT
 FROM {{ source('olids_masked', 'PATIENT') }} AS src
 INNER JOIN {{ ref('synapse_int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
+LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
+    ON src.id = patient_idx.source_patient_id
+LEFT JOIN {{ ref('person_id_index') }} AS person_idx
+    ON src.person_id = person_idx.source_person_id
 LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS gender_map
     ON src.gender_source_concept_id = gender_map.source_concept_id
 WHERE
