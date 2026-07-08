@@ -1,6 +1,6 @@
 {{
     config(
-        secure=true,
+        materialized='table',
         alias='patient')
 }}
 
@@ -50,7 +50,7 @@ LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
     ON src.id = patient_idx.source_patient_id
 LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS gender_map
+LEFT JOIN {{ ref('int_concept_map_best') }} AS gender_map
     ON src.gender_source_concept_id = gender_map.source_concept_id
 WHERE
     TRY_TO_NUMBER(src.sk_patient_id) IS NOT NULL
@@ -58,12 +58,3 @@ WHERE
     AND src.is_spine_sensitive = FALSE
     AND src.is_confidential = FALSE
     AND src.is_test_patient = FALSE
-QUALIFY
-    ROW_NUMBER()
-        OVER (
-            PARTITION BY src.id
-            ORDER BY
-                gender_map.target_display NULLS LAST,
-                gender_map.target_concept_id NULLS LAST
-        )
-    = 1

@@ -66,27 +66,14 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
 INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS concept_map
+LEFT JOIN {{ ref('int_concept_map_best') }} AS concept_map
     ON src.observation_source_concept_id = concept_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS date_precision_map
+LEFT JOIN {{ ref('int_concept_map_best') }} AS date_precision_map
     ON
         src.clinical_effective_date_precision_source_concept_id
         = date_precision_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS result_unit_map
+LEFT JOIN {{ ref('int_concept_map_best') }} AS result_unit_map
     ON
         src.result_value_units_source_concept_id
         = result_unit_map.source_concept_id
 WHERE src.observation_source_concept_id IS NOT NULL
-QUALIFY
-    ROW_NUMBER()
-        OVER (
-            PARTITION BY src.id
-            ORDER BY
-                concept_map.target_display NULLS LAST,
-                concept_map.target_concept_id NULLS LAST,
-                date_precision_map.target_display NULLS LAST,
-                date_precision_map.target_concept_id NULLS LAST,
-                result_unit_map.target_display NULLS LAST,
-                result_unit_map.target_concept_id NULLS LAST
-        )
-    = 1

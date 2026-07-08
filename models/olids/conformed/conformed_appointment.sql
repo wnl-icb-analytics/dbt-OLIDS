@@ -67,29 +67,16 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
 INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS appointment_status_map
+LEFT JOIN {{ ref('int_concept_map_best') }} AS appointment_status_map
     ON
         src.appointment_status_source_concept_id
         = appointment_status_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS booking_method_map
+LEFT JOIN {{ ref('int_concept_map_best') }} AS booking_method_map
     ON
         src.booking_method_source_concept_id
         = booking_method_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS contact_mode_map
+LEFT JOIN {{ ref('int_concept_map_best') }} AS contact_mode_map
     ON src.contact_mode_source_concept_id = contact_mode_map.source_concept_id
 WHERE
     src.patient_id IS NOT NULL
     AND src.start_date IS NOT NULL
-QUALIFY
-    ROW_NUMBER()
-        OVER (
-            PARTITION BY src.id
-            ORDER BY
-                appointment_status_map.target_display NULLS LAST,
-                appointment_status_map.target_concept_id NULLS LAST,
-                booking_method_map.target_display NULLS LAST,
-                booking_method_map.target_concept_id NULLS LAST,
-                contact_mode_map.target_display NULLS LAST,
-                contact_mode_map.target_concept_id NULLS LAST
-        )
-    = 1

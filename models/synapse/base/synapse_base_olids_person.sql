@@ -1,6 +1,6 @@
 {{
     config(
-        secure=true,
+        materialized='table',
         alias='person')
 }}
 

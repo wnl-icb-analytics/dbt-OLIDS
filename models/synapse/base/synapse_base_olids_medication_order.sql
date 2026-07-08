@@ -87,9 +87,9 @@ INNER JOIN {{ ref('synapse_int_wnl_practices') }} AS wnl_practices
     ON src.publisher_organisation_code = wnl_practices.practice_code
 LEFT JOIN {{ source('olids_common', 'MEDICATION_STATEMENT') }} AS ms
     ON src.medication_statement_id = ms.id
-LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS concept_map
+LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS concept_map
     ON src.medication_order_source_concept_id = concept_map.source_concept_id
-LEFT JOIN {{ ref('synapse_int_enriched_concept_map') }} AS date_precision_map
+LEFT JOIN {{ ref('synapse_int_concept_map_best') }} AS date_precision_map
     ON
         src.clinical_effective_date_precision_source_concept_id
         = date_precision_map.source_concept_id
@@ -98,9 +98,3 @@ LEFT JOIN data_lab_olids_ncl.reference.bnf_latest AS bnf
 WHERE
     src.medication_order_source_concept_id IS NOT NULL
     AND src.lds_start_datetime IS NOT NULL
-QUALIFY
-    ROW_NUMBER()
-        OVER (
-            PARTITION BY src.id ORDER BY concept_map.target_display NULLS LAST
-        )
-    = 1
