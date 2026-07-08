@@ -5,160 +5,187 @@ models:
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_appointment
     description: Stable appointment table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_appointment_practitioner
     description: Stable appointment_practitioner table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_concept
     description: Stable concept table.
     columns:
       - name: concept_id
         tests:
+          - unique
           - not_null
   - name: stable_concept_map
     description: Stable concept_map table.
     columns:
       - name: source_concept_id
         tests:
+          - unique
           - not_null
   - name: stable_diagnostic_order
     description: Stable diagnostic_order table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_encounter
     description: Stable encounter table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_episode_of_care
     description: Stable episode_of_care table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_location
     description: Stable location table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_medication_order
     description: Stable medication_order table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_medication_statement
     description: Stable medication_statement table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_national_data_opt_out
     description: Stable national_data_opt_out table.
     columns:
       - name: lds_business_id
         tests:
+          - unique
           - not_null
   - name: stable_observation
     description: Stable observation table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_organisation
     description: Stable organisation table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_patient
     description: Stable patient table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_patient_address
     description: Stable patient_address table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_patient_contact
     description: Stable patient_contact table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_patient_person
     description: Stable patient_person table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_patient_uprn
     description: Stable patient_uprn table.
     columns:
       - name: patient_address_id
         tests:
+          - unique
           - not_null
   - name: stable_person
     description: Stable person table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_postcode_hash
     description: Stable postcode_hash table.
     columns:
       - name: postcode_hash
         tests:
+          - unique
           - not_null
   - name: stable_practitioner
     description: Stable practitioner table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_practitioner_in_role
     description: Stable practitioner_in_role table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_procedure_request
     description: Stable procedure_request table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_referral_request
     description: Stable referral_request table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_schedule
     description: Stable schedule table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null
   - name: stable_schedule_practitioner
     description: Stable schedule_practitioner table.
     columns:
       - name: id
         tests:
+          - unique
           - not_null

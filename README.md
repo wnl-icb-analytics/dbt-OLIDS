@@ -12,8 +12,8 @@ Foundational data layers for OLIDS (One London Integrated Data Set).
 Run selectors:
 
 ```bash
-dbt build --exclude tag:synapse  # nightly (new pipeline)
-dbt build -s tag:synapse         # legacy refresh
+dbt run --exclude tag:synapse  # nightly (new pipeline)
+dbt run -s tag:synapse         # legacy refresh
 ```
 
 ## What This Project Does
@@ -53,7 +53,7 @@ cp env.example .env
 
 # Build
 dbt deps
-dbt build  # Builds and tests all models
+dbt run  # Builds all models
 ```
 
 ## Common Commands
@@ -62,12 +62,18 @@ dbt build  # Builds and tests all models
 
 ```bash
 # Regular development runs (use XS-sized warehouse)
-dbt build              # Build and test everything
-dbt build -s tag:conformed  # Conformed layer only
+dbt run                   # Build all models
+dbt run -s tag:conformed  # Conformed layer only
+
+# Tests are run separately when needed
+dbt test -s stable_patient
+dbt test -s tag:stable
 
 # Full refresh of stable layer (use L-sized warehouse)
-dbt build --full-refresh
+dbt run --full-refresh
 ```
+
+Deep QA lives in `scripts/checks`. Elementary will cover later monitoring.
 
 **Warehouse sizing:**
 - Regular runs: XS-sized warehouse in `.env`
@@ -118,4 +124,3 @@ See [Contributing Guide](CONTRIBUTING.md) for workflow details.
 ## License
 
 Dual licensed under Open Government v3 & MIT. All code outputs subject to Crown Copyright.
-

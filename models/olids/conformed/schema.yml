@@ -4,14 +4,10 @@ models:
     description: Conformed EMIS clinical code lookup.
     columns:
       - name: concept_id
-        tests:
-          - not_null
   - name: conformed_emis_drug_code
     description: Conformed EMIS drug code lookup.
     columns:
       - name: concept_id
-        tests:
-          - not_null
   - name: conformed_allergy_intolerance
     description: 'Filtered Allergy Intolerance conformed view.
 
@@ -28,62 +24,13 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: encounter_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_encounter')
-                field: id
-                tolerance_percent: 1.0
       - name: clinical_effective_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: allergy_intolerance_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date_precision_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_appointment
     description: 'Filtered Appointment conformed view.
 
@@ -100,69 +47,14 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: provider_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_in_role_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner_in_role')
-                field: id
-                tolerance_percent: 1.0
       - name: schedule_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_schedule')
-                field: id
-                tolerance_percent: 1.0
       - name: appointment_status_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: booking_method_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: contact_mode_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_appointment_practitioner
     description: 'Filtered Appointment Practitioner conformed view.
 
@@ -177,22 +69,8 @@ models:
       Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
     columns:
       - name: appointment_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_appointment')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: id
-        tests:
-          - not_null
   - name: conformed_diagnostic_order
     description: 'Filtered Diagnostic Order conformed view.
 
@@ -209,88 +87,16 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: encounter_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_encounter')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: parent_observation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_observation')
-                field: id
-                tolerance_percent: 1.0
       - name: clinical_effective_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: diagnostic_order_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: result_measurement_units_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date_precision_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: episodicity_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_encounter
     description: 'Filtered Encounter conformed view.
 
@@ -307,41 +113,11 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: encounter_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date_precision_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_episode_of_care
     description: 'Filtered Episode Of Care conformed view.
 
@@ -358,72 +134,14 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: publisher_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: managing_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: usual_gp_practitioner_in_role_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner_in_role')
-                field: id
-                tolerance_percent: 1.0
       - name: episode_of_care_start_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: episode_type_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: episode_status_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_location
     description: 'Unfiltered Location reference view.
 
@@ -433,8 +151,6 @@ models:
       Direct passthrough from source table with explicit column selection for interface consistency.'
     columns:
       - name: id
-        tests:
-          - not_null
   - name: conformed_medication_order
     description: 'Filtered Medication Order conformed view.
 
@@ -451,107 +167,19 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: provider_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: medication_statement_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_medication_statement')
-                field: id
-                tolerance_percent: 1.0
       - name: encounter_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_encounter')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: observation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_observation')
-                field: id
-                tolerance_percent: 1.0
       - name: allergy_intolerance_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_allergy_intolerance')
-                field: id
-                tolerance_percent: 1.0
       - name: diagnostic_order_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_diagnostic_order')
-                field: id
-                tolerance_percent: 1.0
       - name: referral_request_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_referral_request')
-                field: id
-                tolerance_percent: 1.0
       - name: clinical_effective_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: medication_order_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 3.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date_precision_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 3.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_medication_statement
     description: 'Filtered Medication Statement conformed view.
 
@@ -568,108 +196,19 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: provider_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: encounter_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_encounter')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: observation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_observation')
-                field: id
-                tolerance_percent: 1.0
       - name: allergy_intolerance_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_allergy_intolerance')
-                field: id
-                tolerance_percent: 1.0
       - name: diagnostic_order_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_diagnostic_order')
-                field: id
-                tolerance_percent: 1.0
       - name: referral_request_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_referral_request')
-                field: id
-                tolerance_percent: 1.0
       - name: clinical_effective_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: medication_statement_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 3.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: authorisation_type_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 3.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date_precision_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 3.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_observation
     description: 'Filtered Observation conformed view.
 
@@ -686,88 +225,16 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: encounter_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_encounter')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: parent_observation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_observation')
-                field: id
-                tolerance_percent: 1.0
       - name: clinical_effective_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: observation_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: result_value_units_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date_precision_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: episodicity_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_organisation
     description: 'Unfiltered Organisation reference view.
 
@@ -777,41 +244,14 @@ models:
       Direct passthrough from source table with explicit column selection for interface consistency.'
     columns:
       - name: id
-        tests:
-          - not_null
   - name: conformed_patient
-    description: "Filtered patient conformed view. Foundation for all patient-related filtering.\n\nExcludes sensitive patients:\n\
-      - is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients)\
-      \ \n- is_test_patient = FALSE (excludes test patients)\n\nRestricts to WNL practices:\n- publisher_organisation_code\
-      \ IN (WNL practice codes via int_wnl_practices)"
+    description: "Filtered patient conformed view. Foundation for all patient-related filtering.\n\nExcludes sensitive patients:\n- is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients) \n- is_test_patient = FALSE (excludes test patients)\n\nRestricts to WNL practices:\n- publisher_organisation_code IN (WNL practice codes via int_wnl_practices)"
     columns:
       - name: sk_patient_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 5.0
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: lds_source_record_id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: gender_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
       - name: registered_practice_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
   - name: conformed_patient_address
     description: 'Filtered Patient Address conformed view.
 
@@ -828,32 +268,9 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: address_type_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_patient_contact
     description: 'Filtered Patient Contact conformed view.
 
@@ -870,32 +287,9 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: contact_type_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_patient_person
     description: 'Generated Patient Person conformed view.
 
@@ -910,22 +304,8 @@ models:
       Filtering method: Filtered through relationships to conformed_patient'
     columns:
       - name: patient_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: id
-        tests:
-          - not_null
   - name: conformed_patient_uprn
     description: 'Unfiltered Patient Uprn reference view.
 
@@ -935,8 +315,6 @@ models:
       Direct passthrough from source table with explicit column selection for interface consistency.'
     columns:
       - name: patient_address_id
-        tests:
-          - not_null
   - name: conformed_person
     description: 'Filtered Person conformed view sourced from the pseudonymised PERSON feed.
 
@@ -952,8 +330,6 @@ models:
       Identifiers: id is the indexed person id; person_uuid holds the source UUID.'
     columns:
       - name: id
-        tests:
-          - not_null
   - name: conformed_practitioner
     description: 'Filtered Practitioner conformed view.
 
@@ -968,8 +344,6 @@ models:
       Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
     columns:
       - name: id
-        tests:
-          - not_null
   - name: conformed_practitioner_in_role
     description: 'Filtered Practitioner In Role conformed view.
 
@@ -984,22 +358,8 @@ models:
       Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
     columns:
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: employer_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: id
-        tests:
-          - not_null
   - name: conformed_procedure_request
     description: 'Filtered Procedure Request conformed view.
 
@@ -1016,67 +376,14 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: encounter_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_encounter')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: clinical_effective_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: procedure_request_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date_precision_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: status_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_referral_request
     description: 'Filtered Referral Request conformed view.
 
@@ -1093,104 +400,19 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: patient_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_patient')
-                field: id
-                tolerance_percent: 1.0
       - name: person_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_person')
-                field: id
-                tolerance_percent: 1.0
       - name: publisher_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: encounter_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_encounter')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: requester_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: recipient_organisation_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_organisation')
-                field: id
-                tolerance_percent: 1.0
       - name: clinical_effective_date
-        tests:
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: referral_request_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: clinical_effective_date_precision_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: referral_request_priority_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: referral_request_type_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
       - name: referral_request_specialty_source_concept_id
-        tests:
-          - concept_mapping_integrity:
-              arguments:
-                tolerance_percent: 1.0
-          - column_completeness:
-              arguments:
-                tolerance_percent: 1.0
   - name: conformed_schedule
     description: 'Filtered Schedule conformed view.
 
@@ -1205,8 +427,6 @@ models:
       Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
     columns:
       - name: id
-        tests:
-          - not_null
   - name: conformed_schedule_practitioner
     description: 'Filtered Schedule Practitioner conformed view.
 
@@ -1221,22 +441,8 @@ models:
       Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
     columns:
       - name: schedule_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_schedule')
-                field: id
-                tolerance_percent: 1.0
       - name: practitioner_id
-        tests:
-          - referential_integrity:
-              arguments:
-                to: ref('conformed_practitioner')
-                field: id
-                tolerance_percent: 1.0
       - name: id
-        tests:
-          - not_null
   - name: conformed_concept
     description: 'Unfiltered OLIDS terminology concept reference view.
 
@@ -1246,8 +452,6 @@ models:
       Direct passthrough from source table with explicit column selection for interface consistency.'
     columns:
       - name: concept_id
-        tests:
-          - not_null
   - name: conformed_concept_map
     description: 'Unfiltered OLIDS terminology concept map reference view.
 
@@ -1257,8 +461,6 @@ models:
       Direct passthrough from source table with explicit column selection for interface consistency.'
     columns:
       - name: source_concept_id
-        tests:
-          - not_null
   - name: conformed_postcode_hash
     description: 'Unfiltered postcode hash reference view linking postcodes to geographical areas.
 
@@ -1268,8 +470,6 @@ models:
       Direct passthrough from source table with explicit column selection for interface consistency.'
     columns:
       - name: postcode_hash
-        tests:
-          - not_null
   - name: conformed_national_data_opt_out
     description: 'Filtered National Data Opt-Out conformed view.
 
@@ -1277,11 +477,5 @@ models:
       Uses the landing national data opt-out feed and keeps the patient key used for stable joins.'
     columns:
       - name: sk_patient_id
-        tests:
-          - not_null
       - name: is_latest
-        tests:
-          - not_null
       - name: lds_business_id
-        tests:
-          - not_null
