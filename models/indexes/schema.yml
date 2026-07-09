@@ -37,7 +37,7 @@ models:
         tests:
           - accepted_values:
               arguments:
-                values: ['multi_sk', 'ambiguous_dob', 'sk_dob_mismatch', 'ambiguous_candidates']
+                values: ['multi_sk', 'ambiguous_dob', 'sk_dob_mismatch', 'ambiguous_candidates', 'oversize_cluster']
               config:
                 where: "review_reason IS NOT NULL"
       - name: first_seen_at

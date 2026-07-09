@@ -164,11 +164,16 @@ classified_sources AS (
         src.is_resolvable::BOOLEAN AS is_resolvable,
         COALESCE(key_stats.cluster_size, 0)::NUMBER(38, 0) AS cluster_size,
         COALESCE(sk_stats.sk_source_count, 0)::NUMBER(38, 0) AS sk_source_count,
+        -- cap at 5: real registration churn yields a handful of duplicate person
+        -- records; larger groups are catch-all identities (e.g. 78 'people' born
+        -- 1911-02 across 71 practices) and must never merge
         (
             src.is_resolvable
-            AND COALESCE(key_stats.cluster_size, 0) > 1
+            AND COALESCE(key_stats.cluster_size, 0) BETWEEN 2 AND 5
         )::BOOLEAN AS cluster_eligible,
         CASE
+            WHEN src.is_resolvable
+                AND COALESCE(key_stats.cluster_size, 0) > 5 THEN 'oversize_cluster'
             WHEN src.sk_count > 1 THEN 'multi_sk'
             WHEN src.dob_count > 1 THEN 'ambiguous_dob'
             WHEN src.is_resolvable
@@ -216,7 +221,8 @@ existing_candidates AS (
         birth_month::NUMBER(38, 0) AS birth_month,
         COUNT(DISTINCT person_id)::NUMBER(38, 0) AS candidate_count,
         MIN(person_id)::NUMBER(38, 0) AS candidate_person_id,
-        MIN(person_seq)::NUMBER(38, 0) AS candidate_person_seq
+        MIN(person_seq)::NUMBER(38, 0) AS candidate_person_seq,
+        COUNT(*)::NUMBER(38, 0) AS candidate_member_count
     FROM {{ this }}
     WHERE sk_patient_id IS NOT NULL
         AND birth_year IS NOT NULL
@@ -246,6 +252,7 @@ new_with_candidates AS (
         COALESCE(candidates.candidate_count, 0)::NUMBER(38, 0) AS candidate_count,
         candidates.candidate_person_id::NUMBER(38, 0) AS candidate_person_id,
         candidates.candidate_person_seq::NUMBER(38, 0) AS candidate_person_seq,
+        COALESCE(candidates.candidate_member_count, 0)::NUMBER(38, 0) AS candidate_member_count,
         COALESCE(existing_sk_stats.existing_sk_person_count, 0)::NUMBER(38, 0) AS existing_sk_person_count,
         src.review_reason::VARCHAR AS source_review_reason
     FROM new_sources AS src
@@ -270,8 +277,10 @@ alias_rows AS (
         NULL::VARCHAR AS review_reason,
         CURRENT_TIMESTAMP()::TIMESTAMP_NTZ AS first_seen_at
     FROM new_with_candidates
+    -- alias only into clusters still under the plausibility cap
     WHERE is_resolvable
         AND candidate_count = 1
+        AND candidate_member_count < 5
 ),
 
 to_mint AS (
@@ -291,6 +300,7 @@ to_mint AS (
     WHERE NOT (
         is_resolvable
         AND candidate_count = 1
+        AND candidate_member_count < 5
     )
 ),
 
@@ -325,6 +335,9 @@ mint_classified AS (
         COALESCE(new_key_stats.new_cluster_size, 0)::NUMBER(38, 0) AS new_cluster_size,
         CASE
             WHEN mint.candidate_count > 1 THEN 'ambiguous_candidates'
+            WHEN mint.candidate_count = 1 THEN 'oversize_cluster'
+            WHEN mint.is_resolvable
+                AND COALESCE(new_key_stats.new_cluster_size, 0) > 5 THEN 'oversize_cluster'
             WHEN mint.sk_count > 1 THEN 'multi_sk'
             WHEN mint.dob_count > 1 THEN 'ambiguous_dob'
             WHEN mint.is_resolvable
@@ -337,7 +350,7 @@ mint_classified AS (
         END::VARCHAR AS review_reason,
         (
             mint.is_resolvable
-            AND COALESCE(new_key_stats.new_cluster_size, 0) > 1
+            AND COALESCE(new_key_stats.new_cluster_size, 0) BETWEEN 2 AND 5
         )::BOOLEAN AS new_cluster_eligible
     FROM to_mint AS mint
     LEFT JOIN new_key_stats
