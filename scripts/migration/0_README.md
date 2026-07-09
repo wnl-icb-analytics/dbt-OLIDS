@@ -1,0 +1,26 @@
+# Person Id Cutover Scripts
+
+Status: prepared only. Do not run before the #257 cutover.
+
+Preconditions:
+
+1. dbt-analytics runs are frozen.
+2. `OLIDS_ENGINEERING.PSEUDONYMISATION.person_id_crosswalk` has been built.
+3. Target tables are backed up.
+4. The cutover owner has accepted the many-to-one collapse risk.
+
+Run order:
+
+1. `001_rotate_dim_person_care_home_snapshot.sql`
+2. `002_rotate_dim_person_ccms_snapshot.sql`
+3. `003_rotate_dim_person_conditions_snapshot.sql`
+4. `004_rotate_dim_person_demographics_snapshot.sql`
+5. `005_rotate_fct_person_behavioural_risk_factors_snapshot.sql`
+6. `006_rotate_fct_person_ltc_lcs_case_finding_snapshot.sql`
+7. `007_rotate_fct_person_ltc_lcs_risk_summary_snapshot.sql`
+8. `008_rotate_fct_person_polypharmacy_current_snapshot.sql`
+9. `009_rotate_int_blood_pressure_observations_base.sql`
+10. `010_rotate_person_month_analysis_base.sql`
+
+Each script is idempotent because it only updates rows still matching `old_person_id`.
+After running, check for duplicate logical keys where collapsed ids merged rows.
