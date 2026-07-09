@@ -88,3 +88,10 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} AS specialty_map
     ON
         src.referral_request_specialty_source_concept_id
         = specialty_map.source_concept_id
+-- upstream REFERRAL_REQUEST carries versioned duplicate ids; keep the latest
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY src.id
+    ORDER BY
+        src.lds_transform_datetime DESC NULLS LAST,
+        src.recorded_date DESC NULLS LAST
+) = 1

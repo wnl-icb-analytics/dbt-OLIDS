@@ -80,11 +80,12 @@ WHERE
         FROM {{ ref('synapse_base_olids_patient_person') }} AS pp
         WHERE pp.person_uuid = per.id
     )
--- legacy PERSON carries versioned duplicate ids; the old incremental merge
--- deduplicated implicitly, full replace must do it explicitly (keep latest)
+-- one canonical row per surfaced person_id: covers legacy PERSON's versioned
+-- duplicate ids AND identity resolution collapsing several records to one person
 QUALIFY ROW_NUMBER() OVER (
-    PARTITION BY per.id
+    PARTITION BY person_idx.person_id
     ORDER BY
         per.lds_start_datetime DESC NULLS LAST,
-        per.lds_datetime_update_acquired_person DESC NULLS LAST
+        per.lds_datetime_update_acquired_person DESC NULLS LAST,
+        per.id
 ) = 1

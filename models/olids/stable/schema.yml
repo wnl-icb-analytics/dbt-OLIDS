@@ -127,11 +127,11 @@ models:
           - unique
           - not_null
   - name: stable_patient_uprn
-    description: Stable patient_uprn table.
+    description: Stable patient_uprn table. Grain is one row per address match
+      attempt; an address accrues multiple rows across matching runs.
     columns:
       - name: patient_address_id
         tests:
-          - unique
           - not_null
   - name: stable_person
     description: Stable person table.

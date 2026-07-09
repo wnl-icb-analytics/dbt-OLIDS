@@ -69,3 +69,9 @@ WHERE EXISTS (
     FROM {{ ref('conformed_patient_person') }} AS pp
     WHERE pp.person_uuid = src.id
 )
+-- identity resolution can map several source person records to one person_id;
+-- the person table carries one canonical row per person (latest record wins)
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY person_idx.person_id
+    ORDER BY src.lds_transform_datetime DESC NULLS LAST, src.id
+) = 1
