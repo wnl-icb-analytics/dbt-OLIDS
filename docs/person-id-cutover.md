@@ -18,8 +18,8 @@ Many-to-one note: collapsed identities mean several old 14-digit ids can rotate 
 | `MODELLING.DBT_SNAPSHOTS.fct_person_ltc_lcs_case_finding_snapshot` | snapshot | `person_id` snapshot key in SCD2 rows | Run script `006_rotate_fct_person_ltc_lcs_case_finding_snapshot.sql` | Review overlapping versions for collapsed ids | Indicator stints may overlap after rotation. |
 | `MODELLING.DBT_SNAPSHOTS.fct_person_ltc_lcs_risk_summary_snapshot` | snapshot | `person_id` snapshot key in SCD2 rows | Run script `007_rotate_fct_person_ltc_lcs_risk_summary_snapshot.sql` | Review overlapping versions for collapsed ids | Risk group stints may overlap after rotation. |
 | `MODELLING.DBT_SNAPSHOTS.fct_person_polypharmacy_current_snapshot` | snapshot | `person_id` snapshot key in SCD2 rows | Run script `008_rotate_fct_person_polypharmacy_current_snapshot.sql` | Review overlapping versions for collapsed ids | Medication burden history may merge by person. |
-| `MODELLING.OLIDS_OBSERVATIONS.int_blood_pressure_observations_base` | incremental model | `person_id` column, unique key is `id, source_cluster_id` | Run script `009_rotate_int_blood_pressure_observations_base.sql` | No person-level dedupe expected | Unique key is observation based, so collapse should not duplicate keys. |
-| `REPORTING.OLIDS_PERSON_ANALYTICS.person_month_analysis_base` | incremental model | `person_id` column, unique key is `person_id, analysis_month` | Run script `010_rotate_person_month_analysis_base.sql` | Required for collapsed ids by `person_id, analysis_month` | Full refresh after cutover is safer if old monthly rows can merge. |
+| `MODELLING.OLIDS_OBSERVATIONS.int_blood_pressure_observations_base` | incremental model | `person_id` column | Rebuild with `--full-refresh` after repointing sources | Not needed on full refresh | No prepared script; regeneration replaces state. |
+| `REPORTING.OLIDS_PERSON_ANALYTICS.person_month_analysis_base` | incremental model | `person_id` column | Rebuild with `--full-refresh` after repointing sources | Collapsed identities merge naturally in the rebuild | No prepared script; regeneration replaces state. |
 
 ## Surveyed Out Of Scope
 
@@ -60,11 +60,11 @@ NOT YET EXECUTED.
 1. Freeze dbt-analytics runs and consumer writes that depend on OLIDS person ids.
 2. Confirm `OLIDS_ENGINEERING.PSEUDONYMISATION.person_id_crosswalk` exists and covers legacy archive ids.
 3. Back up every target relation listed in the migration README.
-4. Run the prepared scripts in `scripts/migration/` in numeric order.
+4. Run the prepared snapshot scripts in `scripts/migration/` in numeric order (snapshots only: their history cannot be regenerated).
 5. Review collapsed-id outputs for objects marked as needing dedupe review.
 6. Repoint dbt-analytics sources to the new OLIDS person ids.
 7. Rebuild dbt-analytics non-incremental models that carry `person_id`.
-8. Full refresh or dedupe `person_month_analysis_base` before returning it to incremental runs.
+8. Rebuild the two incremental models with `--full-refresh` (no in-place rotation needed).
 9. Resume scheduled runs.
 10. Verify row counts, old-id count, duplicate keys, and representative person histories.
 

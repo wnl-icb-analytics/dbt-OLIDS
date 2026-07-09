@@ -19,8 +19,8 @@ Run order:
 6. `006_rotate_fct_person_ltc_lcs_case_finding_snapshot.sql`
 7. `007_rotate_fct_person_ltc_lcs_risk_summary_snapshot.sql`
 8. `008_rotate_fct_person_polypharmacy_current_snapshot.sql`
-9. `009_rotate_int_blood_pressure_observations_base.sql`
-10. `010_rotate_person_month_analysis_base.sql`
 
 Each script is idempotent because it only updates rows still matching `old_person_id`.
 After running, check for duplicate logical keys where collapsed ids merged rows.
+
+Incremental dbt models are not rotated here: rebuild them with --full-refresh after repointing sources. These scripts exist only for snapshots, whose history cannot be regenerated.
