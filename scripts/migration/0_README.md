@@ -24,3 +24,7 @@ Each script is idempotent because it only updates rows still matching `old_perso
 After running, check for duplicate logical keys where collapsed ids merged rows.
 
 Incremental dbt models are not rotated here: rebuild them with --full-refresh after repointing sources. These scripts exist only for snapshots, whose history cannot be regenerated.
+
+Preferred execution: run_all_rotations.sql as DBT_ADMIN does everything in one pass
+(backups, eight snapshots, the AIC eFI2 table we consume, verification). Do not run
+until the data_lake repoint is done. The numbered scripts remain for selective re-runs.

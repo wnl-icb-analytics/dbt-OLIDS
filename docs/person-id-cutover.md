@@ -45,13 +45,13 @@ regenerate.
 
 | Estate | Scale | Finding | Cutover action |
 | --- | --- | --- | --- |
-| `AIC_DEV` (efi2, CCMS, base copies, ~40 tables) | 2.3M rows in each key table | All person ids are old 14-digit values. `__BACKUP_OLIDS2026` tables show the team is already preparing. | AIC re-runs their pipeline against the new ids after cutover. dbt-analytics consumes `INT_EFI2_SCORES` and `INT_CCMS_CURRENT` from here, so sequence their re-run before or alongside our snapshot rotation, or shim the two staging models through the crosswalk during transition. |
+| `AIC_DEV` (efi2, CCMS, base copies, ~40 tables) | 2.3M rows in each key table | All person ids are old 14-digit values. `__BACKUP_OLIDS2026` tables show the team is already preparing. | dbt-analytics calculates CCMS itself now, so the only live dependency is `INT_EFI2_SCORES`: we back it up and rotate it via the crosswalk in the consolidated script (AIC informed). The rest of the AIC estate is theirs to regenerate. |
 | `PHENOLAB_DEV.DEV_MEASUREMENTS` | 948M rows | All person ids are old 14-digit values. Largest single external store of old ids. | Owner regenerates after cutover; offer the crosswalk if any state cannot be rebuilt. |
 | `SDL.DA`, `SDL.OUM` and variants | 0.7M to 1.7M rows | Ids are 6 to 8 digits: sk-family, not OLIDS person ids. | No action. |
 
-Sequencing consequence for the main runbook: step 6 (repoint sources) must include notifying
-AIC and PhenoLab, and the dim_person_ccms_snapshot rotation (script 002) should not run
-until AIC's re-run is agreed, or its staging input will mix id generations.
+Sequencing consequence for the main runbook: notify AIC and PhenoLab at the repoint. No
+snapshot is sequenced behind AIC any more (CCMS is calculated in dbt-analytics), and the
+eFI2 rotation is included in our consolidated script.
 
 ## Cutover Sequence
 
@@ -60,7 +60,7 @@ NOT YET EXECUTED.
 1. Freeze dbt-analytics runs and consumer writes that depend on OLIDS person ids.
 2. Confirm `OLIDS_ENGINEERING.PSEUDONYMISATION.person_id_crosswalk` exists and covers legacy archive ids.
 3. Back up every target relation listed in the migration README.
-4. Run the prepared snapshot scripts in `scripts/migration/` in numeric order (snapshots only: their history cannot be regenerated).
+4. Run `scripts/migration/run_all_rotations.sql` as DBT_ADMIN: zero-copy backups, all eight snapshot rotations, the AIC eFI2 rotation, and the verification queries in one pass. (The numbered per-table scripts remain for selective re-runs.)
 5. Review collapsed-id outputs for objects marked as needing dedupe review.
 6. Repoint dbt-analytics sources to the new OLIDS person ids.
 7. Rebuild dbt-analytics non-incremental models that carry `person_id`.
