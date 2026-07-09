@@ -1,3 +1,5 @@
+-- completeness contract matches mint-on-attributes: every person seen on
+-- PATIENT rows is indexed; person-table-only ids deliberately are not
 WITH person_sources AS (
     SELECT person_id::VARCHAR AS source_person_id
     FROM {{ ref('landing_patient') }}
@@ -5,21 +7,9 @@ WITH person_sources AS (
 
     UNION DISTINCT
 
-    SELECT id::VARCHAR AS source_person_id
-    FROM {{ ref('landing_person') }}
-    WHERE id IS NOT NULL
-
-    UNION DISTINCT
-
     SELECT person_id::VARCHAR AS source_person_id
     FROM {{ source('olids_masked', 'PATIENT') }}
     WHERE person_id IS NOT NULL
-
-    UNION DISTINCT
-
-    SELECT id::VARCHAR AS source_person_id
-    FROM {{ source('olids_masked', 'PERSON') }}
-    WHERE id IS NOT NULL
 ),
 
 patient_sources AS (
