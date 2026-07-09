@@ -4,14 +4,19 @@
 
     {%- if custom_schema_name is none -%}
         {{ default_schema }}
-    {%- elif custom_schema_name == 'olids_base' -%}
-        OLIDS_BASE
-    {%- elif custom_schema_name == 'olids' -%}
-        OLIDS
-    {%- elif custom_schema_name == 'dbt_base' -%}
-        OLIDS_BASE
+    {%- elif custom_schema_name == 'olids_landing' -%}
+        LANDING
+    {%- elif custom_schema_name == 'olids_conformed' -%}
+        CONFORMED
+    {%- elif custom_schema_name == 'olids_stable' -%}
+        STABLE
+    {%- elif custom_schema_name == 'synapse_base' -%}
+        SYNAPSE_BASE
+    {%- elif custom_schema_name == 'synapse_stable' -%}
+        SYNAPSE_STABLE
+    {%- elif custom_schema_name == 'pseudonymisation' -%}
+        PSEUDONYMISATION
     {%- else -%}
-        {#- Default behavior for other custom schemas -#}
         {{ default_schema }}_{{ custom_schema_name | trim }}
     {%- endif -%}
 

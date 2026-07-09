@@ -1,56 +1,37 @@
 {{
     config(
-        materialized='incremental',
-        unique_key='id',
-        on_schema_change='fail',
         cluster_by=['episode_of_care_start_date'],
-        alias='episode_of_care',
-        incremental_strategy='merge',
         transient=false,
-        tags=['stable', 'incremental']
+        alias='episode_of_care'
     )
 }}
 
-select
-    lds_source_record_id,
+SELECT
     id,
-    publisher_organisation_id,
-    provider_organisation_id,
-    author_organisation_id,
-    care_manager_organisation_id,
+    lds_source_record_id,
     patient_id,
     person_id,
+    publisher_organisation_id,
+    managing_organisation_id,
+    author_organisation_id,
+    managing_organisation_code,
+    usual_gp_practitioner_in_role_id,
+    episode_of_care_start_date,
+    episode_of_care_end_date,
+    type,
     episode_type_source_concept_id,
     episode_type_source_code,
     episode_type_source_display,
     episode_type_code,
     episode_type_display,
+    status,
     episode_status_source_concept_id,
     episode_status_source_code,
     episode_status_source_display,
     episode_status_code,
     episode_status_display,
-    episode_of_care_start_date,
-    episode_of_care_end_date,
-    care_manager_practitioner_in_role_id,
-    publisher_organisation_code,
-    care_manager_organisation_code,
-    patient_shard_id,
-    person_shard_id,
-    lds_source_record_shard_id,
-    lds_id,
-    lds_business_key,
-    lds_source_dataset_id,
-    lds_cdm_event_id,
-    lds_versioner_event_id,
-    lds_datetime_first_acquired,
-    lds_datetime_update_acquired,
     lds_is_deleted,
-    lds_start_datetime,
-    lds_lakehouse_date_processed,
-    lds_lakehouse_datetime_updated
-from {{ ref('base_olids_episode_of_care') }}
-
-{% if is_incremental() %}
-    where lds_start_datetime > (select max(lds_start_datetime) from {{ this }})
-{% endif %}
+    publisher_organisation_code,
+    source_extraction_date,
+    lds_transform_datetime
+FROM {{ ref('conformed_episode_of_care') }}

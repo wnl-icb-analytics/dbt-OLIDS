@@ -1,22 +1,19 @@
 {{
     config(
-        materialized='incremental',
-        unique_key='id',
-        on_schema_change='fail',
-        cluster_by=['bnf_chapter', 'mapped_concept_code', 'clinical_effective_date'],
-        alias='medication_order',
-        incremental_strategy='merge',
+        cluster_by=['mapped_concept_code', 'clinical_effective_date'],
         transient=false,
-        tags=['stable', 'incremental']
+        alias='medication_order'
     )
 }}
 
-select
-    lds_source_record_id,
+SELECT
     id,
-    provider_organisation_id,
-    person_id,
+    lds_source_record_id,
     patient_id,
+    person_id,
+    publisher_organisation_id,
+    provider_organisation_id,
+    author_organisation_id,
     medication_statement_id,
     encounter_id,
     practitioner_id,
@@ -38,14 +35,13 @@ select
     estimated_cost,
     medication_name,
     medication_order_source_concept_id,
-    medication_statement_source_concept_id,
     statement_medication_name,
-    mapped_concept_id,
-    mapped_concept_code,
-    mapped_concept_display,
     source_code,
     source_display,
     source_system,
+    mapped_concept_id,
+    mapped_concept_code,
+    mapped_concept_display,
     target_system,
     bnf_chapter,
     bnf_section,
@@ -59,25 +55,8 @@ select
     date_recorded,
     is_confidential,
     issue_method_description,
-    publisher_organisation_id,
-    author_organisation_id,
-    publisher_organisation_code,
-    patient_shard_id,
-    person_shard_id,
-    lds_source_record_shard_id,
-    lds_id,
-    lds_business_key,
-    lds_source_dataset_id,
-    lds_cdm_event_id,
-    lds_versioner_event_id,
-    lds_datetime_first_acquired,
-    lds_datetime_update_acquired,
     lds_is_deleted,
-    lds_start_datetime,
-    lds_lakehouse_date_processed,
-    lds_lakehouse_datetime_updated
-from {{ ref('base_olids_medication_order') }}
-
-{% if is_incremental() %}
-    where lds_start_datetime > (select max(lds_start_datetime) from {{ this }})
-{% endif %}
+    publisher_organisation_code,
+    source_extraction_date,
+    lds_transform_datetime
+FROM {{ ref('conformed_medication_order') }}

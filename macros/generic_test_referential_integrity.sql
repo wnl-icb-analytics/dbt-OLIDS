@@ -13,7 +13,7 @@
               tests:
                 - referential_integrity:
                     arguments:
-                      to: ref('base_olids_patient')
+                      to: ref('conformed_patient')
                       field: id
                       tolerance_percent: 1.0
             
@@ -21,7 +21,7 @@
               tests:
                 - referential_integrity:
                     arguments:
-                      to: ref('base_olids_encounter')
+                      to: ref('conformed_encounter')
                       tolerance_percent: 1.0
     -#}
 

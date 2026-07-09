@@ -1,21 +1,19 @@
 {{
     config(
-        materialized='incremental',
-        unique_key='id',
-        on_schema_change='fail',
         cluster_by=['mapped_concept_code', 'clinical_effective_date'],
-        alias='allergy_intolerance',
-        incremental_strategy='merge',
         transient=false,
-        tags=['stable', 'incremental']
+        alias='allergy_intolerance'
     )
 }}
 
-select
-    lds_source_record_id,
+SELECT
     id,
+    lds_source_record_id,
     patient_id,
     person_id,
+    publisher_organisation_id,
+    provider_organisation_id,
+    author_organisation_id,
     practitioner_id,
     encounter_id,
     clinical_status,
@@ -43,26 +41,8 @@ select
     age_at_event_neonate,
     date_recorded,
     is_confidential,
-    publisher_organisation_id,
-    provider_organisation_id,
-    author_organisation_id,
-    publisher_organisation_code,
-    patient_shard_id,
-    person_shard_id,
-    lds_source_record_shard_id,
-    lds_id,
-    lds_business_key,
-    lds_source_dataset_id,
-    lds_cdm_event_id,
-    lds_versioner_event_id,
-    lds_datetime_first_acquired,
-    lds_datetime_update_acquired,
     lds_is_deleted,
-    lds_start_datetime,
-    lds_lakehouse_date_processed,
-    lds_lakehouse_datetime_updated
-from {{ ref('base_olids_allergy_intolerance') }}
-
-{% if is_incremental() %}
-    where lds_start_datetime > (select max(lds_start_datetime) from {{ this }})
-{% endif %}
+    publisher_organisation_code,
+    source_extraction_date,
+    lds_transform_datetime
+FROM {{ ref('conformed_allergy_intolerance') }}

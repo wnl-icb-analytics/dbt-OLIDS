@@ -2,23 +2,35 @@
 
 Foundational data layers for OLIDS (One London Integrated Data Set).
 
+## Two Pipelines
+
+| Tree | Feed | Coverage | Refresh | Publishes to |
+|---|---|---|---|---|
+| `models/olids` | `Data_Store_OLIDS_WNL` (experimental) | ~15 practices | Nightly | `OLIDS_ENGINEERING` database (`LANDING`/`CONFORMED`/`STABLE`) |
+| `models/synapse` | `Data_Store_OLIDS` (legacy Synapse) | Full NCL | Upstream refreshes fortnightly | `OLIDS_ENGINEERING` database (`SYNAPSE_BASE`/`SYNAPSE_STABLE`); `DATA_LAB_OLIDS_NCL.OLIDS` serves data_lake until the swap |
+
+Run selectors:
+
+```bash
+dbt run --exclude tag:synapse  # nightly (new pipeline)
+dbt run -s tag:synapse         # legacy refresh
+```
+
 ## What This Project Does
 
 Builds two data layers:
 
-**Base Layer**
+**Conformed Layer**
 Filtered views of OLIDS source tables applying:
 - NCL practice filtering
 - Sensitive patient exclusion
 - Concept mapping for clinical codes
 
 **Stable Layer**
-Incrementally updated tables providing stability whilst the One London team develops the OLIDS data. Uses merge strategy to process only new/changed records based on `lds_start_date_time`, tracking historical changes (SCD Type 2). Includes:
-- Incremental updates (processes only changes since last run)
-- `person_id` workaround (hashed from `sk_patient_id` and cascaded throughout, addressing poor population in upstream OLIDS until ISL fixes at source)
-- Clustering (physically organises data by key columns for faster queries)
-
-**Full refresh required when ISL truncates/reloads or reprocesses upstream data.**
+Tables that expose the stable analytical interface. Includes:
+- Indexed patient and person ids
+- WNL patient filtering
+- Clustering on key columns where useful
 
 Analytical models built on the stable layer: [dbt-ncl-analytics](https://github.com/ncl-icb-analytics/dbt-ncl-analytics)
 
@@ -41,7 +53,7 @@ cp env.example .env
 
 # Build
 dbt deps
-dbt build  # Builds and tests all models
+dbt run  # Builds all models
 ```
 
 ## Common Commands
@@ -50,12 +62,18 @@ dbt build  # Builds and tests all models
 
 ```bash
 # Regular development runs (use XS-sized warehouse)
-dbt build              # Build and test everything
-dbt build -s tag:base  # Base layer only
+dbt run                   # Build all models
+dbt run -s tag:conformed  # Conformed layer only
+
+# Tests are run separately when needed
+dbt test -s stable_patient
+dbt test -s tag:stable
 
 # Full refresh of stable layer (use L-sized warehouse)
-dbt build --full-refresh
+dbt run --full-refresh
 ```
+
+Deep QA lives in `scripts/checks`. Elementary will cover later monitoring.
 
 **Warehouse sizing:**
 - Regular runs: XS-sized warehouse in `.env`
@@ -82,18 +100,20 @@ Never commit `.env` or `profiles.yml`.
 
 ```
 models/olids/
-├── base/           # Filtered views
-├── stable/         # Incremental tables
-└── intermediate/   # NCL practices lookup
+├── landing/        # Source cache tables
+├── conformed/      # Filtered views
+├── stable/         # Published tables
+└── intermediate/   # Practices lookup, enriched concept map
 ```
 
 ## Where Objects Are Built
 
 All models are built in the database specified by `SNOWFLAKE_TARGET_DATABASE` in your `.env` file (typically `DATA_LAB_OLIDS_NCL`):
 
-- **Base layer**: `DATA_LAB_OLIDS_NCL.olids_base.*` (views)
-- **Stable layer**: `DATA_LAB_OLIDS_NCL.olids.*` (tables)
-- **Intermediate**: `DATA_LAB_OLIDS_NCL.DBT_STABLE.*` (tables)
+- **Landing**: `LANDING.*` (tables)
+- **Conformed layer**: `CONFORMED.*` (views)
+- **Stable layer**: `STABLE.*` (tables)
+- **Intermediate**: `CONFORMED.*` (tables)
 
 The stable layer reads from `Data_Store_OLIDS_Clinical_Validation` source tables.
 
@@ -104,5 +124,3 @@ See [Contributing Guide](CONTRIBUTING.md) for workflow details.
 ## License
 
 Dual licensed under Open Government v3 & MIT. All code outputs subject to Crown Copyright.
-
-

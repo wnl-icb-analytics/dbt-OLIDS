@@ -1,0 +1,50 @@
+{{
+    config(
+        cluster_by=['diagnostic_order_source_concept_id', 'clinical_effective_date'],
+        alias='diagnostic_order',
+        transient=false,
+        tags=['stable']
+    )
+}}
+
+SELECT
+    lds_source_record_id,
+    id,
+    patient_id,
+    person_id,
+    encounter_id,
+    practitioner_id,
+    parent_observation_id,
+    clinical_effective_date,
+    clinical_effective_date_precision_source_concept_id,
+    result_value,
+    result_measurement_units_source_concept_id,
+    result_date,
+    result_text,
+    is_problem,
+    is_review,
+    problem_end_date,
+    diagnostic_order_source_concept_id,
+    age_at_event,
+    age_at_event_baby,
+    age_at_event_neonate,
+    episodicity_source_concept_id,
+    is_primary,
+    date_recorded,
+    publisher_organisation_id,
+    publisher_organisation_code,
+    patient_shard_id,
+    person_shard_id,
+    lds_source_record_shard_id,
+    lds_id,
+    lds_business_key,
+    lds_source_dataset_id,
+    lds_cdm_event_id,
+    lds_versioner_event_id,
+    lds_datetime_first_acquired,
+    lds_datetime_update_acquired,
+    lds_is_deleted,
+    lds_start_datetime,
+    lds_lakehouse_date_processed,
+    lds_lakehouse_datetime_updated
+FROM {{ ref('synapse_base_olids_diagnostic_order') }}

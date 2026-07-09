@@ -1,34 +1,21 @@
 {{
     config(
-        materialized='incremental',
-        unique_key='id',
-        on_schema_change='fail',
-        cluster_by=['id', 'postcode_hash'],
-        alias='postcode_hash',
-        incremental_strategy='merge',
+        cluster_by=['postcode_hash'],
         transient=false,
-        tags=['stable', 'incremental']
+        alias='postcode_hash'
     )
 }}
 
-select
-    id,
+SELECT
     postcode_hash,
-    primary_care_organisation,
+    outcode,
     local_authority_organisation,
+    primary_care_organisation,
     yr2011_lsoa,
-    yr2011_msoa,
     yr2021_lsoa,
+    yr2011_msoa,
     yr2021_msoa,
-    effective_from,
-    effective_to,
-    is_latest,
-    lds_is_deleted,
-    lds_start_date_time,
-    lakehouse_date_processed,
-    high_watermark_date_time
-from {{ ref('base_olids_postcode_hash') }}
-
-{% if is_incremental() %}
-    where lds_start_date_time > (select max(lds_start_date_time) from {{ this }})
-{% endif %}
+    ward,
+    version,
+    last_updated
+FROM {{ ref('conformed_postcode_hash') }}

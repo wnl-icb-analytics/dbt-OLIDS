@@ -52,7 +52,7 @@ logs/
 temp/
 *.log
 dbt_internal_packages/
-scripts/investigations/output/
+scripts/checks/output/
 
 # claude
 .claude/

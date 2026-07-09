@@ -9,7 +9,7 @@
 WNL Practices Lookup
 GP practices under the West and North London ICB (Z9B2Z, post-April 2026 merger).
 Retains legacy NCL (QMJ) and NWL (QRV) STP codes as a safety net for ODS records
-not yet repointed to Z9B2Z. Foundation filter for all OLIDS base models.
+not yet repointed to Z9B2Z. Foundation filter for all OLIDS conformed models.
 */
 
 SELECT DISTINCT
@@ -18,5 +18,6 @@ SELECT DISTINCT
     "STPCode" AS stp_code,
     "STPName" AS stp_name
 FROM {{ source('dictionary', 'OrganisationMatrixPracticeView') }}
-WHERE "STPCode" IN ('Z9B2Z', 'QMJ', 'QRV')
+WHERE
+    "STPCode" IN ('Z9B2Z', 'QMJ', 'QRV')
     AND "PracticeCode" IS NOT NULL

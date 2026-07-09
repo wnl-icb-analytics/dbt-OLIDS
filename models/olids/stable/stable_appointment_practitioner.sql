@@ -1,38 +1,24 @@
 {{
     config(
-        materialized='incremental',
-        unique_key='id',
-        on_schema_change='fail',
-        cluster_by=['appointment_id', 'practitioner_id'],
-        alias='appointment_practitioner',
-        incremental_strategy='merge',
+        cluster_by=['appointment_id'],
         transient=false,
-        tags=['stable', 'incremental']
+        alias='appointment_practitioner'
     )
 }}
 
-select
-    lds_record_id,
-    lds_record_shard_id,
+SELECT
     id,
-    appointment_id,
-    practitioner_id,
+    lds_source_record_id,
+    patient_id,
+    person_id,
     publisher_organisation_id,
     provider_organisation_id,
-    publisher_organisation_code,
-    lds_id,
-    lds_business_key,
-    lds_source_dataset_id,
-    lds_cdm_event_id,
-    lds_versioner_event_id,
-    lds_datetime_first_acquired,
-    lds_datetime_update_acquired,
+    author_organisation_id,
+    lds_source_record_id_practitioner,
+    appointment_id,
+    practitioner_id,
     lds_is_deleted,
-    lds_start_datetime,
-    lds_lakehouse_date_processed,
-    lds_lakehouse_datetime_updated
-from {{ ref('base_olids_appointment_practitioner') }}
-
-{% if is_incremental() %}
-    where lds_start_datetime > (select max(lds_start_datetime) from {{ this }})
-{% endif %}
+    publisher_organisation_code,
+    source_extraction_date,
+    lds_transform_datetime
+FROM {{ ref('conformed_appointment_practitioner') }}

@@ -1,27 +1,17 @@
 {{
     config(
-        materialized='incremental',
-        unique_key='concept_id',
-        on_schema_change='fail',
         cluster_by=['concept_id'],
-        alias='concept',
-        incremental_strategy='merge',
         transient=false,
-        tags=['stable', 'incremental']
+        alias='concept'
     )
 }}
 
-select
+SELECT
     concept_id,
-    system,
     code,
     display,
+    system,
+    present_in_terminology_server,
     is_mapped,
-    use_count,
-    lds_is_deleted,
-    lds_start_datetime
-from {{ ref('base_olids_concept') }}
-
-{% if is_incremental() %}
-    where lds_start_datetime > (select max(lds_start_datetime) from {{ this }})
-{% endif %}
+    use_count
+FROM {{ ref('conformed_concept') }}

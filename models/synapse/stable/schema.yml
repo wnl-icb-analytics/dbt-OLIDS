@@ -1,0 +1,214 @@
+version: 2
+
+models:
+  - name: synapse_stable_allergy_intolerance
+    description: Stable allergy intolerance table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_appointment
+    description: Stable appointment table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_appointment_practitioner
+    description: Stable appointment practitioner table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_diagnostic_order
+    description: Stable diagnostic order table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_encounter
+    description: Stable encounter table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_episode_of_care
+    description: Stable episode of care table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_location
+    description: Stable location table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_location_contact
+    description: Stable location contact table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_medication_order
+    description: Stable medication order table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_medication_statement
+    description: Stable medication statement table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_observation
+    description: Stable observation table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_organisation
+    description: Stable organisation table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_patient
+    description: Stable patient table with WNL filtering and indexed patient ids.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_patient_address
+    description: Stable patient address table with indexed patient ids.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_patient_contact
+    description: Stable patient contact table with indexed patient ids.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_patient_person
+    description: Stable patient person bridge with indexed patient and person ids.
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+      - name: person_uuid
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - patient_id
+              - person_uuid
+  - name: synapse_stable_patient_registered_practitioner_in_role
+    description: Stable patient registered practitioner in role table with indexed patient ids.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_patient_uprn
+    description: Stable patient UPRN table with indexed patient ids.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_person
+    description: Stable person table. id is the indexed person id; person_uuid is the source UUID.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_practitioner
+    description: Stable practitioner table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_practitioner_in_role
+    description: Stable practitioner in role table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_procedure_request
+    description: Stable procedure request table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_referral_request
+    description: Stable referral request table with WNL patient filtering.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_schedule
+    description: Stable schedule table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_schedule_practitioner
+    description: Stable schedule practitioner table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_concept
+    description: Stable concept table.
+    columns:
+      - name: concept_id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_concept_map
+    description: Stable concept map table.
+    columns:
+      - name: mapped_item_id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_postcode_hash
+    description: Stable postcode hash table linking postcodes to geographical areas.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: synapse_stable_ndoo_hashed
+    description: Stable national data opt-out table keyed by hashed NHS number.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null

@@ -1,198 +1,191 @@
 version: 2
 models:
-- name: stable_allergy_intolerance
-  description: 'Incremental allergy intolerance table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_appointment
-  description: 'Incremental appointment table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_appointment_practitioner
-  description: 'Incremental appointment practitioner reference table.
-
-
-    Appointment Practitioner relationships and attributes.
-
-    Maintains referential integrity with parent entities.'
-- name: stable_diagnostic_order
-  description: 'Incremental diagnostic order table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_encounter
-  description: 'Incremental encounter table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_episode_of_care
-  description: 'Incremental episode of care table.
-
-
-    Provides stable interface between source data and analytical models.
-
-    Uses incremental materialisation for efficient updates.'
-- name: stable_location
-  description: 'Incremental location entity table.
-
-
-    Core location demographics and attributes.
-
-    Provides stable interface for downstream analytical models.'
-- name: stable_location_contact
-  description: 'Incremental location contact reference table.
-
-
-    Location Contact relationships and attributes.
-
-    Maintains referential integrity with parent entities.'
-- name: stable_medication_order
-  description: 'Incremental medication order table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_medication_statement
-  description: 'Incremental medication statement table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_observation
-  description: 'Incremental observation table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_organisation
-  description: 'Incremental organisation entity table.
-
-
-    Core organisation demographics and attributes.
-
-    Provides stable interface for downstream analytical models.'
-- name: stable_patient
-  description: 'Incremental patient entity table.
-
-
-    Core patient demographics and attributes.
-
-    NCL filtering applied with sensitive patients excluded.'
-- name: stable_patient_address
-  description: 'Incremental patient address reference table.
-
-
-    Patient Address relationships and attributes.
-
-    Maintains referential integrity with parent entities.'
-- name: stable_patient_contact
-  description: 'Incremental patient contact reference table.
-
-
-    Patient Contact relationships and attributes.
-
-    Maintains referential integrity with parent entities.'
-- name: stable_patient_person
-  description: 'Incremental patient person table.
-
-
-    Provides stable interface between source data and analytical models.
-
-    Uses incremental materialisation for efficient updates.'
-- name: stable_patient_registered_practitioner_in_role
-  description: 'Incremental patient registered practitioner in role table.
-
-
-    Provides stable interface between source data and analytical models.
-
-    Uses incremental materialisation for efficient updates.'
-- name: stable_patient_uprn
-  description: 'Incremental patient uprn reference table.
-
-
-    Patient Uprn relationships and attributes.
-
-    Maintains referential integrity with parent entities.'
-- name: stable_person
-  description: 'Incremental person entity table sourced from native OLIDS_MASKED.PERSON,
-    filtered to NCL via PATIENT_PERSON. id is the numeric person_id; person_uuid
-    holds the native UUID.'
-- name: stable_practitioner
-  description: 'Incremental practitioner entity table.
-
-
-    Core practitioner demographics and attributes.
-
-    Provides stable interface for downstream analytical models.'
-- name: stable_practitioner_in_role
-  description: 'Incremental practitioner in role reference table.
-
-
-    Practitioner In Role relationships and attributes.
-
-    Maintains referential integrity with parent entities.'
-- name: stable_procedure_request
-  description: 'Incremental procedure request table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_referral_request
-  description: 'Incremental referral request table.
-
-
-    Clinical event records with NCL patient filtering and quality controls applied.
-
-    Uses merge strategy with clustering on source concept and clinical effective date for optimal query performance.'
-- name: stable_schedule
-  description: 'Incremental schedule reference table.
-
-
-    Schedule relationships and attributes.
-
-    Maintains referential integrity with parent entities.'
-- name: stable_schedule_practitioner
-  description: 'Incremental schedule practitioner reference table.
-
-
-    Schedule Practitioner relationships and attributes.
-
-    Maintains referential integrity with parent entities.'
-- name: stable_concept
-  description: 'Incremental concept table.
-
-
-    Provides stable interface between source data and analytical models.
-
-    Uses incremental materialisation for efficient updates.'
-- name: stable_concept_map
-  description: 'Incremental concept map table.
-
-
-    Provides stable interface between source data and analytical models.
-
-    Uses incremental materialisation for efficient updates.'
-- name: stable_postcode_hash
-  description: 'Incremental postcode hash table linking postcodes to geographical areas.
-
-
-    Provides stable interface between source data and analytical models.
-
-    Uses incremental materialisation for efficient updates.'
-- name: stable_ndoo_hashed
-  description: 'Incremental NDOO (National Data Opt-Out) preferences keyed by hashed
-    NHS number, clustered on nhs_number_hash for join performance.'
+  - name: stable_allergy_intolerance
+    description: Stable allergy_intolerance table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_appointment
+    description: Stable appointment table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_appointment_practitioner
+    description: Stable appointment_practitioner table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_concept
+    description: Stable concept table.
+    columns:
+      - name: concept_id
+        tests:
+          - unique
+          - not_null
+  - name: stable_concept_map
+    description: Stable concept_map table.
+    columns:
+      - name: source_concept_id
+        tests:
+          - unique
+          - not_null
+  - name: stable_diagnostic_order
+    description: Stable diagnostic_order table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_encounter
+    description: Stable encounter table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_episode_of_care
+    description: Stable episode_of_care table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_location
+    description: Stable location table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_medication_order
+    description: Stable medication_order table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_medication_statement
+    description: Stable medication_statement table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_national_data_opt_out
+    description: Stable national_data_opt_out table.
+    columns:
+      - name: lds_record_id
+        tests:
+          - unique
+          - not_null
+  - name: stable_observation
+    description: Stable observation table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_organisation
+    description: Stable organisation table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_patient
+    description: Stable patient table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_patient_address
+    description: Stable patient_address table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_patient_contact
+    description: Stable patient_contact table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_patient_person
+    description: Stable patient_person table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_patient_uprn
+    description: Stable patient_uprn table.
+    columns:
+      - name: patient_address_id
+        tests:
+          - unique
+          - not_null
+  - name: stable_person
+    description: Stable person table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_postcode_hash
+    description: Stable postcode_hash table.
+    columns:
+      - name: postcode_hash
+        tests:
+          - unique
+          - not_null
+  - name: stable_practitioner
+    description: Stable practitioner table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_practitioner_in_role
+    description: Stable practitioner_in_role table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_procedure_request
+    description: Stable procedure_request table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_referral_request
+    description: Stable referral_request table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_schedule
+    description: Stable schedule table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stable_schedule_practitioner
+    description: Stable schedule_practitioner table.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null

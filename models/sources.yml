@@ -1,5 +1,1310 @@
 version: 2
 sources:
+- name: olids_pseudo
+  database: '"Data_Store_OLIDS_WNL"'
+  schema: '"OLIDS_PSEUDO"'
+  description: Consolidated OLIDS pseudonymised feed (WNL). Views with row-access and masking policies.
+  tables:
+  - name: ALLERGY_INTOLERANCE
+    identifier: '"ALLERGY_INTOLERANCE"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: encounter_id
+      data_type: UUID
+    - name: clinical_status
+      data_type: TEXT
+    - name: verification_status
+      data_type: TEXT
+    - name: category
+      data_type: TEXT
+    - name: clinical_effective_date
+      data_type: DATE
+    - name: clinical_effective_date_precision_source_concept_id
+      data_type: UUID
+    - name: is_review
+      data_type: BOOLEAN
+    - name: medication_name
+      data_type: TEXT
+    - name: multi_lex_action
+      data_type: TEXT
+    - name: allergy_intolerance_source_concept_id
+      data_type: UUID
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: date_recorded
+      data_type: TIMESTAMP_NTZ
+    - name: is_confidential
+      data_type: BOOLEAN
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: APPOINTMENT
+    identifier: '"APPOINTMENT"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: slot_id
+      data_type: UUID
+    - name: practitioner_in_role_id
+      data_type: UUID
+    - name: schedule_id
+      data_type: UUID
+    - name: start_date
+      data_type: TIMESTAMP_NTZ
+    - name: planned_duration_mins
+      data_type: NUMBER
+    - name: actual_duration_mins
+      data_type: NUMBER
+    - name: appointment_status_source_concept_id
+      data_type: UUID
+    - name: patient_wait_mins
+      data_type: NUMBER
+    - name: patient_delay_mins
+      data_type: NUMBER
+    - name: datetime_booked
+      data_type: TIMESTAMP_NTZ
+    - name: datetime_sent_in
+      data_type: TIMESTAMP_NTZ
+    - name: datetime_left
+      data_type: TIMESTAMP_NTZ
+    - name: cancelled_date
+      data_type: TEXT
+    - name: appointment_type
+      data_type: TEXT
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: booking_method_source_concept_id
+      data_type: UUID
+    - name: contact_mode_source_concept_id
+      data_type: UUID
+    - name: is_blocked
+      data_type: BOOLEAN
+    - name: national_slot_category_name
+      data_type: TEXT
+    - name: context_type
+      data_type: TEXT
+    - name: service_setting
+      data_type: TEXT
+    - name: national_slot_category_description
+      data_type: TEXT
+    - name: csds_care_contact_identifier
+      data_type: TEXT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: APPOINTMENT_PRACTITIONER
+    identifier: '"APPOINTMENT_PRACTITIONER"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: lds_source_record_id_practitioner
+      data_type: UUID
+    - name: appointment_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: CONCEPT
+    identifier: '"CONCEPT"'
+    columns:
+    - name: concept_id
+      data_type: UUID
+    - name: code
+      data_type: TEXT
+    - name: display
+      data_type: TEXT
+    - name: system
+      data_type: TEXT
+    - name: present_in_terminology_server
+      data_type: BOOLEAN
+    - name: is_mapped
+      data_type: BOOLEAN
+    - name: use_count
+      data_type: TEXT
+  - name: CONCEPT_MAP
+    identifier: '"CONCEPT_MAP"'
+    columns:
+    - name: concept_map_name
+      data_type: TEXT
+    - name: source_concept_id
+      data_type: UUID
+    - name: source_system
+      data_type: TEXT
+    - name: source_code
+      data_type: TEXT
+    - name: source_display
+      data_type: TEXT
+    - name: target_concept_id
+      data_type: UUID
+    - name: target_system
+      data_type: TEXT
+    - name: target_code
+      data_type: TEXT
+    - name: target_display
+      data_type: TEXT
+    - name: equivalence
+      data_type: TEXT
+    - name: equivalence_rank
+      data_type: NUMBER
+    - name: is_primary
+      data_type: NUMBER
+  - name: DIAGNOSTIC_ORDER
+    identifier: '"DIAGNOSTIC_ORDER"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: encounter_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: parent_observation_id
+      data_type: UUID
+    - name: clinical_effective_date
+      data_type: DATE
+    - name: date_precision_raw
+      data_type: TEXT
+    - name: clinical_effective_date_precision_source_concept_id
+      data_type: UUID
+    - name: result_value
+      data_type: FLOAT
+    - name: result_measurement_units_source_concept_id
+      data_type: UUID
+    - name: result_date
+      data_type: DATE
+    - name: result_text
+      data_type: TEXT
+    - name: is_problem
+      data_type: BOOLEAN
+    - name: is_review
+      data_type: BOOLEAN
+    - name: problem_end_date
+      data_type: DATE
+    - name: diagnostic_order_source_concept_id
+      data_type: UUID
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: episodicity_source_concept_id
+      data_type: UUID
+    - name: is_primary
+      data_type: BOOLEAN
+    - name: date_recorded
+      data_type: TIMESTAMP_NTZ
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: EMIS_CLINICAL_CODE
+    identifier: '"EMIS_CLINICAL_CODE"'
+    columns:
+    - name: concept_id
+      data_type: UUID
+    - name: code_id
+      data_type: TEXT
+    - name: term
+      data_type: TEXT
+    - name: read_term_id
+      data_type: TEXT
+    - name: snomed_ct_concept_id
+      data_type: TEXT
+    - name: snomed_ct_description_id
+      data_type: TEXT
+    - name: national_code
+      data_type: TEXT
+    - name: national_code_category
+      data_type: TEXT
+    - name: national_description
+      data_type: TEXT
+    - name: emis_code_category_description
+      data_type: TEXT
+  - name: EMIS_DRUG_CODE
+    identifier: '"EMIS_DRUG_CODE"'
+    columns:
+    - name: concept_id
+      data_type: UUID
+    - name: code_id
+      data_type: NUMBER
+    - name: term
+      data_type: TEXT
+    - name: dmd_product_code_id
+      data_type: TEXT
+    - name: bnf_chapter_ref
+      data_type: TEXT
+  - name: ENCOUNTER
+    identifier: '"ENCOUNTER"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: episode_of_care_id
+      data_type: UUID
+    - name: appointment_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: location
+      data_type: TEXT
+    - name: encounter_source_concept_id
+      data_type: UUID
+    - name: clinical_effective_date_precision_source_concept_id
+      data_type: UUID
+    - name: consultation_type
+      data_type: TEXT
+    - name: clinical_effective_date
+      data_type: DATE
+    - name: date_recorded
+      data_type: TIMESTAMP_NTZ
+    - name: is_confidential
+      data_type: BOOLEAN
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: type
+      data_type: TEXT
+    - name: subtype
+      data_type: TEXT
+    - name: admission_method
+      data_type: TEXT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: EPISODE_OF_CARE
+    identifier: '"EPISODE_OF_CARE"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: managing_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: managing_organisation_code
+      data_type: TEXT
+    - name: usual_gp_practitioner_in_role_id
+      data_type: UUID
+    - name: episode_of_care_start_date
+      data_type: DATE
+    - name: episode_of_care_end_date
+      data_type: DATE
+    - name: type
+      data_type: TEXT
+    - name: episode_type_source_concept_id
+      data_type: UUID
+    - name: status
+      data_type: TEXT
+    - name: episode_status_source_concept_id
+      data_type: UUID
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: DATE
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: LOCATION
+    identifier: '"LOCATION"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: name
+      data_type: TEXT
+    - name: location_type_source_concept_id
+      data_type: UUID
+    - name: type_description
+      data_type: TEXT
+    - name: is_primary_location
+      data_type: TEXT
+    - name: house_name
+      data_type: TEXT
+    - name: house_number
+      data_type: TEXT
+    - name: house_name_flat_number
+      data_type: TEXT
+    - name: street
+      data_type: TEXT
+    - name: address_line_1
+      data_type: TEXT
+    - name: address_line_2
+      data_type: TEXT
+    - name: address_line_3
+      data_type: TEXT
+    - name: address_line_4
+      data_type: TEXT
+    - name: postcode
+      data_type: TEXT
+    - name: managing_organisation_id
+      data_type: UUID
+    - name: open_date
+      data_type: DATE
+    - name: close_date
+      data_type: DATE
+    - name: is_obsolete
+      data_type: BOOLEAN
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: MEDICATION_ORDER
+    identifier: '"MEDICATION_ORDER"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: medication_statement_id
+      data_type: UUID
+    - name: encounter_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: observation_id
+      data_type: UUID
+    - name: allergy_intolerance_id
+      data_type: UUID
+    - name: diagnostic_order_id
+      data_type: UUID
+    - name: referral_request_id
+      data_type: UUID
+    - name: clinical_effective_date
+      data_type: DATE
+    - name: clinical_effective_date_precision_source_concept_id
+      data_type: UUID
+    - name: dose
+      data_type: TEXT
+    - name: quantity_value
+      data_type: FLOAT
+    - name: quantity_value_description
+      data_type: TEXT
+    - name: quantity_unit
+      data_type: TEXT
+    - name: duration_days
+      data_type: NUMBER
+    - name: estimated_cost
+      data_type: NUMBER
+    - name: medication_name
+      data_type: TEXT
+    - name: medication_order_source_concept_id
+      data_type: UUID
+    - name: bnf_reference
+      data_type: TEXT
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: issue_method
+      data_type: TEXT
+    - name: date_recorded
+      data_type: TIMESTAMP_NTZ
+    - name: is_confidential
+      data_type: BOOLEAN
+    - name: issue_method_description
+      data_type: TEXT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: MEDICATION_STATEMENT
+    identifier: '"MEDICATION_STATEMENT"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: encounter_id
+      data_type: UUID
+    - name: observation_id
+      data_type: UUID
+    - name: allergy_intolerance_id
+      data_type: UUID
+    - name: diagnostic_order_id
+      data_type: UUID
+    - name: referral_request_id
+      data_type: UUID
+    - name: clinical_effective_date
+      data_type: DATE
+    - name: clinical_effective_date_precision_source_concept_id
+      data_type: UUID
+    - name: cancellation_date
+      data_type: DATE
+    - name: dose
+      data_type: TEXT
+    - name: quantity_value_description
+      data_type: TEXT
+    - name: quantity_value
+      data_type: FLOAT
+    - name: quantity_unit
+      data_type: TEXT
+    - name: authorisation_type_source_concept_id
+      data_type: UUID
+    - name: medication_name
+      data_type: TEXT
+    - name: medication_statement_source_concept_id
+      data_type: UUID
+    - name: bnf_reference
+      data_type: TEXT
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: issue_method
+      data_type: TEXT
+    - name: date_recorded
+      data_type: TIMESTAMP_NTZ
+    - name: is_active
+      data_type: BOOLEAN
+    - name: is_confidential
+      data_type: BOOLEAN
+    - name: expiry_date
+      data_type: DATE
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: NATIONAL_DATA_OPT_OUT
+    identifier: '"NATIONAL_DATA_OPT_OUT"'
+    columns:
+    - name: lds_business_id
+      data_type: UUID
+    - name: lds_record_id
+      data_type: UUID
+    - name: sk_patient_id
+      data_type: TEXT
+    - name: preference_type
+      data_type: TEXT
+    - name: preference_status
+      data_type: TEXT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: effective_from
+      data_type: TIMESTAMP_NTZ
+    - name: effective_to
+      data_type: TIMESTAMP_NTZ
+    - name: is_latest
+      data_type: BOOLEAN
+  - name: OBSERVATION
+    identifier: '"OBSERVATION"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: encounter_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: parent_observation_id
+      data_type: UUID
+    - name: clinical_effective_date
+      data_type: DATE
+    - name: clinical_effective_date_precision_source_concept_id
+      data_type: UUID
+    - name: result_value
+      data_type: FLOAT
+    - name: result_value_units_source_concept_id
+      data_type: UUID
+    - name: result_date
+      data_type: DATE
+    - name: result_text
+      data_type: TEXT
+    - name: is_problem
+      data_type: BOOLEAN
+    - name: is_review
+      data_type: BOOLEAN
+    - name: problem_end_date
+      data_type: DATE
+    - name: observation_source_concept_id
+      data_type: UUID
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: episodicity_source_concept_id
+      data_type: UUID
+    - name: is_primary
+      data_type: TEXT
+    - name: date_recorded
+      data_type: TIMESTAMP_NTZ
+    - name: is_problem_deleted
+      data_type: TEXT
+    - name: is_confidential
+      data_type: BOOLEAN
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: ORGANISATION
+    identifier: '"ORGANISATION"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: organisation_code
+      data_type: TEXT
+    - name: assigning_authority_code
+      data_type: TEXT
+    - name: name
+      data_type: TEXT
+    - name: type_description
+      data_type: TEXT
+    - name: primary_location_type_source_concept_id
+      data_type: UUID
+    - name: postcode
+      data_type: TEXT
+    - name: parent_organisation_id
+      data_type: UUID
+    - name: open_date
+      data_type: DATE
+    - name: close_date
+      data_type: DATE
+    - name: is_obsolete
+      data_type: BOOLEAN
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: PATIENT
+    identifier: '"PATIENT"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: registered_practice_organisation_id
+      data_type: UUID
+    - name: local_patient_id
+      data_type: TEXT
+    - name: sk_patient_id
+      data_type: TEXT
+    - name: title
+      data_type: TEXT
+    - name: gender_source_concept_id
+      data_type: UUID
+    - name: birth_date
+      data_type: DATE
+    - name: birth_year
+      data_type: NUMBER
+    - name: birth_month
+      data_type: NUMBER
+    - name: birth_week_iso
+      data_type: NUMBER
+    - name: birth_day
+      data_type: NUMBER
+    - name: death_date
+      data_type: DATE
+    - name: death_year
+      data_type: NUMBER
+    - name: death_month
+      data_type: NUMBER
+    - name: death_week_iso
+      data_type: NUMBER
+    - name: is_confidential
+      data_type: BOOLEAN
+    - name: is_test_patient
+      data_type: BOOLEAN
+    - name: is_spine_sensitive
+      data_type: BOOLEAN
+    - name: lds_source_dataset
+      data_type: TEXT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: PATIENT_ADDRESS
+    identifier: '"PATIENT_ADDRESS"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: is_home_address
+      data_type: BOOLEAN
+    - name: address_type_source_concept_id
+      data_type: UUID
+    - name: postcode
+      data_type: TEXT
+    - name: start_date
+      data_type: DATE
+    - name: end_date
+      data_type: DATE
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: PATIENT_CONTACT
+    identifier: '"PATIENT_CONTACT"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: contact_type_source_concept_id
+      data_type: UUID
+    - name: start_date
+      data_type: DATE
+    - name: end_date
+      data_type: DATE
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: PATIENT_PERSON
+    identifier: '"PATIENT_PERSON"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: lds_business_id_person
+      data_type: UUID
+    - name: lds_source_record_id_person
+      data_type: UUID
+    - name: gp_practice_code
+      data_type: TEXT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: PATIENT_UPRN
+    identifier: '"PATIENT_UPRN"'
+    columns:
+    - name: patient_address_id
+      data_type: UUID
+    - name: status
+      data_type: TEXT
+    - name: matched
+      data_type: TEXT
+    - name: uprn
+      data_type: TEXT
+    - name: postcode_quality
+      data_type: TEXT
+    - name: qualifier
+      data_type: TEXT
+    - name: classification
+      data_type: TEXT
+    - name: algorithm
+      data_type: TEXT
+    - name: match_pattern
+      data_type: TEXT
+    - name: error_message
+      data_type: TEXT
+    - name: publisher_organisation_code
+      data_type: TEXT
+  - name: PERSON
+    identifier: '"PERSON"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: req_nhs_number
+      data_type: TEXT
+    - name: matched_nhs_no
+      data_type: TEXT
+    - name: gender
+      data_type: TEXT
+    - name: date_of_birth
+      data_type: DATE
+    - name: date_of_birth_year
+      data_type: NUMBER
+    - name: date_of_birth_month
+      data_type: NUMBER
+    - name: date_of_birth_day
+      data_type: NUMBER
+    - name: date_of_birth_time
+      data_type: TIME
+    - name: date_of_death
+      data_type: DATE
+    - name: date_of_death_year
+      data_type: NUMBER
+    - name: date_of_death_month
+      data_type: NUMBER
+    - name: date_of_death_day
+      data_type: NUMBER
+    - name: date_of_death_time
+      data_type: TIME
+    - name: death_notification_status
+      data_type: TEXT
+    - name: postcode
+      data_type: TEXT
+    - name: preferred_contact_method
+      data_type: TEXT
+    - name: nominated_pharmacy
+      data_type: TEXT
+    - name: dispensing_doctor
+      data_type: TEXT
+    - name: medical_appliance_supplier
+      data_type: TEXT
+    - name: gp_practice_code
+      data_type: TEXT
+    - name: gp_registration_date
+      data_type: TEXT
+    - name: nhais_posting_id
+      data_type: TEXT
+    - name: as_at_date
+      data_type: TEXT
+    - name: local_patient_id
+      data_type: TEXT
+    - name: internal_id
+      data_type: TEXT
+    - name: mps_id
+      data_type: TEXT
+    - name: patient_flagged_sensitive
+      data_type: BOOLEAN
+    - name: error_success_code
+      data_type: TEXT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: POSTCODE_HASH
+    identifier: '"POSTCODE_HASH"'
+    columns:
+    - name: postcode_hash
+      data_type: TEXT
+    - name: outcode
+      data_type: TEXT
+    - name: local_authority_organisation
+      data_type: TEXT
+    - name: primary_care_organisation
+      data_type: TEXT
+    - name: yr2011_lsoa
+      data_type: TEXT
+    - name: yr2021_lsoa
+      data_type: TEXT
+    - name: yr2011_msoa
+      data_type: TEXT
+    - name: yr2021_msoa
+      data_type: TEXT
+    - name: ward
+      data_type: TEXT
+    - name: version
+      data_type: TEXT
+    - name: last_updated
+      data_type: TIMESTAMP_LTZ
+  - name: PRACTITIONER
+    identifier: '"PRACTITIONER"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: gmc_code
+      data_type: TEXT
+    - name: title
+      data_type: TEXT
+    - name: first_name
+      data_type: TEXT
+    - name: surname
+      data_type: TEXT
+    - name: name
+      data_type: TEXT
+    - name: is_obsolete
+      data_type: BOOLEAN
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: PRACTITIONER_IN_ROLE
+    identifier: '"PRACTITIONER_IN_ROLE"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: employer_organisation_id
+      data_type: UUID
+    - name: role_code
+      data_type: TEXT
+    - name: role
+      data_type: TEXT
+    - name: date_employment_start
+      data_type: DATE
+    - name: date_employment_end
+      data_type: DATE
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: PROCEDURE_REQUEST
+    identifier: '"PROCEDURE_REQUEST"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: encounter_id
+      data_type: UUID
+    - name: clinical_effective_date
+      data_type: DATE
+    - name: clinical_effective_date_precision_source_concept_id
+      data_type: UUID
+    - name: date_recorded
+      data_type: TIMESTAMP_NTZ
+    - name: description
+      data_type: TEXT
+    - name: procedure_request_source_concept_id
+      data_type: UUID
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: is_confidential
+      data_type: BOOLEAN
+    - name: status_source_concept_id
+      data_type: UUID
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: REFERRAL_REQUEST
+    identifier: '"REFERRAL_REQUEST"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: organisation_id
+      data_type: UUID
+    - name: encounter_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: unique_booking_reference_number
+      data_type: TEXT
+    - name: clinical_effective_date
+      data_type: DATE
+    - name: clinical_effective_date_precision_source_concept_id
+      data_type: UUID
+    - name: requester_organisation_id
+      data_type: UUID
+    - name: recipient_organisation_id
+      data_type: UUID
+    - name: referral_request_priority_source_concept_id
+      data_type: UUID
+    - name: referral_request_type_source_concept_id
+      data_type: UUID
+    - name: referral_request_specialty_source_concept_id
+      data_type: UUID
+    - name: mode
+      data_type: TEXT
+    - name: is_outgoing_referral
+      data_type: BOOLEAN
+    - name: is_review
+      data_type: NUMBER
+    - name: referral_request_source_concept_id
+      data_type: UUID
+    - name: age_at_event
+      data_type: NUMBER
+    - name: age_at_event_baby
+      data_type: NUMBER
+    - name: age_at_event_neonate
+      data_type: NUMBER
+    - name: recorded_date
+      data_type: TIMESTAMP_NTZ
+    - name: value
+      data_type: FLOAT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: SCHEDULE
+    identifier: '"SCHEDULE"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: location_id
+      data_type: UUID
+    - name: location_name
+      data_type: TEXT
+    - name: practitioner_id
+      data_type: UUID
+    - name: start_datetime
+      data_type: TIMESTAMP_NTZ
+    - name: end_datetime
+      data_type: TIMESTAMP_NTZ
+    - name: type
+      data_type: TEXT
+    - name: name
+      data_type: TEXT
+    - name: is_private
+      data_type: BOOLEAN
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: SCHEDULE_PRACTITIONER
+    identifier: '"SCHEDULE_PRACTITIONER"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: provider_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: schedule_id
+      data_type: UUID
+    - name: practitioner_id
+      data_type: UUID
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+- name: nhsd_snomed
+  database: '"Dictionary"'
+  schema: '"NHSD_SnomedReportingModel"'
+  description: NHS Digital SNOMED CT reporting model
+  tables:
+  - name: SCT_Concept
+    identifier: '"SCT_Concept"'
+    columns:
+    - name: Id
+      data_type: NUMBER
+    - name: EffectiveTime
+      data_type: TIMESTAMP_NTZ
+    - name: Active
+      data_type: BOOLEAN
+    - name: ModuleId
+      data_type: NUMBER
+    - name: DefinitionStatusId
+      data_type: NUMBER
+  - name: SCT_History
+    identifier: '"SCT_History"'
+    columns:
+    - name: OldConceptId
+      data_type: NUMBER
+    - name: OldConceptStatus
+      data_type: NUMBER
+    - name: NewConceptId
+      data_type: NUMBER
+    - name: NewConceptStatus
+      data_type: NUMBER
+    - name: Path
+      data_type: TEXT
+    - name: IsAmbiguous
+      data_type: BOOLEAN
+    - name: Iterations
+      data_type: NUMBER
+    - name: OldConceptFullySpecifiedName
+      data_type: TEXT
+    - name: NewConceptFullySpecifiedName
+      data_type: TEXT
+    - name: NewConceptFullySpecifiedNameStatus
+      data_type: NUMBER
+- name: dictionary
+  database: '"Dictionary"'
+  schema: '"dbo"'
+  description: Reference data including lookups and terminology mappings
+  tables:
+  - name: OrganisationMatrixPracticeView
+    identifier: '"OrganisationMatrixPracticeView"'
+    columns:
+    - name: SK_OrganisationID_Practice
+      data_type: NUMBER
+    - name: PracticeCode
+      data_type: TEXT
+    - name: PracticeName
+      data_type: TEXT
+    - name: SK_OrganisationID_Network
+      data_type: NUMBER
+    - name: NetworkCode
+      data_type: TEXT
+    - name: NetworkName
+      data_type: TEXT
+    - name: SK_OrganisationID_Commissioner
+      data_type: NUMBER
+    - name: CommissionerCode
+      data_type: TEXT
+    - name: CommissionerName
+      data_type: TEXT
+    - name: SK_OrganisationID_STP
+      data_type: NUMBER
+    - name: STPCode
+      data_type: TEXT
+    - name: STPName
+      data_type: TEXT
 - name: olids_masked
   database: '"Data_Store_OLIDS"'
   schema: '"OLIDS_MASKED"'
@@ -1722,79 +3027,6 @@ sources:
       data_type: TIMESTAMP_NTZ
     - name: lds_is_deleted
       data_type: BOOLEAN
-- name: nhsd_snomed
-  database: '"Dictionary"'
-  schema: '"NHSD_SnomedReportingModel"'
-  description: NHS Digital SNOMED CT reporting model
-  tables:
-  - name: SCT_Concept
-    identifier: '"SCT_Concept"'
-    columns:
-    - name: Id
-      data_type: NUMBER
-    - name: EffectiveTime
-      data_type: TIMESTAMP_NTZ
-    - name: Active
-      data_type: BOOLEAN
-    - name: ModuleId
-      data_type: NUMBER
-    - name: DefinitionStatusId
-      data_type: NUMBER
-  - name: SCT_History
-    identifier: '"SCT_History"'
-    columns:
-    - name: OldConceptId
-      data_type: NUMBER
-    - name: OldConceptStatus
-      data_type: NUMBER
-    - name: NewConceptId
-      data_type: NUMBER
-    - name: NewConceptStatus
-      data_type: NUMBER
-    - name: Path
-      data_type: TEXT
-    - name: IsAmbiguous
-      data_type: BOOLEAN
-    - name: Iterations
-      data_type: NUMBER
-    - name: OldConceptFullySpecifiedName
-      data_type: TEXT
-    - name: NewConceptFullySpecifiedName
-      data_type: TEXT
-    - name: NewConceptFullySpecifiedNameStatus
-      data_type: NUMBER
-- name: dictionary
-  database: '"Dictionary"'
-  schema: '"dbo"'
-  description: Reference data including lookups and terminology mappings
-  tables:
-  - name: OrganisationMatrixPracticeView
-    identifier: '"OrganisationMatrixPracticeView"'
-    columns:
-    - name: SK_OrganisationID_Practice
-      data_type: NUMBER
-    - name: PracticeCode
-      data_type: TEXT
-    - name: PracticeName
-      data_type: TEXT
-    - name: SK_OrganisationID_Network
-      data_type: NUMBER
-    - name: NetworkCode
-      data_type: TEXT
-    - name: NetworkName
-      data_type: TEXT
-    - name: SK_OrganisationID_Commissioner
-      data_type: NUMBER
-    - name: CommissionerCode
-      data_type: TEXT
-    - name: CommissionerName
-      data_type: TEXT
-    - name: SK_OrganisationID_STP
-      data_type: NUMBER
-    - name: STPCode
-      data_type: TEXT
-    - name: STPName
-      data_type: TEXT
 - name: emis_reference
   database: '"Data_Store_OLIDS"'
   schema: '"REFERENCE"'

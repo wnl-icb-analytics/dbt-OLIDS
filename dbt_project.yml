@@ -31,25 +31,54 @@ models:
     +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
     +persist_docs:
       columns: true
+    indexes:
+      +materialized: incremental
+      +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+      +schema: "pseudonymisation"
+      +post-hook: ["{{ add_model_comment() }}"]
+      +tags: ["index"]
     olids:
-      base:
+      landing:
+        +materialized: table
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "olids_landing"
+        +post-hook: ["{{ add_model_comment() }}"]
+        +tags: ["landing"]
+      conformed:
         +materialized: view
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
-        +schema: "olids_base"
+        +schema: "olids_conformed"
         +post-hook: ["{{ add_model_comment() }}"]
-        +tags: ["base"]
+        +tags: ["conformed"]
       stable:
-        +materialized: incremental
+        +materialized: table
         +transient: false
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
-        +schema: "olids"
-        +on_schema_change: fail
+        +schema: "olids_stable"
         +post-hook: ["{{ add_model_comment() }}"]
-        +tags: ["stable", "incremental"]
+        +tags: ["stable"]
       intermediate:
         +materialized: table
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
-        +schema: "olids_base"
+        +schema: "olids_conformed"
         +post-hook: ["{{ add_model_comment() }}"]
         +tags: ["intermediate"]
+    synapse:
+      +tags: ["synapse"]
+      base:
+        +materialized: view
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "synapse_base"
+        +post-hook: ["{{ add_model_comment() }}"]
+      stable:
+        +materialized: table
+        +transient: false
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "synapse_stable"
+        +post-hook: ["{{ add_model_comment() }}"]
+      intermediate:
+        +materialized: table
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "synapse_base"
+        +post-hook: ["{{ add_model_comment() }}"]
 
