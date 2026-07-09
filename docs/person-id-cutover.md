@@ -37,6 +37,22 @@ Many-to-one note: collapsed identities mean several old 14-digit ids can rotate 
 | 14-digit literals | code search | Matches were SNOMED or dm+d concept codes, not person ids | No action. |
 | Non-incremental table models | model | 603 table models reference `person_id` in compiled model SQL | Rebuild after repointing sources. No prepared update scripts. |
 
+## External Person Id Estates (outside dbt-analytics)
+
+Swept DATA_LAKE__NCL for PERSON_ID columns and shape-checked content. These are owned by
+other teams; we do not rotate them. The crosswalk is available to any owner who cannot
+regenerate.
+
+| Estate | Scale | Finding | Cutover action |
+| --- | --- | --- | --- |
+| `AIC_DEV` (efi2, CCMS, base copies, ~40 tables) | 2.3M rows in each key table | All person ids are old 14-digit values. `__BACKUP_OLIDS2026` tables show the team is already preparing. | AIC re-runs their pipeline against the new ids after cutover. dbt-analytics consumes `INT_EFI2_SCORES` and `INT_CCMS_CURRENT` from here, so sequence their re-run before or alongside our snapshot rotation, or shim the two staging models through the crosswalk during transition. |
+| `PHENOLAB_DEV.DEV_MEASUREMENTS` | 948M rows | All person ids are old 14-digit values. Largest single external store of old ids. | Owner regenerates after cutover; offer the crosswalk if any state cannot be rebuilt. |
+| `SDL.DA`, `SDL.OUM` and variants | 0.7M to 1.7M rows | Ids are 6 to 8 digits: sk-family, not OLIDS person ids. | No action. |
+
+Sequencing consequence for the main runbook: step 6 (repoint sources) must include notifying
+AIC and PhenoLab, and the dim_person_ccms_snapshot rotation (script 002) should not run
+until AIC's re-run is agreed, or its staging input will mix id generations.
+
 ## Cutover Sequence
 
 NOT YET EXECUTED.
