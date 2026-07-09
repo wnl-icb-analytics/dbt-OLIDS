@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: person_id_index
-    description: Append-only person id assignment table. Loss rotates surfaced person ids; `full_refresh=false` protects the state.
+    description: Append-only person identity table. Aliases share a person_id when patient sk and DOB agree.
     columns:
       - name: source_person_id
         description: Raw source person UUID.
@@ -10,16 +10,36 @@ models:
           - not_null
           - unique
       - name: person_seq
-        description: Assignment order, starting at 1.
+        description: Cluster assignment order, starting at 1.
         tests:
           - not_null
       - name: person_id
         description: Nine-digit surfaced person key.
         tests:
           - not_null
-          - unique
+      - name: sk_patient_id
+        description: Patient sk used for identity resolution.
+      - name: birth_year
+        description: Patient birth year used for identity resolution.
+      - name: birth_month
+        description: Patient birth month used for identity resolution.
       - name: source_feed
         description: First feed that introduced the source id.
+      - name: match_method
+        description: How the person_id was assigned.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['minted', 'sk_dob_cluster', 'sk_dob_alias']
+      - name: review_reason
+        description: Reason the row was not resolved cleanly.
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['multi_sk', 'ambiguous_dob', 'sk_dob_mismatch', 'ambiguous_candidates']
+              config:
+                where: "review_reason IS NOT NULL"
       - name: first_seen_at
         description: Assignment timestamp.
 
