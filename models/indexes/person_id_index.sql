@@ -10,6 +10,10 @@
     )
 }}
 
+-- Mint only for persons seen on patient rows. Person-table-only ids carry no
+-- sk/DOB attributes, so minting them early would permanently split them from
+-- their cross-feed twins once their practice's data lands (append-only ids
+-- never re-resolve). Persons without a registration never surface downstream.
 WITH source_ids AS (
     SELECT DISTINCT
         person_id::VARCHAR AS source_person_id,
@@ -21,29 +25,11 @@ WITH source_ids AS (
     UNION DISTINCT
 
     SELECT DISTINCT
-        id::VARCHAR AS source_person_id,
-        'OLIDS'::VARCHAR AS source_feed,
-        1::NUMBER(38, 0) AS feed_order
-    FROM {{ ref('landing_person') }}
-    WHERE id IS NOT NULL
-
-    UNION DISTINCT
-
-    SELECT DISTINCT
         person_id::VARCHAR AS source_person_id,
         'SYNAPSE'::VARCHAR AS source_feed,
         2::NUMBER(38, 0) AS feed_order
     FROM {{ source('olids_masked', 'PATIENT') }}
     WHERE person_id IS NOT NULL
-
-    UNION DISTINCT
-
-    SELECT DISTINCT
-        id::VARCHAR AS source_person_id,
-        'SYNAPSE'::VARCHAR AS source_feed,
-        2::NUMBER(38, 0) AS feed_order
-    FROM {{ source('olids_masked', 'PERSON') }}
-    WHERE id IS NOT NULL
 ),
 
 patient_rows AS (
