@@ -43,6 +43,21 @@ models:
       - name: first_seen_at
         description: Assignment timestamp.
 
+  - name: person_id_crosswalk
+    description: Maps retired 14-digit Synapse person ids to current indexed person ids for #257 cutover.
+    columns:
+      - name: old_person_id
+        description: Retired 14-digit person id recomputed from the legacy source UUID.
+        tests:
+          - not_null
+          - unique
+      - name: new_person_id
+        description: Current indexed person id.
+        tests:
+          - not_null
+      - name: is_collapsed
+        description: True when several retired ids map to this current person id.
+
   - name: patient_id_index
     description: Append-only patient id assignment table. Loss rotates surfaced patient ids; `full_refresh=false` protects the state.
     columns:
