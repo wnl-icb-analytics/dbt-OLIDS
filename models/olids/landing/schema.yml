@@ -5,6 +5,18 @@ models:
 
   - name: landing_appointment
     description: Landing cache for APPOINTMENT.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
 
   - name: landing_appointment_practitioner
     description: Landing cache for APPOINTMENT_PRACTITIONER.
@@ -26,30 +38,102 @@ models:
 
   - name: landing_encounter
     description: Landing cache for ENCOUNTER.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
 
   - name: landing_episode_of_care
     description: Landing cache for EPISODE_OF_CARE.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
 
   - name: landing_location
     description: Landing cache for LOCATION.
 
   - name: landing_medication_order
     description: Landing cache for MEDICATION_ORDER.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
 
   - name: landing_medication_statement
     description: Landing cache for MEDICATION_STATEMENT.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
 
   - name: landing_national_data_opt_out
     description: Landing cache for NATIONAL_DATA_OPT_OUT.
 
   - name: landing_observation
     description: Landing cache for OBSERVATION.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
 
   - name: landing_organisation
     description: Landing cache for ORGANISATION.
 
   - name: landing_patient
     description: Landing cache for PATIENT.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
 
   - name: landing_patient_address
     description: Landing cache for PATIENT_ADDRESS.
@@ -80,6 +164,18 @@ models:
 
   - name: landing_referral_request
     description: Landing cache for REFERRAL_REQUEST.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
 
   - name: landing_schedule
     description: Landing cache for SCHEDULE.

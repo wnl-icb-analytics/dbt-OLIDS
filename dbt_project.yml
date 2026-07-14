@@ -26,6 +26,9 @@ tests:
   +schema: "test_audit"
 
 models:
+  elementary:
+    +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+    +schema: "dbt_elementary"
   dbt_olids:
     +materialized: table
     +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
