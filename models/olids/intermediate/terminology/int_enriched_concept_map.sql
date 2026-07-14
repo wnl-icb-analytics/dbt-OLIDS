@@ -139,8 +139,10 @@ missing_emis_mappings AS (
 ),
 
 local_backfills AS (
-    -- keyed on (system, code): feed concept UUIDs are not stable across loads,
-    -- so the current UUID is resolved from the concept table at build time
+    -- fallback only: applies when the feed supplies no CONCEPT_MAP row.
+    -- keyed on (system, code), not concept UUID - each environment mints its
+    -- own pseudonymised ids (the previous hardcoded UUID was authored against
+    -- the synapse feed and matched nothing here)
     SELECT
         src.concept_id AS source_concept_id,
         src.code AS source_code,
@@ -154,9 +156,12 @@ local_backfills AS (
         'local-backfill' AS equivalence,
         1 AS equivalence_rank
     FROM {{ ref('landing_concept') }} AS src
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
+        ON src.concept_id = cm.source_concept_id
     WHERE
         src.system = 'EMIS_RegistrationStatus_cs'
         AND src.code = 'Deceased'
+        AND cm.source_concept_id IS NULL
 ),
 
 unioned AS (
