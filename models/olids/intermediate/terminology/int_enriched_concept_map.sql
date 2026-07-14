@@ -139,11 +139,13 @@ missing_emis_mappings AS (
 ),
 
 local_backfills AS (
+    -- keyed on (system, code): feed concept UUIDs are not stable across loads,
+    -- so the current UUID is resolved from the concept table at build time
     SELECT
-        '5a8a5445-b192-671c-fba0-24048a06fcf4'::VARCHAR AS source_concept_id,
-        'Deceased' AS source_code,
-        'Deceased' AS source_display,
-        'EMIS_RegistrationStatus_cs' AS source_system,
+        src.concept_id AS source_concept_id,
+        src.code AS source_code,
+        src.display AS source_display,
+        src.system AS source_system,
         NULL::VARCHAR AS target_concept_id,
         '725951000000101' AS target_code,
         'GP22 deregistration - death' AS target_display,
@@ -151,6 +153,10 @@ local_backfills AS (
         TRUE AS is_primary,
         'local-backfill' AS equivalence,
         1 AS equivalence_rank
+    FROM {{ ref('landing_concept') }} AS src
+    WHERE
+        src.system = 'EMIS_RegistrationStatus_cs'
+        AND src.code = 'Deceased'
 ),
 
 unioned AS (

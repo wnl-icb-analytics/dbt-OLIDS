@@ -134,13 +134,13 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
 
     tests:
-      # one feed concept (9b72a651-1501-b182-74d4-3996196c7876, 8,421 rows, 1.64%) survives
-      # enrichment; tighten to 0 once the vocabulary seed mapping lands (#265 follow-up)
+      # the enriched map local backfill covers Deceased, resolved by (system, code)
+      # because feed concept UUIDs rotate between loads
       - audit_gate:
           arguments:
             audit_model: audit_episode_of_care
             metric: episode_status_source_concept_id_unmapped_pct
-            max_value: 2
+            max_value: 0
           config:
             severity: error
     columns:
