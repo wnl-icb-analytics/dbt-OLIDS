@@ -10,6 +10,8 @@
         CONFORMED
     {%- elif custom_schema_name == 'olids_stable' -%}
         STABLE
+    {%- elif custom_schema_name == 'olids_audit' -%}
+        AUDIT
     {%- elif custom_schema_name == 'synapse_base' -%}
         SYNAPSE_BASE
     {%- elif custom_schema_name == 'synapse_stable' -%}

@@ -1,6 +1,7 @@
 {{
     config(
-        secure=true,
+        materialized='table',
+        transient=true,
         alias='medication_statement')
 }}
 

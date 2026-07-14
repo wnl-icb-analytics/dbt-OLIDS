@@ -6,6 +6,11 @@ models:
   - name: landing_appointment
     description: Landing cache for APPOINTMENT.
     tests:
+      - min_row_count:
+          arguments:
+            min_rows: 8000000
+          config:
+            severity: error
       - elementary.volume_anomalies:
           arguments:
             anomaly_direction: drop
@@ -39,6 +44,11 @@ models:
   - name: landing_encounter
     description: Landing cache for ENCOUNTER.
     tests:
+      - min_row_count:
+          arguments:
+            min_rows: 50000000
+          config:
+            severity: error
       - elementary.volume_anomalies:
           arguments:
             anomaly_direction: drop
@@ -54,6 +64,11 @@ models:
   - name: landing_episode_of_care
     description: Landing cache for EPISODE_OF_CARE.
     tests:
+      - min_row_count:
+          arguments:
+            min_rows: 300000
+          config:
+            severity: error
       - elementary.volume_anomalies:
           arguments:
             anomaly_direction: drop
@@ -72,6 +87,11 @@ models:
   - name: landing_medication_order
     description: Landing cache for MEDICATION_ORDER.
     tests:
+      - min_row_count:
+          arguments:
+            min_rows: 40000000
+          config:
+            severity: error
       - elementary.volume_anomalies:
           arguments:
             anomaly_direction: drop
@@ -105,6 +125,11 @@ models:
   - name: landing_observation
     description: Landing cache for OBSERVATION.
     tests:
+      - min_row_count:
+          arguments:
+            min_rows: 150000000
+          config:
+            severity: error
       - elementary.volume_anomalies:
           arguments:
             anomaly_direction: drop
@@ -123,6 +148,11 @@ models:
   - name: landing_patient
     description: Landing cache for PATIENT.
     tests:
+      - min_row_count:
+          arguments:
+            min_rows: 250000
+          config:
+            severity: error
       - elementary.volume_anomalies:
           arguments:
             anomaly_direction: drop
@@ -143,12 +173,24 @@ models:
 
   - name: landing_patient_person
     description: Landing cache for PATIENT_PERSON.
+    tests:
+      - min_row_count:
+          arguments:
+            min_rows: 200000
+          config:
+            severity: error
 
   - name: landing_patient_uprn
     description: Landing cache for PATIENT_UPRN.
 
   - name: landing_person
     description: Landing cache for PERSON.
+    tests:
+      - min_row_count:
+          arguments:
+            min_rows: 1500000
+          config:
+            severity: error
 
   - name: landing_postcode_hash
     description: Landing cache for POSTCODE_HASH.

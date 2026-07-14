@@ -1,0 +1,134 @@
+version: 2
+
+models:
+  - name: audit_patient_linkage
+    description: >-
+      Patient linkage metrics. One row per table_name, metric_name, practice_code and value_text.
+      Warns outside 90,000-125,000 unlinked live patients or above 10,000 null keys.
+
+    tests:
+      - audit_metric_within_band:
+          arguments:
+            metric: unlinked_live_patients
+            min_value: 90000
+            max_value: 125000
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            metric: unlinked_live_null_sk
+            max_value: 10000
+          config:
+            severity: warn
+
+  - name: audit_observation
+    description: >-
+      Observation metrics. One row per table_name, metric_name, practice_code and value_text.
+      Warns above 100 retained person orphans. The 99% precision warning signals that
+      real bands must be added when the upstream vocabulary fix lands.
+
+    tests:
+      - audit_metric_within_band:
+          arguments:
+            metric: person_orphan_no_patient_row
+            max_value: 100
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            metric: clinical_effective_date_precision_source_concept_id_unmapped_pct
+            min_value: 99
+          config:
+            severity: warn
+
+  - name: audit_medication_order
+    description: >-
+      Medication order metrics. One row per table_name, metric_name, practice_code and value_text.
+      No warn threshold is set.
+
+  - name: audit_medication_statement
+    description: >-
+      Medication statement metrics. One row per table_name, metric_name, practice_code and value_text.
+      No warn threshold is set.
+
+  - name: audit_encounter
+    description: >-
+      Encounter metrics. One row per table_name, metric_name, practice_code and value_text.
+      No warn threshold is set.
+
+  - name: audit_appointment
+    description: >-
+      Appointment metrics. One row per table_name, metric_name, practice_code and value_text.
+      Warns above 2,500,000 patient orphan rows.
+
+    tests:
+      - audit_metric_within_band:
+          arguments:
+            metric: patient_orphan_rows
+            max_value: 2500000
+          config:
+            severity: warn
+
+  - name: audit_episode_of_care
+    description: >-
+      Episode of care metrics. One row per table_name, metric_name, practice_code and value_text.
+      No warn threshold is set.
+
+  - name: audit_referral_request
+    description: >-
+      Referral request metrics. One row per table_name, metric_name, practice_code and value_text.
+      Warns outside 200,000-400,000 duplicate id rows.
+
+    tests:
+      - audit_metric_within_band:
+          arguments:
+            metric: duplicate_id_rows
+            min_value: 200000
+            max_value: 400000
+          config:
+            severity: warn
+
+  - name: audit_allergy_intolerance
+    description: >-
+      Allergy intolerance metrics. One row per table_name, metric_name, practice_code and value_text.
+      No warn threshold is set.
+
+  - name: audit_diagnostic_order
+    description: >-
+      Diagnostic order metrics. One row per table_name, metric_name, practice_code and value_text.
+      No warn threshold is set.
+
+  - name: audit_procedure_request
+    description: >-
+      Procedure request metrics. One row per table_name, metric_name, practice_code and value_text.
+      No warn threshold is set.
+
+  - name: audit_staleness
+    description: >-
+      Domain staleness metrics. One row per table_name, metric_name, practice_code and value_text.
+      Warns above five practices lagging the domain consensus by seven days. Consensus is the
+      median of per-practice max activity dates; rows dated after their own source_extraction_date
+      are excluded, so future-dated source rows cannot distort it. No CURRENT_DATE is used.
+
+    tests:
+      - audit_metric_within_band:
+          arguments:
+            metric: practices_lagging_consensus_7d
+            table_name: OBSERVATION
+            max_value: 5
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            metric: practices_lagging_consensus_7d
+            table_name: MEDICATION_ORDER
+            max_value: 5
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            metric: practices_lagging_consensus_7d
+            table_name: EPISODE_OF_CARE
+            max_value: 5
+          config:
+            severity: warn
