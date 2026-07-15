@@ -725,8 +725,6 @@ sources:
       data_type: BOOLEAN
     - name: lds_is_deleted
       data_type: BOOLEAN
-    - name: publisher_organisation_code
-      data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
     - name: lds_transform_datetime
@@ -1021,8 +1019,6 @@ sources:
       data_type: BOOLEAN
     - name: lds_is_deleted
       data_type: BOOLEAN
-    - name: publisher_organisation_code
-      data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
     - name: lds_transform_datetime
@@ -1052,8 +1048,6 @@ sources:
       data_type: DATE
     - name: lds_is_deleted
       data_type: BOOLEAN
-    - name: publisher_organisation_code
-      data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
     - name: lds_transform_datetime

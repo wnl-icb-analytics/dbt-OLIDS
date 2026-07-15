@@ -21,10 +21,13 @@ SELECT
     src.name,
     src.is_obsolete,
     src.lds_is_deleted,
-    src.publisher_organisation_code,
+    -- derived: the feed no longer carries publisher_organisation_code
+    pub.organisation_code AS publisher_organisation_code,
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_practitioner') }} AS src
+LEFT JOIN {{ ref('landing_organisation') }} AS pub
+    ON src.publisher_organisation_id = pub.id
 WHERE src.id IN (
     SELECT DISTINCT practitioner_id
     FROM {{ ref('conformed_practitioner_in_role') }}
