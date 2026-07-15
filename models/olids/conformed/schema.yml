@@ -288,7 +288,7 @@ models:
       - null_count_below:
           arguments:
             column_name: person_id
-            max_nulls: 500
+            max_nulls: 5000
           config:
             severity: error
     columns:

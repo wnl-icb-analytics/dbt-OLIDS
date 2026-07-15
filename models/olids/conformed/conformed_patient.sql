@@ -58,3 +58,8 @@ WHERE
     AND src.is_spine_sensitive = FALSE
     AND src.is_confidential = FALSE
     AND src.is_test_patient = FALSE
+-- the feed occasionally ships exact duplicate patient rows; keep one deterministically
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY src.id
+    ORDER BY src.lds_transform_datetime DESC, src.lds_source_record_id
+) = 1
