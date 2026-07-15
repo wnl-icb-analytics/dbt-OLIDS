@@ -47,6 +47,12 @@ models:
         +schema: "olids_landing"
         +post-hook: ["{{ add_model_comment() }}"]
         +tags: ["landing"]
+      audit:
+        +materialized: table
+        +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
+        +schema: "olids_audit"
+        +post-hook: ["{{ add_model_comment() }}"]
+        +tags: ["audit"]
       conformed:
         +materialized: view
         +database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"

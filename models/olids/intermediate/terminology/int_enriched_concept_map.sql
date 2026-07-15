@@ -139,11 +139,15 @@ missing_emis_mappings AS (
 ),
 
 local_backfills AS (
+    -- fallback only: applies when the feed supplies no CONCEPT_MAP row.
+    -- keyed on (system, code), not concept UUID - each environment mints its
+    -- own pseudonymised ids (the previous hardcoded UUID was authored against
+    -- the synapse feed and matched nothing here)
     SELECT
-        '5a8a5445-b192-671c-fba0-24048a06fcf4'::VARCHAR AS source_concept_id,
-        'Deceased' AS source_code,
-        'Deceased' AS source_display,
-        'EMIS_RegistrationStatus_cs' AS source_system,
+        src.concept_id AS source_concept_id,
+        src.code AS source_code,
+        src.display AS source_display,
+        src.system AS source_system,
         NULL::VARCHAR AS target_concept_id,
         '725951000000101' AS target_code,
         'GP22 deregistration - death' AS target_display,
@@ -151,6 +155,13 @@ local_backfills AS (
         TRUE AS is_primary,
         'local-backfill' AS equivalence,
         1 AS equivalence_rank
+    FROM {{ ref('landing_concept') }} AS src
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
+        ON src.concept_id = cm.source_concept_id
+    WHERE
+        src.system = 'EMIS_RegistrationStatus_cs'
+        AND src.code = 'Deceased'
+        AND cm.source_concept_id IS NULL
 ),
 
 unioned AS (
