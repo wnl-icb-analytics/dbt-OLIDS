@@ -3,6 +3,12 @@ version: 2
 models:
   - name: person_id_index
     description: Append-only person identity table. Aliases share a person_id when patient sk and DOB agree.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
     columns:
       - name: source_person_id
         description: Raw source person UUID.
@@ -60,6 +66,12 @@ models:
 
   - name: patient_id_index
     description: Append-only patient id assignment table. Loss rotates surfaced patient ids; `full_refresh=false` protects the state.
+    tests:
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
     columns:
       - name: source_patient_id
         description: Raw source patient UUID.

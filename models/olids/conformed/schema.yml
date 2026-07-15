@@ -132,6 +132,17 @@ models:
 
 
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
+
+    tests:
+      # the enriched map local backfill covers Deceased, resolved by (system, code)
+      # because feed concept UUIDs rotate between loads
+      - audit_gate:
+          arguments:
+            audit_model: audit_episode_of_care
+            metric: episode_status_source_concept_id_unmapped_pct
+            max_value: 0
+          config:
+            severity: error
     columns:
       - name: id
       - name: patient_id
@@ -165,6 +176,15 @@ models:
 
 
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
+
+    tests:
+      - audit_gate:
+          arguments:
+            audit_model: audit_medication_order
+            metric: medication_order_source_concept_id_unmapped_pct
+            max_value: 0.1
+          config:
+            severity: error
     columns:
       - name: id
       - name: patient_id
@@ -194,6 +214,15 @@ models:
 
 
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
+
+    tests:
+      - audit_gate:
+          arguments:
+            audit_model: audit_medication_statement
+            metric: medication_statement_source_concept_id_unmapped_pct
+            max_value: 0.1
+          config:
+            severity: error
     columns:
       - name: id
       - name: patient_id
@@ -223,6 +252,15 @@ models:
 
 
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
+
+    tests:
+      - audit_gate:
+          arguments:
+            audit_model: audit_observation
+            metric: observation_source_concept_id_unmapped_pct
+            max_value: 0.1
+          config:
+            severity: error
     columns:
       - name: id
       - name: patient_id
@@ -246,8 +284,19 @@ models:
       - name: id
   - name: conformed_patient
     description: "Filtered patient conformed view. Foundation for all patient-related filtering.\n\nExcludes sensitive patients:\n- is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients) \n- is_test_patient = FALSE (excludes test patients)\n\nRestricts to WNL practices:\n- publisher_organisation_code IN (WNL practice codes via int_wnl_practices)"
+    tests:
+      - null_count_below:
+          arguments:
+            column_name: person_id
+            max_nulls: 500
+          config:
+            severity: error
     columns:
       - name: sk_patient_id
+        tests:
+          - not_null:
+              config:
+                severity: error
       - name: id
       - name: lds_source_record_id
       - name: gender_source_concept_id
@@ -400,6 +449,10 @@ models:
       Filtering method: Inner join to conformed_patient and int_wnl_practices'
     columns:
       - name: id
+        tests:
+          - unique:
+              config:
+                severity: error
       - name: patient_id
       - name: person_id
       - name: publisher_organisation_id

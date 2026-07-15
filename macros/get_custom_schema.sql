@@ -10,12 +10,16 @@
         CONFORMED
     {%- elif custom_schema_name == 'olids_stable' -%}
         STABLE
+    {%- elif custom_schema_name == 'olids_audit' -%}
+        AUDIT
     {%- elif custom_schema_name == 'synapse_base' -%}
         SYNAPSE_BASE
     {%- elif custom_schema_name == 'synapse_stable' -%}
         SYNAPSE_STABLE
     {%- elif custom_schema_name == 'pseudonymisation' -%}
         PSEUDONYMISATION
+    {%- elif custom_schema_name == 'dbt_elementary' -%}
+        DBT_ELEMENTARY
     {%- else -%}
         {{ default_schema }}_{{ custom_schema_name | trim }}
     {%- endif -%}
