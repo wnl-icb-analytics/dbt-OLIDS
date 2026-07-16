@@ -207,7 +207,7 @@ models:
           - not_null
 
   - name: stable_freshness
-    description: 'Published freshness watermarks computed from the stable tables. Grain: one row per table_name and publisher_code (null publisher_code = table-level row). Processing watermarks (max source_extraction_date, max lds_transform_datetime) show pipeline movement; activity watermarks show content currency, excluding deleted rows and rows dated after their own extraction. Consensus is the median of publisher maxima; lag is data-to-data (no CURRENT_DATE). Tables without processing date columns carry no row.'
+    description: 'Per-publisher freshness watermarks computed from the stable tables. Grain: one row per table_name and publisher_code, every column populated. Processing watermarks (max source_extraction_date, max lds_transform_datetime) show pipeline movement; activity watermarks show content currency, excluding deleted rows and rows dated after their own extraction. Consensus is the median of publisher maxima; lag is data-to-data (no CURRENT_DATE). Table-level rollups live in FRESHNESS_SUMMARY.'
 
     tests:
       - dbt_utils.unique_combination_of_columns:
@@ -220,11 +220,19 @@ models:
         tests:
           - not_null
       - name: publisher_code
+        tests:
+          - not_null
       - name: max_source_extraction_date
       - name: max_lds_transform_datetime
       - name: max_activity_date
       - name: consensus_activity_date
       - name: activity_lag_days
-      - name: practices_reporting
-      - name: practices_lagging_consensus_7d
-      - name: practices_lagging_consensus_14d
+
+  - name: stable_freshness_summary
+    description: 'One row per table: table-level watermarks, consensus and the worst-lagging publisher from FRESHNESS. The quick-scan view of feed health.'
+
+    columns:
+      - name: table_name
+        tests:
+          - not_null
+          - unique
