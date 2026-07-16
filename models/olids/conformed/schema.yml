@@ -31,6 +31,7 @@ models:
       - name: clinical_effective_date
       - name: allergy_intolerance_source_concept_id
       - name: clinical_effective_date_precision_source_concept_id
+      - name: clinical_system
   - name: conformed_appointment
     description: 'Filtered Appointment conformed view.
 
@@ -55,6 +56,7 @@ models:
       - name: appointment_status_source_concept_id
       - name: booking_method_source_concept_id
       - name: contact_mode_source_concept_id
+      - name: clinical_system
   - name: conformed_appointment_practitioner
     description: 'Filtered Appointment Practitioner conformed view.
 
@@ -97,6 +99,7 @@ models:
       - name: result_measurement_units_source_concept_id
       - name: clinical_effective_date_precision_source_concept_id
       - name: episodicity_source_concept_id
+      - name: clinical_system
   - name: conformed_encounter
     description: 'Filtered Encounter conformed view.
 
@@ -118,6 +121,7 @@ models:
       - name: clinical_effective_date
       - name: encounter_source_concept_id
       - name: clinical_effective_date_precision_source_concept_id
+      - name: clinical_system
   - name: conformed_episode_of_care
     description: 'Filtered Episode Of Care conformed view.
 
@@ -153,6 +157,7 @@ models:
       - name: episode_of_care_start_date
       - name: episode_type_source_concept_id
       - name: episode_status_source_concept_id
+      - name: clinical_system
   - name: conformed_location
     description: 'Unfiltered Location reference view.
 
@@ -200,6 +205,7 @@ models:
       - name: clinical_effective_date
       - name: medication_order_source_concept_id
       - name: clinical_effective_date_precision_source_concept_id
+      - name: clinical_system
   - name: conformed_medication_statement
     description: 'Filtered Medication Statement conformed view.
 
@@ -238,6 +244,7 @@ models:
       - name: medication_statement_source_concept_id
       - name: authorisation_type_source_concept_id
       - name: clinical_effective_date_precision_source_concept_id
+      - name: clinical_system
   - name: conformed_observation
     description: 'Filtered Observation conformed view.
 
@@ -273,6 +280,7 @@ models:
       - name: result_value_units_source_concept_id
       - name: clinical_effective_date_precision_source_concept_id
       - name: episodicity_source_concept_id
+      - name: clinical_system
   - name: conformed_organisation
     description: 'Unfiltered Organisation reference view.
 
@@ -301,6 +309,7 @@ models:
       - name: lds_source_record_id
       - name: gender_source_concept_id
       - name: registered_practice_organisation_id
+      - name: clinical_system
   - name: conformed_patient_address
     description: 'Filtered Patient Address conformed view.
 
@@ -320,6 +329,7 @@ models:
       - name: patient_id
       - name: person_id
       - name: address_type_source_concept_id
+      - name: clinical_system
   - name: conformed_patient_contact
     description: 'Filtered Patient Contact conformed view.
 
@@ -339,6 +349,7 @@ models:
       - name: patient_id
       - name: person_id
       - name: contact_type_source_concept_id
+      - name: clinical_system
   - name: conformed_patient_person
     description: 'Generated Patient Person conformed view.
 
@@ -355,6 +366,7 @@ models:
       - name: patient_id
       - name: person_id
       - name: id
+      - name: clinical_system
   - name: conformed_patient_uprn
     description: 'Unfiltered Patient Uprn reference view.
 
@@ -379,6 +391,7 @@ models:
       Identifiers: id is the indexed person id; person_uuid holds the source UUID.'
     columns:
       - name: id
+      - name: clinical_system
   - name: conformed_practitioner
     description: 'Filtered Practitioner conformed view.
 
@@ -433,6 +446,7 @@ models:
       - name: procedure_request_source_concept_id
       - name: clinical_effective_date_precision_source_concept_id
       - name: status_source_concept_id
+      - name: clinical_system
   - name: conformed_referral_request
     description: 'Filtered Referral Request conformed view.
 
@@ -466,6 +480,7 @@ models:
       - name: referral_request_priority_source_concept_id
       - name: referral_request_type_source_concept_id
       - name: referral_request_specialty_source_concept_id
+      - name: clinical_system
   - name: conformed_schedule
     description: 'Filtered Schedule conformed view.
 

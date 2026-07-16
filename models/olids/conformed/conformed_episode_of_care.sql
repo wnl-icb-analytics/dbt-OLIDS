@@ -35,6 +35,7 @@ SELECT
     episode_status_map.target_display AS episode_status_display,
     src.lds_is_deleted,
     src.publisher_organisation_code,
+    patients.clinical_system,
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_episode_of_care') }} AS src

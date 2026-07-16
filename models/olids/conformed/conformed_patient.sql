@@ -38,6 +38,14 @@ SELECT
     src.is_test_patient,
     src.is_spine_sensitive,
     src.lds_source_dataset,
+    CASE
+        WHEN src.lds_source_dataset ILIKE '%emis%' THEN 'EMIS'
+        WHEN
+            src.lds_source_dataset ILIKE '%tpp%'
+            OR src.lds_source_dataset ILIKE '%systmone%'
+            THEN 'SystmOne'
+        ELSE src.lds_source_dataset
+    END AS clinical_system,
     src.lds_is_deleted,
     src.publisher_organisation_code,
     src.source_extraction_date,

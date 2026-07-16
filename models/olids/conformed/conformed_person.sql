@@ -12,7 +12,8 @@ Keeps people linked to the filtered patient spine and passes pseudonymised field
 WITH gender_fallback AS (
     SELECT
         pp.person_uuid,
-        c.display AS gender
+        c.display AS gender,
+        pat.clinical_system
     FROM {{ ref('conformed_patient_person') }} AS pp
     INNER JOIN {{ ref('conformed_patient') }} AS pat
         ON pp.patient_id = pat.id
@@ -56,6 +57,8 @@ SELECT
     src.patient_flagged_sensitive,
     src.error_success_code,
     src.lds_is_deleted,
+    -- from the patient record backing this person row
+    gf.clinical_system,
     src.source_extraction_date,
     src.lds_transform_datetime,
     COALESCE(src.gender, gf.gender) AS gender

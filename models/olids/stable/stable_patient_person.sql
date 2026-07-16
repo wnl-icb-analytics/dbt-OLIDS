@@ -16,5 +16,6 @@ SELECT
     lds_source_record_id_person,
     gp_practice_code,
     lds_is_deleted,
-    lds_transform_datetime
+    lds_transform_datetime,
+    clinical_system
 FROM {{ ref('conformed_patient_person') }}

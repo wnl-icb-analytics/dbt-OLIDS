@@ -7,6 +7,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_appointment
     description: Stable appointment table.
     columns:
@@ -14,6 +15,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_appointment_practitioner
     description: Stable appointment_practitioner table.
     columns:
@@ -42,6 +44,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_encounter
     description: Stable encounter table.
     columns:
@@ -49,6 +52,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_episode_of_care
     description: Stable episode_of_care table.
     columns:
@@ -56,6 +60,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_location
     description: Stable location table.
     columns:
@@ -70,6 +75,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_medication_statement
     description: Stable medication_statement table.
     columns:
@@ -77,6 +83,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_national_data_opt_out
     description: Stable national_data_opt_out table.
     columns:
@@ -91,6 +98,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_organisation
     description: Stable organisation table.
     columns:
@@ -105,6 +113,8 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
+        description: 'Clinical system that recorded the row, cascaded from the patient record (EMIS or SystmOne).'
   - name: stable_patient_address
     description: Stable patient_address table.
     columns:
@@ -112,6 +122,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_patient_contact
     description: Stable patient_contact table.
     columns:
@@ -119,6 +130,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_patient_person
     description: Stable patient_person table.
     columns:
@@ -126,6 +138,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_patient_uprn
     description: Stable patient_uprn table. Grain is one row per address match
       attempt; an address accrues multiple rows across matching runs.
@@ -140,6 +153,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_postcode_hash
     description: Stable postcode_hash table.
     columns:
@@ -168,6 +182,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_referral_request
     description: Stable referral_request table.
     columns:
@@ -175,6 +190,7 @@ models:
         tests:
           - unique
           - not_null
+      - name: clinical_system
   - name: stable_schedule
     description: Stable schedule table.
     columns:
@@ -189,3 +205,26 @@ models:
         tests:
           - unique
           - not_null
+
+  - name: stable_freshness
+    description: 'Published freshness watermarks computed from the stable tables. Grain: one row per table_name and publisher_code (null publisher_code = table-level row). Processing watermarks (max source_extraction_date, max lds_transform_datetime) show pipeline movement; activity watermarks show content currency, excluding deleted rows and rows dated after their own extraction. Consensus is the median of publisher maxima; lag is data-to-data (no CURRENT_DATE). Tables without processing date columns carry no row.'
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - table_name
+              - publisher_code
+    columns:
+      - name: table_name
+        tests:
+          - not_null
+      - name: publisher_code
+      - name: max_source_extraction_date
+      - name: max_lds_transform_datetime
+      - name: max_activity_date
+      - name: consensus_activity_date
+      - name: activity_lag_days
+      - name: practices_reporting
+      - name: practices_lagging_consensus_7d
+      - name: practices_lagging_consensus_14d

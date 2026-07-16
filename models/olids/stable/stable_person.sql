@@ -39,6 +39,7 @@ SELECT
     patient_flagged_sensitive,
     error_success_code,
     lds_is_deleted,
+    clinical_system,
     source_extraction_date,
     lds_transform_datetime
 FROM {{ ref('conformed_person') }}

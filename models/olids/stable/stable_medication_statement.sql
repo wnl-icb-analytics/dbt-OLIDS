@@ -60,6 +60,7 @@ SELECT
     expiry_date,
     lds_is_deleted,
     publisher_organisation_code,
+    clinical_system,
     source_extraction_date,
     lds_transform_datetime
 FROM {{ ref('conformed_medication_statement') }}

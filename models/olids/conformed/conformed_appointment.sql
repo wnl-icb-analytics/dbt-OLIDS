@@ -57,6 +57,7 @@ SELECT
     src.csds_care_contact_identifier,
     src.lds_is_deleted,
     src.publisher_organisation_code,
+    patients.clinical_system,
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_appointment') }} AS src
