@@ -138,30 +138,79 @@ missing_emis_mappings AS (
     WHERE cm.source_concept_id IS NULL
 ),
 
+{#-
+    Fallback mappings for vocabularies the feed ships without CONCEPT_MAP rows.
+    Keyed on (system, code), never concept UUID: each environment mints its own
+    pseudonymised ids. Targets mirror the legacy feed's authoritative mappings.
+-#}
+{% set local_mappings = [
+    {'system': 'EMIS_RegistrationStatus_cs', 'code': 'Deceased',
+     'target_code': '725951000000101', 'target_display': 'GP22 deregistration - death'},
+    {'system': 'EMIS_and_TPP_MedicationStatement_cs', 'code': 'Acute',
+     'target_code': '1217105006', 'target_display': 'Prescription given'},
+    {'system': 'EMIS_and_TPP_MedicationStatement_cs', 'code': 'Automatic',
+     'target_code': '1217105006', 'target_display': 'Prescription given'},
+    {'system': 'EMIS_and_TPP_MedicationStatement_cs', 'code': 'Repeat',
+     'target_code': '182918009', 'target_display': 'Repeated prescription'},
+    {'system': 'EMIS_and_TPP_MedicationStatement_cs', 'code': 'Repeat Dispensing',
+     'target_code': '182918009', 'target_display': 'Repeated prescription'},
+] %}
+
 local_backfills AS (
-    -- fallback only: applies when the feed supplies no CONCEPT_MAP row.
-    -- keyed on (system, code), not concept UUID - each environment mints its
-    -- own pseudonymised ids (the previous hardcoded UUID was authored against
-    -- the synapse feed and matched nothing here)
+    -- fallback only: applies when the feed supplies no CONCEPT_MAP row
     SELECT
         src.concept_id AS source_concept_id,
         src.code AS source_code,
         src.display AS source_display,
         src.system AS source_system,
         NULL::VARCHAR AS target_concept_id,
-        '725951000000101' AS target_code,
-        'GP22 deregistration - death' AS target_display,
+        m.target_code,
+        m.target_display,
         'snomed_info_sct' AS target_system,
         TRUE AS is_primary,
         'local-backfill' AS equivalence,
         1 AS equivalence_rank
     FROM {{ ref('landing_concept') }} AS src
+    INNER JOIN (
+        {% for m in local_mappings %}
+        SELECT
+            '{{ m.system }}' AS system,
+            '{{ m.code }}' AS code,
+            '{{ m.target_code }}' AS target_code,
+            '{{ m.target_display }}' AS target_display
+        {% if not loop.last %}UNION ALL{% endif %}
+        {% endfor %}
+    ) AS m
+        ON src.system = m.system AND src.code = m.code
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
+        ON src.concept_id = cm.source_concept_id
+    WHERE cm.source_concept_id IS NULL
+),
+
+unmapped_passthrough AS (
+    -- concepts with no CONCEPT_MAP row keep their source code and display so
+    -- enumerations (date precision, address and contact types, statuses) stay
+    -- usable downstream; target side stays null, so mapping gates still count
+    -- these as unmapped. The final dedupe prefers any row with a target.
+    SELECT
+        src.concept_id AS source_concept_id,
+        src.code AS source_code,
+        src.display AS source_display,
+        src.system AS source_system,
+        NULL::VARCHAR AS target_concept_id,
+        NULL::VARCHAR AS target_code,
+        NULL::VARCHAR AS target_display,
+        NULL::VARCHAR AS target_system,
+        TRUE AS is_primary,
+        'unmapped-passthrough' AS equivalence,
+        99 AS equivalence_rank
+    FROM {{ ref('landing_concept') }} AS src
     LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
         ON src.concept_id = cm.source_concept_id
     WHERE
-        src.system = 'EMIS_RegistrationStatus_cs'
-        AND src.code = 'Deceased'
-        AND cm.source_concept_id IS NULL
+        cm.source_concept_id IS NULL
+        -- honour the snomed-as-source exclusion applied to mapped rows
+        AND src.system NOT IN ('http:__snomed.info_sct', 'snomed_info_sct')
 ),
 
 unioned AS (
@@ -211,6 +260,22 @@ unioned AS (
         equivalence,
         equivalence_rank
     FROM local_backfills
+
+    UNION ALL
+
+    SELECT
+        source_concept_id,
+        source_code,
+        source_display,
+        source_system,
+        target_concept_id,
+        target_code,
+        target_display,
+        target_system,
+        is_primary,
+        equivalence,
+        equivalence_rank
+    FROM unmapped_passthrough
 )
 
 SELECT *
