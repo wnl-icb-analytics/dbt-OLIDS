@@ -83,5 +83,5 @@ LEFT JOIN gender_fallback AS gf
 -- the person table carries one canonical row per person (latest record wins)
 QUALIFY ROW_NUMBER() OVER (
     PARTITION BY spine.person_id
-    ORDER BY src.lds_transform_datetime DESC NULLS LAST, spine.person_uuid
+    ORDER BY src.lds_transform_datetime DESC NULLS LAST, spine.person_uuid ASC
 ) = 1

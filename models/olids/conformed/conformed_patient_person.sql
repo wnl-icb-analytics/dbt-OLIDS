@@ -31,7 +31,7 @@ WITH bridge AS (
     -- the feed can ship duplicate rows per patient; keep the latest
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY patient_id
-        ORDER BY lds_transform_datetime DESC NULLS LAST, id
+        ORDER BY lds_transform_datetime DESC NULLS LAST, id ASC
     ) = 1
 )
 
