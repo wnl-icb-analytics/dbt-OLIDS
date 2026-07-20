@@ -307,6 +307,8 @@ models:
                 severity: error
       - name: id
       - name: lds_source_record_id
+      - name: person_uuid
+        description: Source person UUID from PATIENT.person_id
       - name: gender_source_concept_id
       - name: registered_practice_organisation_id
       - name: clinical_system
@@ -351,19 +353,26 @@ models:
       - name: contact_type_source_concept_id
       - name: clinical_system
   - name: conformed_patient_person
-    description: 'Generated Patient Person conformed view.
+    description: 'Patient-person bridge built from the patient spine.
 
 
-      Applied filters:
+      Construction: one row per conformed patient with a person UUID, taken from
+      PATIENT.person_id. The source PATIENT_PERSON feed only supplies bridge
+      metadata where a feed row exists - it is missing ~950k patient links that
+      PATIENT.person_id carries, so it is no longer the driving table.
 
-      - Patient filtering: Inherits filtering from underlying patient relationships
 
-      - Practice filtering: Inherits WNL practice restriction through patient associations
+      Derived rows (no feed row) reuse the patient source UUID as id and have
+      NULL lds_source_record_id.
 
 
-      Filtering method: Filtered through relationships to conformed_patient'
+      Filtering: inherits WNL practice restriction and sensitive-patient
+      exclusions from conformed_patient.'
     columns:
       - name: patient_id
+        tests:
+          - unique
+          - not_null
       - name: person_id
       - name: id
       - name: clinical_system
@@ -377,20 +386,22 @@ models:
     columns:
       - name: patient_address_id
   - name: conformed_person
-    description: 'Filtered Person conformed view sourced from the pseudonymised PERSON feed.
+    description: 'Person view driven from the patient-person bridge.
 
 
-      Applied filters:
-
-      - Patient filtering: Restricted to people linked to WNL patients via PATIENT_PERSON
-
-
-      Filtering method: WHERE EXISTS against conformed_patient_person on person_uuid.
+      Construction: one row per bridged person. The source PERSON feed only
+      supplies pseudonymised attributes where a feed row exists - it is missing
+      ~830k persons that appear on PATIENT rows, so it is no longer the driving
+      table. Persons without a feed row carry NULL feed attributes; gender and
+      clinical_system fall back to the patient record.
 
 
       Identifiers: id is the indexed person id; person_uuid holds the source UUID.'
     columns:
       - name: id
+        tests:
+          - unique
+          - not_null
       - name: clinical_system
   - name: conformed_practitioner
     description: 'Filtered Practitioner conformed view.
