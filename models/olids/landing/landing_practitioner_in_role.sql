@@ -18,7 +18,6 @@ SELECT
     date_employment_start,
     date_employment_end,
     lds_is_deleted,
-    publisher_organisation_code,
     source_extraction_date,
     lds_transform_datetime
 FROM {{ source('olids_pseudo', 'PRACTITIONER_IN_ROLE') }}
