@@ -14,6 +14,7 @@ SELECT
     src.id AS source_id,
     src.lds_source_record_id,
     person_idx.person_id,
+    src.person_id AS person_uuid,
     src.publisher_organisation_id,
     src.provider_organisation_id,
     src.author_organisation_id,

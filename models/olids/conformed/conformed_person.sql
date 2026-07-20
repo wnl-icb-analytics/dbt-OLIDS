@@ -6,10 +6,22 @@
 
 /*
 Conformed PERSON view.
-Keeps people linked to the filtered patient spine and passes pseudonymised fields through.
+
+Driven from the patient-person bridge, not the source PERSON feed: the feed is
+missing ~830k persons that appear on PATIENT rows. Every bridged person gets a
+row; the feed record supplies pseudonymised attributes when present, otherwise
+they are NULL (gender and clinical_system fall back to the patient record).
 */
 
-WITH gender_fallback AS (
+WITH person_spine AS (
+    SELECT DISTINCT
+        person_id,
+        person_uuid
+    FROM {{ ref('conformed_patient_person') }}
+    WHERE person_id IS NOT NULL AND person_uuid IS NOT NULL
+),
+
+gender_fallback AS (
     SELECT
         pp.person_uuid,
         c.display AS gender,
@@ -26,8 +38,8 @@ WITH gender_fallback AS (
 )
 
 SELECT
-    person_idx.person_id AS id,
-    src.id AS person_uuid,
+    spine.person_id AS id,
+    spine.person_uuid,
     src.lds_source_record_id,
     src.req_nhs_number,
     src.matched_nhs_no,
@@ -56,25 +68,20 @@ SELECT
     src.mps_id,
     src.patient_flagged_sensitive,
     src.error_success_code,
-    src.lds_is_deleted,
+    COALESCE(src.lds_is_deleted, FALSE) AS lds_is_deleted,
     -- from the patient record backing this person row
     gf.clinical_system,
     src.source_extraction_date,
     src.lds_transform_datetime,
     COALESCE(src.gender, gf.gender) AS gender
-FROM {{ ref('landing_person') }} AS src
+FROM person_spine AS spine
+LEFT JOIN {{ ref('landing_person') }} AS src
+    ON spine.person_uuid = src.id
 LEFT JOIN gender_fallback AS gf
-    ON src.id = gf.person_uuid
-LEFT JOIN {{ ref('person_id_index') }} AS person_idx
-    ON src.id = person_idx.source_person_id
-WHERE EXISTS (
-    SELECT 1
-    FROM {{ ref('conformed_patient_person') }} AS pp
-    WHERE pp.person_uuid = src.id
-)
+    ON spine.person_uuid = gf.person_uuid
 -- identity resolution can map several source person records to one person_id;
 -- the person table carries one canonical row per person (latest record wins)
 QUALIFY ROW_NUMBER() OVER (
-    PARTITION BY person_idx.person_id
-    ORDER BY src.lds_transform_datetime DESC NULLS LAST, src.id
+    PARTITION BY spine.person_id
+    ORDER BY src.lds_transform_datetime DESC NULLS LAST, spine.person_uuid ASC
 ) = 1
