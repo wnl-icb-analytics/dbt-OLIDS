@@ -19,7 +19,8 @@ SELECT
     src.lds_source_record_id_person,
     src.gp_practice_code,
     src.lds_is_deleted,
-    src.lds_transform_datetime
+    src.lds_transform_datetime,
+    patients.clinical_system
 FROM {{ ref('landing_patient_person') }} AS src
 INNER JOIN {{ ref('conformed_patient') }} AS patients
     ON src.patient_id = patients.source_id

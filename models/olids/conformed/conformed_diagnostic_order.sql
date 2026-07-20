@@ -50,6 +50,7 @@ SELECT
     src.date_recorded,
     src.lds_is_deleted,
     src.publisher_organisation_code,
+    patients.clinical_system,
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_diagnostic_order') }} AS src

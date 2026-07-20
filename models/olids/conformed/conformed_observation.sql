@@ -56,6 +56,7 @@ SELECT
     src.is_confidential,
     src.lds_is_deleted,
     src.publisher_organisation_code,
+    patients.clinical_system,
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_observation') }} AS src

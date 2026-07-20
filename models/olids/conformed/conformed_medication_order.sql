@@ -62,6 +62,7 @@ SELECT
     src.issue_method_description,
     src.lds_is_deleted,
     src.publisher_organisation_code,
+    patients.clinical_system,
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_medication_order') }} AS src
