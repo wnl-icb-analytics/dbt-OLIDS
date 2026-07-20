@@ -78,3 +78,8 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} AS result_unit_map
         src.result_value_units_source_concept_id
         = result_unit_map.source_concept_id
 WHERE src.observation_source_concept_id IS NOT NULL
+-- the feed occasionally ships exact duplicate rows; keep one deterministically
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY src.id
+    ORDER BY src.lds_transform_datetime DESC, src.lds_source_record_id
+) = 1

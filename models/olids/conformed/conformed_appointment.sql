@@ -81,3 +81,8 @@ LEFT JOIN {{ ref('int_enriched_concept_map') }} AS contact_mode_map
 WHERE
     src.patient_id IS NOT NULL
     AND src.start_date IS NOT NULL
+-- the feed occasionally ships exact duplicate rows; keep one deterministically
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY src.id
+    ORDER BY src.lds_transform_datetime DESC, src.lds_source_record_id
+) = 1

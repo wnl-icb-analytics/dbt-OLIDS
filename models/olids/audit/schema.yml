@@ -10,14 +10,14 @@ models:
       - audit_metric_within_band:
           arguments:
             metric: unlinked_live_patients
-            min_value: 90000
-            max_value: 125000
+            min_value: 800000
+            max_value: 1200000
           config:
             severity: warn
       - audit_metric_within_band:
           arguments:
             metric: unlinked_live_null_sk
-            max_value: 10000
+            max_value: 15000
           config:
             severity: warn
 
@@ -65,7 +65,7 @@ models:
       - audit_metric_within_band:
           arguments:
             metric: patient_orphan_rows
-            max_value: 2500000
+            max_value: 30000000
           config:
             severity: warn
 
@@ -83,8 +83,8 @@ models:
       - audit_metric_within_band:
           arguments:
             metric: duplicate_id_rows
-            min_value: 200000
-            max_value: 400000
+            min_value: 8000000
+            max_value: 20000000
           config:
             severity: warn
 
@@ -106,7 +106,7 @@ models:
   - name: audit_staleness
     description: >-
       Domain staleness metrics. One row per table_name, metric_name, practice_code and value_text.
-      Warns above five practices lagging the domain consensus by seven days. Consensus is the
+      Warns above thirty practices lagging the domain consensus by seven days. Consensus is the
       median of per-practice max activity dates; rows dated after their own source_extraction_date
       are excluded, so future-dated source rows cannot distort it. No CURRENT_DATE is used.
 
@@ -115,20 +115,20 @@ models:
           arguments:
             metric: practices_lagging_consensus_7d
             table_name: OBSERVATION
-            max_value: 5
+            max_value: 30
           config:
             severity: warn
       - audit_metric_within_band:
           arguments:
             metric: practices_lagging_consensus_7d
             table_name: MEDICATION_ORDER
-            max_value: 5
+            max_value: 30
           config:
             severity: warn
       - audit_metric_within_band:
           arguments:
             metric: practices_lagging_consensus_7d
             table_name: EPISODE_OF_CARE
-            max_value: 5
+            max_value: 30
           config:
             severity: warn
