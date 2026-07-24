@@ -17,7 +17,6 @@ SELECT
     person_idx.person_id,
     src.publisher_organisation_id,
     src.author_organisation_id,
-    src.organisation_id,
     src.encounter_id,
     src.practitioner_id,
     src.unique_booking_reference_number,
@@ -58,7 +57,7 @@ SELECT
     src.age_at_event,
     src.age_at_event_baby,
     src.age_at_event_neonate,
-    src.recorded_date,
+    src.recorded_datetime,
     src.value,
     src.lds_is_deleted,
     src.publisher_organisation_code,
@@ -95,5 +94,5 @@ QUALIFY ROW_NUMBER() OVER (
     PARTITION BY src.id
     ORDER BY
         src.lds_transform_datetime DESC NULLS LAST,
-        src.recorded_date DESC NULLS LAST
+        src.recorded_datetime DESC NULLS LAST
 ) = 1

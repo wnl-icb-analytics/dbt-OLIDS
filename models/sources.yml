@@ -1116,8 +1116,6 @@ sources:
       data_type: UUID
     - name: author_organisation_id
       data_type: UUID
-    - name: organisation_id
-      data_type: UUID
     - name: encounter_id
       data_type: UUID
     - name: practitioner_id
@@ -1152,7 +1150,7 @@ sources:
       data_type: NUMBER
     - name: age_at_event_neonate
       data_type: NUMBER
-    - name: recorded_date
+    - name: recorded_datetime
       data_type: TIMESTAMP_NTZ
     - name: value
       data_type: FLOAT
