@@ -6,7 +6,7 @@
 
 /*
 Conformed filtered patient view.
-Excludes sensitive, confidential and test patients, then restricts to WNL practices.
+Excludes sensitive, confidential and test patients, then restricts to NCL practices.
 */
 
 SELECT
@@ -39,6 +39,10 @@ SELECT
     src.is_test_patient,
     src.is_spine_sensitive,
     src.lds_source_dataset,
+    src.lds_is_deleted,
+    src.publisher_organisation_code,
+    src.source_extraction_date,
+    src.lds_transform_datetime,
     CASE
         WHEN src.lds_source_dataset ILIKE '%emis%' THEN 'EMIS'
         WHEN
@@ -47,14 +51,10 @@ SELECT
             THEN 'SystmOne'
         ELSE src.lds_source_dataset
     END AS clinical_system,
-    src.lds_is_deleted,
-    src.publisher_organisation_code,
-    src.source_extraction_date,
-    src.lds_transform_datetime,
     TRY_TO_NUMBER(src.sk_patient_id) AS sk_patient_id
 FROM {{ ref('landing_patient') }} AS src
-INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
-    ON src.publisher_organisation_code = wnl_practices.practice_code
+INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
+    ON src.publisher_organisation_code = ncl_practices.practice_code
 LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
     ON src.id = patient_idx.source_patient_id
 LEFT JOIN {{ ref('person_id_index') }} AS person_idx
@@ -70,5 +70,5 @@ WHERE
 -- the feed occasionally ships exact duplicate patient rows; keep one deterministically
 QUALIFY ROW_NUMBER() OVER (
     PARTITION BY src.id
-    ORDER BY src.lds_transform_datetime DESC, src.lds_source_record_id
+    ORDER BY src.lds_transform_datetime DESC, src.lds_source_record_id ASC
 ) = 1

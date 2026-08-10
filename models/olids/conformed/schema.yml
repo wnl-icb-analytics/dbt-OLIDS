@@ -16,12 +16,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
     columns:
       - name: id
       - name: patient_id
@@ -40,12 +40,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
     columns:
       - name: id
       - name: patient_id
@@ -63,12 +63,12 @@ models:
 
       Applied filters:
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner join ensures only records with valid organisation references
 
 
-      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+      Filtering method: Inner join to int_ncl_practices on publisher_organisation_code'
     columns:
       - name: appointment_id
       - name: practitioner_id
@@ -81,12 +81,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
     columns:
       - name: id
       - name: patient_id
@@ -108,12 +108,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
     columns:
       - name: id
       - name: patient_id
@@ -130,12 +130,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
 
     tests:
       # the enriched map local backfill covers Deceased, resolved by (system, code)
@@ -175,12 +175,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
 
     tests:
       - audit_gate:
@@ -214,12 +214,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
 
     tests:
       - audit_gate:
@@ -253,12 +253,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
 
     tests:
       - audit_gate:
@@ -291,7 +291,7 @@ models:
     columns:
       - name: id
   - name: conformed_patient
-    description: "Filtered patient conformed view. Foundation for all patient-related filtering.\n\nExcludes sensitive patients:\n- is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients) \n- is_test_patient = FALSE (excludes test patients)\n\nRestricts to WNL practices:\n- publisher_organisation_code IN (WNL practice codes via int_wnl_practices)"
+    description: "Filtered patient conformed view. Foundation for all patient-related filtering.\n\nExcludes sensitive patients:\n- is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients) \n- is_test_patient = FALSE (excludes test patients)\n\nRestricts to NCL practices:\n- publisher_organisation_code IN (NCL practice codes via int_ncl_practices)"
     tests:
       - null_count_below:
           arguments:
@@ -320,12 +320,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
     columns:
       - name: id
       - name: patient_id
@@ -340,12 +340,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
     columns:
       - name: id
       - name: patient_id
@@ -366,7 +366,7 @@ models:
       NULL lds_source_record_id.
 
 
-      Filtering: inherits WNL practice restriction and sensitive-patient
+      Filtering: inherits NCL practice restriction and sensitive-patient
       exclusions from conformed_patient.'
     columns:
       - name: patient_id
@@ -409,12 +409,12 @@ models:
 
       Applied filters:
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner join ensures only records with valid organisation references
 
 
-      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+      Filtering method: Inner join to int_ncl_practices on publisher_organisation_code'
     columns:
       - name: id
   - name: conformed_practitioner_in_role
@@ -423,12 +423,12 @@ models:
 
       Applied filters:
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner join ensures only records with valid organisation references
 
 
-      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+      Filtering method: Inner join to int_ncl_practices on publisher_organisation_code'
     columns:
       - name: practitioner_id
       - name: employer_organisation_id
@@ -441,12 +441,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
     columns:
       - name: id
       - name: patient_id
@@ -466,12 +466,12 @@ models:
 
       - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner joins ensure only records with valid patient and organisation references
 
 
-      Filtering method: Inner join to conformed_patient and int_wnl_practices'
+      Filtering method: Inner join to conformed_patient and int_ncl_practices'
     columns:
       - name: id
         tests:
@@ -498,12 +498,12 @@ models:
 
       Applied filters:
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner join ensures only records with valid organisation references
 
 
-      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+      Filtering method: Inner join to int_ncl_practices on publisher_organisation_code'
     columns:
       - name: id
   - name: conformed_schedule_practitioner
@@ -512,12 +512,12 @@ models:
 
       Applied filters:
 
-      - Practice filtering: Restricts to WNL practices only
+      - Practice filtering: Restricts to NCL practices only
 
       - Data integrity: Inner join ensures only records with valid organisation references
 
 
-      Filtering method: Inner join to int_wnl_practices on publisher_organisation_code'
+      Filtering method: Inner join to int_ncl_practices on publisher_organisation_code'
     columns:
       - name: schedule_id
       - name: practitioner_id

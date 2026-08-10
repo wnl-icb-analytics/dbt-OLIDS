@@ -7,7 +7,7 @@
 
 /*
 Conformed MEDICATION_ORDER view.
-Filters to WNL practices, excludes patients outside the filtered spine and adds medication mappings.
+Filters to NCL practices, excludes patients outside the filtered spine and adds medication mappings.
 */
 
 SELECT
@@ -72,8 +72,8 @@ LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
     ON src.patient_id = patient_idx.source_patient_id
 LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
-INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
-    ON src.publisher_organisation_code = wnl_practices.practice_code
+INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
+    ON src.publisher_organisation_code = ncl_practices.practice_code
 LEFT JOIN {{ ref('landing_medication_statement') }} AS ms
     ON src.medication_statement_id = ms.id
 LEFT JOIN {{ ref('int_enriched_concept_map') }} AS concept_map

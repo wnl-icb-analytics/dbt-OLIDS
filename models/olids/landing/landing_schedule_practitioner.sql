@@ -3,7 +3,8 @@
 }}
 
 /*
-Single daily scan through source policies. Downstream models read this cache.
+Single daily scan through source policies, scoped to NCL practices.
+Downstream models read this cache.
 */
 
 SELECT
@@ -19,3 +20,6 @@ SELECT
     source_extraction_date,
     lds_transform_datetime
 FROM {{ source('olids_pseudo', 'SCHEDULE_PRACTITIONER') }}
+WHERE publisher_organisation_code IN (
+    SELECT ncl.practice_code FROM {{ ref('int_ncl_practices') }} AS ncl
+)

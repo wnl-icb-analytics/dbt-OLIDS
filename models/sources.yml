@@ -3198,3 +3198,28 @@ sources:
       data_type: DATE
     - name: high_watermark_date_time
       data_type: TIMESTAMP_NTZ
+- name: reference
+  database: REFERENCE
+  schema: PRIMARY_CARE
+  description: Curated primary care reference data (practice, PCN, neighbourhood)
+  tables:
+  - name: PRACTICE_CURRENT
+    identifier: PRACTICE_CURRENT
+    description: Active GP practices with sub-ICB, borough, PCN and neighbourhood attribution
+    columns:
+    - name: PRACTICE_CODE
+      data_type: TEXT
+    - name: PRACTICE_NAME
+      data_type: TEXT
+    - name: PRACTICE_STATUS
+      data_type: TEXT
+    - name: SUB_ICB_CODE
+      data_type: TEXT
+    - name: SUB_ICB_NAME
+      data_type: TEXT
+    - name: REGISTERED_BOROUGH_NAME
+      data_type: TEXT
+    - name: PCN_CODE
+      data_type: TEXT
+    - name: PCN_NAME
+      data_type: TEXT

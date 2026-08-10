@@ -6,7 +6,7 @@
 
 /*
 Conformed APPOINTMENT_PRACTITIONER view.
-Restricts to WNL practices.
+Restricts to NCL practices.
 */
 
 SELECT
@@ -25,8 +25,8 @@ SELECT
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_appointment_practitioner') }} AS src
-INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
-    ON src.publisher_organisation_code = wnl_practices.practice_code
+INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
+    ON src.publisher_organisation_code = ncl_practices.practice_code
 LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
     ON src.patient_id = patient_idx.source_patient_id
 LEFT JOIN {{ ref('person_id_index') }} AS person_idx
