@@ -19,5 +19,6 @@ SELECT
     is_obsolete,
     lds_is_deleted,
     source_extraction_date,
+    lds_source_dataset,
     lds_transform_datetime
 FROM {{ source('olids_pseudo', 'PRACTITIONER') }}

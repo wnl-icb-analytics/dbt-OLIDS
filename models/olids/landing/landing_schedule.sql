@@ -24,6 +24,7 @@ SELECT
     lds_is_deleted,
     publisher_organisation_code,
     source_extraction_date,
+    lds_source_dataset,
     lds_transform_datetime
 FROM {{ source('olids_pseudo', 'SCHEDULE') }}
 WHERE publisher_organisation_code IN (

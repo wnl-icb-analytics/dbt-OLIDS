@@ -24,7 +24,7 @@ WITH bridge AS (
         person_id,
         lds_business_id_person,
         lds_source_record_id_person,
-        gp_practice_code,
+        publisher_organisation_code,
         lds_is_deleted,
         lds_transform_datetime
     FROM {{ ref('landing_patient_person') }}
@@ -36,19 +36,22 @@ WITH bridge AS (
 )
 
 SELECT
-    COALESCE(bridge.id, patients.source_id) AS id,
     bridge.lds_source_record_id,
     patients.id AS patient_id,
-    COALESCE(patients.person_id, bridge_person_idx.person_id) AS person_id,
-    COALESCE(patients.person_uuid, bridge.person_id) AS person_uuid,
     bridge.lds_business_id_person,
     bridge.lds_source_record_id_person,
-    COALESCE(bridge.gp_practice_code, patients.publisher_organisation_code)
-        AS gp_practice_code,
+    patients.clinical_system,
+    COALESCE(bridge.id, patients.source_id) AS id,
+    COALESCE(patients.person_id, bridge_person_idx.person_id) AS person_id,
+    COALESCE(patients.person_uuid, bridge.person_id) AS person_uuid,
+    -- the feed renamed this to publisher_organisation_code; the published
+    -- column keeps its name so downstream consumers are unaffected
+    COALESCE(
+        bridge.publisher_organisation_code, patients.publisher_organisation_code
+    ) AS gp_practice_code,
     COALESCE(bridge.lds_is_deleted, patients.lds_is_deleted) AS lds_is_deleted,
     COALESCE(bridge.lds_transform_datetime, patients.lds_transform_datetime)
-        AS lds_transform_datetime,
-    patients.clinical_system
+        AS lds_transform_datetime
 FROM {{ ref('conformed_patient') }} AS patients
 LEFT JOIN bridge
     ON patients.source_id = bridge.patient_id

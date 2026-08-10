@@ -60,6 +60,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: APPOINTMENT
@@ -135,6 +137,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: APPOINTMENT_PRACTITIONER
@@ -166,6 +170,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: CONCEPT
@@ -275,6 +281,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: EMIS_CLINICAL_CODE
@@ -368,6 +376,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: EPISODE_OF_CARE
@@ -409,6 +419,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: DATE
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: LOCATION
@@ -456,6 +468,8 @@ sources:
       data_type: BOOLEAN
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: MEDICATION_ORDER
@@ -531,6 +545,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: MEDICATION_STATEMENT
@@ -567,6 +583,8 @@ sources:
     - name: clinical_effective_date_precision_source_concept_id
       data_type: UUID
     - name: cancellation_date
+      data_type: DATE
+    - name: cancellation_date_derived
       data_type: DATE
     - name: dose
       data_type: TEXT
@@ -606,6 +624,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: NATIONAL_DATA_OPT_OUT
@@ -694,6 +714,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: ORGANISATION
@@ -727,6 +749,8 @@ sources:
       data_type: BOOLEAN
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: PATIENT
@@ -778,14 +802,14 @@ sources:
       data_type: BOOLEAN
     - name: is_spine_sensitive
       data_type: BOOLEAN
-    - name: lds_source_dataset
-      data_type: TEXT
     - name: lds_is_deleted
       data_type: BOOLEAN
     - name: publisher_organisation_code
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: PATIENT_ADDRESS
@@ -821,6 +845,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: PATIENT_CONTACT
@@ -852,6 +878,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: PATIENT_PERSON
@@ -869,10 +897,12 @@ sources:
       data_type: UUID
     - name: lds_source_record_id_person
       data_type: UUID
-    - name: gp_practice_code
+    - name: publisher_organisation_code
       data_type: TEXT
     - name: lds_is_deleted
       data_type: BOOLEAN
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: PATIENT_UPRN
@@ -896,8 +926,6 @@ sources:
       data_type: TEXT
     - name: match_pattern
       data_type: TEXT
-    - name: error_message
-      data_type: TEXT
     - name: publisher_organisation_code
       data_type: TEXT
   - name: PERSON
@@ -907,6 +935,8 @@ sources:
       data_type: UUID
     - name: lds_source_record_id
       data_type: UUID
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: req_nhs_number
       data_type: TEXT
     - name: matched_nhs_no
@@ -915,24 +945,20 @@ sources:
       data_type: TEXT
     - name: date_of_birth
       data_type: DATE
+    - name: date_of_birth_precision
+      data_type: TEXT
     - name: date_of_birth_year
       data_type: NUMBER
     - name: date_of_birth_month
       data_type: NUMBER
-    - name: date_of_birth_day
-      data_type: NUMBER
-    - name: date_of_birth_time
-      data_type: TIME
     - name: date_of_death
       data_type: DATE
+    - name: date_of_death_precision
+      data_type: TEXT
     - name: date_of_death_year
       data_type: NUMBER
     - name: date_of_death_month
       data_type: NUMBER
-    - name: date_of_death_day
-      data_type: NUMBER
-    - name: date_of_death_time
-      data_type: TIME
     - name: death_notification_status
       data_type: TEXT
     - name: postcode
@@ -951,18 +977,12 @@ sources:
       data_type: TEXT
     - name: nhais_posting_id
       data_type: TEXT
-    - name: as_at_date
-      data_type: TEXT
-    - name: local_patient_id
-      data_type: TEXT
-    - name: internal_id
-      data_type: TEXT
-    - name: mps_id
-      data_type: TEXT
-    - name: patient_flagged_sensitive
+    - name: is_patient_flagged_sensitive
       data_type: BOOLEAN
     - name: error_success_code
       data_type: TEXT
+    - name: is_latest_for_person
+      data_type: BOOLEAN
     - name: lds_is_deleted
       data_type: BOOLEAN
     - name: source_extraction_date
@@ -1021,6 +1041,8 @@ sources:
       data_type: BOOLEAN
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: PRACTITIONER_IN_ROLE
@@ -1050,6 +1072,8 @@ sources:
       data_type: BOOLEAN
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: PROCEDURE_REQUEST
@@ -1099,6 +1123,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: REFERRAL_REQUEST
@@ -1160,6 +1186,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: SCHEDULE
@@ -1197,6 +1225,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
   - name: SCHEDULE_PRACTITIONER
@@ -1222,6 +1252,8 @@ sources:
       data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
 - name: nhsd_snomed

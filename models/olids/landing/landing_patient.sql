@@ -31,10 +31,10 @@ SELECT
     is_confidential,
     is_test_patient,
     is_spine_sensitive,
-    lds_source_dataset,
     lds_is_deleted,
     publisher_organisation_code,
     source_extraction_date,
+    lds_source_dataset,
     lds_transform_datetime
 FROM {{ source('olids_pseudo', 'PATIENT') }}
 WHERE publisher_organisation_code IN (

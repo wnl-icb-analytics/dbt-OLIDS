@@ -19,6 +19,5 @@ SELECT
     src.classification,
     src.algorithm,
     src.match_pattern,
-    src.error_message,
     src.publisher_organisation_code
 FROM {{ ref('landing_patient_uprn') }} AS src

@@ -24,6 +24,7 @@ SELECT
     clinical_effective_date,
     clinical_effective_date_precision_source_concept_id,
     cancellation_date,
+    cancellation_date_derived,
     dose,
     quantity_value_description,
     quantity_value,
@@ -43,6 +44,7 @@ SELECT
     lds_is_deleted,
     publisher_organisation_code,
     source_extraction_date,
+    lds_source_dataset,
     lds_transform_datetime
 FROM {{ source('olids_pseudo', 'MEDICATION_STATEMENT') }}
 WHERE publisher_organisation_code IN (

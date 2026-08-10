@@ -13,7 +13,8 @@ SELECT
     person_id,
     lds_business_id_person,
     lds_source_record_id_person,
-    gp_practice_code,
+    publisher_organisation_code,
     lds_is_deleted,
+    lds_source_dataset,
     lds_transform_datetime
 FROM {{ source('olids_pseudo', 'PATIENT_PERSON') }}

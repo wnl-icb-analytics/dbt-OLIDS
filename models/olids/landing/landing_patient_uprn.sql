@@ -17,7 +17,6 @@ SELECT
     classification,
     algorithm,
     match_pattern,
-    error_message,
     publisher_organisation_code
 FROM {{ source('olids_pseudo', 'PATIENT_UPRN') }}
 WHERE publisher_organisation_code IN (
