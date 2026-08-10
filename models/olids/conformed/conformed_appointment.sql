@@ -7,7 +7,7 @@
 
 /*
 Conformed APPOINTMENT view.
-Filters to WNL practices and excludes patients outside the filtered spine.
+Filters to NCL practices and excludes patients outside the filtered spine.
 */
 
 SELECT
@@ -67,8 +67,8 @@ LEFT JOIN {{ ref('patient_id_index') }} AS patient_idx
     ON src.patient_id = patient_idx.source_patient_id
 LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
-INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
-    ON src.publisher_organisation_code = wnl_practices.practice_code
+INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
+    ON src.publisher_organisation_code = ncl_practices.practice_code
 LEFT JOIN {{ ref('int_enriched_concept_map') }} AS appointment_status_map
     ON
         src.appointment_status_source_concept_id
@@ -85,5 +85,5 @@ WHERE
 -- the feed occasionally ships exact duplicate rows; keep one deterministically
 QUALIFY ROW_NUMBER() OVER (
     PARTITION BY src.id
-    ORDER BY src.lds_transform_datetime DESC, src.lds_source_record_id
+    ORDER BY src.lds_transform_datetime DESC, src.lds_source_record_id ASC
 ) = 1

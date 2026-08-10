@@ -3,7 +3,8 @@
 }}
 
 /*
-Single daily scan through source policies. Downstream models read this cache.
+Single daily scan through source policies, scoped to NCL practices.
+Downstream models read this cache.
 */
 
 SELECT
@@ -42,5 +43,9 @@ SELECT
     lds_is_deleted,
     publisher_organisation_code,
     source_extraction_date,
+    lds_source_dataset,
     lds_transform_datetime
 FROM {{ source('olids_pseudo', 'MEDICATION_ORDER') }}
+WHERE publisher_organisation_code IN (
+    SELECT ncl.practice_code FROM {{ ref('int_ncl_practices') }} AS ncl
+)

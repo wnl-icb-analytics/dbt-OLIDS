@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: int_ncl_practices
+    description: 'North Central London practices (sub-ICB 93C). Grain: one row per practice_code. Gates the landing scan and guards the conformed joins, so a duplicate would fan out clinical rows; tests are error severity.'
+
+    columns:
+      - name: practice_code
+        tests:
+          - unique:
+              config:
+                severity: error
+          - not_null:
+              config:
+                severity: error
+
+    tests:
+      - min_row_count:
+          arguments:
+            min_rows: 150
+          config:
+            severity: error

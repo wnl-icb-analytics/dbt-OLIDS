@@ -1,14 +1,14 @@
 version: 2
 models:
   - name: landing_allergy_intolerance
-    description: Landing cache for ALLERGY_INTOLERANCE.
+    description: Landing cache for ALLERGY_INTOLERANCE, scoped to NCL practices.
 
   - name: landing_appointment
-    description: Landing cache for APPOINTMENT.
+    description: Landing cache for APPOINTMENT, scoped to NCL practices.
     tests:
       - min_row_count:
           arguments:
-            min_rows: 100000000
+            min_rows: 80000000
           config:
             severity: error
       - elementary.volume_anomalies:
@@ -24,7 +24,7 @@ models:
             severity: warn
 
   - name: landing_appointment_practitioner
-    description: Landing cache for APPOINTMENT_PRACTITIONER.
+    description: Landing cache for APPOINTMENT_PRACTITIONER, scoped to NCL practices.
 
   - name: landing_concept
     description: Landing cache for CONCEPT.
@@ -33,7 +33,7 @@ models:
     description: Landing cache for CONCEPT_MAP.
 
   - name: landing_diagnostic_order
-    description: Landing cache for DIAGNOSTIC_ORDER.
+    description: Landing cache for DIAGNOSTIC_ORDER, scoped to NCL practices.
 
   - name: landing_emis_clinical_code
     description: Landing cache for EMIS_CLINICAL_CODE.
@@ -42,11 +42,11 @@ models:
     description: Landing cache for EMIS_DRUG_CODE.
 
   - name: landing_encounter
-    description: Landing cache for ENCOUNTER.
+    description: Landing cache for ENCOUNTER, scoped to NCL practices.
     tests:
       - min_row_count:
           arguments:
-            min_rows: 500000000
+            min_rows: 450000000
           config:
             severity: error
       - elementary.volume_anomalies:
@@ -62,11 +62,11 @@ models:
             severity: warn
 
   - name: landing_episode_of_care
-    description: Landing cache for EPISODE_OF_CARE.
+    description: Landing cache for EPISODE_OF_CARE, scoped to NCL practices.
     tests:
       - min_row_count:
           arguments:
-            min_rows: 4000000
+            min_rows: 2700000
           config:
             severity: error
       - elementary.volume_anomalies:
@@ -85,11 +85,11 @@ models:
     description: Landing cache for LOCATION.
 
   - name: landing_medication_order
-    description: Landing cache for MEDICATION_ORDER.
+    description: Landing cache for MEDICATION_ORDER, scoped to NCL practices.
     tests:
       - min_row_count:
           arguments:
-            min_rows: 400000000
+            min_rows: 340000000
           config:
             severity: error
       - elementary.volume_anomalies:
@@ -105,7 +105,7 @@ models:
             severity: warn
 
   - name: landing_medication_statement
-    description: Landing cache for MEDICATION_STATEMENT.
+    description: Landing cache for MEDICATION_STATEMENT, scoped to NCL practices.
     tests:
       - elementary.volume_anomalies:
           arguments:
@@ -123,11 +123,11 @@ models:
     description: Landing cache for NATIONAL_DATA_OPT_OUT.
 
   - name: landing_observation
-    description: Landing cache for OBSERVATION.
+    description: Landing cache for OBSERVATION, scoped to NCL practices.
     tests:
       - min_row_count:
           arguments:
-            min_rows: 1500000000
+            min_rows: 1350000000
           config:
             severity: error
       - elementary.volume_anomalies:
@@ -146,11 +146,11 @@ models:
     description: Landing cache for ORGANISATION.
 
   - name: landing_patient
-    description: Landing cache for PATIENT.
+    description: Landing cache for PATIENT, scoped to NCL practices.
     tests:
       - min_row_count:
           arguments:
-            min_rows: 4000000
+            min_rows: 2700000
           config:
             severity: error
       - elementary.volume_anomalies:
@@ -166,10 +166,10 @@ models:
             severity: warn
 
   - name: landing_patient_address
-    description: Landing cache for PATIENT_ADDRESS.
+    description: Landing cache for PATIENT_ADDRESS, scoped to NCL practices.
 
   - name: landing_patient_contact
-    description: Landing cache for PATIENT_CONTACT.
+    description: Landing cache for PATIENT_CONTACT, scoped to NCL practices.
 
   - name: landing_patient_person
     description: Landing cache for PATIENT_PERSON.
@@ -181,7 +181,7 @@ models:
             severity: error
 
   - name: landing_patient_uprn
-    description: Landing cache for PATIENT_UPRN.
+    description: Landing cache for PATIENT_UPRN, scoped to NCL practices.
 
   - name: landing_person
     description: Landing cache for PERSON.
@@ -202,10 +202,10 @@ models:
     description: Landing cache for PRACTITIONER_IN_ROLE.
 
   - name: landing_procedure_request
-    description: Landing cache for PROCEDURE_REQUEST.
+    description: Landing cache for PROCEDURE_REQUEST, scoped to NCL practices.
 
   - name: landing_referral_request
-    description: Landing cache for REFERRAL_REQUEST.
+    description: Landing cache for REFERRAL_REQUEST, scoped to NCL practices.
     tests:
       - elementary.volume_anomalies:
           arguments:
@@ -220,7 +220,7 @@ models:
             severity: warn
 
   - name: landing_schedule
-    description: Landing cache for SCHEDULE.
+    description: Landing cache for SCHEDULE, scoped to NCL practices.
 
   - name: landing_schedule_practitioner
-    description: Landing cache for SCHEDULE_PRACTITIONER.
+    description: Landing cache for SCHEDULE_PRACTITIONER, scoped to NCL practices.

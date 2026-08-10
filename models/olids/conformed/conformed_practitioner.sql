@@ -6,7 +6,7 @@
 
 /*
 Conformed PRACTITIONER view.
-Keeps practitioners linked to WNL roles.
+Keeps practitioners linked to NCL roles.
 */
 
 SELECT

@@ -4,14 +4,14 @@ models:
   - name: audit_patient_linkage
     description: >-
       Patient linkage metrics. One row per table_name, metric_name, practice_code and value_text.
-      Warns outside 90,000-125,000 unlinked live patients or above 10,000 null keys.
+      Warns above 10,000 unlinked live patients or 15,000 null keys. Both sit at zero since
+      patient_person began building from the patient spine, so the bands catch a regression.
 
     tests:
       - audit_metric_within_band:
           arguments:
             metric: unlinked_live_patients
-            min_value: 800000
-            max_value: 1200000
+            max_value: 10000
           config:
             severity: warn
       - audit_metric_within_band:
@@ -77,14 +77,14 @@ models:
   - name: audit_referral_request
     description: >-
       Referral request metrics. One row per table_name, metric_name, practice_code and value_text.
-      Warns outside 200,000-400,000 duplicate id rows.
+      Warns above 100,000 duplicate id rows. The feed no longer ships duplicate referral ids,
+      so the band catches a regression rather than tracking a known fault.
 
     tests:
       - audit_metric_within_band:
           arguments:
             metric: duplicate_id_rows
-            min_value: 8000000
-            max_value: 20000000
+            max_value: 100000
           config:
             severity: warn
 

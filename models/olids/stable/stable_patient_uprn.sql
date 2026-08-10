@@ -16,6 +16,5 @@ SELECT
     classification,
     algorithm,
     match_pattern,
-    error_message,
     publisher_organisation_code
 FROM {{ ref('conformed_patient_uprn') }}

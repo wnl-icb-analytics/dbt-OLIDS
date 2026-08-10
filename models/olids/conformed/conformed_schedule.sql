@@ -6,7 +6,7 @@
 
 /*
 Conformed SCHEDULE view.
-Restricts to WNL practices.
+Restricts to NCL practices.
 */
 
 SELECT
@@ -28,5 +28,5 @@ SELECT
     src.source_extraction_date,
     src.lds_transform_datetime
 FROM {{ ref('landing_schedule') }} AS src
-INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
-    ON src.publisher_organisation_code = wnl_practices.practice_code
+INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
+    ON src.publisher_organisation_code = ncl_practices.practice_code

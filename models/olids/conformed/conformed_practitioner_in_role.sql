@@ -6,7 +6,7 @@
 
 /*
 Conformed PRACTITIONER_IN_ROLE view.
-Restricts to WNL practices. The feed no longer carries
+Restricts to NCL practices. The feed no longer carries
 publisher_organisation_code, so it is derived via publisher_organisation_id
 to keep the published interface unchanged.
 */
@@ -29,5 +29,5 @@ SELECT
 FROM {{ ref('landing_practitioner_in_role') }} AS src
 INNER JOIN {{ ref('landing_organisation') }} AS pub
     ON src.publisher_organisation_id = pub.id
-INNER JOIN {{ ref('int_wnl_practices') }} AS wnl_practices
-    ON pub.organisation_code = wnl_practices.practice_code
+INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
+    ON pub.organisation_code = ncl_practices.practice_code
