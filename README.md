@@ -6,8 +6,8 @@ Foundational data layers for OLIDS (One London Integrated Data Set).
 
 | Tree | Feed | Coverage | Refresh | Publishes to |
 |---|---|---|---|---|
-| `models/olids` | `Data_Store_OLIDS_WNL` (experimental) | ~15 practices | Nightly | `OLIDS_ENGINEERING` database (`LANDING`/`CONFORMED`/`STABLE`) |
-| `models/synapse` | `Data_Store_OLIDS` (legacy Synapse) | Full NCL | Upstream refreshes fortnightly | `OLIDS_ENGINEERING` database (`SYNAPSE_BASE`/`SYNAPSE_STABLE`); `DATA_LAB_OLIDS_NCL.OLIDS` serves data_lake until the swap |
+| `models/olids` | `Data_Store_OLIDS_WNL` | NCL practices (production) | Nightly | `OLIDS_ENGINEERING` (`LANDING`/`CONFORMED`/`STABLE`) → `DATA_LAKE.OLIDS` |
+| `models/synapse` | `Data_Store_OLIDS` (legacy Synapse) | Full NCL, frozen since 16 July 2026 | None (upstream stopped) | `OLIDS_ENGINEERING` (`SYNAPSE_BASE`/`SYNAPSE_STABLE`) → `DATA_LAKE.OLIDS_SYNAPSE` |
 
 Run selectors:
 
