@@ -8,9 +8,6 @@ profile: 'dbt_olids'
 on-run-start:
   - "{{ log('🔗 DBT CONNECTION: Role=' ~ target.role ~ ', Warehouse=' ~ target.warehouse ~ ', Database=' ~ target.database ~ ', Schema=' ~ target.schema ~ ', Target=' ~ target.name, info=True) }}"
 
-on-run-end:
-  - "{{ deploy_data_lake_views() }}"
-
 target-path: "target"
 clean-targets:
   - "target"
