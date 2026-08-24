@@ -24,6 +24,7 @@ data-to-data: no CURRENT_DATE. Table-level rollups live in FRESHNESS_SUMMARY.
     {'name': 'encounter', 'activity': 'clinical_effective_date'},
     {'name': 'appointment', 'activity': 'start_date'},
     {'name': 'episode_of_care', 'activity': 'episode_of_care_start_date'},
+    {'name': 'episode_of_care_v2', 'activity': 'episode_of_care_start_date'},
     {'name': 'referral_request', 'activity': 'clinical_effective_date'},
     {'name': 'procedure_request', 'activity': 'clinical_effective_date'},
     {'name': 'diagnostic_order', 'activity': 'clinical_effective_date'},
@@ -40,27 +41,27 @@ data-to-data: no CURRENT_DATE. Table-level rollups live in FRESHNESS_SUMMARY.
 
 WITH per_publisher AS (
     {% for t in tables %}
-    SELECT
-        '{{ t.name | upper }}' AS table_name,
-        publisher_organisation_code AS publisher_code,
-        MAX(source_extraction_date) AS max_source_extraction_date,
-        MAX(lds_transform_datetime) AS max_lds_transform_datetime,
-        {% if t.activity %}
-        MAX(CASE
-            WHEN
-                NOT COALESCE(lds_is_deleted, FALSE)
-                AND {{ t.activity }} <= source_extraction_date
-                THEN {{ t.activity }}
-        END)::DATE AS max_activity_date
-        {% else %}
-        NULL::DATE AS max_activity_date
+        SELECT
+            '{{ t.name | upper }}' AS table_name,
+            publisher_organisation_code AS publisher_code,
+            MAX(source_extraction_date) AS max_source_extraction_date,
+            MAX(lds_transform_datetime) AS max_lds_transform_datetime,
+            {% if t.activity %}
+                MAX(CASE
+                    WHEN
+                        NOT COALESCE(lds_is_deleted, FALSE)
+                        AND {{ t.activity }} <= source_extraction_date
+                        THEN {{ t.activity }}
+                END)::DATE AS max_activity_date
+            {% else %}
+                NULL::DATE AS max_activity_date
+            {% endif %}
+        FROM {{ ref('stable_' ~ t.name) }}
+        WHERE publisher_organisation_code IS NOT NULL
+        GROUP BY publisher_organisation_code
+        {% if not loop.last %}
+            UNION ALL
         {% endif %}
-    FROM {{ ref('stable_' ~ t.name) }}
-    WHERE publisher_organisation_code IS NOT NULL
-    GROUP BY publisher_organisation_code
-    {% if not loop.last %}
-    UNION ALL
-    {% endif %}
     {% endfor %}
 ),
 

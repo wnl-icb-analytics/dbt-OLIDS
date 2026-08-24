@@ -25,6 +25,7 @@ SELECT
     src.planned_duration_mins,
     src.actual_duration_mins,
     src.appointment_status_source_concept_id,
+    src.appointment_status_derived,
     appointment_status_map.source_code AS appointment_status_source_code,
     appointment_status_map.source_display AS appointment_status_source_display,
     appointment_status_map.target_code AS appointment_status_code,

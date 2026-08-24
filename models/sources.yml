@@ -95,6 +95,8 @@ sources:
       data_type: NUMBER
     - name: appointment_status_source_concept_id
       data_type: UUID
+    - name: appointment_status_derived
+      data_type: TEXT
     - name: patient_wait_mins
       data_type: NUMBER
     - name: patient_delay_mins
@@ -423,6 +425,49 @@ sources:
       data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
+  - name: EPISODE_OF_CARE_V2
+    identifier: '"EPISODE_OF_CARE_V2"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: patient_id
+      data_type: UUID
+    - name: person_id
+      data_type: UUID
+    - name: publisher_organisation_id
+      data_type: UUID
+    - name: managing_organisation_id
+      data_type: UUID
+    - name: author_organisation_id
+      data_type: UUID
+    - name: managing_organisation_code
+      data_type: TEXT
+    - name: usual_practitioner_in_role_id
+      data_type: UUID
+    - name: episode_of_care_start_date
+      data_type: DATE
+    - name: episode_of_care_end_date
+      data_type: DATE
+    - name: type
+      data_type: TEXT
+    - name: episode_type_source_concept_id
+      data_type: UUID
+    - name: status
+      data_type: TEXT
+    - name: episode_status_source_concept_id
+      data_type: UUID
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: source_extraction_date
+      data_type: DATE
+    - name: lds_source_dataset
+      data_type: TEXT
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
   - name: LOCATION
     identifier: '"LOCATION"'
     columns:
@@ -466,6 +511,29 @@ sources:
       data_type: BOOLEAN
     - name: lds_is_deleted
       data_type: BOOLEAN
+    - name: source_extraction_date
+      data_type: TIMESTAMP_NTZ
+    - name: lds_source_dataset
+      data_type: TEXT
+    - name: lds_transform_datetime
+      data_type: TIMESTAMP_LTZ
+  - name: LOCATION_CONTACT
+    identifier: '"LOCATION_CONTACT"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: lds_source_record_id
+      data_type: UUID
+    - name: location_id
+      data_type: UUID
+    - name: is_primary_contact
+      data_type: BOOLEAN
+    - name: contact_type_source_concept_id
+      data_type: UUID
+    - name: contact_type
+      data_type: TEXT
+    - name: value
+      data_type: TEXT
     - name: source_extraction_date
       data_type: TIMESTAMP_NTZ
     - name: lds_source_dataset
@@ -701,11 +769,11 @@ sources:
     - name: episodicity_source_concept_id
       data_type: UUID
     - name: is_primary
-      data_type: TEXT
+      data_type: BOOLEAN
     - name: date_recorded
       data_type: TIMESTAMP_NTZ
     - name: is_problem_deleted
-      data_type: TEXT
+      data_type: BOOLEAN
     - name: is_confidential
       data_type: BOOLEAN
     - name: lds_is_deleted
@@ -812,6 +880,53 @@ sources:
       data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
+  - name: PATIENT_DATE_FLAGS
+    identifier: '"PATIENT_DATE_FLAGS"'
+    columns:
+    - name: id
+      data_type: UUID
+    - name: publisher_organisation_code
+      data_type: TEXT
+    - name: is_less_than_8_weeks_old
+      data_type: BOOLEAN
+    - name: is_less_than_12_weeks_old
+      data_type: BOOLEAN
+    - name: is_less_than_15_weeks_old
+      data_type: BOOLEAN
+    - name: is_less_than_16_weeks_old
+      data_type: BOOLEAN
+    - name: is_less_than_24_weeks_old
+      data_type: BOOLEAN
+    - name: is_less_than_6_months_old
+      data_type: BOOLEAN
+    - name: is_less_than_8_months_old
+      data_type: BOOLEAN
+    - name: is_less_than_12_months_old
+      data_type: BOOLEAN
+    - name: is_less_than_18_months_old
+      data_type: BOOLEAN
+    - name: is_less_than_1000_days_old
+      data_type: BOOLEAN
+    - name: is_between_1_to_18_months_old
+      data_type: BOOLEAN
+    - name: is_less_than_2_years_old
+      data_type: BOOLEAN
+    - name: is_between_3_to_4_years_old
+      data_type: BOOLEAN
+    - name: is_less_than_5_years_old
+      data_type: BOOLEAN
+    - name: is_between_11_to_18_years_old
+      data_type: BOOLEAN
+    - name: is_less_than_19_years_old
+      data_type: BOOLEAN
+    - name: is_of_secondary_school_age_last_sept
+      data_type: BOOLEAN
+    - name: is_of_secondary_school_age_next_sept
+      data_type: BOOLEAN
+    - name: is_between_80_to_100_years_old
+      data_type: BOOLEAN
+    - name: is_between_60_to_100_years_old
+      data_type: BOOLEAN
   - name: PATIENT_ADDRESS
     identifier: '"PATIENT_ADDRESS"'
     columns:
@@ -992,8 +1107,12 @@ sources:
   - name: POSTCODE_HASH
     identifier: '"POSTCODE_HASH"'
     columns:
+    - name: postcode
+      data_type: TEXT
+      description: Masked 64-character value; currently identical to postcode_hash.
     - name: postcode_hash
       data_type: TEXT
+      description: Masked 64-character postcode hash.
     - name: outcode
       data_type: TEXT
     - name: local_authority_organisation
@@ -1013,7 +1132,7 @@ sources:
     - name: version
       data_type: TEXT
     - name: last_updated
-      data_type: TIMESTAMP_LTZ
+      data_type: TIMESTAMP_NTZ
   - name: PRACTITIONER
     identifier: '"PRACTITIONER"'
     columns:
@@ -1167,7 +1286,7 @@ sources:
     - name: is_outgoing_referral
       data_type: BOOLEAN
     - name: is_review
-      data_type: NUMBER
+      data_type: BOOLEAN
     - name: referral_request_source_concept_id
       data_type: UUID
     - name: age_at_event

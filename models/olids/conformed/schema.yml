@@ -158,6 +158,30 @@ models:
       - name: episode_type_source_concept_id
       - name: episode_status_source_concept_id
       - name: clinical_system
+  - name: conformed_episode_of_care_v2
+    description: >-
+      Filtered Episode Of Care V2 conformed view at lds_source_record_id grain.
+      Applies patient and NCL practice filters while retaining repeated business ids.
+    tests:
+      - audit_gate:
+          arguments:
+            audit_model: audit_episode_of_care_v2
+            metric: episode_status_source_concept_id_unmapped_pct
+            max_value: 0
+          config:
+            severity: error
+    columns:
+      - name: id
+      - name: lds_source_record_id
+      - name: patient_id
+      - name: person_id
+      - name: publisher_organisation_id
+      - name: managing_organisation_id
+      - name: usual_practitioner_in_role_id
+      - name: episode_of_care_start_date
+      - name: episode_type_source_concept_id
+      - name: episode_status_source_concept_id
+      - name: clinical_system
   - name: conformed_location
     description: 'Unfiltered Location reference view.
 
@@ -541,13 +565,15 @@ models:
     columns:
       - name: source_concept_id
   - name: conformed_postcode_hash
-    description: 'Unfiltered postcode hash reference view linking postcodes to geographical areas.
+    description: 'Unfiltered masked-postcode reference view linking hashes to geographical areas.
 
 
       No filters applied - reference data used as-is.
 
       Direct passthrough from source table with explicit column selection for interface consistency.'
     columns:
+      - name: postcode
+        description: Masked value; currently identical to postcode_hash, not a raw postcode.
       - name: postcode_hash
   - name: conformed_national_data_opt_out
     description: 'Filtered National Data Opt-Out conformed view.

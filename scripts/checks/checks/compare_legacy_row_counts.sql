@@ -71,6 +71,17 @@ WITH counts AS (
 
     UNION ALL
 
+    SELECT 'EPISODE_OF_CARE_V2' AS table_name, 'new-feed practices' AS test_subject,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."EPISODE_OF_CARE_V2" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
+        (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."EPISODE_OF_CARE" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
+    SELECT DISTINCT publisher_organisation_code
+    FROM {TARGET_DATABASE}.LANDING."PATIENT"
+    WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
+    )) AS legacy_rows,
+        TRUE AS is_info
+
+    UNION ALL
+
     SELECT 'MEDICATION_ORDER' AS table_name, 'new-feed practices' AS test_subject,
         (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."MEDICATION_ORDER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
         (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."MEDICATION_ORDER" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
@@ -104,13 +115,9 @@ WITH counts AS (
 
     UNION ALL
 
-    SELECT 'ORGANISATION' AS table_name, 'new-feed practices' AS test_subject,
-        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."ORGANISATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL) AS new_rows,
-        (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."ORGANISATION" WHERE lds_is_deleted = FALSE AND publisher_organisation_code IN (
-    SELECT DISTINCT publisher_organisation_code
-    FROM {TARGET_DATABASE}.LANDING."PATIENT"
-    WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
-    )) AS legacy_rows,
+    SELECT 'ORGANISATION' AS table_name, 'full population' AS test_subject,
+        (SELECT COUNT(*) FROM {TARGET_DATABASE}.LANDING."ORGANISATION" WHERE lds_is_deleted = FALSE) AS new_rows,
+        (SELECT COUNT(*) FROM "Data_Store_OLIDS"."OLIDS_COMMON"."ORGANISATION" WHERE lds_is_deleted = FALSE) AS legacy_rows,
         FALSE AS is_info
 
     UNION ALL

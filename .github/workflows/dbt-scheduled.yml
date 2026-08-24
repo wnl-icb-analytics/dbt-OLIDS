@@ -1,0 +1,110 @@
+# Runs before dbt-analytics, which starts at 04:00 UTC.
+# Current OLIDS snapshots finish by about 01:08 UTC. The 02:30 UTC start is
+# 03:30 BST and leaves 90 minutes before the downstream build.
+
+name: dbt OLIDS Scheduled Run
+
+run-name: dbt OLIDS daily
+
+on:
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Run dbt even when the last successful watermark matches
+        type: boolean
+        default: false
+
+jobs:
+  run:
+    name: Scheduled dbt-olids run
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    concurrency:
+      group: dbt-olids-prod
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      issues: write
+    env:
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE__USERNAME }}
+      SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: ${{ secrets.SNOWFLAKE__PASSPHRASE }}
+      SNOWFLAKE_ROLE: DBT_ADMIN
+      SNOWFLAKE_WAREHOUSE: WH_WNL_OLIDS_L
+      SNOWFLAKE_TARGET_DATABASE: OLIDS_ENGINEERING
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@6b9c6063abd6010835644d4c2e1bef4cf5cd0fca # v6
+        with:
+          version: "0.6.x"
+
+      - name: Install check dependencies
+        run: |
+          uv venv --python 3.11
+          uv pip install --python .venv/bin/python pyyaml snowflake-connector-python
+          echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
+
+      - name: Write Snowflake private key
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE__PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.snowflake
+          printf '%s\n' "$SNOWFLAKE_PRIVATE_KEY" > ~/.snowflake/rsa_key.p8
+          chmod 600 ~/.snowflake/rsa_key.p8
+          echo "SNOWFLAKE_PRIVATE_KEY_PATH=$HOME/.snowflake/rsa_key.p8" >> "$GITHUB_ENV"
+
+      - name: Check source schema contract
+        run: python scripts/checks/compare_sources_to_information_schema.py
+
+      - name: Wait for a new source snapshot
+        id: watermark
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          FORCE_BUILD: ${{ inputs.force || false }}
+        run: |
+          args=(--github-output "$GITHUB_OUTPUT")
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            args+=(--timeout-seconds 900 --poll-seconds 300 --max-age-hours 6)
+          fi
+          if [ "$FORCE_BUILD" = "true" ]; then args+=(--force); fi
+          python scripts/checks/check_source_watermarks.py "${args[@]}"
+
+      - name: Install dbt Fusion
+        if: steps.watermark.outputs.should_run == 'true'
+        run: |
+          curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- --target x86_64-unknown-linux-gnu --update
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/dbt" --version
+
+      - name: Install dbt packages
+        if: steps.watermark.outputs.should_run == 'true'
+        run: |
+          cp profiles.yml.template profiles.yml
+          dbt deps
+
+      - name: Build OLIDS
+        id: build
+        if: steps.watermark.outputs.should_run == 'true'
+        run: dbt build --exclude tag:synapse --target stable --profiles-dir .
+
+      - name: Verify and record successful build
+        if: steps.watermark.outputs.should_run == 'true'
+        run: python scripts/checks/check_source_watermarks.py --verify --record-success
+
+      - name: Report or resolve failure issue
+        if: ${{ !cancelled() && github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOB_OUTCOME: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ISSUE_LABEL: dbt-scheduled-run-failure
+        run: python .github/scripts/report_scheduled_failure.py
+
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f ~/.snowflake/rsa_key.p8 profiles.yml

@@ -21,6 +21,7 @@ SELECT
     planned_duration_mins,
     actual_duration_mins,
     appointment_status_source_concept_id,
+    appointment_status_derived,
     appointment_status_source_code,
     appointment_status_source_display,
     appointment_status_code,

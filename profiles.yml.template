@@ -14,16 +14,18 @@ dbt_olids:
       type: snowflake
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
       user: "{{ env_var('SNOWFLAKE_USER') }}"
-      authenticator: externalbrowser
+      password: "{{ env_var('SNOWFLAKE_PASSWORD', '') }}"
+      token: "{{ env_var('SNOWFLAKE_PAT', '') }}"
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH', '') }}"
+      private_key_passphrase: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PASSPHRASE', '') }}"
+      authenticator: "{{ env_var('SNOWFLAKE_AUTHENTICATOR', 'snowflake_jwt' if env_var('SNOWFLAKE_PRIVATE_KEY_PATH', '') else ('programmatic_access_token' if env_var('SNOWFLAKE_PAT', '') else ('username_password_mfa' if env_var('SNOWFLAKE_PASSWORD', '') else 'externalbrowser'))) }}"
       role: "{{ env_var('SNOWFLAKE_ROLE') }}"
       database: "{{ env_var('SNOWFLAKE_TARGET_DATABASE') }}"
-      schema: DBT_STABLE
+      schema: OLIDS_BASE
       warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
-      threads: 4
+      threads: 8
       client_session_keep_alive: true
       query_tag: "dbt_olids_stable"
-
-# Alternative authentication:
-# For password auth, add:
-#   password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
-#   authenticator: password
+      connect_retries: 3
+      connect_timeout: 10
+      retry_all: true

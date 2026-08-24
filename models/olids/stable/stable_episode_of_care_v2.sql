@@ -1,0 +1,38 @@
+{{
+    config(
+        cluster_by=['episode_of_care_start_date'],
+        transient=false,
+        alias='episode_of_care_v2'
+    )
+}}
+
+SELECT
+    id,
+    lds_source_record_id,
+    patient_id,
+    person_id,
+    publisher_organisation_id,
+    managing_organisation_id,
+    author_organisation_id,
+    managing_organisation_code,
+    usual_practitioner_in_role_id,
+    episode_of_care_start_date,
+    episode_of_care_end_date,
+    type,
+    episode_type_source_concept_id,
+    episode_type_source_code,
+    episode_type_source_display,
+    episode_type_code,
+    episode_type_display,
+    status,
+    episode_status_source_concept_id,
+    episode_status_source_code,
+    episode_status_source_display,
+    episode_status_code,
+    episode_status_display,
+    lds_is_deleted,
+    publisher_organisation_code,
+    clinical_system,
+    source_extraction_date,
+    lds_transform_datetime
+FROM {{ ref('conformed_episode_of_care_v2') }}
