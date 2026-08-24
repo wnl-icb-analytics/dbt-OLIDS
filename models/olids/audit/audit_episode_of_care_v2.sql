@@ -7,9 +7,13 @@ WITH source_grain_metrics AS (
     SELECT
         COUNT(*) AS row_count,
         COUNT_IF(src.lds_is_deleted = TRUE) AS deleted_rows,
-        COUNT(*) - COUNT(DISTINCT src.id) AS repeated_id_rows,
-        COUNT(*) - COUNT(DISTINCT src.lds_source_record_id)
+        COUNT(src.id) - COUNT(DISTINCT src.id) AS repeated_id_rows,
+        COUNT(src.lds_source_record_id)
+            - COUNT(DISTINCT src.lds_source_record_id)
             AS duplicate_source_record_id_rows,
+        COUNT_IF(src.id IS NULL) AS null_id_rows,
+        COUNT_IF(src.lds_source_record_id IS NULL)
+            AS null_source_record_id_rows,
         COUNT_IF(
             src.episode_of_care_end_date < src.episode_of_care_start_date
         ) AS end_before_start_rows
@@ -82,7 +86,7 @@ practice_staleness AS (
         MAX(episode_of_care_start_date)::DATE AS max_activity_date
     FROM {{ ref('landing_episode_of_care_v2') }}
     WHERE
-        lds_is_deleted = FALSE
+        NOT COALESCE(lds_is_deleted, FALSE)
         AND episode_of_care_start_date <= source_extraction_date
     GROUP BY publisher_organisation_code
 ),
@@ -108,6 +112,18 @@ metrics AS (
         'duplicate_source_record_id_rows',
         NULL,
         duplicate_source_record_id_rows,
+        NULL,
+        NULL
+    FROM source_grain_metrics
+    UNION ALL
+    SELECT 'EPISODE_OF_CARE_V2', 'null_id_rows', NULL, null_id_rows, NULL, NULL
+    FROM source_grain_metrics
+    UNION ALL
+    SELECT
+        'EPISODE_OF_CARE_V2',
+        'null_source_record_id_rows',
+        NULL,
+        null_source_record_id_rows,
         NULL,
         NULL
     FROM source_grain_metrics

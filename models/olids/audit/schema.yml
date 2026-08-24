@@ -85,6 +85,12 @@ models:
             max_value: 0
           config:
             severity: error
+      - audit_metric_within_band:
+          arguments:
+            metric: null_source_record_id_rows
+            max_value: 0
+          config:
+            severity: error
 
   - name: audit_referral_request
     description: >-
