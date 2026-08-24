@@ -52,6 +52,14 @@ WITH freshness AS (
 
     UNION ALL
 
+    SELECT 'EPISODE_OF_CARE_V2' AS table_name,
+        MAX(lds_transform_datetime) AS max_transform,
+        MAX(source_extraction_date) AS max_extraction
+    FROM {TARGET_DATABASE}.LANDING."EPISODE_OF_CARE_V2"
+    WHERE lds_is_deleted = FALSE
+
+    UNION ALL
+
     SELECT 'MEDICATION_ORDER' AS table_name,
         MAX(lds_transform_datetime) AS max_transform,
         MAX(source_extraction_date) AS max_extraction

@@ -7,6 +7,7 @@
 }}
 
 SELECT
+    postcode,
     postcode_hash,
     outcode,
     local_authority_organisation,

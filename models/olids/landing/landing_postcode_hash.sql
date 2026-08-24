@@ -7,6 +7,7 @@ Single daily scan through source policies. Downstream models read this cache.
 */
 
 SELECT
+    postcode,
     postcode_hash,
     outcode,
     local_authority_organisation,

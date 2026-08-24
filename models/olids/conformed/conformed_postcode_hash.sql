@@ -10,6 +10,7 @@ Uses the landing cache for the WNL pseudonymised feed.
 */
 
 SELECT
+    src.postcode,
     src.postcode_hash,
     src.outcode,
     src.local_authority_organisation,

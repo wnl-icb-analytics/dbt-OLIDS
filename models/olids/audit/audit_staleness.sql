@@ -23,6 +23,15 @@ WITH domain_dates AS (
         value_date
     FROM {{ ref('audit_episode_of_care') }}
     WHERE metric_name = 'max_activity_date' AND value_date IS NOT NULL
+
+    UNION ALL
+
+    SELECT
+        table_name,
+        practice_code,
+        value_date
+    FROM {{ ref('audit_episode_of_care_v2') }}
+    WHERE metric_name = 'max_activity_date' AND value_date IS NOT NULL
 ),
 
 consensus AS (

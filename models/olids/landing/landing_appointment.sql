@@ -22,6 +22,7 @@ SELECT
     planned_duration_mins,
     actual_duration_mins,
     appointment_status_source_concept_id,
+    appointment_status_derived,
     patient_wait_mins,
     patient_delay_mins,
     datetime_booked,

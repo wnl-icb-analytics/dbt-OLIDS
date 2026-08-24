@@ -61,6 +61,17 @@ models:
           - unique
           - not_null
       - name: clinical_system
+  - name: stable_episode_of_care_v2
+    description: Stable episode_of_care_v2 table at source-record grain.
+    columns:
+      - name: lds_source_record_id
+        tests:
+          - unique
+          - not_null
+      - name: id
+        tests:
+          - not_null
+      - name: clinical_system
   - name: stable_location
     description: Stable location table.
     columns:
@@ -155,9 +166,15 @@ models:
           - not_null
       - name: clinical_system
   - name: stable_postcode_hash
-    description: Stable postcode_hash table.
+    description: >-
+      Stable postcode geography lookup. The source masking policy currently
+      returns the same 64-character masked value in postcode and postcode_hash;
+      neither column contains a raw postcode.
     columns:
+      - name: postcode
+        description: Masked postcode value; currently identical to postcode_hash.
       - name: postcode_hash
+        description: Masked 64-character postcode hash.
         tests:
           - unique
           - not_null

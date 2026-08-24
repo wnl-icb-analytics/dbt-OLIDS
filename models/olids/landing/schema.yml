@@ -81,6 +81,26 @@ models:
           config:
             severity: warn
 
+  - name: landing_episode_of_care_v2
+    description: Landing cache for EPISODE_OF_CARE_V2, scoped to NCL practices.
+    tests:
+      - min_row_count:
+          arguments:
+            min_rows: 2700000
+          config:
+            severity: error
+      - elementary.volume_anomalies:
+          arguments:
+            anomaly_direction: drop
+          config:
+            severity: warn
+      - elementary.dimension_anomalies:
+          arguments:
+            dimensions:
+              - publisher_organisation_code
+          config:
+            severity: warn
+
   - name: landing_location
     description: Landing cache for LOCATION.
 
@@ -193,7 +213,9 @@ models:
             severity: error
 
   - name: landing_postcode_hash
-    description: Landing cache for POSTCODE_HASH.
+    description: >-
+      Landing cache for POSTCODE_HASH. Source postcode and postcode_hash are
+      currently identical masked values; neither contains a raw postcode.
 
   - name: landing_practitioner
     description: Landing cache for PRACTITIONER.

@@ -32,7 +32,7 @@ def load_env(path=None):
 def get_connection(env):
     """Open a Snowflake connection.
 
-    Password auth when SNOWFLAKE_PASSWORD is set, otherwise external browser SSO.
+    Key-pair auth takes precedence, then password/PAT, then external browser SSO.
     """
     import snowflake.connector
 
@@ -47,9 +47,21 @@ def get_connection(env):
         if env.get(key):
             params[name] = env[key]
 
+    private_key_file = env.get('SNOWFLAKE_PRIVATE_KEY_PATH')
+    private_key_passphrase = env.get('SNOWFLAKE_PRIVATE_KEY_PASSPHRASE')
     password = env.get('SNOWFLAKE_PASSWORD')
+    token = env.get('SNOWFLAKE_PAT')
     authenticator = env.get('SNOWFLAKE_AUTHENTICATOR')
-    if password:
+    if private_key_file:
+        params['authenticator'] = authenticator or 'SNOWFLAKE_JWT'
+        params['private_key_file'] = private_key_file
+        params['private_key_file_pwd'] = (
+            private_key_passphrase.encode() if private_key_passphrase else None
+        )
+    elif token:
+        params['authenticator'] = authenticator or 'PROGRAMMATIC_ACCESS_TOKEN'
+        params['token'] = token
+    elif password:
         params['password'] = password
         if authenticator:
             params['authenticator'] = authenticator
