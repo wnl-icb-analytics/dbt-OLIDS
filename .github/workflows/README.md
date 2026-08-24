@@ -11,6 +11,12 @@ the `force` input also rebuilds an already-processed snapshot.
 No-op detection uses the source watermark set recorded after the last
 successful full build. A failed partial build is retried.
 
+After a successful build, the workflow publishes `OLIDS_ENGINEERING.STABLE`
+through `DATA_LAKE.OLIDS` using the single-source deployment procedure. It runs
+as `DATA_PLATFORM_MANAGER`, so replaced views retain platform ownership. The
+workflow verifies that every stable object has one DPM-owned data-lake view.
+The watermark is recorded only after publication and verification succeed.
+
 The workflow fails before dbt when the live source schema differs from
 `models/sources.yml`. Scheduled failures create or update one GitHub issue and
 the next successful scheduled run closes it.
