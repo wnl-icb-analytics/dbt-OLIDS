@@ -92,6 +92,13 @@ jobs:
         if: steps.watermark.outputs.should_run == 'true'
         run: dbt build --exclude tag:synapse --target stable --profiles-dir .
 
+      - name: Publish data lake views
+        if: steps.watermark.outputs.should_run == 'true'
+        env:
+          SNOWFLAKE_ROLE: DATA_PLATFORM_MANAGER
+          SNOWFLAKE_WAREHOUSE: WH_NCL_ENGINEERING_XS
+        run: python scripts/checks/deploy_data_lake_views.py
+
       - name: Verify and record successful build
         if: steps.watermark.outputs.should_run == 'true'
         run: python scripts/checks/check_source_watermarks.py --verify --record-success
