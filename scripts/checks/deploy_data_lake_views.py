@@ -15,6 +15,13 @@ CALL DATA_LAKE.CONTROL.DEPLOY_DATA_LAKE_VIEWS_FOR_SINGLE_SOURCE_MAPPING(
     DESTINATION_SCHEMA => 'OLIDS'
 )
 """
+COMMENT_SYNC_SQL = """
+CALL DATA_LAKE.CONTROL.SYNC_DATA_LAKE_VIEW_COMMENTS_FOR_SINGLE_SOURCE_MAPPING(
+    SOURCE_DATABASE => 'OLIDS_ENGINEERING',
+    SOURCE_SCHEMA => 'STABLE',
+    DESTINATION_SCHEMA => 'OLIDS'
+)
+"""
 
 
 def parse_response(value):
@@ -36,6 +43,19 @@ def response_failed(response):
     if isinstance(value, str) and value.lower() in {'true', 'false'}:
         return value.lower() == 'true'
     raise RuntimeError('Data lake deployment returned an invalid error flag')
+
+
+def call_procedure(cur, sql, operation):
+    """Call a deployment procedure and validate its response."""
+    cur.execute(sql)
+    row = cur.fetchone()
+    if not row:
+        raise RuntimeError(f'{operation} returned no response')
+
+    response = parse_response(row[0])
+    if response_failed(response):
+        raise RuntimeError(response.get('message', f'{operation} failed'))
+    return response
 
 
 def verify_mapping(cur):
@@ -84,17 +104,12 @@ def deploy(conn):
                 f'Expected role {EXPECTED_ROLE}, connected with {role}'
             )
 
-        cur.execute(DEPLOY_SQL)
-        row = cur.fetchone()
-        if not row:
-            raise RuntimeError('Data lake deployment returned no response')
-
-        response = parse_response(row[0])
-        if response_failed(response):
-            raise RuntimeError(
-                response.get('message', 'Data lake deployment failed')
-            )
+        call_procedure(cur, DEPLOY_SQL, 'Data lake deployment')
+        comment_response = call_procedure(
+            cur, COMMENT_SYNC_SQL, 'View comment sync'
+        )
         verify_mapping(cur)
+        return comment_response.get('updated_view_count', 0)
     finally:
         cur.close()
 
@@ -103,10 +118,13 @@ def main():
     env = load_env()
     conn = get_connection(env)
     try:
-        deploy(conn)
+        updated_comments = deploy(conn)
     finally:
         conn.close()
-    print('Published OLIDS_ENGINEERING.STABLE to DATA_LAKE.OLIDS.')
+    print(
+        'Published OLIDS_ENGINEERING.STABLE to DATA_LAKE.OLIDS; '
+        f'synchronised {updated_comments} view comment(s).'
+    )
     return 0
 
 

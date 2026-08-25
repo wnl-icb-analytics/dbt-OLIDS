@@ -15,6 +15,7 @@ After a successful build, the workflow publishes `OLIDS_ENGINEERING.STABLE`
 through `DATA_LAKE.OLIDS` using the single-source deployment procedure. It runs
 as `DATA_PLATFORM_MANAGER`, so replaced views retain platform ownership. The
 workflow verifies that every stable object has one DPM-owned data-lake view.
+It then reconciles inherited object comments without replacing unchanged views.
 The watermark is recorded only after publication and verification succeed.
 
 The workflow fails before dbt when the live source schema differs from
