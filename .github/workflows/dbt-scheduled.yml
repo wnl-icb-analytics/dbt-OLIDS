@@ -93,6 +93,7 @@ jobs:
         run: dbt build --exclude tag:synapse --target stable --profiles-dir .
 
       - name: Publish data lake views
+        id: publish
         if: steps.watermark.outputs.should_run == 'true'
         env:
           SNOWFLAKE_ROLE: DATA_PLATFORM_MANAGER
@@ -100,8 +101,21 @@ jobs:
         run: python scripts/checks/deploy_data_lake_views.py
 
       - name: Verify and record successful build
+        id: verify
         if: steps.watermark.outputs.should_run == 'true'
         run: python scripts/checks/check_source_watermarks.py --verify --record-success
+
+      - name: Record failed audit attempt
+        if: ${{ !cancelled() && failure() && steps.watermark.outputs.should_run == 'true' && steps.build.outcome != 'skipped' }}
+        env:
+          DBT_BUILD_OUTCOME: ${{ steps.build.outcome }}
+          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
+          VERIFY_OUTCOME: ${{ steps.verify.outcome }}
+        run: |
+          python scripts/checks/record_failed_audit_history.py \
+            --dbt-build-outcome "$DBT_BUILD_OUTCOME" \
+            --publish-outcome "$PUBLISH_OUTCOME" \
+            --verify-outcome "$VERIFY_OUTCOME"
 
       - name: Report or resolve failure issue
         if: ${{ !cancelled() && github.event_name == 'schedule' }}
