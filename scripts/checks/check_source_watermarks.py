@@ -8,6 +8,12 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from audit_history import (
+    build_run_context,
+    ensure_history_tables,
+    fetch_audit_metric_tables,
+    insert_attempt_history,
+)
 from compare_sources_to_information_schema import parse_sources
 from snowflake_env import get_connection, load_env
 
@@ -205,8 +211,8 @@ def compare_processed(conn, database, source_watermarks):
     }
 
 
-def record_success(conn, database, source_watermarks):
-    """Record the source snapshot set consumed by a successful full build."""
+def record_success(conn, database, source_watermarks, env):
+    """Record the successful baseline and its audit history."""
     schema = '.'.join(
         quote_identifier(part) for part in (database, STATE_SCHEMA)
     )
@@ -222,6 +228,23 @@ def record_success(conn, database, source_watermarks):
             'completed_at TIMESTAMP_TZ NOT NULL DEFAULT CURRENT_TIMESTAMP(), '
             'PRIMARY KEY (pipeline_name, table_name) NOT ENFORCED)'
         )
+        ensure_history_tables(cur, database)
+        audit_tables = fetch_audit_metric_tables(cur, database)
+        existing = fetch_existing_tables(conn, database, LANDING_SCHEMA)
+        landing_watermarks = fetch_watermarks(
+            conn,
+            database,
+            LANDING_SCHEMA,
+            SNAPSHOT_TABLES,
+            existing=existing,
+        )
+        context = build_run_context(
+            env,
+            dbt_build_outcome='success',
+            publish_outcome='success',
+            verify_outcome='success',
+            pipeline_status='success',
+        )
         cur.execute('BEGIN')
         cur.execute(
             f"DELETE FROM {relation} WHERE pipeline_name = 'dbt-olids'"
@@ -233,6 +256,14 @@ def record_success(conn, database, source_watermarks):
                 ('dbt-olids', table, source_watermarks[table])
                 for table in SNAPSHOT_TABLES
             ],
+        )
+        insert_attempt_history(
+            cur,
+            database,
+            context,
+            source_watermarks,
+            landing_watermarks,
+            audit_tables,
         )
         cur.execute('COMMIT')
     except Exception:
@@ -290,7 +321,7 @@ def main():
         if args.verify:
             changed = compare_target(conn, target_database, source_watermarks)
             if not changed and args.record_success:
-                record_success(conn, target_database, source_watermarks)
+                record_success(conn, target_database, source_watermarks, env)
         else:
             changed = compare_processed(
                 conn, target_database, source_watermarks

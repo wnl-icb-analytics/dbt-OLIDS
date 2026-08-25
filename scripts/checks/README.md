@@ -59,3 +59,16 @@ source venv/Scripts/activate && python scripts/checks/compare_sources_to_informa
 Compares the `olids_pseudo` source in `models/sources.yml` against live
 `INFORMATION_SCHEMA`. Run it after upstream releases to spot contract drift, and
 regenerate `sources.yml` when it reports differences. Exits `1` on any difference.
+
+## Audit history
+
+The scheduled workflow retains current audit metrics in `AUDIT.AUDIT_*` and
+appends each dbt attempt to:
+
+- `AUDIT.PIPELINE_RUN_HISTORY`: run identity and step outcomes
+- `AUDIT.WATERMARK_HISTORY`: source and landing watermarks by table
+- `AUDIT.METRIC_HISTORY`: metric rows copied from each `AUDIT.AUDIT_*` table
+
+Failed dbt tests are retained with a failed outcome because their models may
+already have built. `AUDIT.PIPELINE_STATE` advances only after the build, data
+lake publication and landing verification pass.
