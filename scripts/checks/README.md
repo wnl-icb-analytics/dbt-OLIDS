@@ -63,7 +63,7 @@ regenerate `sources.yml` when it reports differences. Exits `1` on any differenc
 ## Audit history
 
 The scheduled workflow retains current audit metrics in `AUDIT.AUDIT_*` and
-appends each dbt attempt to:
+appends each non-cancelled run that reaches dbt to:
 
 - `AUDIT.PIPELINE_RUN_HISTORY`: run identity and step outcomes
 - `AUDIT.WATERMARK_HISTORY`: source and landing watermarks by table

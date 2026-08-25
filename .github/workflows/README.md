@@ -11,10 +11,10 @@ the `force` input also rebuilds an already-processed snapshot.
 No-op detection uses the source watermark set recorded after the last
 successful full build. A failed partial build is retried.
 
-Every attempted dbt build appends its step outcomes, source and landing
-watermarks, and current `AUDIT.AUDIT_*` metrics to the audit history tables.
-This includes models built before a test failure. Only a verified run advances
-the no-op baseline.
+Every non-cancelled run that reaches dbt appends its step outcomes, source and
+landing watermarks, and current `AUDIT.AUDIT_*` metrics to the audit history
+tables. This includes models built before a test failure. Only a verified run
+advances the no-op baseline.
 
 After a successful build, the workflow publishes `OLIDS_ENGINEERING.STABLE`
 through `DATA_LAKE.OLIDS` using the single-source deployment procedure. It runs
