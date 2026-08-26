@@ -315,7 +315,26 @@ models:
     columns:
       - name: id
   - name: conformed_patient
-    description: "Filtered patient conformed view. Foundation for all patient-related filtering.\n\nExcludes sensitive patients:\n- is_spine_sensitive = FALSE (excludes spine-sensitive patients)\n- is_confidential = FALSE (excludes confidential patients) \n- is_test_patient = FALSE (excludes test patients)\n\nRestricts to NCL practices:\n- publisher_organisation_code IN (NCL practice codes via int_ncl_practices)"
+    description: >-
+      Filtered patient conformed view. Foundation for all patient-related filtering.
+
+
+      Excludes sensitive patients:
+
+      - is_spine_sensitive = FALSE
+
+      - is_confidential = FALSE
+
+      - is_test_patient = FALSE
+
+
+      Restricts to NCL practices (int_ncl_practices).
+
+
+      sk_patient_id ownership: where one submitted sk is held by several live
+      persons, the PDS trace on PERSON decides the owner. Losing rows keep their
+      person_id and stay in the population with sk_patient_id nulled. Rows are
+      still filtered on the submitted sk, so the population is unchanged.
     tests:
       - null_count_below:
           arguments:
@@ -325,10 +344,32 @@ models:
             severity: error
     columns:
       - name: sk_patient_id
+        description: Pseudonymised NHS number key; NULL when sk_linkage_status is contested, ambiguous_owner or no_owner.
         tests:
           - not_null:
               config:
                 severity: error
+                where: "sk_linkage_status IN ('sole', 'pds_owner')"
+      - name: pds_trace_status
+        description: >-
+          PDS trace outcome from the patient's PERSON row: confirmed (submitted = matched NHS number),
+          contradicted (PDS returned a different real number), untraced (no matched number, or a
+          sentinel value written on trace failure), no_person_row.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['confirmed', 'contradicted', 'untraced', 'no_person_row']
+      - name: sk_linkage_status
+        description: >-
+          Ownership of the submitted sk across live persons: sole (one person), pds_owner (only PDS-confirmed
+          person on a shared sk), contested (another person is PDS-confirmed), ambiguous_owner (several
+          PDS-confirmed persons), no_owner (shared, none confirmed). sk_patient_id is kept for sole and pds_owner.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['sole', 'pds_owner', 'contested', 'ambiguous_owner', 'no_owner']
       - name: id
       - name: lds_source_record_id
       - name: person_uuid

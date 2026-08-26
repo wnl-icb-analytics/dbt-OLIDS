@@ -118,12 +118,24 @@ models:
           - unique
           - not_null
   - name: stable_patient
-    description: Stable patient table.
+    description: >-
+      Stable patient table. One row per registration record.
+
+
+      Join contract: person_id within OLIDS; sk_patient_id to commissioning datasets
+      (SUS, MHSDS, CSDS). sk_patient_id resolves to one live person; it is NULL where
+      the PDS trace shows another person owns the key (see sk_linkage_status).
     columns:
       - name: id
         tests:
           - unique
           - not_null
+      - name: sk_patient_id
+        description: Pseudonymised NHS number key; NULL when sk_linkage_status is contested, ambiguous_owner or no_owner.
+      - name: pds_trace_status
+        description: PDS trace outcome for the row (confirmed, contradicted, untraced incl. sentinel trace failures, no_person_row).
+      - name: sk_linkage_status
+        description: Ownership of the submitted sk (sole, pds_owner, contested, ambiguous_owner, no_owner).
       - name: clinical_system
         description: 'Clinical system that recorded the row, cascaded from the patient record (EMIS or SystmOne).'
   - name: stable_patient_address
