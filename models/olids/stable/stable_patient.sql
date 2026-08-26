@@ -16,6 +16,8 @@ SELECT
     registered_practice_organisation_id,
     local_patient_id,
     sk_patient_id,
+    pds_trace_status,
+    sk_linkage_status,
     title,
     gender_source_concept_id,
     gender_source_code,

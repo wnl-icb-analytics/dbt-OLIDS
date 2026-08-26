@@ -56,6 +56,23 @@ patient_person_metrics AS (
     FROM {{ ref('landing_patient_person') }}
 ),
 
+-- sk ownership outcomes on live conformed rows; sk_nulled_persons is the
+-- number of persons whose linkage key was removed
+sk_linkage_metrics AS (
+    SELECT
+        COUNT_IF(sk_linkage_status = 'contested') AS sk_contested_rows,
+        COUNT_IF(sk_linkage_status = 'ambiguous_owner') AS sk_ambiguous_owner_rows,
+        COUNT_IF(sk_linkage_status = 'no_owner') AS sk_no_owner_rows,
+        COUNT(DISTINCT CASE
+            WHEN sk_patient_id IS NULL THEN person_id
+        END) AS sk_nulled_persons,
+        COUNT(DISTINCT CASE
+            WHEN pds_trace_status = 'contradicted' THEN person_id
+        END) AS pds_contradicted_persons
+    FROM {{ ref('conformed_patient') }}
+    WHERE COALESCE(lds_is_deleted, FALSE) = FALSE
+),
+
 metrics AS (
     SELECT
         'PATIENT' AS table_name,
@@ -137,6 +154,51 @@ metrics AS (
         NULL,
         NULL
     FROM patient_person_metrics
+    UNION ALL
+    SELECT
+        'PATIENT',
+        'sk_contested_rows',
+        NULL,
+        sk_contested_rows,
+        NULL,
+        NULL
+    FROM sk_linkage_metrics
+    UNION ALL
+    SELECT
+        'PATIENT',
+        'sk_ambiguous_owner_rows',
+        NULL,
+        sk_ambiguous_owner_rows,
+        NULL,
+        NULL
+    FROM sk_linkage_metrics
+    UNION ALL
+    SELECT
+        'PATIENT',
+        'sk_no_owner_rows',
+        NULL,
+        sk_no_owner_rows,
+        NULL,
+        NULL
+    FROM sk_linkage_metrics
+    UNION ALL
+    SELECT
+        'PATIENT',
+        'sk_nulled_persons',
+        NULL,
+        sk_nulled_persons,
+        NULL,
+        NULL
+    FROM sk_linkage_metrics
+    UNION ALL
+    SELECT
+        'PATIENT',
+        'pds_contradicted_persons',
+        NULL,
+        pds_contradicted_persons,
+        NULL,
+        NULL
+    FROM sk_linkage_metrics
     UNION ALL
     SELECT
         'PATIENT',
