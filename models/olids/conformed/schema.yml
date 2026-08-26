@@ -353,7 +353,8 @@ models:
       - name: pds_trace_status
         description: >-
           PDS trace outcome from the patient's PERSON row: confirmed (submitted = matched NHS number),
-          contradicted (PDS returned a different number), untraced (no matched number), no_person_row.
+          contradicted (PDS returned a different real number), untraced (no matched number, or a
+          sentinel value written on trace failure), no_person_row.
         tests:
           - not_null
           - accepted_values:

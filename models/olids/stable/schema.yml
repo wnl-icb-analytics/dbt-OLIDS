@@ -133,7 +133,7 @@ models:
       - name: sk_patient_id
         description: Pseudonymised NHS number key; NULL when sk_linkage_status is contested, ambiguous_owner or no_owner.
       - name: pds_trace_status
-        description: PDS trace outcome for the row (confirmed, contradicted, untraced, no_person_row).
+        description: PDS trace outcome for the row (confirmed, contradicted, untraced incl. sentinel trace failures, no_person_row).
       - name: sk_linkage_status
         description: Ownership of the submitted sk (sole, pds_owner, contested, ambiguous_owner, no_owner).
       - name: clinical_system

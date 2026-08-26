@@ -14,16 +14,37 @@ that lose keep their person_id and stay in the population; only sk_patient_id
 is nulled. See sk_linkage_status. Rows are still filtered on the submitted sk.
 */
 
-WITH pds AS (
-    SELECT
-        id,
-        req_nhs_number,
-        matched_nhs_no
+WITH
+-- PDS writes a sentinel value into matched_nhs_no when the trace fails or
+-- no number was submitted. Two such values cover ~43k rows; real numbers
+-- repeat at most a handful of times, so 100 is a safe cut.
+sentinel_numbers AS (
+    SELECT matched_nhs_no
     FROM {{ ref('landing_person') }}
+    WHERE matched_nhs_no IS NOT NULL
+    GROUP BY matched_nhs_no
+    HAVING COUNT(*) >= 100
+),
+
+pds AS (
+    SELECT
+        src.id,
+        src.req_nhs_number,
+        src.matched_nhs_no,
+        (
+            src.matched_nhs_no IS NULL
+            OR matched_sentinel.matched_nhs_no IS NOT NULL
+            OR req_sentinel.matched_nhs_no IS NOT NULL
+        ) AS is_untraced
+    FROM {{ ref('landing_person') }} AS src
+    LEFT JOIN sentinel_numbers AS matched_sentinel
+        ON src.matched_nhs_no = matched_sentinel.matched_nhs_no
+    LEFT JOIN sentinel_numbers AS req_sentinel
+        ON src.req_nhs_number = req_sentinel.matched_nhs_no
     -- the feed ships one row per person uuid; guard against a future change
     QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY id
-        ORDER BY lds_transform_datetime DESC NULLS LAST
+        PARTITION BY src.id
+        ORDER BY src.lds_transform_datetime DESC NULLS LAST
     ) = 1
 ),
 
@@ -73,7 +94,7 @@ patients AS (
         TRY_TO_NUMBER(src.sk_patient_id) AS submitted_sk_patient_id,
         CASE
             WHEN pds.id IS NULL THEN 'no_person_row'
-            WHEN pds.matched_nhs_no IS NULL THEN 'untraced'
+            WHEN pds.is_untraced THEN 'untraced'
             WHEN pds.req_nhs_number = pds.matched_nhs_no THEN 'confirmed'
             ELSE 'contradicted'
         END AS pds_trace_status
