@@ -69,7 +69,7 @@ jobs:
         run: |
           args=(--github-output "$GITHUB_OUTPUT")
           if [ "$EVENT_NAME" = "schedule" ]; then
-            args+=(--timeout-seconds 900 --poll-seconds 300 --max-age-hours 6)
+            args+=(--timeout-seconds 900 --poll-seconds 300 --wait-for-advance)
           fi
           if [ "$FORCE_BUILD" = "true" ]; then args+=(--force); fi
           python scripts/checks/check_source_watermarks.py "${args[@]}"

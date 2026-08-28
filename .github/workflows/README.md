@@ -4,9 +4,11 @@
 current OLIDS source snapshots, skips an already-processed batch, and runs dbt
 before the downstream `dbt-analytics` 04:00 UTC schedule.
 
-Scheduled runs allow 15 minutes for every snapshot to meet the six-hour
-freshness SLA. Manual dispatches use the latest available snapshot immediately;
-the `force` input also rebuilds an already-processed snapshot.
+Scheduled runs allow 15 minutes for every snapshot watermark to advance past
+the last successful build. This accepts a new daily snapshot when GitHub delays
+the cron job and waits for a partially published snapshot to finish. Manual
+dispatches use the latest available snapshot immediately; the `force` input
+also rebuilds an already-processed snapshot.
 
 No-op detection uses the source watermark set recorded after the last
 successful full build. A failed partial build is retried.

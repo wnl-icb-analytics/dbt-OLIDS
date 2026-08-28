@@ -114,10 +114,39 @@ def write_outputs(path, should_run, watermark):
         handle.write(f'source_watermark={watermark}\n')
 
 
+def find_unadvanced(watermarks, previous_watermarks):
+    """Return source tables that have not advanced past the prior build."""
+    return {
+        table: (value, previous_watermarks.get(table))
+        for table, value in watermarks.items()
+        if value is not None
+        and previous_watermarks.get(table) is not None
+        and normalise_timestamp(value)
+        <= normalise_timestamp(previous_watermarks[table])
+    }
+
+
+def matches_previous(watermarks, previous_watermarks):
+    """Return whether every source watermark matches the prior build."""
+    return all(
+        value is not None
+        and previous_watermarks.get(table) is not None
+        and normalise_timestamp(value)
+        == normalise_timestamp(previous_watermarks[table])
+        for table, value in watermarks.items()
+    )
+
+
 def wait_for_current_source(
-    conn, database, schema, timeout, interval, max_age_hours
+    conn,
+    database,
+    schema,
+    timeout,
+    interval,
+    max_age_hours,
+    previous_watermarks=None,
 ):
-    """Poll until every source snapshot is present and within the age SLA."""
+    """Poll until every source snapshot is present and ready to process."""
     deadline = time.monotonic() + timeout
     while True:
         watermarks = fetch_watermarks(
@@ -143,19 +172,41 @@ def wait_for_current_source(
                 )
             )
         }
-        if not stale:
+        unadvanced = (
+            find_unadvanced(watermarks, previous_watermarks)
+            if previous_watermarks is not None
+            else {}
+        )
+        if not stale and not unadvanced:
             latest = max(watermarks.values())
             message = f'All {len(watermarks)} source snapshots are available'
+            if previous_watermarks is not None:
+                message += ' and have advanced'
             if max_age_hours is not None:
                 message += f' and no more than {max_age_hours:g} hours old'
             print(f'{message}; latest watermark {format_watermark(latest)}.')
             return watermarks
 
-        print(f'{len(stale)} source snapshot(s) are missing or stale:')
-        for table, value in stale.items():
-            print(f'  {table}: {format_watermark(value)}')
+        if stale:
+            print(f'{len(stale)} source snapshot(s) are missing or stale:')
+            for table, value in stale.items():
+                print(f'  {table}: {format_watermark(value)}')
+        if unadvanced:
+            print(f'{len(unadvanced)} source snapshot(s) have not advanced:')
+            for table, (current, previous) in unadvanced.items():
+                print(
+                    f'  {table}: current={format_watermark(current)}, '
+                    f'previous={format_watermark(previous)}'
+                )
         remaining = deadline - time.monotonic()
         if remaining <= 0:
+            if (
+                previous_watermarks is not None
+                and not stale
+                and matches_previous(watermarks, previous_watermarks)
+            ):
+                print('No source watermarks advanced before the timeout.')
+                return watermarks
             raise RuntimeError('Source watermark wait timed out')
         wait = min(interval, remaining)
         print(f'Retrying in {wait:.0f} seconds.')
@@ -284,6 +335,11 @@ def main():
         type=float,
         help='Fail when a source watermark is older than this age',
     )
+    parser.add_argument(
+        '--wait-for-advance',
+        action='store_true',
+        help='Wait for every source watermark to advance past the prior build',
+    )
     parser.add_argument('--force', action='store_true', help='Build even when current')
     parser.add_argument(
         '--verify', action='store_true', help='Fail unless landing matches source'
@@ -310,6 +366,11 @@ def main():
 
     conn = get_connection(env)
     try:
+        previous_watermarks = (
+            fetch_processed_watermarks(conn, target_database)
+            if args.wait_for_advance
+            else None
+        )
         source_watermarks = wait_for_current_source(
             conn,
             source_database,
@@ -317,6 +378,7 @@ def main():
             max(args.timeout_seconds, 0),
             max(args.poll_seconds, 1),
             args.max_age_hours,
+            previous_watermarks=previous_watermarks,
         )
         if args.verify:
             changed = compare_target(conn, target_database, source_watermarks)
