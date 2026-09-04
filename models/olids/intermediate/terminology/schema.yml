@@ -2,7 +2,10 @@ version: 2
 
 models:
   - name: int_enriched_concept_map
-    description: 'Enriched concept map. Grain: one row per source_concept_id. Every conformed and audit join relies on this grain; a duplicate fans out clinical rows silently, so the tests are error severity.'
+    description: >-
+      Join-safe analytical concept map. Grain: one row per source_concept_id.
+      Active non-READ mappings are preferred; the last known analytical mapping
+      is retained only when no active version exists.
     columns:
       - name: source_concept_id
         tests:
@@ -10,5 +13,17 @@ models:
               config:
                 severity: error
           - not_null:
+              config:
+                severity: error
+      - name: mapping_status
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - active
+                  - last_known
+                  - backfilled
+                  - legacy_only
+                  - unmapped
               config:
                 severity: error

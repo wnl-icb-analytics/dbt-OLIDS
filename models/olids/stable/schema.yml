@@ -31,12 +31,32 @@ models:
           - unique
           - not_null
   - name: stable_concept_map
-    description: Stable concept_map table.
+    description: >-
+      Join-safe concept map with one row per source concept and one selected
+      analytical mapping. READ/local mappings are kept in CONCEPT_MAP_HISTORY.
     columns:
       - name: source_concept_id
         tests:
           - unique
           - not_null
+      - name: mapped_concept_id
+      - name: mapped_concept_code
+      - name: mapped_concept_display
+      - name: mapped_concept_system
+      - name: mapping_status
+      - name: mapping_is_active
+      - name: mapping_updated_date
+  - name: stable_concept_map_history
+    description: Complete long-form CONCEPT_MAP_V2 history, including inactive and READ/local mappings.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - concept_map_name
+              - source_concept_id
+              - target_concept_id
+              - is_active
+              - last_updated_date
   - name: stable_diagnostic_order
     description: Stable diagnostic_order table.
     columns:

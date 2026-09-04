@@ -5,8 +5,7 @@
 }}
 
 /*
-Conformed CONCEPT_MAP view.
-Uses the landing cache for the WNL pseudonymised feed.
+Complete CONCEPT_MAP_V2 history. Selection belongs in the enriched model.
 */
 
 SELECT
@@ -21,7 +20,7 @@ SELECT
     src.target_display,
     src.equivalence,
     src.equivalence_rank,
-    src.is_primary
+    src.is_primary,
+    src.is_active,
+    src.last_updated_date
 FROM {{ ref('landing_concept_map') }} AS src
--- mappings without a source concept cannot be joined; upstream carries a handful
-WHERE src.source_concept_id IS NOT NULL

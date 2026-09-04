@@ -1,9 +1,9 @@
 {{
-    config(alias='CONCEPT_MAP')
+    config(alias='CONCEPT_MAP_V2')
 }}
 
 /*
-Single daily scan through source policies. Downstream models read this cache.
+Single daily scan of the parallel V2 source. This preserves every mapping row.
 */
 
 SELECT
@@ -18,5 +18,7 @@ SELECT
     target_display,
     equivalence,
     equivalence_rank,
-    is_primary
-FROM {{ source('olids_pseudo', 'CONCEPT_MAP') }}
+    is_primary,
+    is_active,
+    last_updated_date
+FROM {{ source('olids_pseudo', 'CONCEPT_MAP_V2') }}

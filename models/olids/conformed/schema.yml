@@ -597,12 +597,16 @@ models:
     columns:
       - name: concept_id
   - name: conformed_concept_map
-    description: 'Unfiltered OLIDS terminology concept map reference view.
-
-
-      No filters applied - reference data used as-is.
-
-      Direct passthrough from source table with explicit column selection for interface consistency.'
+    description: 'Complete long-form CONCEPT_MAP_V2 history. No mapping selection or filtering is applied.'
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - concept_map_name
+              - source_concept_id
+              - target_concept_id
+              - is_active
+              - last_updated_date
     columns:
       - name: source_concept_id
   - name: conformed_postcode_hash

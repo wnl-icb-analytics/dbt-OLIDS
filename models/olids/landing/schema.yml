@@ -30,7 +30,7 @@ models:
     description: Landing cache for CONCEPT.
 
   - name: landing_concept_map
-    description: Landing cache for CONCEPT_MAP.
+    description: Lossless landing cache for the parallel CONCEPT_MAP_V2 source.
 
   - name: landing_diagnostic_order
     description: Landing cache for DIAGNOSTIC_ORDER, scoped to NCL practices.
