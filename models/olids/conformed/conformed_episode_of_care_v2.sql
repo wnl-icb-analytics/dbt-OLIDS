@@ -26,14 +26,14 @@ SELECT
     src.episode_type_source_concept_id,
     episode_type_map.source_code AS episode_type_source_code,
     episode_type_map.source_display AS episode_type_source_display,
-    episode_type_map.target_code AS episode_type_code,
-    episode_type_map.target_display AS episode_type_display,
+    episode_type_map.mapped_concept_code AS episode_type_code,
+    episode_type_map.mapped_concept_display AS episode_type_display,
     src.status,
     src.episode_status_source_concept_id,
     episode_status_map.source_code AS episode_status_source_code,
     episode_status_map.source_display AS episode_status_source_display,
-    episode_status_map.target_code AS episode_status_code,
-    episode_status_map.target_display AS episode_status_display,
+    episode_status_map.mapped_concept_code AS episode_status_code,
+    episode_status_map.mapped_concept_display AS episode_status_display,
     src.lds_is_deleted,
     src.publisher_organisation_code,
     patients.clinical_system,
@@ -48,9 +48,9 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
 INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
     ON src.publisher_organisation_code = ncl_practices.practice_code
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS episode_type_map
+LEFT JOIN {{ ref('conformed_concept_map') }} AS episode_type_map
     ON src.episode_type_source_concept_id = episode_type_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS episode_status_map
+LEFT JOIN {{ ref('conformed_concept_map') }} AS episode_status_map
     ON
         src.episode_status_source_concept_id
         = episode_status_map.source_concept_id

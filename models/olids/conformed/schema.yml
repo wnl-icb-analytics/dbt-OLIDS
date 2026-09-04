@@ -597,12 +597,51 @@ models:
     columns:
       - name: concept_id
   - name: conformed_concept_map
-    description: 'Unfiltered OLIDS terminology concept map reference view.
-
-
-      No filters applied - reference data used as-is.
-
-      Direct passthrough from source table with explicit column selection for interface consistency.'
+    description: >-
+      Join-safe concept map. Grain: one row per source_concept_id. Active
+      non-READ mappings are preferred; the last known analytical mapping is
+      retained only when no active version exists.
+    columns:
+      - name: source_concept_id
+        tests:
+          - unique:
+              config:
+                severity: error
+          - not_null:
+              config:
+                severity: error
+      - name: mapping_name
+        description: >-
+          V2 concept map name, emis-reference-backfill for a mapping supplied
+          by EMIS_CLINICAL_CODE, or manual-backfill for one of the five locally
+          maintained mappings.
+      - name: mapping_status
+        description: >-
+          Selection outcome. Both fallback sources use backfilled; mapping_name
+          identifies whether the source was the EMIS reference or the manual
+          list.
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - active
+                  - last_known
+                  - backfilled
+                  - legacy_only
+                  - unmapped
+              config:
+                severity: error
+  - name: conformed_concept_map_history
+    description: 'Complete long-form CONCEPT_MAP_V2 history. No mapping selection or reshaping is applied.'
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - concept_map_name
+              - source_concept_id
+              - target_concept_id
+              - is_active
+              - last_updated_date
     columns:
       - name: source_concept_id
   - name: conformed_postcode_hash

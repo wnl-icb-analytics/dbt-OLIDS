@@ -64,8 +64,8 @@ patients AS (
         src.gender_source_concept_id,
         gender_map.source_code AS gender_source_code,
         gender_map.source_display AS gender_source_display,
-        gender_map.target_code AS gender_code,
-        gender_map.target_display AS gender_display,
+        gender_map.mapped_concept_code AS gender_code,
+        gender_map.mapped_concept_display AS gender_display,
         src.birth_date,
         src.birth_year,
         src.birth_month,
@@ -105,7 +105,7 @@ patients AS (
         ON src.id = patient_idx.source_patient_id
     LEFT JOIN {{ ref('person_id_index') }} AS person_idx
         ON src.person_id = person_idx.source_person_id
-    LEFT JOIN {{ ref('int_enriched_concept_map') }} AS gender_map
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS gender_map
         ON src.gender_source_concept_id = gender_map.source_concept_id
     LEFT JOIN pds
         ON src.person_id = pds.id
