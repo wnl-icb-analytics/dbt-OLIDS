@@ -89,18 +89,19 @@ ranked_mappings AS (
 
 /*
 Some EMIS concepts have no analytical V2 row but do have a supplied SNOMED
-mapping in EMIS_CLINICAL_CODE. Use that only after V2 has been exhausted.
+mapping in EMIS_CLINICAL_CODE. This takes precedence over a READ/local-only V2
+mapping, but cannot replace a usable V2 mapping.
 */
 emis_fallbacks AS (
     SELECT
-        concept_id AS source_concept_id,
-        snomed_ct_concept_id::VARCHAR AS target_code,
-        term AS target_display
-    FROM {{ ref('conformed_emis_clinical_code') }}
-    WHERE snomed_ct_concept_id::VARCHAR <> '138875005'
+        emis.concept_id AS source_concept_id,
+        emis.snomed_ct_concept_id::VARCHAR AS target_code,
+        emis.term AS target_display
+    FROM {{ ref('conformed_emis_clinical_code') }} AS emis
+    WHERE emis.snomed_ct_concept_id::VARCHAR <> '138875005'
     QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY concept_id
-        ORDER BY code_id, snomed_ct_concept_id
+        PARTITION BY emis.concept_id
+        ORDER BY emis.code_id, emis.snomed_ct_concept_id
     ) = 1
 ),
 
@@ -114,8 +115,9 @@ legacy_sources AS (
 )
 
 /*
-V2 wins whenever it has a usable mapping. The EMIS reference is the only
-fallback. Every other source concept remains as legacy-only or unmapped.
+A usable V2 mapping wins. The EMIS reference then backfills SNOMED where V2 has
+only READ/local or no usable mapping. All other concepts remain legacy-only or
+unmapped.
 */
 SELECT  -- noqa: ST06
     source.concept_id AS source_concept_id,
