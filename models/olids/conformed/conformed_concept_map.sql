@@ -96,12 +96,81 @@ emis_fallbacks AS (
     SELECT
         emis.concept_id AS source_concept_id,
         emis.snomed_ct_concept_id::VARCHAR AS target_code,
-        emis.term AS target_display
+        emis.term AS target_display,
+        'emis-reference-backfill' AS mapping_name,
+        1 AS fallback_priority
     FROM {{ ref('conformed_emis_clinical_code') }} AS emis
     WHERE emis.snomed_ct_concept_id::VARCHAR <> '138875005'
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY emis.concept_id
         ORDER BY emis.code_id, emis.snomed_ct_concept_id
+    ) = 1
+),
+
+/*
+These five mappings are maintained locally because neither V2 nor the EMIS
+reference supplies them. They are keyed by system and code because concept IDs
+differ between environments.
+*/
+manual_fallback_values AS (
+    SELECT
+        column1::VARCHAR AS source_system,
+        column2::VARCHAR AS source_code,
+        column3::VARCHAR AS target_code,
+        column4::VARCHAR AS target_display
+    FROM
+        VALUES
+        (
+            'EMIS_RegistrationStatus_cs', 'Deceased',
+            '725951000000101', 'GP22 deregistration - death'
+        ),
+        (
+            'EMIS_and_TPP_MedicationStatement_cs', 'Acute',
+            '1217105006', 'Prescription given'
+        ),
+        (
+            'EMIS_and_TPP_MedicationStatement_cs', 'Automatic',
+            '1217105006', 'Prescription given'
+        ),
+        (
+            'EMIS_and_TPP_MedicationStatement_cs', 'Repeat',
+            '182918009', 'Repeated prescription'
+        ),
+        (
+            'EMIS_and_TPP_MedicationStatement_cs', 'Repeat Dispensing',
+            '182918009', 'Repeated prescription'
+        )
+),
+
+manual_fallbacks AS (
+    SELECT
+        source.concept_id AS source_concept_id,
+        manual.target_code,
+        manual.target_display,
+        'manual-backfill' AS mapping_name,
+        2 AS fallback_priority
+    FROM manual_fallback_values AS manual
+    INNER JOIN source_concepts AS source
+        ON
+            manual.source_system = source.system
+            AND manual.source_code = source.code
+),
+
+-- The supplied EMIS reference takes precedence if fallback sources overlap.
+fallbacks AS (
+    SELECT
+        source_concept_id,
+        target_code,
+        target_display,
+        mapping_name
+    FROM (
+        SELECT * FROM emis_fallbacks
+        UNION ALL
+        SELECT * FROM manual_fallbacks
+    ) AS combined_fallbacks
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY source_concept_id
+        ORDER BY fallback_priority
     ) = 1
 ),
 
@@ -116,8 +185,8 @@ legacy_sources AS (
 
 /*
 A usable V2 mapping wins. The EMIS reference then backfills SNOMED where V2 has
-only READ/local or no usable mapping. All other concepts remain legacy-only or
-unmapped.
+only READ/local or no usable mapping. The five manual mappings are the final
+fallback. All other concepts remain legacy-only or unmapped.
 */
 SELECT  -- noqa: ST06
     source.concept_id AS source_concept_id,
@@ -141,11 +210,7 @@ SELECT  -- noqa: ST06
     ) AS is_primary,
     COALESCE(
         mapping.equivalence,
-        IFF(
-            fallback.source_concept_id IS NOT NULL,
-            'emis-reference-backfill',
-            NULL
-        )
+        fallback.mapping_name
     ) AS equivalence,
     COALESCE(
         mapping.equivalence_rank,
@@ -153,11 +218,7 @@ SELECT  -- noqa: ST06
     ) AS equivalence_rank,
     COALESCE(
         mapping.concept_map_name,
-        IFF(
-            fallback.source_concept_id IS NOT NULL,
-            'emis-reference-backfill',
-            NULL
-        )
+        fallback.mapping_name
     ) AS mapping_name,
     CASE
         WHEN mapping.source_concept_id IS NOT NULL
@@ -175,7 +236,7 @@ SELECT  -- noqa: ST06
 FROM source_concepts AS source
 LEFT JOIN ranked_mappings AS mapping
     ON source.concept_id = mapping.source_concept_id
-LEFT JOIN emis_fallbacks AS fallback
+LEFT JOIN fallbacks AS fallback
     ON
         source.concept_id = fallback.source_concept_id
         AND mapping.source_concept_id IS NULL

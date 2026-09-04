@@ -610,7 +610,16 @@ models:
           - not_null:
               config:
                 severity: error
+      - name: mapping_name
+        description: >-
+          V2 concept map name, emis-reference-backfill for a mapping supplied
+          by EMIS_CLINICAL_CODE, or manual-backfill for one of the five locally
+          maintained mappings.
       - name: mapping_status
+        description: >-
+          Selection outcome. Both fallback sources use backfilled; mapping_name
+          identifies whether the source was the EMIS reference or the manual
+          list.
         tests:
           - accepted_values:
               arguments:
