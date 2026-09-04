@@ -13,7 +13,7 @@ WITH global_metrics AS (
                 src.{{ field }} IS NOT NULL
                 AND (
                     ecm_{{ loop.index }}.source_concept_id IS NULL
-                    OR ecm_{{ loop.index }}.target_code IS NULL
+                    OR ecm_{{ loop.index }}.mapped_concept_code IS NULL
                 )
             ) AS {{ field }}_unmapped_rows,
             COUNT_IF(src.{{ field }} IS NOT NULL)
@@ -25,7 +25,7 @@ WITH global_metrics AS (
         {% endfor %}
     FROM {{ ref('landing_observation') }} AS src
     {% for field in concept_fields %}
-        LEFT JOIN {{ ref('int_enriched_concept_map') }} AS ecm_{{ loop.index }}
+        LEFT JOIN {{ ref('conformed_concept_map') }} AS ecm_{{ loop.index }}
             ON src.{{ field }} = ecm_{{ loop.index }}.source_concept_id
     {% endfor %}
 ),
@@ -69,9 +69,9 @@ unmapped_concepts AS (
             clinical_effective_date_precision_source_concept_id
         )
     ) AS unpivoted
-    LEFT JOIN {{ ref('int_enriched_concept_map') }} AS ecm
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS ecm
         ON unpivoted.source_concept_id = ecm.source_concept_id
-    WHERE ecm.source_concept_id IS NULL OR ecm.target_code IS NULL
+    WHERE ecm.source_concept_id IS NULL OR ecm.mapped_concept_code IS NULL
     GROUP BY unpivoted.concept_field, unpivoted.source_concept_id
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY unpivoted.concept_field

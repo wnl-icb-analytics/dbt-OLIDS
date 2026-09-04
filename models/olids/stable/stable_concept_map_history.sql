@@ -26,4 +26,4 @@ SELECT
     is_primary,
     is_active,
     last_updated_date
-FROM {{ ref('conformed_concept_map') }}
+FROM {{ ref('conformed_concept_map_history') }}

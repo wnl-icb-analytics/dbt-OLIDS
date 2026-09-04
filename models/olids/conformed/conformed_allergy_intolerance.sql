@@ -26,8 +26,8 @@ SELECT
     src.clinical_effective_date_precision_source_concept_id,
     date_precision_map.source_code AS date_precision_source_code,
     date_precision_map.source_display AS date_precision_source_display,
-    date_precision_map.target_code AS date_precision_code,
-    date_precision_map.target_display AS date_precision_display,
+    date_precision_map.mapped_concept_code AS date_precision_code,
+    date_precision_map.mapped_concept_display AS date_precision_display,
     src.is_review,
     src.medication_name,
     src.multi_lex_action,
@@ -35,10 +35,10 @@ SELECT
     concept_map.source_code,
     concept_map.source_display,
     concept_map.source_system,
-    concept_map.target_concept_id AS mapped_concept_id,
-    concept_map.target_code AS mapped_concept_code,
-    concept_map.target_display AS mapped_concept_display,
-    concept_map.target_system,
+    concept_map.mapped_concept_id,
+    concept_map.mapped_concept_code,
+    concept_map.mapped_concept_display,
+    concept_map.mapped_concept_system AS target_system,
     src.age_at_event,
     src.age_at_event_baby,
     src.age_at_event_neonate,
@@ -58,9 +58,9 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
 INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
     ON src.publisher_organisation_code = ncl_practices.practice_code
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS concept_map
+LEFT JOIN {{ ref('conformed_concept_map') }} AS concept_map
     ON src.allergy_intolerance_source_concept_id = concept_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS date_precision_map
+LEFT JOIN {{ ref('conformed_concept_map') }} AS date_precision_map
     ON
         src.clinical_effective_date_precision_source_concept_id
         = date_precision_map.source_concept_id

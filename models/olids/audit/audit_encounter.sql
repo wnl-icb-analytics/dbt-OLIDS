@@ -7,12 +7,12 @@ WITH global_metrics AS (
         COUNT(*) - COUNT(DISTINCT src.id) AS duplicate_id_rows,
         COUNT_IF(
             src.{{ concept_field }} IS NOT NULL
-            AND (ecm.source_concept_id IS NULL OR ecm.target_code IS NULL)
+            AND (ecm.source_concept_id IS NULL OR ecm.mapped_concept_code IS NULL)
         ) AS {{ concept_field }}_unmapped_rows,
         COUNT_IF(src.{{ concept_field }} IS NOT NULL)
             AS {{ concept_field }}_populated_rows
     FROM {{ ref('landing_encounter') }} AS src
-    LEFT JOIN {{ ref('int_enriched_concept_map') }} AS ecm
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS ecm
         ON src.{{ concept_field }} = ecm.source_concept_id
 ),
 
@@ -35,11 +35,11 @@ unmapped_concepts AS (
         src.{{ concept_field }}::VARCHAR AS source_concept_id,
         COUNT(*) AS affected_rows
     FROM {{ ref('landing_encounter') }} AS src
-    LEFT JOIN {{ ref('int_enriched_concept_map') }} AS ecm
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS ecm
         ON src.{{ concept_field }} = ecm.source_concept_id
     WHERE
         src.{{ concept_field }} IS NOT NULL
-        AND (ecm.source_concept_id IS NULL OR ecm.target_code IS NULL)
+        AND (ecm.source_concept_id IS NULL OR ecm.mapped_concept_code IS NULL)
     GROUP BY src.{{ concept_field }}
     QUALIFY ROW_NUMBER() OVER (
         ORDER BY COUNT(*) DESC, src.{{ concept_field }}

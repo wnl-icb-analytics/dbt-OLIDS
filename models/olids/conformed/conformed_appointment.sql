@@ -28,8 +28,8 @@ SELECT
     src.appointment_status_derived,
     appointment_status_map.source_code AS appointment_status_source_code,
     appointment_status_map.source_display AS appointment_status_source_display,
-    appointment_status_map.target_code AS appointment_status_code,
-    appointment_status_map.target_display AS appointment_status_display,
+    appointment_status_map.mapped_concept_code AS appointment_status_code,
+    appointment_status_map.mapped_concept_display AS appointment_status_display,
     src.patient_wait_mins,
     src.patient_delay_mins,
     src.datetime_booked,
@@ -43,13 +43,13 @@ SELECT
     src.booking_method_source_concept_id,
     booking_method_map.source_code AS booking_method_source_code,
     booking_method_map.source_display AS booking_method_source_display,
-    booking_method_map.target_code AS booking_method_code,
-    booking_method_map.target_display AS booking_method_display,
+    booking_method_map.mapped_concept_code AS booking_method_code,
+    booking_method_map.mapped_concept_display AS booking_method_display,
     src.contact_mode_source_concept_id,
     contact_mode_map.source_code AS contact_mode_source_code,
     contact_mode_map.source_display AS contact_mode_source_display,
-    contact_mode_map.target_code AS contact_mode_code,
-    contact_mode_map.target_display AS contact_mode_display,
+    contact_mode_map.mapped_concept_code AS contact_mode_code,
+    contact_mode_map.mapped_concept_display AS contact_mode_display,
     src.is_blocked,
     src.national_slot_category_name,
     src.context_type,
@@ -70,15 +70,15 @@ LEFT JOIN {{ ref('person_id_index') }} AS person_idx
     ON src.person_id = person_idx.source_person_id
 INNER JOIN {{ ref('int_ncl_practices') }} AS ncl_practices
     ON src.publisher_organisation_code = ncl_practices.practice_code
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS appointment_status_map
+LEFT JOIN {{ ref('conformed_concept_map') }} AS appointment_status_map
     ON
         src.appointment_status_source_concept_id
         = appointment_status_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS booking_method_map
+LEFT JOIN {{ ref('conformed_concept_map') }} AS booking_method_map
     ON
         src.booking_method_source_concept_id
         = booking_method_map.source_concept_id
-LEFT JOIN {{ ref('int_enriched_concept_map') }} AS contact_mode_map
+LEFT JOIN {{ ref('conformed_concept_map') }} AS contact_mode_map
     ON src.contact_mode_source_concept_id = contact_mode_map.source_concept_id
 WHERE
     src.patient_id IS NOT NULL

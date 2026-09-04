@@ -1,10 +1,10 @@
 SELECT selected.source_concept_id
-FROM {{ ref('int_enriched_concept_map') }} AS selected
+FROM {{ ref('conformed_concept_map') }} AS selected
 WHERE
     selected.mapping_status = 'last_known'
     AND EXISTS (
         SELECT 1
-        FROM {{ ref('conformed_concept_map') }} AS candidate
+        FROM {{ ref('conformed_concept_map_history') }} AS candidate
         WHERE
             candidate.source_concept_id = selected.source_concept_id
             AND candidate.is_active = 1
