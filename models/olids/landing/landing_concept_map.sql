@@ -18,5 +18,6 @@ SELECT
     target_display,
     equivalence,
     equivalence_rank,
-    is_primary
+    is_primary,
+    last_updated_date
 FROM {{ source('olids_pseudo', 'CONCEPT_MAP') }}

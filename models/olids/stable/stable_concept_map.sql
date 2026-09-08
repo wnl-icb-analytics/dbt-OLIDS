@@ -17,5 +17,6 @@ SELECT
     target_system,
     is_primary,
     equivalence,
-    equivalence_rank
+    equivalence_rank,
+    last_updated_date
 FROM {{ ref('int_enriched_concept_map') }}

@@ -220,6 +220,40 @@ sources:
       data_type: NUMBER
     - name: is_primary
       data_type: NUMBER
+    - name: last_updated_date
+      data_type: DATE
+  - name: CONCEPT_MAP_V2
+    identifier: '"CONCEPT_MAP_V2"'
+    description: Parallel concept map release containing mapping history and activity status.
+    columns:
+    - name: concept_map_name
+      data_type: TEXT
+    - name: source_concept_id
+      data_type: UUID
+    - name: source_system
+      data_type: TEXT
+    - name: source_code
+      data_type: TEXT
+    - name: source_display
+      data_type: TEXT
+    - name: target_concept_id
+      data_type: UUID
+    - name: target_system
+      data_type: TEXT
+    - name: target_code
+      data_type: TEXT
+    - name: target_display
+      data_type: TEXT
+    - name: equivalence
+      data_type: TEXT
+    - name: equivalence_rank
+      data_type: NUMBER
+    - name: is_primary
+      data_type: NUMBER
+    - name: is_active
+      data_type: NUMBER
+    - name: last_updated_date
+      data_type: DATE
   - name: DIAGNOSTIC_ORDER
     identifier: '"DIAGNOSTIC_ORDER"'
     columns:
@@ -708,6 +742,27 @@ sources:
     - name: preference_type
       data_type: TEXT
     - name: preference_status
+      data_type: TEXT
+    - name: lds_is_deleted
+      data_type: BOOLEAN
+    - name: effective_from
+      data_type: TIMESTAMP_NTZ
+    - name: effective_to
+      data_type: TIMESTAMP_NTZ
+    - name: is_latest
+      data_type: BOOLEAN
+  - name: PATIENT_OPT_OUT
+    identifier: '"PATIENT_OPT_OUT"'
+    columns:
+    - name: lds_business_id
+      data_type: UUID
+    - name: lds_record_id
+      data_type: UUID
+    - name: sk_patient_id
+      data_type: TEXT
+    - name: patient_instruction_category
+      data_type: TEXT
+    - name: patient_instruction_state
       data_type: TEXT
     - name: lds_is_deleted
       data_type: BOOLEAN

@@ -142,6 +142,9 @@ models:
   - name: landing_national_data_opt_out
     description: Landing cache for NATIONAL_DATA_OPT_OUT.
 
+  - name: landing_patient_opt_out
+    description: Landing cache for PATIENT_OPT_OUT. Successor to NATIONAL_DATA_OPT_OUT.
+
   - name: landing_observation
     description: Landing cache for OBSERVATION, scoped to NCL practices.
     tests:

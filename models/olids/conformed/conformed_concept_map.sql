@@ -21,7 +21,8 @@ SELECT
     src.target_display,
     src.equivalence,
     src.equivalence_rank,
-    src.is_primary
+    src.is_primary,
+    src.last_updated_date
 FROM {{ ref('landing_concept_map') }} AS src
 -- mappings without a source concept cannot be joined; upstream carries a handful
 WHERE src.source_concept_id IS NOT NULL
