@@ -616,6 +616,15 @@ models:
       - name: postcode
         description: Masked value; currently identical to postcode_hash, not a raw postcode.
       - name: postcode_hash
+  - name: conformed_patient_opt_out
+    description: 'Filtered patient opt-out conformed view.
+
+
+      Successor to conformed_national_data_opt_out with generic category and state names. Uses the landing patient opt-out feed and keeps the patient key used for stable joins.'
+    columns:
+      - name: sk_patient_id
+      - name: is_latest
+      - name: lds_business_id
   - name: conformed_national_data_opt_out
     description: 'Filtered National Data Opt-Out conformed view.
 

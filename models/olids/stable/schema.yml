@@ -96,7 +96,14 @@ models:
           - not_null
       - name: clinical_system
   - name: stable_national_data_opt_out
-    description: Stable national_data_opt_out table.
+    description: Stable national_data_opt_out table. Due for retirement; use stable_patient_opt_out.
+    columns:
+      - name: lds_record_id
+        tests:
+          - unique
+          - not_null
+  - name: stable_patient_opt_out
+    description: Stable patient_opt_out table. Replaces national_data_opt_out with generic category and state names.
     columns:
       - name: lds_record_id
         tests:

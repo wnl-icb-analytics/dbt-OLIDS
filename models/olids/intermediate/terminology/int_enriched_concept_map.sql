@@ -58,6 +58,7 @@ enriched_existing AS (
         cm.target_system,
         cm.equivalence,
         cm.equivalence_rank,
+        cm.last_updated_date,
         CASE
             WHEN
                 cm.target_code = '138875005'
@@ -128,7 +129,8 @@ missing_emis_mappings AS (
         'snomed_info_sct' AS target_system,
         TRUE AS is_primary,
         'emis-reference-backfill' AS equivalence,
-        1 AS equivalence_rank
+        1 AS equivalence_rank,
+        NULL::DATE AS last_updated_date
     FROM emis_clinical AS emis_ref
     LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
         ON emis_ref.concept_id = cm.source_concept_id
@@ -169,16 +171,17 @@ local_backfills AS (
         'snomed_info_sct' AS target_system,
         TRUE AS is_primary,
         'local-backfill' AS equivalence,
-        1 AS equivalence_rank
+        1 AS equivalence_rank,
+        NULL::DATE AS last_updated_date
     FROM {{ ref('landing_concept') }} AS src
     INNER JOIN (
         {% for m in local_mappings %}
-        SELECT
-            '{{ m.system }}' AS system,
-            '{{ m.code }}' AS code,
-            '{{ m.target_code }}' AS target_code,
-            '{{ m.target_display }}' AS target_display
-        {% if not loop.last %}UNION ALL{% endif %}
+            SELECT
+                '{{ m.system }}' AS system,
+                '{{ m.code }}' AS code,
+                '{{ m.target_code }}' AS target_code,
+                '{{ m.target_display }}' AS target_display
+            {% if not loop.last %}UNION ALL{% endif %}
         {% endfor %}
     ) AS m
         ON src.system = m.system AND src.code = m.code
@@ -203,7 +206,8 @@ unmapped_passthrough AS (
         NULL::VARCHAR AS target_system,
         TRUE AS is_primary,
         'unmapped-passthrough' AS equivalence,
-        99 AS equivalence_rank
+        99 AS equivalence_rank,
+        NULL::DATE AS last_updated_date
     FROM {{ ref('landing_concept') }} AS src
     LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
         ON src.concept_id = cm.source_concept_id
@@ -226,7 +230,8 @@ unioned AS (
         target_system,
         is_primary,
         equivalence,
-        equivalence_rank
+        equivalence_rank,
+        last_updated_date
     FROM enriched_existing
 
     UNION ALL
@@ -242,7 +247,8 @@ unioned AS (
         target_system,
         is_primary,
         equivalence,
-        equivalence_rank
+        equivalence_rank,
+        last_updated_date
     FROM missing_emis_mappings
 
     UNION ALL
@@ -258,7 +264,8 @@ unioned AS (
         target_system,
         is_primary,
         equivalence,
-        equivalence_rank
+        equivalence_rank,
+        last_updated_date
     FROM local_backfills
 
     UNION ALL
@@ -274,7 +281,8 @@ unioned AS (
         target_system,
         is_primary,
         equivalence,
-        equivalence_rank
+        equivalence_rank,
+        last_updated_date
     FROM unmapped_passthrough
 )
 
