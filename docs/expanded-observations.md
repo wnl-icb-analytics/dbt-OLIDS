@@ -1,5 +1,11 @@
 # Expanded observations
 
+**Release blocker:** structural compatibility is proven, but consumer semantic
+equivalence is not. The [complete column and clinical-meaning review](expanded-observation-completeness.md)
+found added records that match diagnosis and completed-care code lists without
+establishing that interpretation. Keep the combined model and companion PRs in
+draft until source classification and clinical evidence rules are resolved.
+
 `CONFORMED.OBSERVATION` and its existing `STABLE.OBSERVATION` publication combine
 native observations, recorded allergies and referral requests. One row represents
 one source-entity record. A count of these rows is not a count of distinct clinical
@@ -123,9 +129,10 @@ query with aggregate validation, not a materialised build or the complete nightl
 pipeline. The existing wide-row deduplication cost is tracked separately in
 [issue 278](https://github.com/wnl-icb-analytics/dbt-OLIDS/issues/278).
 
-Independent review checked identity, source mapping, nulls, types, reconciliation
-and downstream provenance. The identified test and diagnostic-scope gaps were
-corrected before the draft PR.
+Initial independent review checked identity, source mapping, nulls, types,
+reconciliation and downstream provenance. Test and diagnostic-scope gaps were
+corrected before the draft PR. The subsequent full completeness and code-list
+review identified the semantic release blocker described above.
 
 No warehouse model build or publication has run. This repository has only the
 tracked `stable` target, which writes production `OLIDS_ENGINEERING` layers. A
