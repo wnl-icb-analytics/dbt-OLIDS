@@ -110,13 +110,34 @@ models:
           - unique
           - not_null
   - name: stable_observation
-    description: Stable observation table.
+    description: >-
+      Published observations, recorded allergies and referral requests, one row per
+      source entity and source ID. Native observation IDs are unchanged; added
+      entities use deterministic UUIDs. Use source_entity and source_record_id to
+      join the original entity table. Counts are source records, not deduplicated
+      clinical actions. Allergy clinical and verification status are unavailable.
+      Missing fields retain nulls, including measurement fields on added records.
+      The population follows conformed patient filtering and current NCL practices.
+
     columns:
       - name: id
         tests:
           - unique
           - not_null
       - name: clinical_system
+      - name: source_entity
+        description: Source entity, observation, allergy_intolerance or referral_request. Counts are source records, not deduplicated clinical actions.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['observation', 'allergy_intolerance', 'referral_request']
+      - name: source_record_id
+        description: Original UUID in the source entity table. Join with source_entity; added observation IDs use an entity-qualified UUID. Native observation IDs are unchanged.
+        tests:
+          - not_null
+      - name: allergy_medication_name
+        description: Supplied medication name on an allergy record. This records allergy evidence; the feed does not populate clinical or verification status.
   - name: stable_organisation
     description: Stable organisation table.
     columns:
