@@ -20,6 +20,8 @@
         PSEUDONYMISATION
     {%- elif custom_schema_name == 'dbt_elementary' -%}
         DBT_ELEMENTARY
+    {%- elif custom_schema_name == 'reference_terminology' -%}
+        TERMINOLOGY
     {%- else -%}
         {{ default_schema }}_{{ custom_schema_name | trim }}
     {%- endif -%}

@@ -59,5 +59,9 @@ SELECT
     publisher_organisation_code,
     clinical_system,
     source_extraction_date,
-    lds_transform_datetime
+    lds_transform_datetime,
+    observation_id,
+    provider_organisation_id,
+    referral_snomed_code,
+    referral_snomed_name
 FROM {{ ref('conformed_referral_request') }}

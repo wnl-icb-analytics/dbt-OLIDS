@@ -20,7 +20,7 @@ WITH appointment_encounters AS (
 clinical_records AS (
     SELECT
         'observation'::VARCHAR(32) AS clinical_record_type,
-        id AS clinical_record_id,
+        id AS source_record_id,
         encounter_id,
         person_id
     FROM {{ ref('conformed_observation') }}
@@ -31,7 +31,7 @@ clinical_records AS (
 
     SELECT
         'medication_order'::VARCHAR(32) AS clinical_record_type,
-        id AS clinical_record_id,
+        id AS source_record_id,
         encounter_id,
         person_id
     FROM {{ ref('conformed_medication_order') }}
@@ -42,7 +42,7 @@ clinical_records AS (
 
     SELECT
         'medication_statement'::VARCHAR(32) AS clinical_record_type,
-        id AS clinical_record_id,
+        id AS source_record_id,
         encounter_id,
         person_id
     FROM {{ ref('conformed_medication_statement') }}
@@ -53,7 +53,8 @@ clinical_records AS (
 SELECT
     e.appointment_id,
     c.clinical_record_type,
-    c.clinical_record_id,
+    {{ olids_clinical_record_id('c.clinical_record_type', 'c.source_record_id') }} AS clinical_record_id,
+    c.source_record_id,
     e.encounter_id,
     e.patient_id,
     e.person_id

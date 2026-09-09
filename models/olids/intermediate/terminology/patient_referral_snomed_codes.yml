@@ -1,0 +1,23 @@
+version: 2
+models:
+  - name: patient_referral_snomed_codes
+    description: >-
+      One SNOMED code classified as patient referral by the agreed ECL
+      <<3457005 |Patient referral (procedure)|. UKHFD supplies the current
+      descendant-or-self closure. Inactive codes qualify through exactly one
+      explicitly non-ambiguous active successor in that closure. This is
+      succession-based inclusion, not a reconstruction of historical ECL releases.
+      The NHS SNOMED reporting model supplies each code's own latest preferred
+      label, including inactive codes. Built in REFERENCE.TERMINOLOGY without
+      calls to a terminology server.
+    columns:
+      - name: code
+        description: Recorded SNOMED code, including supported historical codes.
+        tests: [unique, not_null]
+      - name: code_name
+        description: Latest preferred label for this code, without replacing it with its successor's label.
+        tests: [not_null]
+      - name: active_code
+        description: Current referral concept supporting classification; equals code for current concepts.
+      - name: classification_basis
+        description: Current descendant membership or an unambiguous historical successor.

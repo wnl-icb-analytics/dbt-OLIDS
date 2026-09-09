@@ -75,10 +75,18 @@ def check_sql(model):
     expected_after = [row for row in expected_before if not any(
         label in row for label in ('moved', 'old_slot_patient', 'removed_next_snapshot')
     )] + ["('a2','observation','moved','e6','practice_b',1)"]
-    columns = "appointment_id, clinical_record_type, clinical_record_id, encounter_id, patient_id, person_id"
+    columns = "appointment_id, clinical_record_type, source_record_id, encounter_id, patient_id, person_id"
+    def expected(name, rows):
+        raw = fixture(name + '_raw', columns, ','.join(rows))
+        return raw + f""", {name} AS (
+            SELECT appointment_id, clinical_record_type,
+                UUID_STRING('6ba7b811-9dad-11d1-80b4-00c04fd430c8',
+                    'olids:clinical_record:' || clinical_record_type || ':' || source_record_id)::UUID AS clinical_record_id,
+                source_record_id, encounter_id, patient_id, person_id
+            FROM {name}_raw)"""
     return f"""WITH before_result AS ({before}), after_result AS ({after}),
-{fixture('expected_before', columns, ','.join(expected_before))},
-{fixture('expected_after', columns, ','.join(expected_after))},
+{expected('expected_before', expected_before)},
+{expected('expected_after', expected_after)},
 before_missing AS (SELECT * FROM expected_before MINUS SELECT * FROM before_result),
 before_extra AS (SELECT * FROM before_result MINUS SELECT * FROM expected_before),
 after_missing AS (SELECT * FROM expected_after MINUS SELECT * FROM after_result),

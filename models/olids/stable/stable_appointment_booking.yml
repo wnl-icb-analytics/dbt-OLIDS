@@ -1,0 +1,39 @@
+version: 2
+models:
+  - name: stable_appointment_booking
+    description: >-
+      One current recorded booking per non-deleted patient-associated appointment
+      with a booking timestamp and person ID, from the filtered NCL patient spine.
+      Retains all statuses, contexts and patient-associated blocked slots.
+      Published as a view over the conformed selection to avoid copying the
+      existing appointment snapshot. Source changes can replace or remove a
+      booking; this is not a full history of rebookings or cancellations.
+    columns:
+      - name: appointment_id
+        description: Current appointment ID identifying its single recorded booking.
+        tests: [unique, not_null]
+      - name: patient_id
+        description: Practice-level patient ID on the current appointment.
+      - name: person_id
+        description: Consistent person ID across practice registrations.
+      - name: datetime_booked
+        description: Supplied booking timestamp, always populated in this view.
+        tests: [not_null]
+      - name: start_date
+        description: Current scheduled appointment timestamp. Can precede the booking timestamp after retrospective entry.
+      - name: booking_method_source_code
+        description: Source booking method code from the conformed concept lookup.
+      - name: booking_method_source_display
+        description: Label for the source booking method.
+      - name: booking_method_code
+        description: Mapped booking method code from the conformed concept lookup.
+      - name: booking_method_display
+        description: Label for the mapped booking method.
+      - name: provider_organisation_id
+        description: Current appointment provider, not necessarily the booking organisation.
+      - name: publisher_organisation_id
+        description: Data publisher organisation ID.
+      - name: publisher_organisation_code
+        description: Publisher practice ODS code supplied on the appointment.
+      - name: source_extraction_date
+        description: Source snapshot extraction timestamp.
