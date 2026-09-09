@@ -270,19 +270,15 @@ models:
       - name: clinical_effective_date_precision_source_concept_id
       - name: clinical_system
   - name: conformed_observation
-    description: 'Filtered Observation conformed view.
-
-
-      Applied filters:
-
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
-
-      - Practice filtering: Restricts to NCL practices only
-
-      - Data integrity: Inner joins ensure only records with valid patient and organisation references
-
-
-      Filtering method: Inner join to conformed_patient and int_ncl_practices'
+    description: >-
+      One record per source entity and source ID, combining observations, recorded
+      allergies and referral requests for the filtered NCL patient population.
+      Diagnostic and procedure requests and medications are excluded. Existing
+      observations retain their IDs and fields. Added records retain source dates,
+      codes and flags without invented measurement values or problem status.
+      Records with shared source identity or clinical content remain separate when
+      their source entities differ. Source deletion flags remain available.
+      Source entities identify delivery tables; clinical meaning follows the recorded code.
 
     tests:
       - audit_gate:
@@ -305,6 +301,19 @@ models:
       - name: clinical_effective_date_precision_source_concept_id
       - name: episodicity_source_concept_id
       - name: clinical_system
+      - name: source_entity
+        description: Source entity, observation, allergy_intolerance or referral_request. Counts are source records, not deduplicated clinical actions.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['observation', 'allergy_intolerance', 'referral_request']
+      - name: source_record_id
+        description: Original UUID in the source entity table. Join with source_entity; added observation IDs use an entity-qualified UUID. Native observation IDs are unchanged.
+        tests:
+          - not_null
+      - name: allergy_medication_name
+        description: Supplied medication name on an allergy record. This records allergy evidence; the feed does not populate clinical or verification status.
   - name: conformed_organisation
     description: 'Unfiltered Organisation reference view.
 

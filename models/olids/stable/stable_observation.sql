@@ -54,5 +54,8 @@ SELECT
     publisher_organisation_code,
     clinical_system,
     source_extraction_date,
-    lds_transform_datetime
+    lds_transform_datetime,
+    source_entity,
+    source_record_id,
+    allergy_medication_name
 FROM {{ ref('conformed_observation') }}
