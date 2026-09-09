@@ -118,6 +118,7 @@ models:
       clinical actions. Allergy clinical and verification status are unavailable.
       Missing fields retain nulls, including measurement fields on added records.
       The population follows conformed patient filtering and current NCL practices.
+      Source entities identify delivery tables; clinical meaning follows the recorded code.
 
     columns:
       - name: id

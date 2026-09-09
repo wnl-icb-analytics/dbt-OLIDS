@@ -1,10 +1,11 @@
 # Expanded observations
 
-**Release blocker:** structural compatibility is proven, but consumer semantic
-equivalence is not. The [complete column and clinical-meaning review](expanded-observation-completeness.md)
-found added records that match diagnosis and completed-care code lists without
-establishing that interpretation. Keep the combined model and companion PRs in
-draft until source classification and clinical evidence rules are resolved.
+The observations contract is recorded clinical codes with their dates and context.
+Source entity records delivery provenance; it does not override the coded meaning.
+Recovering coded records held in allergy and referral tables fits that contract.
+The [complete column and clinical-meaning review](expanded-observation-completeness.md)
+records coverage and consumer effects. Coordinated deployment and warehouse
+validation remain outstanding.
 
 `CONFORMED.OBSERVATION` and its existing `STABLE.OBSERVATION` publication combine
 native observations, recorded allergies and referral requests. One row represents
@@ -132,7 +133,8 @@ pipeline. The existing wide-row deduplication cost is tracked separately in
 Initial independent review checked identity, source mapping, nulls, types,
 reconciliation and downstream provenance. Test and diagnostic-scope gaps were
 corrected before the draft PR. The subsequent full completeness and code-list
-review identified the semantic release blocker described above.
+review identified consumer effects and a separate foot-examination interpretation
+defect. Source-table placement alone is not a reason to exclude a recorded code.
 
 No warehouse model build or publication has run. This repository has only the
 tracked `stable` target, which writes production `OLIDS_ENGINEERING` layers. A

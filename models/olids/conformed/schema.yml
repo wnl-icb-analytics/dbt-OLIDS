@@ -278,6 +278,7 @@ models:
       codes and flags without invented measurement values or problem status.
       Records with shared source identity or clinical content remain separate when
       their source entities differ. Source deletion flags remain available.
+      Source entities identify delivery tables; clinical meaning follows the recorded code.
 
     tests:
       - audit_gate:

@@ -2,10 +2,16 @@
 
 Structural compatibility is proven for the existing 48 observation columns:
 unchanged native content and types, unchanged IDs and no expanded ID collisions.
-**Consumer semantic equivalence is not proven. This is a release blocker.**
-The combined model remains a draft. Do not widen generic clinical measures until
-source classification and the intended interpretation of added evidence are resolved.
-No clinical rules or warehouse models were changed for this review.
+The agreed observations contract is recorded clinical codes with their dates and
+context. Source-table placement is provenance, not a separate clinical eligibility
+rule. Adding codes held in allergy and referral tables restores coverage for
+consumers that already interpret the same codes in native observations.
+
+EMIS document-related routing is a suspected explanation supplied by the project
+owner; this review has not independently verified that mechanism. The decision to
+include recorded codes does not depend on proving that explanation. Counts and
+measure populations can change as coverage improves. No clinical rules or warehouse
+models were changed for this review.
 
 ## Coverage
 
@@ -118,8 +124,7 @@ conformed mapped labels remain complete.
 | Qualifier value | 0 | 16 |
 | No matching fully specified name | 1,936 | 259,888 |
 
-The specific overlaps found in existing consumer code lists need clinical/source
-interpretation before release:
+The added records match existing consumer code lists as follows:
 
 | Added entity and code list | Matching records | SNOMED tag |
 | --- | ---: | --- |
@@ -131,26 +136,31 @@ interpretation before release:
 | Referral, each UKHSA COVID/flu `ASTADM_COD` | 7,639 | Procedure |
 
 These are record/code-list overlaps, not numbers of newly classified people.
-The allergy matches above are disorder codes, **not products or substances**.
-A medication-product explanation for those matches is unsupported. The source
-allergy classification and missing clinical/verification status still prevent
-assuming confirmed diagnosis or treatment from the table and code alone.
-A procedure code on a referral does not by itself establish a performed examination
-or completed admission.
+The allergy matches above are disorder codes, not products or substances.
+Consumers apply their existing code and date definitions to those records;
+their placement in an allergy table does not invalidate the coded evidence.
+Missing allergy status still limits uses that specifically need a confirmed active
+allergy list. The combined table supplies recorded evidence, not an independently
+verified account of care.
 
 Public reference terms make the referral examples more specific. All 10,466 foot
 examination code-list matches use "Refer to diabetic foot screener (procedure)".
-That is referral evidence, not proof that screening occurred. All 7,639 asthma
+That is referral evidence, not proof that screening occurred. The existing foot
+consumer incorrectly derives checked flags from this code regardless of its source
+entity; that defect is separate from including the record. All 7,639 asthma
 admission matches use "Emergency hospital admission for asthma (procedure)" in the
-referral source. That code/source classification needs resolution before treating
-the record as a completed admission. The terms were first retrieved from public
+referral source. Their table placement does not turn an admission code into a
+planned referral. The terms were first retrieved from public
 reference tables without clinical joins; aggregate assertions then confirmed the
 matches without returning source clinical codes or records.
 
-The SQL interface can therefore remain compatible while unqualified code-list
-consumers change clinical meaning. Source-entity provenance is necessary but does
-not fix a consumer that ignores it. The existing Valproate union correction and
-provenance companion do not resolve all generic measure interpretations.
+Existing code-list consumers keep their interpretation rules and gain recorded
+evidence. No blanket native-observation filter is required. Provenance remains
+available for tracing records and for consumers with a specific source requirement.
+The Valproate companion removes its duplicate referral input. The foot-check
+interpretation defect needs its own correction; it is not evidence that the
+combined observations contract is invalid. It is tracked in
+[dbt-analytics issue 1125](https://github.com/wnl-icb-analytics/dbt-analytics/issues/1125).
 
 ## Reproducible checks
 
@@ -165,4 +175,4 @@ All queries are read-only and return aggregate counts, public code-list names or
 public reference categories. No patient records, source clinical tokens or clinical
 value examples are included. [PR 298](https://github.com/wnl-icb-analytics/dbt-OLIDS/pull/298)
 and its [analytics companion](https://github.com/wnl-icb-analytics/dbt-analytics/pull/1123)
-remain drafts pending resolution of the semantic release blocker.
+remain drafts pending coordinated publication and warehouse validation.
