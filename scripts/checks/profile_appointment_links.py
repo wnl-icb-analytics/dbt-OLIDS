@@ -15,7 +15,7 @@ SELECT clinical_record_type,
     COUNT(*) AS row_count,
     COUNT(DISTINCT appointment_id, clinical_record_type, clinical_record_id) AS grain_count,
     COUNT(DISTINCT appointment_id) AS appointment_count,
-    COUNT_IF(appointment_id IS NULL OR clinical_record_id IS NULL
+    COUNT_IF(appointment_id IS NULL OR clinical_record_type IS NULL OR clinical_record_id IS NULL
         OR encounter_id IS NULL OR patient_id IS NULL OR person_id IS NULL) AS incomplete_links,
     HASH_AGG(appointment_id, clinical_record_type, clinical_record_id,
         encounter_id, patient_id, person_id) AS output_hash
