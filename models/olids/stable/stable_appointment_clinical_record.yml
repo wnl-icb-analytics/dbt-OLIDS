@@ -1,0 +1,30 @@
+version: 2
+models:
+  - name: stable_appointment_clinical_record
+    description: >-
+      One appointment, clinical record type and clinical record ID linked through
+      a recorded encounter for the same person. Retains non-deleted records from
+      the filtered NCL patient spine, including patient-associated blocked slots
+      and every current appointment status. This is a current snapshot, rebuilt
+      with the OLIDS source tables so changed relationships and deleted records
+      disappear. It does not establish attendance or temporal proximity.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [appointment_id, clinical_record_type, clinical_record_id]
+    columns:
+      - name: appointment_id
+        description: ID in the appointment table.
+        tests: [not_null]
+      - name: clinical_record_type
+        description: Detail table containing clinical_record_id, observation, medication_order or medication_statement.
+        tests: [not_null]
+      - name: clinical_record_id
+        description: ID in the named detail table. Allergies and referrals use their expanded observation ID.
+        tests: [not_null]
+      - name: encounter_id
+        description: Encounter carrying the source appointment relationship and referenced by the clinical record.
+      - name: patient_id
+        description: Patient ID on the appointment, which can differ from the clinical record for the same person.
+      - name: person_id
+        description: Person ID shared by the appointment, encounter and clinical record.
