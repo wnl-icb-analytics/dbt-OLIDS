@@ -34,7 +34,8 @@ WITH expected AS (
         NULL::BOOLEAN,
         lds_is_deleted,
         NULL::VARCHAR
-    FROM {{ ref('conformed_referral_request') }}
+    -- Observations retain all original content, including non-referral codes.
+    FROM {{ ref('conformed_referral_request_source') }}
 ),
 
 actual AS (
