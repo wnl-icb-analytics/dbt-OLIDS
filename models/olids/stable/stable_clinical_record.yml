@@ -1,0 +1,83 @@
+version: 2
+models:
+- name: stable_clinical_record
+  description: One clinical source record from expanded observations, medication orders or medication
+    statements in the filtered NCL OLIDS patient spine. Excludes deleted records; retains missing dates,
+    values and approved person hash keys. Source codes define clinical meaning, not the storage entity.
+    No temporal association or healthcare milestone is inferred. Medication quantities and doses remain
+    in medication detail. The stable current snapshot is materialised once with person and clinical-date
+    clustering; source changes and deletions replace previous rows.
+  columns:
+  - name: clinical_record_id
+    description: Stable namespaced ID for this OLIDS clinical record, distinct across source record types.
+    tests:
+    - unique
+    - not_null
+  - name: source_record_type
+    description: Detail entity, observation, medication_order or medication_statement. This does not classify
+      clinical meaning.
+  - name: source_record_id
+    description: ID in the named detail entity. Expanded observations use observation.id, including minted
+      allergy and referral IDs.
+  - name: person_id
+    description: Consistent person ID across practice registrations.
+  - name: patient_id
+    description: Practice-level patient ID on the clinical record.
+  - name: sk_patient_id
+    description: NHS number hash approved by the conformed patient identity rules. Null when no approved
+      key is available.
+  - name: encounter_id
+    description: Recorded encounter ID. A link does not establish appointment attendance or a common event
+      time.
+  - name: clinical_record_date
+    description: Supplied clinical effective date. Retained when missing, historical or future; interpret
+      it with the source precision.
+  - name: clinical_date_precision_code
+    description: Source date-precision code, such as YMD, YM, Y or Unknown.
+  - name: clinical_date_precision_name
+    description: Source date-precision label. A date-typed value does not establish day precision.
+  - name: date_recorded
+    description: Supplied record-entry timestamp, not a substitute for the clinical date.
+  - name: source_code
+    description: Original clinical code from the source concept lookup.
+  - name: source_code_name
+    description: Authoritative source clinical code label from the conformed lookup.
+  - name: source_coding_system
+    description: Coding system for source_code.
+  - name: mapped_code
+    description: Mapped clinical code from the conformed concept lookup. Null when no mapping is available.
+  - name: mapped_code_name
+    description: Label for mapped_code, including the established historical successor resolution.
+  - name: mapped_coding_system
+    description: Coding system for mapped_code.
+  - name: result_value
+    description: Numeric observation result. Null for medication records; prescribing quantity is not
+      a measurement result.
+  - name: result_date
+    description: Supplied observation result date. Null for medication records.
+  - name: result_unit_source_code
+    description: Source observation result-unit code. Null when not supplied or not an observation.
+  - name: result_unit_source_name
+    description: Label for the source observation result unit.
+  - name: medication_name
+    description: Supplied medication name for orders, statements or added allergy observations. Null when
+      not supplied.
+  - name: provider_organisation_id
+    description: Recorded provider organisation ID, where supplied.
+  - name: publisher_organisation_id
+    description: Recorded data publisher organisation ID.
+  - name: publisher_organisation_code
+    description: Publisher practice ODS code supplied on the record.
+  - name: practitioner_id
+    description: Recorded practitioner ID, where supplied.
+  - name: source_extraction_date
+    description: Source snapshot extraction timestamp, for delivery and coverage assessment.
+  - name: provider_organisation_code
+    description: Recorded provider code. Interpret with provider_code_authority; it is not always an ODS
+      code.
+  - name: provider_code_authority
+    description: Authority for the provider organisation code.
+  - name: provider_organisation_name
+    description: Recorded provider organisation name. Null when the organisation lookup is unavailable.
+  - name: publisher_organisation_name
+    description: Recorded publisher organisation name. Null when the organisation lookup is unavailable.

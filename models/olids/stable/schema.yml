@@ -241,14 +241,7 @@ models:
           - unique
           - not_null
       - name: clinical_system
-  - name: stable_referral_request
-    description: Stable referral_request table.
-    columns:
-      - name: id
-        tests:
-          - unique
-          - not_null
-      - name: clinical_system
+
   - name: stable_schedule
     description: Stable schedule table.
     columns:

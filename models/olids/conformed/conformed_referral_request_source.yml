@@ -1,0 +1,26 @@
+version: 2
+models:
+- name: conformed_referral_request_source
+  description: One deduplicated original referral-request source record from the filtered NCL patient
+    spine. Contains non-referral clinical codes. Preserved for expanded observations before terminology-based
+    referral selection; not the published referral population.
+  columns:
+  - name: id
+    tests:
+    - unique:
+        config:
+          severity: error
+  - name: patient_id
+  - name: person_id
+  - name: publisher_organisation_id
+  - name: encounter_id
+  - name: practitioner_id
+  - name: requester_organisation_id
+  - name: recipient_organisation_id
+  - name: clinical_effective_date
+  - name: referral_request_source_concept_id
+  - name: clinical_effective_date_precision_source_concept_id
+  - name: referral_request_priority_source_concept_id
+  - name: referral_request_type_source_concept_id
+  - name: referral_request_specialty_source_concept_id
+  - name: clinical_system

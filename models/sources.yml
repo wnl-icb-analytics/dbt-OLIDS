@@ -1448,6 +1448,17 @@ sources:
       data_type: NUMBER
     - name: DefinitionStatusId
       data_type: NUMBER
+  - name: SCT_Description
+    identifier: '"SCT_Description"'
+    columns:
+    - name: ConceptId
+      data_type: NUMBER
+    - name: Term
+      data_type: TEXT
+    - name: Active
+      data_type: BOOLEAN
+    - name: DescriptionType
+      data_type: TEXT
   - name: SCT_History
     identifier: '"SCT_History"'
     columns:
@@ -3429,3 +3440,15 @@ sources:
       data_type: TEXT
     - name: PCN_NAME
       data_type: TEXT
+- name: ukhfd_snomed
+  database: UKHFD
+  schema: '"SNOMED_Simplified_Model"'
+  description: UKHFD current SNOMED descendant-or-self hierarchy
+  tables:
+  - name: dim_SCT_Transitive_Closures
+    identifier: '"dim_SCT_Transitive_Closures"'
+    columns:
+    - name: SupertypeID
+      data_type: NUMBER
+    - name: SubtypeID
+      data_type: NUMBER

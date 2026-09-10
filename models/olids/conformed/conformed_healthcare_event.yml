@@ -1,0 +1,76 @@
+version: 2
+models:
+- name: conformed_healthcare_event
+  description: One currently recorded booking, appointment slot or coded patient referral milestone from
+    the filtered NCL OLIDS patient spine, with a known person ID. Referral inclusion uses <<3457005 |Patient
+    referral (procedure)| and supported unambiguous historical successors across expanded observations,
+    regardless of original source entity. Retains missing and partial referral dates with explicit precision.
+    Excludes deleted records. No cancellation, attendance, discharge or general encounter history is inferred.
+    Source changes and deletions replace previous milestones. The stable layer materialises this shared
+    definition.
+  columns:
+  - name: healthcare_event_id
+    description: Stable namespaced milestone ID. A changed source record replaces the same milestone;
+      this is not an immutable audit log.
+  - name: event_type
+    description: 'Recorded milestone: appointment_booking, appointment_slot or patient_referral. A slot
+      does not establish attendance.'
+  - name: person_id
+    description: Consistent person ID across practice registrations.
+  - name: patient_id
+    description: Practice-level patient ID on the source record.
+  - name: sk_patient_id
+    description: NHS number hash approved by the conformed patient identity rules. Null when unavailable.
+  - name: event_at
+    description: Supplied timestamp for a booking or appointment slot. Null for date-only clinical referrals;
+      no midnight time is invented.
+  - name: event_date
+    description: Supplied calendar date. Interpret with event_time_precision; a partial date is not an
+      exact day.
+  - name: event_time_precision
+    description: timestamp, day, month, year or unknown. Referrals preserve the source clinical date precision.
+  - name: event_time_basis
+    description: 'Source field defining this milestone: datetime_booked, start_date or clinical_effective_date.'
+  - name: source_record_type
+    description: 'Detail entity: appointment or referral_request. Referrals use the canonical terminology-defined
+      population.'
+  - name: source_record_id
+    description: ID in the named detail entity. Referral records include observation_id for clinical detail.
+  - name: appointment_id
+    description: Current appointment ID for booking and slot events. Null for coded referral events, which
+      do not assert an appointment link.
+  - name: clinical_record_id
+    description: ID in clinical_record for coded referrals. Null for appointment milestones.
+  - name: event_code
+    description: SNOMED code supporting referral inclusion. Null for booking and slot events; use event_type
+      and appointment detail.
+  - name: event_code_name
+    description: Latest preferred label for event_code, including supported historical codes.
+  - name: event_coding_system
+    description: snomed_info_sct for coded referral events. Null for booking and slot events.
+  - name: source_status_code
+    description: Supplied appointment status code on a slot event. Null for bookings and coded referrals.
+  - name: source_status_name
+    description: Source label for the current slot status. It does not reconstruct status changes.
+  - name: status_code
+    description: Mapped current appointment slot status. Null for bookings and coded referrals.
+  - name: status_name
+    description: Mapped current slot status label. A future or booked slot is not a completed contact.
+  - name: provider_organisation_id
+    description: Recorded provider organisation ID. This does not identify a referral destination or the
+      person making a booking.
+  - name: publisher_organisation_id
+    description: Recorded publisher organisation ID.
+  - name: publisher_organisation_code
+    description: Publisher practice ODS code.
+  - name: source_extraction_date
+    description: Source snapshot extraction timestamp.
+  - name: provider_organisation_code
+    description: Recorded provider code. Interpret with provider_code_authority; it is not always an ODS
+      code.
+  - name: provider_code_authority
+    description: Authority for the provider organisation code.
+  - name: provider_organisation_name
+    description: Recorded provider organisation name. Null when the organisation lookup is unavailable.
+  - name: publisher_organisation_name
+    description: Recorded publisher organisation name. Null when the organisation lookup is unavailable.

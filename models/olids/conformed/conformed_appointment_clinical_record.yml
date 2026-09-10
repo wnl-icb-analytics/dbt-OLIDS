@@ -1,0 +1,25 @@
+version: 2
+models:
+- name: conformed_appointment_clinical_record
+  description: One appointment, clinical record type and clinical record ID linked by the recorded
+    encounter relationship. All three records must identify the same person and must not be deleted.
+    The population inherits the filtered NCL patient spine. Patient-associated blocked slots and
+    every current appointment status remain included. The link does not establish attendance or a
+    shared event time. Expanded observations include recorded allergies and referrals; medication
+    orders and statements remain separate record types.
+  columns:
+  - name: appointment_id
+    description: Appointment ID in the current appointment table.
+  - name: clinical_record_type
+    description: 'Detail entity containing source_record_id: observation, medication_order or medication_statement.'
+  - name: clinical_record_id
+    description: Stable namespaced ID shared with clinical_record, distinct across detail entities.
+  - name: encounter_id
+    description: Encounter carrying the recorded appointment_id and referenced by the clinical record.
+  - name: patient_id
+    description: Patient ID on the appointment. A clinical record can have another patient ID for
+      the same person.
+  - name: person_id
+    description: Person ID shared by the appointment, encounter and clinical record.
+  - name: source_record_id
+    description: ID in the named observation, medication order or medication statement detail entity.

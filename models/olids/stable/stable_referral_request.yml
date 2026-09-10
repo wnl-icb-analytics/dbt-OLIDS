@@ -1,0 +1,139 @@
+version: 2
+models:
+- name: stable_referral_request
+  description: One retained coded patient referral from expanded observations in the filtered NCL patient
+    spine, selected by <<3457005 |Patient referral (procedure)| and supported unambiguous historical successors.
+    Includes qualifying native observations and excludes non-referral original referral-request rows.
+    All original content remains in observations. Existing qualifying referral IDs are preserved; added
+    rows have namespaced IDs. Referral-specific source fields are null for added observations; direction,
+    destination, priority and referral type are not inferred.
+  columns:
+  - name: id
+    description: Stable referral ID. Original referral-request IDs are preserved; added observation referrals
+      use a deterministic namespace.
+    tests:
+    - unique
+    - not_null
+  - name: lds_source_record_id
+    description: Recorded lds source record id.
+  - name: patient_id
+    description: Recorded patient id.
+  - name: person_id
+    description: Recorded person id.
+  - name: publisher_organisation_id
+    description: Recorded publisher organisation id.
+  - name: author_organisation_id
+    description: Recorded author organisation id.
+  - name: encounter_id
+    description: Recorded encounter id.
+  - name: practitioner_id
+    description: Recorded practitioner id.
+  - name: unique_booking_reference_number
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: clinical_effective_date
+    description: Supplied clinical date. Missing and partial dates are retained; interpret with date precision.
+  - name: clinical_effective_date_precision_source_concept_id
+    description: Recorded clinical effective date precision source concept id.
+  - name: date_precision_source_code
+    description: Recorded date precision source code.
+  - name: date_precision_source_display
+    description: Recorded date precision source display.
+  - name: date_precision_code
+    description: Recorded date precision code.
+  - name: date_precision_display
+    description: Recorded date precision display.
+  - name: requester_organisation_id
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: recipient_organisation_id
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_priority_source_concept_id
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_priority_source_code
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_priority_source_display
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_priority_code
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_priority_display
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_type_source_concept_id
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_type_source_code
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_type_source_display
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_type_code
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_type_display
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_specialty_source_concept_id
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_specialty_source_code
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_specialty_source_display
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_specialty_code
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: referral_request_specialty_display
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: mode
+    description: Original referral-request field; null for added observations when not supplied.
+  - name: is_outgoing_referral
+    description: Supplied direction flag on original referral-request rows. Null for added observations;
+      referral coding alone does not establish direction.
+  - name: is_review
+    description: Recorded is review.
+  - name: referral_request_source_concept_id
+    description: Recorded referral request source concept id.
+  - name: source_code
+    description: Recorded source code.
+  - name: source_display
+    description: Recorded source display.
+  - name: source_system
+    description: Recorded source system.
+  - name: mapped_concept_id
+    description: Recorded mapped concept id.
+  - name: mapped_concept_code
+    description: Recorded mapped concept code.
+  - name: mapped_concept_display
+    description: Recorded mapped concept display.
+  - name: target_system
+    description: Recorded target system.
+  - name: age_at_event
+    description: Recorded age at event.
+  - name: age_at_event_baby
+    description: Recorded age at event baby.
+  - name: age_at_event_neonate
+    description: Recorded age at event neonate.
+  - name: recorded_datetime
+    description: Supplied record-entry timestamp, separate from the clinical effective date.
+  - name: value
+    description: Original referral-request value, where supplied. Null for added observations; observation
+      results remain in observation.
+  - name: lds_is_deleted
+    description: Recorded lds is deleted.
+  - name: publisher_organisation_code
+    description: Recorded publisher organisation code.
+  - name: clinical_system
+    description: Recorded clinical system.
+  - name: source_extraction_date
+    description: Recorded source extraction date.
+  - name: lds_transform_datetime
+    description: Recorded lds transform datetime.
+  - name: observation_id
+    description: ID of the same clinical record in expanded observation. Use this link to avoid counting
+      it twice.
+    tests:
+    - unique
+    - not_null
+  - name: provider_organisation_id
+    description: Provider recorded on the observation, where supplied. Not a referral destination.
+  - name: referral_snomed_code
+    description: Source or mapped SNOMED code supporting the agreed referral definition, with source-code
+      preference.
+    tests:
+    - not_null
+  - name: referral_snomed_name
+    description: Latest preferred label for referral_snomed_code, including supported historical codes.
+    tests:
+    - not_null

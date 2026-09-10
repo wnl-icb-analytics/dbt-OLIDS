@@ -200,4 +200,4 @@ SELECT
     'referral_request'::VARCHAR(32) AS source_entity,
     src.id AS source_record_id,
     NULL::VARCHAR(16777216) AS allergy_medication_name
-FROM {{ ref('conformed_referral_request') }} AS src
+FROM {{ ref('conformed_referral_request_source') }} AS src
