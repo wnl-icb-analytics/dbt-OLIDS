@@ -1,5 +1,29 @@
 # OLIDS longitudinal outputs
 
+## Medication orders in clinical history
+
+Clinical records contain expanded observations and medication orders. Standalone
+medication statements remain in their detail table but do not add clinical rows
+or appointment-clinical links. Existing observation and order IDs are unchanged.
+Person and clinical-date clustering is unchanged.
+
+Orders retain their own dates, codes, medication names, doses, quantities and
+durations. The clinical output adds these prescribing fields and the source
+code and label for authorisation type from the current linked statement.
+The statement must be non-deleted and belong to the same person. Missing or
+mismatched statements leave the order in place with null authorisation fields.
+Current statement context is not a historical authorisation status and does not
+overwrite order details. The empty quantity-description field is omitted.
+Supplied duration and quantity can be zero or negative; they are retained, not
+interpreted as validated treatment durations or administered quantities.
+
+The 10 September profile has 384,607,642 orders. Of these, 384,602,541 have a
+same-person statement with a labelled authorisation type; 118 have no available
+statement and 4,983 point to a different person. There are 3,383,873 statements
+with no matching order for the same person. They remain available separately.
+The earlier profiles below include standalone statements and describe the
+previous population.
+
 Conformed models define shared OLIDS data. Stable models store the event stream
 and clinical history once, on the existing OLIDS warehouse. Analytics exposes
 thin views and supplies the later cross-source event stream. No `fct_` model is
@@ -10,7 +34,7 @@ added to dbt-OLIDS.
 | `appointment_booking` | Current recorded booking for an appointment with a booking timestamp | View over the prepared appointment snapshot |
 | `referral_request` | Terminology-defined referral, including qualifying observations | Existing stable table, selected in conformed |
 | `healthcare_event` | Current booking, appointment slot or coded patient referral milestone | Stable table clustered by person and event date |
-| `clinical_record` | Expanded observation, medication order or medication statement | Stable table clustered by person and clinical date |
+| `clinical_record` | Expanded observation or medication order | Stable table clustered by person and clinical date |
 | `appointment_clinical_record` | Recorded encounter path between an appointment and clinical record for the same person | Stable table clustered by appointment |
 
 A slot is not proof of attendance. The feed cannot reconstruct all rebookings,
@@ -20,8 +44,8 @@ and procedure requests do not become healthcare milestones.
 
 Clinical records remain separate from the event stream. Expanded observations
 already include allergy and referral-request content, so neither source is added
-again. Medication orders and statements retain their own record types and detail
-tables. Prescribing quantity is not an observation result. The current source
+again. Medication orders supply the prescribing rows; statements provide authorisation
+context and remain separately available in their detail table. Prescribing quantity is not an observation result. The current source
 has no populated result text or mapped result-unit fields, so those columns are
 omitted. Supplied numeric values, result dates and source unit codes and labels
 remain available. The existing code-clustered detail tables are unchanged.

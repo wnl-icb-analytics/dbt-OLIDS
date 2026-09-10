@@ -37,17 +37,6 @@ clinical_records AS (
     FROM {{ ref('conformed_medication_order') }}
     WHERE encounter_id IS NOT NULL
         AND NOT COALESCE(lds_is_deleted, FALSE)
-
-    UNION ALL
-
-    SELECT
-        'medication_statement'::VARCHAR(32) AS clinical_record_type,
-        id AS source_record_id,
-        encounter_id,
-        person_id
-    FROM {{ ref('conformed_medication_statement') }}
-    WHERE encounter_id IS NOT NULL
-        AND NOT COALESCE(lds_is_deleted, FALSE)
 )
 
 SELECT

@@ -1,12 +1,12 @@
 version: 2
 models:
 - name: stable_clinical_record
-  description: One clinical source record from expanded observations, medication orders or medication
-    statements in the filtered NCL OLIDS patient spine. Excludes deleted records; retains missing dates,
-    values and approved person hash keys. Source codes define clinical meaning, not the storage entity.
-    No temporal association or healthcare milestone is inferred. Medication quantities and doses remain
-    in medication detail. The stable current snapshot is materialised once with person and clinical-date
-    clustering; source changes and deletions replace previous rows.
+  description: One clinical record from expanded observations or medication orders in the filtered NCL
+    OLIDS patient spine. Excludes deleted records and standalone medication statements. Each order keeps
+    its own ID, date, codes, dose, quantity and duration. Authorisation type comes from its current non-deleted
+    linked statement for the same person; orders without a valid match remain. Statement context does
+    not establish historical authorisation status. Retains missing dates, values and approved person hash
+    keys. The stable snapshot is clustered by person and clinical date.
   columns:
   - name: clinical_record_id
     description: Stable namespaced ID for this OLIDS clinical record, distinct across source record types.
@@ -14,8 +14,13 @@ models:
     - unique
     - not_null
   - name: source_record_type
-    description: Detail entity, observation, medication_order or medication_statement. This does not classify
-      clinical meaning.
+    description: Detail entity, observation or medication_order. Clinical meaning is defined by the code.
+    tests:
+    - accepted_values:
+        arguments:
+          values:
+          - observation
+          - medication_order
   - name: source_record_id
     description: ID in the named detail entity. Expanded observations use observation.id, including minted
       allergy and referral IDs.
@@ -60,8 +65,23 @@ models:
   - name: result_unit_source_name
     description: Label for the source observation result unit.
   - name: medication_name
-    description: Supplied medication name for orders, statements or added allergy observations. Null when
-      not supplied.
+    description: Supplied medication name for orders or added allergy observations. Null when not supplied.
+  - name: medication_dose
+    description: Dosage instructions supplied on the medication order. Null for observations.
+  - name: medication_quantity_value
+    description: Quantity supplied on the order; interpret with medication_quantity_unit. Source values
+      can be zero or negative and are retained. Null for observations.
+  - name: medication_quantity_unit
+    description: Supplied medication order quantity unit. Null for observations or when absent.
+  - name: medication_duration_days
+    description: Duration in days supplied on the order. Source values can be zero or negative; this is
+      not a validated treatment duration. Null for observations or when absent.
+  - name: medication_authorisation_type_code
+    description: Source authorisation type code from the current non-deleted linked statement for the
+      same person. Null without a valid match or for observations.
+  - name: medication_authorisation_type_name
+    description: Source authorisation type label, such as acute or repeat. Describes the current linked
+      statement, not its status when the order was issued.
   - name: provider_organisation_id
     description: Recorded provider organisation ID, where supplied.
   - name: publisher_organisation_id

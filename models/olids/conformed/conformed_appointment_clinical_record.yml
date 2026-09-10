@@ -6,12 +6,12 @@ models:
     The population inherits the filtered NCL patient spine. Patient-associated blocked slots and
     every current appointment status remain included. The link does not establish attendance or a
     shared event time. Expanded observations include recorded allergies and referrals; medication
-    orders and statements remain separate record types.
+    orders provide the prescribing links. Standalone medication statements are excluded.
   columns:
   - name: appointment_id
     description: Appointment ID in the current appointment table.
   - name: clinical_record_type
-    description: 'Detail entity containing source_record_id: observation, medication_order or medication_statement.'
+    description: 'Detail entity containing source_record_id: observation or medication_order.'
   - name: clinical_record_id
     description: Stable namespaced ID shared with clinical_record, distinct across detail entities.
   - name: encounter_id
@@ -22,4 +22,4 @@ models:
   - name: person_id
     description: Person ID shared by the appointment, encounter and clinical record.
   - name: source_record_id
-    description: ID in the named observation, medication order or medication statement detail entity.
+    description: ID in the named observation or medication order detail entity.
