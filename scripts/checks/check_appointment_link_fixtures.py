@@ -48,9 +48,8 @@ def snapshot(model, after=False):
         ])),
         fixture("fixture_observation", "id, encounter_id, person_id, lds_is_deleted, patient_id", ",".join(observations)),
         fixture("fixture_medication_order", "id, encounter_id, person_id, lds_is_deleted", "('same_id', 'e2', 1, FALSE)"),
-        fixture("fixture_medication_statement", "id, encounter_id, person_id, lds_is_deleted", "('same_id', 'e2', 1, FALSE)"),
     ]
-    for entity in ("appointment", "encounter", "observation", "medication_order", "medication_statement"):
+    for entity in ("appointment", "encounter", "observation", "medication_order"):
         model, count = re.subn(
             rf'\bOLIDS_ENGINEERING\.CONFORMED\.{entity}\b',
             f'fixture_{entity}', model, flags=re.IGNORECASE,
@@ -70,7 +69,6 @@ def check_sql(model):
         "('a2','observation','null_deletion_flag','e2','practice_b',1)",
         "('a2','observation','removed_next_snapshot','e2','practice_b',1)",
         "('a2','medication_order','same_id','e2','practice_b',1)",
-        "('a2','medication_statement','same_id','e2','practice_b',1)",
     ]
     expected_after = [row for row in expected_before if not any(
         label in row for label in ('moved', 'old_slot_patient', 'removed_next_snapshot')

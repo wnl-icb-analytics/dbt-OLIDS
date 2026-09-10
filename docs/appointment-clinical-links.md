@@ -1,5 +1,29 @@
 # Recorded appointment links
 
+## Medication orders in clinical history
+
+Clinical records contain expanded observations and medication orders. Standalone
+medication statements remain in their detail table but do not add clinical rows
+or appointment-clinical links. Existing observation and order IDs are unchanged.
+Person and clinical-date clustering is unchanged.
+
+Orders retain their own dates, codes, medication names, doses, quantities and
+durations. The clinical output adds these prescribing fields and the source
+code and label for authorisation type from the current linked statement.
+The statement must be non-deleted and belong to the same person. Missing or
+mismatched statements leave the order in place with null authorisation fields.
+Current statement context is not a historical authorisation status and does not
+overwrite order details. The empty quantity-description field is omitted.
+Supplied duration and quantity can be zero or negative; they are retained, not
+interpreted as validated treatment durations or administered quantities.
+
+The 10 September profile has 384,607,642 orders. Of these, 384,602,541 have a
+same-person statement with a labelled authorisation type; 118 have no available
+statement and 4,983 point to a different person. There are 3,383,873 statements
+with no matching order for the same person. They remain available separately.
+The earlier profiles below include standalone statements and describe the
+previous population.
+
 `appointment_clinical_record` contains one appointment, clinical record type and
 clinical record ID with a recorded encounter path. The conformed view defines
 the joins; the stable table materialises their result on the existing OLIDS
@@ -16,8 +40,7 @@ The population inherits the filtered NCL patient spine and the existing
 appointment table's requirement for a patient and scheduled start. It retains
 patient-associated blocked slots and all current appointment statuses.
 Observations already include allergies and referrals after PR #298. The model
-reads that expanded table once; medication orders and statements have separate
-record types. `clinical_record_id` is the namespaced key shared with the new
+reads that expanded table once and adds medication orders. `clinical_record_id` is the namespaced key shared with the new
 `clinical_record` output. `source_record_id` is the detail table's `id`, including
 the minted observation IDs for added allergies and referrals. Clinical codes,
 labels, dates and results are available in the clinical output and detail tables.
