@@ -6,8 +6,10 @@ models:
     referral (procedure)| and supported unambiguous historical successors across expanded observations,
     regardless of original source entity. Retains missing and partial referral dates with explicit precision.
     Excludes deleted records. No cancellation, attendance, discharge or general encounter history is inferred.
-    Source changes and deletions replace previous milestones. Materialised once with person and event-date
-    clustering.
+    New source deliveries replace previous milestones. Withdrawn keys and records removed from
+    the filtered spine disappear on every run. Changes without a newer extraction timestamp are
+    reconciled by the monthly full refresh. Materialised once and clustered by person, then event
+    timestamp with a date fallback for storage. Published date-only event timestamps remain null.
   columns:
   - name: healthcare_event_id
     description: Stable namespaced milestone ID. A changed source record replaces the same milestone;

@@ -6,7 +6,11 @@ models:
     its own ID, date, codes, dose, quantity and duration. Authorisation type comes from its current non-deleted
     linked statement for the same person; orders without a valid match remain. Statement context does
     not establish historical authorisation status. Retains missing dates, values and approved person hash
-    keys. The stable snapshot is clustered by person and clinical date.
+    keys. New source deliveries update the same clinical record IDs. Withdrawn source keys and
+    records removed from the filtered spine disappear on every run. Changes without a newer
+    source extraction timestamp, including statement-only context changes, are reconciled by
+    the monthly full refresh. Clustered by person and clinical date; the source does not establish
+    clinical clock times, and record-entry timestamps are not substituted.
   columns:
   - name: clinical_record_id
     description: Stable namespaced ID for this OLIDS clinical record, distinct across source record types.
