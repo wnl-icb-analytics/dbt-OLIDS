@@ -44,7 +44,12 @@ def check_sql(model):
         'mapped_concept_code': "'different_mapped_code'",
     }
     fixtures = [
-        fixture('fixture_observation', observations, [{'id': "'observation'"}]),
+        fixture('fixture_observation', observations, [
+            {'id': "'observation'"},
+            {'id': "'context_missing'", 'encounter_id': "'absent'", 'clinical_effective_date': 'NULL::DATE'},
+            {'id': "'context_wrong_person'", 'encounter_id': "'other_person'", 'clinical_effective_date': 'NULL::DATE'},
+            {'id': "'context_deleted'", 'encounter_id': "'deleted'", 'clinical_effective_date': 'NULL::DATE'},
+        ]),
         fixture('fixture_medication_order', orders, [
             {'id': "'matched'"}, {'id': "'repeat_issue'"},
             {'id': "'missing'", 'medication_statement_id': "'absent'"},
@@ -59,13 +64,19 @@ def check_sql(model):
             {'id': "'deleted'", 'lds_is_deleted': 'TRUE'},
         ]),
         fixture('fixture_patient', {'id': "'synthetic'", 'person_id': '1', 'sk_patient_id': '123'}, [{}]),
+        fixture('fixture_encounter', {
+            'id': "'synthetic'", 'person_id': '1', 'clinical_effective_date': "'1999-12-30'::DATE",
+            'date_precision_source_code': "'YM'", 'date_precision_source_display': "'Month'",
+            'lds_is_deleted': 'FALSE',
+        }, [{}, {'id': "'other_person'", 'person_id': '2'}, {'id': "'deleted'", 'lds_is_deleted': 'TRUE'}]),
         fixture('fixture_organisation', {
             'id': "'synthetic'", 'organisation_code': "'ORG'", 'assigning_authority_code': "'ODS'",
             'name': "'Synthetic organisation'", 'lds_is_deleted': 'FALSE',
         }, [{}]),
     ]
     for entity, expected_count in [('observation', 1), ('medication_order', 1),
-                                   ('medication_statement', 1), ('patient', 1), ('organisation', 2)]:
+                                   ('medication_statement', 1), ('patient', 1), ('organisation', 2),
+                                   ('encounter', 1)]:
         model, count = re.subn(rf'\bOLIDS_ENGINEERING\.CONFORMED\.{entity}\b',
                                f'fixture_{entity}', model, flags=re.IGNORECASE)
         if count != expected_count:
@@ -83,6 +94,16 @@ SELECT COUNT(*) AS actual_rows, COUNT(DISTINCT clinical_record_id) AS distinct_i
         IFF(source_record_id IN ('matched','repeat_issue'),'R',NULL))
         OR NOT EQUAL_NULL(medication_authorisation_type_name,
         IFF(source_record_id IN ('matched','repeat_issue'),'Repeat',NULL))) AS incorrect_enrichment,
+    COUNT_IF(encounter_id='synthetic' AND (
+        is_encounter_person_consistent IS DISTINCT FROM TRUE
+        OR encounter_date IS DISTINCT FROM '1999-12-30'::DATE
+        OR encounter_date_precision_code IS DISTINCT FROM 'YM')) AS missing_valid_context,
+    COUNT_IF(encounter_id<>'synthetic' AND (
+        encounter_date IS NOT NULL OR encounter_date_precision_code IS NOT NULL
+        OR encounter_date_precision_name IS NOT NULL)) AS invalid_context_promoted,
+    COUNT_IF(source_record_id LIKE 'context_%' AND clinical_record_date IS NOT NULL) AS fabricated_clinical_dates,
+    COUNT_IF(source_record_id='context_wrong_person' AND is_encounter_person_consistent IS DISTINCT FROM FALSE)
+        AS missed_person_conflicts,
     COUNT_IF(clinical_record_id != UUID_STRING('6ba7b811-9dad-11d1-80b4-00c04fd430c8',
         'olids:clinical_record:' || source_record_type || ':' || source_record_id)::UUID) AS changed_ids
 FROM actual;

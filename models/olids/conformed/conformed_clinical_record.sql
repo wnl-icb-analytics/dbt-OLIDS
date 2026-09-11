@@ -87,6 +87,10 @@ SELECT
     c.patient_id,
     p.sk_patient_id,
     c.encounter_id,
+    c.person_id = encounter.person_id AS is_encounter_person_consistent,
+    IFF(is_encounter_person_consistent, encounter.clinical_effective_date, NULL) AS encounter_date,
+    IFF(is_encounter_person_consistent, encounter.date_precision_source_code, NULL) AS encounter_date_precision_code,
+    IFF(is_encounter_person_consistent, encounter.date_precision_source_display, NULL) AS encounter_date_precision_name,
     c.clinical_record_date,
     c.clinical_date_precision_code,
     c.clinical_date_precision_name,
@@ -118,6 +122,9 @@ SELECT
     provider.name AS provider_organisation_name,
     publisher.name AS publisher_organisation_name
 FROM clinical_records AS c
+-- Encounter dates describe the recorded care context, not the clinical item's onset.
+LEFT JOIN {{ ref('conformed_encounter') }} AS encounter
+    ON c.encounter_id = encounter.id AND NOT COALESCE(encounter.lds_is_deleted, FALSE)
 LEFT JOIN {{ ref('conformed_patient') }} AS p
     ON c.patient_id = p.id
     AND c.person_id = p.person_id

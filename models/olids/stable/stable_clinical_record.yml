@@ -10,7 +10,9 @@ models:
     records removed from the filtered spine disappear on every run. Changes without a newer
     source extraction timestamp, including statement-only context changes, are reconciled by
     the monthly full refresh. Clustered by sk_patient_id and clinical date; the source does not establish
-    clinical clock times, and record-entry timestamps are not substituted.
+    clinical clock times, and record-entry timestamps are not substituted. Encounter context
+    requires a non-deleted encounter for the same person and retains its source date precision.
+    Encounter-only changes reach existing deliveries at the monthly full refresh.
   columns:
   - name: clinical_record_id
     description: Stable namespaced ID for this OLIDS clinical record, distinct across source record types.
@@ -39,9 +41,21 @@ models:
   - name: encounter_id
     description: Recorded encounter ID. A link does not establish appointment attendance or a common event
       time.
+  - name: is_encounter_person_consistent
+    description: Whether the recorded encounter and clinical record have the same person_id. False identifies
+      a conflicting link; null means no non-deleted encounter or no comparable person key.
+  - name: encounter_date
+    description: Clinical effective date of the recorded, non-deleted encounter for the same person. It is
+      care context, not a replacement for the clinical record date or diagnosis onset. Null without positive
+      person agreement.
+  - name: encounter_date_precision_code
+    description: Source precision of encounter_date, such as YMD, YM or Y. Null when no encounter date context
+      can be established.
+  - name: encounter_date_precision_name
+    description: Source label for the encounter date precision.
   - name: clinical_record_date
-    description: Supplied clinical effective date. Retained when missing, historical or future; interpret
-      it with the source precision.
+    description: Supplied clinical effective date. Retained when missing, historical or future; interpret it
+      with the source precision.
   - name: clinical_date_precision_code
     description: Source date-precision code, such as YMD, YM, Y or Unknown.
   - name: clinical_date_precision_name
@@ -61,8 +75,8 @@ models:
   - name: mapped_coding_system
     description: Coding system for mapped_code.
   - name: result_value
-    description: Numeric observation result. Null for medication records; prescribing quantity is not
-      a measurement result.
+    description: Numeric observation result. Null for medication records; prescribing quantity is not a measurement
+      result.
   - name: result_date
     description: Supplied observation result date. Null for medication records.
   - name: result_unit_source_code
@@ -74,19 +88,19 @@ models:
   - name: medication_dose
     description: Dosage instructions supplied on the medication order. Null for observations.
   - name: medication_quantity_value
-    description: Quantity supplied on the order; interpret with medication_quantity_unit. Source values
-      can be zero or negative and are retained. Null for observations.
+    description: Quantity supplied on the order; interpret with medication_quantity_unit. Source values can
+      be zero or negative and are retained. Null for observations.
   - name: medication_quantity_unit
     description: Supplied medication order quantity unit. Null for observations or when absent.
   - name: medication_duration_days
-    description: Duration in days supplied on the order. Source values can be zero or negative; this is
-      not a validated treatment duration. Null for observations or when absent.
+    description: Duration in days supplied on the order. Source values can be zero or negative; this is not
+      a validated treatment duration. Null for observations or when absent.
   - name: medication_authorisation_type_code
-    description: Source authorisation type code from the current non-deleted linked statement for the
-      same person. Null without a valid match or for observations.
+    description: Source authorisation type code from the current non-deleted linked statement for the same
+      person. Null without a valid match or for observations.
   - name: medication_authorisation_type_name
-    description: Source authorisation type label, such as acute or repeat. Describes the current linked
-      statement, not its status when the order was issued.
+    description: Source authorisation type label, such as acute or repeat. Describes the current linked statement,
+      not its status when the order was issued.
   - name: provider_organisation_id
     description: Recorded provider organisation ID, where supplied.
   - name: publisher_organisation_id
@@ -98,8 +112,7 @@ models:
   - name: source_extraction_date
     description: Source snapshot extraction timestamp, for delivery and coverage assessment.
   - name: provider_organisation_code
-    description: Recorded provider code. Interpret with provider_code_authority; it is not always an ODS
-      code.
+    description: Recorded provider code. Interpret with provider_code_authority; it is not always an ODS code.
   - name: provider_code_authority
     description: Authority for the provider organisation code.
   - name: provider_organisation_name

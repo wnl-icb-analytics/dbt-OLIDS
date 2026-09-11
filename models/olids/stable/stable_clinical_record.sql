@@ -18,6 +18,10 @@ SELECT
     -- Store the cross-system lookup key as text so downstream filters can prune partitions.
     sk_patient_id::varchar as sk_patient_id,
     encounter_id,
+    is_encounter_person_consistent,
+    encounter_date,
+    encounter_date_precision_code,
+    encounter_date_precision_name,
     clinical_record_date,
     clinical_date_precision_code,
     clinical_date_precision_name,
