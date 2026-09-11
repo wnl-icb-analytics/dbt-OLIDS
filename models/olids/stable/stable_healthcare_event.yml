@@ -8,7 +8,7 @@ models:
     Excludes deleted records. No cancellation, attendance, discharge or general encounter history is inferred.
     New source deliveries replace previous milestones. Withdrawn keys and records removed from
     the filtered spine disappear on every run. Changes without a newer extraction timestamp are
-    reconciled by the monthly full refresh. Materialised once and clustered by person, then event
+    reconciled by the monthly full refresh. Materialised once and clustered by sk_patient_id, then event
     timestamp with a date fallback for storage. Published date-only event timestamps remain null.
   columns:
   - name: healthcare_event_id
@@ -25,7 +25,9 @@ models:
   - name: patient_id
     description: Practice-level patient ID on the source record.
   - name: sk_patient_id
-    description: NHS number hash approved by the conformed patient identity rules. Null when unavailable.
+    description: NHS number hash approved by the conformed patient identity rules, stored as text for
+      cross-system person lookups and clustering. Null when unavailable. Many events can share this key;
+      healthcare_event_id identifies one row.
   - name: event_at
     description: Supplied timestamp for a booking or appointment slot. Null for date-only clinical referrals;
       no midnight time is invented.

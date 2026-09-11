@@ -1,7 +1,7 @@
 {{ config(
     alias='healthcare_event', materialized='incremental', incremental_strategy='merge',
     unique_key='healthcare_event_id', on_schema_change='fail',
-    cluster_by=['person_id', 'coalesce(event_at, event_date::timestamp_ntz)'],
+    cluster_by=['sk_patient_id', 'coalesce(event_at, event_date::timestamp_ntz)'],
     pre_hook="{{ longitudinal_build_warehouse() }}",
     post_hook=[
         "{{ longitudinal_remove_withdrawn_records('conformed_healthcare_event', ['source_record_type', 'source_record_id', 'event_type']) }}",
@@ -14,7 +14,8 @@ SELECT
     event_type,
     person_id,
     patient_id,
-    sk_patient_id,
+    -- Store the cross-system lookup key as text so downstream filters can prune partitions.
+    sk_patient_id::varchar as sk_patient_id,
     event_at,
     event_date,
     event_time_precision,

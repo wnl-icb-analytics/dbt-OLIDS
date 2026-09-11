@@ -9,7 +9,7 @@ models:
     keys. New source deliveries update the same clinical record IDs. Withdrawn source keys and
     records removed from the filtered spine disappear on every run. Changes without a newer
     source extraction timestamp, including statement-only context changes, are reconciled by
-    the monthly full refresh. Clustered by person and clinical date; the source does not establish
+    the monthly full refresh. Clustered by sk_patient_id and clinical date; the source does not establish
     clinical clock times, and record-entry timestamps are not substituted.
   columns:
   - name: clinical_record_id
@@ -33,8 +33,9 @@ models:
   - name: patient_id
     description: Practice-level patient ID on the clinical record.
   - name: sk_patient_id
-    description: NHS number hash approved by the conformed patient identity rules. Null when no approved
-      key is available.
+    description: NHS number hash approved by the conformed patient identity rules, stored as text for
+      cross-system person lookups and clustering. Null when no approved key is available. Many records
+      can share this key; clinical_record_id identifies one row.
   - name: encounter_id
     description: Recorded encounter ID. A link does not establish appointment attendance or a common event
       time.

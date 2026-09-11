@@ -20,9 +20,13 @@ selection, then fully refreshes only these two stable outputs. It bypasses the
 unchanged-watermark skip for that run. It does not fully refresh the
 pseudonymisation indexes. Source freshness checks still apply.
 
-Healthcare events cluster by `person_id`, then
+Both stable outputs store `sk_patient_id` as text, preserving the approved key
+values. This matches the cross-system analyst interface and permits direct
+filtering without converting the stored numeric key at query time.
+
+Healthcare events cluster by `sk_patient_id`, then
 `coalesce(event_at, event_date::timestamp_ntz)`. Clinical records cluster by
-`person_id`, then `clinical_record_date`: their source dates do not establish
+`sk_patient_id`, then `clinical_record_date`: their source dates do not establish
 clinical clock times. The storage fallback does not populate missing event
 timestamps. Consumers still need `ORDER BY` for guaranteed presentation order.
 
@@ -31,8 +35,9 @@ the profile role is `DBT_ADMIN`. Other roles retain their profile warehouse.
 Normal increments use the profile warehouse, which is already L in the scheduled
 workflow. A final hook restores the configured warehouse.
 
-Deploy the new physical clustering with a full refresh of these two models, or
-allow the monthly full refresh to apply it. Code worktrees do not isolate
+Deploy the text key and physical clustering with a full refresh of these two
+models or a metadata-preserving rewrite of their existing prepared snapshots.
+An incremental merge alone does not change the stored key type. Code worktrees do not isolate
 warehouse objects: the established stable target points to `OLIDS_ENGINEERING`.
 Compilation and read-only aggregate checks can validate this change without
 rebuilding production tables before review.
@@ -50,12 +55,23 @@ rows in the inspected snapshot. Observations span 249 extraction timestamps;
 orders span 186. Extraction times therefore support selective loading rather
 than selecting every row as a newly dated snapshot.
 
-Production tables have not been rebuilt for this validation. The first full
-refresh, merge performance and scheduled monthly execution remain deployment
-checks. A read-only withdrawal comparison across both full outputs took 60
+The initial validation did not rebuild production. A later person-lookup
+correction rewrites the existing prepared snapshots on L with text keys and
+cross-system person clustering. Full-source refresh performance, merge
+performance and scheduled monthly execution remain deployment checks.
+A read-only withdrawal comparison across both full outputs took 60
 seconds on L and found no withdrawn keys. The preceding UUID-based comparison
 also found none and took 164 seconds; these are single measurements, with
 different warehouse cache states, not a controlled speed comparison.
 The related dbt-analytics change exercises receipt boundaries,
 corrections, withdrawn records and monthly reconciliation with synthetic data,
 and checks repeat increments against full-source aggregate fingerprints.
+
+The snapshot rewrites completed in 31 seconds for 179,290,676 events and 489
+seconds for 1,974,867,939 clinical records. Counts and whole-row fingerprints
+matched before and after, comparing the original numeric key as text. Grants
+and column metadata were preserved. The same cross-system clinical lookup now
+assigns one OLIDS partition, about 19 MB, instead of 6,569 partitions and about
+123 GB. This is a plan comparison, not a post-change execution benchmark.
+Merge this change before the next scheduled build to retain the corrected key
+type and clustering.
