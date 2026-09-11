@@ -1,13 +1,18 @@
 version: 2
 models:
 - name: stable_clinical_record
-  description: One clinical record from expanded observations or medication orders in the filtered NCL OLIDS
-    patient spine. Excludes deleted records and standalone medication statements. Each order keeps its own
-    ID, date, codes, dose, quantity and duration. Authorisation type comes from its current non-deleted linked
-    statement for the same person; orders without a valid match remain. Statement context does not establish
-    historical authorisation status. Retains missing dates, values and approved person hash keys. The stable
-    snapshot is clustered by person and clinical date. Encounter context requires a non-deleted encounter for
-    the same person and retains its source date precision. Clinical and recording dates remain unchanged.
+  description: One clinical record from expanded observations or medication orders in the filtered NCL
+    OLIDS patient spine. Excludes deleted records and standalone medication statements. Each order keeps
+    its own ID, date, codes, dose, quantity and duration. Authorisation type comes from its current non-deleted
+    linked statement for the same person; orders without a valid match remain. Statement context does
+    not establish historical authorisation status. Retains missing dates, values and approved person hash
+    keys. New source deliveries update the same clinical record IDs. Withdrawn source keys and
+    records removed from the filtered spine disappear on every run. Changes without a newer
+    source extraction timestamp, including statement-only context changes, are reconciled by
+    the monthly full refresh. Clustered by sk_patient_id and clinical date; the source does not establish
+    clinical clock times, and record-entry timestamps are not substituted. Encounter context
+    requires a non-deleted encounter for the same person and retains its source date precision.
+    Encounter-only changes reach existing deliveries at the monthly full refresh.
   columns:
   - name: clinical_record_id
     description: Stable namespaced ID for this OLIDS clinical record, distinct across source record types.
@@ -30,8 +35,9 @@ models:
   - name: patient_id
     description: Practice-level patient ID on the clinical record.
   - name: sk_patient_id
-    description: NHS number hash approved by the conformed patient identity rules. Null when no approved key
-      is available.
+    description: NHS number hash approved by the conformed patient identity rules, stored as text for
+      cross-system person lookups and clustering. Null when no approved key is available. Many records
+      can share this key; clinical_record_id identifies one row.
   - name: encounter_id
     description: Recorded encounter ID. A link does not establish appointment attendance or a common event
       time.
