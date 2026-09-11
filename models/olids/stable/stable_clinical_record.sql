@@ -1,4 +1,13 @@
-{{ config(alias='clinical_record', cluster_by=['person_id', 'clinical_record_date']) }}
+{{ config(
+    alias='clinical_record', materialized='incremental', incremental_strategy='merge',
+    unique_key='clinical_record_id', on_schema_change='fail',
+    cluster_by=['sk_patient_id', 'clinical_record_date'],
+    pre_hook="{{ longitudinal_build_warehouse() }}",
+    post_hook=[
+        "{{ longitudinal_remove_withdrawn_records('conformed_clinical_record', ['source_record_type', 'source_record_id']) }}",
+        "{{ longitudinal_build_warehouse(restore=true) }}"
+    ]
+) }}
 
 SELECT
     clinical_record_id,
@@ -6,7 +15,8 @@ SELECT
     source_record_id,
     person_id,
     patient_id,
-    sk_patient_id,
+    -- Store the cross-system lookup key as text so downstream filters can prune partitions.
+    sk_patient_id::varchar as sk_patient_id,
     encounter_id,
     clinical_record_date,
     clinical_date_precision_code,
@@ -38,4 +48,5 @@ SELECT
     provider_code_authority,
     provider_organisation_name,
     publisher_organisation_name
-FROM {{ ref('conformed_clinical_record') }}
+FROM {{ ref('conformed_clinical_record') }} as current_records
+{{ longitudinal_delivery_filter() }}

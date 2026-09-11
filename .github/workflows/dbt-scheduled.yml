@@ -68,8 +68,11 @@ jobs:
           FORCE_BUILD: ${{ inputs.force || false }}
         run: |
           args=(--github-output "$GITHUB_OUTPUT")
+          # Reconcile these outputs monthly even when the source snapshot is unchanged.
+          if [ "$(date -u +%d)" = "01" ]; then args+=(--force); fi
           if [ "$EVENT_NAME" = "schedule" ]; then
-            args+=(--timeout-seconds 900 --poll-seconds 300 --wait-for-advance)
+            args+=(--timeout-seconds 900 --poll-seconds 300)
+            if [ "$(date -u +%d)" != "01" ]; then args+=(--wait-for-advance); fi
           fi
           if [ "$FORCE_BUILD" = "true" ]; then args+=(--force); fi
           python scripts/checks/check_source_watermarks.py "${args[@]}"
@@ -90,7 +93,14 @@ jobs:
       - name: Build OLIDS
         id: build
         if: steps.watermark.outputs.should_run == 'true'
-        run: dbt build --exclude tag:synapse --target stable --profiles-dir .
+        run: |
+          if [ "$(date -u +%d)" = "01" ]; then
+            # Keep pseudonymisation indexes out of the full refresh.
+            dbt build --exclude tag:synapse stable_healthcare_event stable_clinical_record --target stable --profiles-dir .
+            dbt build --select stable_healthcare_event stable_clinical_record --full-refresh --target stable --profiles-dir .
+          else
+            dbt build --exclude tag:synapse --target stable --profiles-dir .
+          fi
 
       - name: Publish data lake views
         id: publish

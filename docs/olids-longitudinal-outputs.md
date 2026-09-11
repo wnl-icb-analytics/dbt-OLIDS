@@ -5,7 +5,9 @@
 Clinical records contain expanded observations and medication orders. Standalone
 medication statements remain in their detail table but do not add clinical rows
 or appointment-clinical links. Existing observation and order IDs are unchanged.
-Person and clinical-date clustering is unchanged.
+The stable outputs cluster by the cross-system person key `sk_patient_id` and
+the relevant clinical date or event timestamp. The key is stored as text for
+direct cross-system lookups; source person and record IDs remain available.
 
 Orders retain their own dates, codes, medication names, doses, quantities and
 durations. The clinical output adds these prescribing fields and the source
