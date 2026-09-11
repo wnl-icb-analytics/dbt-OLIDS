@@ -6,8 +6,11 @@ or after the stored watermark for their source record type. Equal extraction
 times are replayed; null times are always reconsidered. Clinical dates are not
 load watermarks, so newly delivered historical records can load immediately.
 
-A post-build key comparison removes withdrawn records, including records no
-longer in the filtered patient spine. The monthly full refresh handles changes
+A post-build comparison of source record type and source ID removes withdrawn
+records, including records no longer in the filtered patient spine. Events also
+compare event type so a withdrawn booking does not survive beside its slot.
+These natural keys avoid deriving UUIDs over the whole conformed history.
+The monthly full refresh handles changes
 without a newer extraction timestamp. These include label changes and updated
 statement context on an unchanged medication order. Standalone statements do
 not become clinical records.
@@ -49,6 +52,10 @@ than selecting every row as a newly dated snapshot.
 
 Production tables have not been rebuilt for this validation. The first full
 refresh, merge performance and scheduled monthly execution remain deployment
-checks. The related dbt-analytics change exercises receipt boundaries,
+checks. A read-only withdrawal comparison across both full outputs took 60
+seconds on L and found no withdrawn keys. The preceding UUID-based comparison
+also found none and took 164 seconds; these are single measurements, with
+different warehouse cache states, not a controlled speed comparison.
+The related dbt-analytics change exercises receipt boundaries,
 corrections, withdrawn records and monthly reconciliation with synthetic data,
 and checks repeat increments against full-source aggregate fingerprints.

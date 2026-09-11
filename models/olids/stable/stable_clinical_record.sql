@@ -4,7 +4,7 @@
     cluster_by=['person_id', 'clinical_record_date'],
     pre_hook="{{ longitudinal_build_warehouse() }}",
     post_hook=[
-        "{{ longitudinal_remove_withdrawn_records('conformed_clinical_record', 'clinical_record_id') }}",
+        "{{ longitudinal_remove_withdrawn_records('conformed_clinical_record', ['source_record_type', 'source_record_id']) }}",
         "{{ longitudinal_build_warehouse(restore=true) }}"
     ]
 ) }}

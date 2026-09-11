@@ -4,7 +4,7 @@
     cluster_by=['person_id', 'coalesce(event_at, event_date::timestamp_ntz)'],
     pre_hook="{{ longitudinal_build_warehouse() }}",
     post_hook=[
-        "{{ longitudinal_remove_withdrawn_records('conformed_healthcare_event', 'healthcare_event_id') }}",
+        "{{ longitudinal_remove_withdrawn_records('conformed_healthcare_event', ['source_record_type', 'source_record_id', 'event_type']) }}",
         "{{ longitudinal_build_warehouse(restore=true) }}"
     ]
 ) }}
