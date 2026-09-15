@@ -1,0 +1,238 @@
+#!/usr/bin/env python3
+"""Drive dbt-OLIDS verification from the terminal. Never print secrets or row dumps."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+SKILL_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[4]
+SECRET_NAME_RE = re.compile(
+    r'(PASSWORD|PASSPHRASE|PRIVATE_KEY|TOKEN|SECRET|PAT)$', re.I
+)
+UUID_RE = re.compile(
+    r'\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b'
+)
+PEM_RE = re.compile(
+    r'-----BEGIN [A-Z ]+-----.*?-----END [A-Z ]+-----', re.S
+)
+REQUIRED_ENV = (
+    'SNOWFLAKE_ACCOUNT',
+    'SNOWFLAKE_USER',
+    'SNOWFLAKE_ROLE',
+    'SNOWFLAKE_WAREHOUSE',
+    'SNOWFLAKE_TARGET_DATABASE',
+)
+AUTH_ENV = (
+    'SNOWFLAKE_PRIVATE_KEY_PATH',
+    'SNOWFLAKE_PAT',
+    'SNOWFLAKE_PASSWORD',
+)
+
+
+def artefact_dir() -> Path:
+    """Return the run-scoped artefact directory, creating it if needed."""
+    configured = os.environ.get('CONTROL_DBT_OLIDS_ARTEFACT_DIR')
+    if configured:
+        path = Path(configured)
+    else:
+        run_id = os.environ.get(
+            'CONTROL_DBT_OLIDS_RUN_ID',
+            datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ'),
+        )
+        path = SKILL_ROOT / 'artefacts' / run_id
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def secret_values() -> list[str]:
+    """Collect env values that must never appear in artefacts."""
+    values = []
+    for name, value in os.environ.items():
+        if not value:
+            continue
+        if SECRET_NAME_RE.search(name) or name in REQUIRED_ENV or name in AUTH_ENV:
+            values.append(value)
+    return sorted(values, key=len, reverse=True)
+
+
+def redact_text(text: str) -> str:
+    """Strip secrets, PEM blocks, and UUID-shaped tokens from captured output."""
+    redacted = PEM_RE.sub('[redacted-pem]', text)
+    for value in secret_values():
+        if len(value) >= 4:
+            redacted = redacted.replace(value, '[redacted]')
+    return UUID_RE.sub('[redacted-uuid]', redacted)
+
+
+def write_text(path: Path, content: str) -> None:
+    """Write redacted text to an artefact path."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(redact_text(content), encoding='utf-8')
+
+
+def env_is_set(name: str) -> bool:
+    """Return True when a named variable is present and non-empty."""
+    value = os.environ.get(name, '')
+    if not value and (REPO_ROOT / '.env').exists():
+        sys.path.insert(0, str(REPO_ROOT / 'scripts' / 'checks'))
+        from snowflake_env import load_env  # noqa: E402
+        value = load_env().get(name, '')
+    return bool(value)
+
+
+def auth_material() -> str:
+    """Name the configured auth method without revealing material."""
+    if env_is_set('SNOWFLAKE_PRIVATE_KEY_PATH'):
+        return 'key-pair'
+    if env_is_set('SNOWFLAKE_PAT'):
+        return 'pat'
+    if env_is_set('SNOWFLAKE_PASSWORD'):
+        return 'password'
+    return 'missing'
+
+
+def run_cmd(argv: list[str], timeout: int | None = None) -> subprocess.CompletedProcess[str]:
+    """Run a command from the repo root with AWS metadata probes disabled."""
+    env = dict(os.environ)
+    env['AWS_EC2_METADATA_DISABLED'] = 'true'
+    return subprocess.run(
+        argv,
+        cwd=REPO_ROOT,
+        env=env,
+        text=True,
+        capture_output=True,
+        timeout=timeout,
+        check=False,
+    )
+
+
+def sources_contract_ok() -> tuple[bool, str]:
+    """Parse models/sources.yml with the CI helper; no warehouse call."""
+    checks = REPO_ROOT / 'scripts' / 'checks'
+    sys.path.insert(0, str(checks))
+    try:
+        from compare_sources_to_information_schema import parse_sources
+        database, schema, tables = parse_sources()
+        return True, f'{database}.{schema} tables={len(tables)}'
+    except Exception as exc:  # doctor must still finish
+        return False, type(exc).__name__
+
+
+def summarise_run_results(src: Path, dest: Path) -> None:
+    """Copy pass/fail counts from dbt run_results.json, omitting compiled SQL."""
+    payload = json.loads(src.read_text(encoding='utf-8'))
+    results = []
+    counts: dict[str, int] = {}
+    for item in payload.get('results', []):
+        status = str(item.get('status') or 'unknown')
+        counts[status] = counts.get(status, 0) + 1
+        results.append({
+            'unique_id': item.get('unique_id'),
+            'status': status,
+            'message': redact_text(str(item.get('message') or ''))[:300],
+            'execution_time': item.get('execution_time'),
+        })
+    summary = {
+        'elapsed_time': payload.get('elapsed_time'),
+        'counts': counts,
+        'results': results,
+    }
+    dest.write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+
+
+def cmd_doctor() -> int:
+    """Print a read-only verdict: project_ok for offline gates, warehouse_ok for dbt."""
+    dbt = run_cmd(['dbt', '--version'], timeout=30)
+    dbt_ok = dbt.returncode == 0
+    packages_ok = (REPO_ROOT / 'dbt_packages' / 'dbt_utils').is_dir()
+    profiles_ok = (REPO_ROOT / 'profiles.yml').is_file()
+    contract_ok, contract_detail = sources_contract_ok()
+    env_flags = {name: env_is_set(name) for name in REQUIRED_ENV}
+    auth = auth_material()
+    project_ok = contract_ok
+    debug_ok = False
+    debug_detail = 'skipped'
+    if dbt_ok and packages_ok and profiles_ok and all(env_flags.values()) and auth != 'missing':
+        debug = run_cmd(
+            ['dbt', 'debug', '--target', 'stable', '--profiles-dir', '.'],
+            timeout=60,
+        )
+        debug_ok = debug.returncode == 0
+        debug_detail = 'ok' if debug_ok else 'failed'
+        write_text(artefact_dir() / 'doctor-debug.txt', debug.stdout + debug.stderr)
+    warehouse_ok = debug_ok
+    lines = [
+        f'dbt_ok={str(dbt_ok).lower()}',
+        f'dbt_version={(dbt.stdout or dbt.stderr).strip().splitlines()[0] if dbt_ok else "missing"}',
+        f'packages_ok={str(packages_ok).lower()}',
+        f'profiles_ok={str(profiles_ok).lower()}',
+        f'sources_contract_ok={str(contract_ok).lower()}',
+        f'sources_contract={contract_detail}',
+        *[f'{name.lower()}_set={str(flag).lower()}' for name, flag in env_flags.items()],
+        f'auth_material={auth}',
+        f'debug_ok={str(debug_ok).lower()}',
+        f'debug_detail={debug_detail}',
+        f'project_ok={str(project_ok).lower()}',
+        f'warehouse_ok={str(warehouse_ok).lower()}',
+        f'worth_driving={str(warehouse_ok).lower()}',
+    ]
+    report = '\n'.join(lines) + '\n'
+    print(report, end='')
+    write_text(artefact_dir() / 'doctor.txt', report)
+    return 0 if project_ok else 1
+
+
+def cmd_cli(command: list[str], label: str) -> int:
+    """Run one user-facing command and store command, streams, and exit code."""
+    if not command:
+        raise SystemExit('cli requires a command after --')
+    dest = artefact_dir() / label
+    dest.mkdir(parents=True, exist_ok=True)
+    proc = run_cmd(command)
+    write_text(dest / 'command.txt', ' '.join(command) + '\n')
+    write_text(dest / 'stdout.txt', proc.stdout)
+    write_text(dest / 'stderr.txt', proc.stderr)
+    write_text(dest / 'exit_code.txt', f'{proc.returncode}\n')
+    results = REPO_ROOT / 'target' / 'run_results.json'
+    if results.is_file() and command and command[0] == 'dbt':
+        summarise_run_results(results, dest / 'run_results.summary.json')
+    print(f'exit={proc.returncode} artefacts={dest}')
+    return proc.returncode
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest='action', required=True)
+
+    sub.add_parser('doctor', help='Read-only health check')
+
+    cli = sub.add_parser('cli', help='Run a captured command')
+    cli.add_argument('--label', default='cli', help='Artefact subfolder name')
+    cli.add_argument('command', nargs=argparse.REMAINDER)
+
+    summary = sub.add_parser('summarise-run-results', help='Redact dbt run_results.json')
+    summary.add_argument('src', type=Path)
+    summary.add_argument('dest', type=Path)
+
+    args = parser.parse_args()
+    if args.action == 'doctor':
+        return cmd_doctor()
+    if args.action == 'cli':
+        command = args.command
+        if command and command[0] == '--':
+            command = command[1:]
+        return cmd_cli(command, args.label)
+    summarise_run_results(args.src, args.dest)
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
