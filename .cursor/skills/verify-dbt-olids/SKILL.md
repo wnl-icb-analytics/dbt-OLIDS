@@ -20,10 +20,13 @@ Cloud and GitHub Actions (preferred when `dbt` is missing):
 ```bash
 curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- --target x86_64-unknown-linux-gnu --update
 export PATH="$HOME/.local/bin:$PATH"
-python3 -m venv venv
-venv/bin/pip install -r requirements.txt
-cp -n profiles.yml.template profiles.yml
-dbt deps
+# README uses python -m venv; if ensurepip is missing, match CI with uv:
+uv venv --python 3.12 venv
+uv pip install --python venv/bin/python pyyaml snowflake-connector-python
+cp --update=none profiles.yml.template profiles.yml
+# profiles.yml interpolates env_var; placeholders are enough for deps when auth is absent
+dbt deps --target stable --profiles-dir .
+source venv/bin/activate
 ```
 
 Local Windows (README):
