@@ -52,10 +52,17 @@ def artefact_dir() -> Path:
     return path
 
 
+def loaded_env() -> dict[str, str]:
+    """Return process env overlaid with repo .env, matching the check scripts."""
+    sys.path.insert(0, str(REPO_ROOT / 'scripts' / 'checks'))
+    from snowflake_env import load_env  # noqa: E402
+    return load_env()
+
+
 def secret_values() -> list[str]:
     """Collect env values that must never appear in artefacts."""
     values = []
-    for name, value in os.environ.items():
+    for name, value in loaded_env().items():
         if not value:
             continue
         if SECRET_NAME_RE.search(name) or name in REQUIRED_ENV or name in AUTH_ENV:
@@ -80,12 +87,7 @@ def write_text(path: Path, content: str) -> None:
 
 def env_is_set(name: str) -> bool:
     """Return True when a named variable is present and non-empty."""
-    value = os.environ.get(name, '')
-    if not value and (REPO_ROOT / '.env').exists():
-        sys.path.insert(0, str(REPO_ROOT / 'scripts' / 'checks'))
-        from snowflake_env import load_env  # noqa: E402
-        value = load_env().get(name, '')
-    return bool(value)
+    return bool(loaded_env().get(name, ''))
 
 
 def auth_material() -> str:
@@ -101,7 +103,7 @@ def auth_material() -> str:
 
 def run_cmd(argv: list[str], timeout: int | None = None) -> subprocess.CompletedProcess[str]:
     """Run a command from the repo root with AWS metadata probes disabled."""
-    env = dict(os.environ)
+    env = loaded_env()
     env['AWS_EC2_METADATA_DISABLED'] = 'true'
     return subprocess.run(
         argv,
@@ -122,7 +124,7 @@ def sources_contract_ok() -> tuple[bool, str]:
         from compare_sources_to_information_schema import parse_sources
         database, schema, tables = parse_sources()
         return True, f'{database}.{schema} tables={len(tables)}'
-    except Exception as exc:  # doctor must still finish
+    except (Exception, SystemExit) as exc:  # doctor must still finish
         return False, type(exc).__name__
 
 
@@ -196,13 +198,21 @@ def cmd_cli(command: list[str], label: str) -> int:
         raise SystemExit('cli requires a command after --')
     dest = artefact_dir() / label
     dest.mkdir(parents=True, exist_ok=True)
+    results = REPO_ROOT / 'target' / 'run_results.json'
+    prior_mtime = results.stat().st_mtime if results.is_file() else None
     proc = run_cmd(command)
     write_text(dest / 'command.txt', ' '.join(command) + '\n')
     write_text(dest / 'stdout.txt', proc.stdout)
     write_text(dest / 'stderr.txt', proc.stderr)
     write_text(dest / 'exit_code.txt', f'{proc.returncode}\n')
-    results = REPO_ROOT / 'target' / 'run_results.json'
-    if results.is_file() and command and command[0] == 'dbt':
+    subcommand = next(
+        (part for part in command[1:] if not part.startswith('-')), None
+    ) if command and command[0] == 'dbt' else None
+    if (
+        subcommand in {'build', 'run', 'test', 'seed', 'snapshot', 'compile'}
+        and results.is_file()
+        and (prior_mtime is None or results.stat().st_mtime > prior_mtime)
+    ):
         summarise_run_results(results, dest / 'run_results.summary.json')
     print(f'exit={proc.returncode} artefacts={dest}')
     return proc.returncode

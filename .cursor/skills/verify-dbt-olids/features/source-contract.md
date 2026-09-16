@@ -23,7 +23,7 @@ Preconditions:
 - Check dependencies include PyYAML (`pip install -r requirements.txt` or the workflow's `uv pip install pyyaml snowflake-connector-python`).
 
 - **Parse contract.** Confirm the YAML loads. Run `control-dbt-olids doctor`. `sources_contract_ok=true` and `sources_contract` names `Data_Store_OLIDS_WNL.OLIDS_PSEUDO` with a non-zero table count.
-- **Live compare.** Gate as CI does. Run `control-dbt-olids cli --label contract-live -- python scripts/checks/compare_sources_to_information_schema.py`. Exit code `0` and stdout end with `0 difference(s)`. Exit code `1` is a real drift: keep the table/column names, not row data.
+- **Live compare.** Gate as CI does. Run `control-dbt-olids cli --label contract-live -- python scripts/checks/compare_sources_to_information_schema.py`. Exit code `0` and stdout end with `Summary:` reporting `0 difference(s)`. Treat exit code `1` as drift only when that Summary line reports a non-zero difference count; exit code `1` without a Summary line is a connection, authentication, or comparison failure, not drift. Keep the table/column names, not row data.
 - **Verbose compare.** Include matches. Run `control-dbt-olids cli --label contract-verbose -- python scripts/checks/compare_sources_to_information_schema.py --verbose`. Shared tables print `OK` with a column count.
 - **Proof.** Doctor output plus `stdout.txt` from the live command. The summary line is the observable end state. Do not regenerate `sources.yml` from verification.
 
