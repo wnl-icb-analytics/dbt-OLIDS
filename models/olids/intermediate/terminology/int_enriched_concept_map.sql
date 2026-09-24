@@ -216,6 +216,8 @@ ucum_folded AS (
     FROM ucum_map
     QUALIFY
         COUNT(DISTINCT target_code) OVER (PARTITION BY folded_code) = 1
+        AND COUNT(target_code) OVER (PARTITION BY folded_code)
+        = COUNT(*) OVER (PARTITION BY folded_code)
         AND ROW_NUMBER() OVER (
             PARTITION BY folded_code ORDER BY source_code
         ) = 1
