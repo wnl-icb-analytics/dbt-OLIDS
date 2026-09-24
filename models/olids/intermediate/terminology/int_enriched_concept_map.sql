@@ -11,7 +11,8 @@
 Enriched concept map: local source codes (EMIS/TPP and enumeration families)
 mapped to their canonical targets, one row per source concept - join-safe
 without any downstream dedupe. Snomed-as-source rows (OPCS, cluster maps) are excluded.
-Replaces retired SNOMED targets, repairs root targets and backfills missing EMIS mappings.
+Replaces retired SNOMED targets, repairs root targets, backfills missing EMIS mappings
+and bridges result units to the feed's UCUM map by code.
 */
 
 WITH sct_history AS (
@@ -190,6 +191,71 @@ local_backfills AS (
     WHERE cm.source_concept_id IS NULL
 ),
 
+ucum_map AS (
+    SELECT
+        source_code,
+        LOWER(TRIM(source_code)) AS folded_code,
+        target_concept_id,
+        target_code,
+        target_display,
+        target_system,
+        is_primary = 1 AS is_primary,
+        equivalence,
+        equivalence_rank,
+        last_updated_date
+    FROM {{ ref('conformed_concept_map') }}
+    WHERE source_system = 'EMISandTPP_NumericUnit_cs'
+),
+
+ucum_folded AS (
+    -- case variants can map to different targets (U/ml -> [arb'U], u/mL -> U/mL);
+    -- fold only where every variant agrees
+    SELECT
+        folded_code,
+        source_code
+    FROM ucum_map
+    QUALIFY
+        COUNT(DISTINCT target_code) OVER (PARTITION BY folded_code) = 1
+        AND COUNT(target_code) OVER (PARTITION BY folded_code)
+        = COUNT(*) OVER (PARTITION BY folded_code)
+        AND ROW_NUMBER() OVER (
+            PARTITION BY folded_code ORDER BY source_code
+        ) = 1
+),
+
+unit_code_bridge AS (
+    -- observations reference EMIS_and_TPP_NumericUnit_cs concepts, but the feed
+    -- keys its UCUM map on a separate EMISandTPP_NumericUnit_cs concept set.
+    -- Bridge by code: exact match first, then unambiguous case-insensitive match.
+    SELECT
+        src.concept_id AS source_concept_id,
+        src.code AS source_code,
+        src.display AS source_display,
+        src.system AS source_system,
+        ucum.target_concept_id,
+        ucum.target_code,
+        ucum.target_display,
+        ucum.target_system,
+        ucum.is_primary,
+        ucum.equivalence,
+        ucum.equivalence_rank,
+        ucum.last_updated_date
+    FROM {{ ref('landing_concept') }} AS src
+    LEFT JOIN ucum_map AS exact_match
+        ON src.code = exact_match.source_code
+    LEFT JOIN ucum_folded AS folded_match
+        ON LOWER(TRIM(src.code)) = folded_match.folded_code
+    INNER JOIN ucum_map AS ucum
+        ON
+            COALESCE(exact_match.source_code, folded_match.source_code)
+            = ucum.source_code
+    LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
+        ON src.concept_id = cm.source_concept_id
+    WHERE
+        src.system = 'EMIS_and_TPP_NumericUnit_cs'
+        AND cm.source_concept_id IS NULL
+),
+
 unmapped_passthrough AS (
     -- concepts with no CONCEPT_MAP row keep their source code and display so
     -- enumerations (date precision, address and contact types, statuses) stay
@@ -267,6 +333,23 @@ unioned AS (
         equivalence_rank,
         last_updated_date
     FROM local_backfills
+
+    UNION ALL
+
+    SELECT
+        source_concept_id,
+        source_code,
+        source_display,
+        source_system,
+        target_concept_id,
+        target_code,
+        target_display,
+        target_system,
+        is_primary,
+        equivalence,
+        equivalence_rank,
+        last_updated_date
+    FROM unit_code_bridge
 
     UNION ALL
 
