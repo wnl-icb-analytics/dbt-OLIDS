@@ -3411,7 +3411,7 @@ sources:
 - name: ukhfd_snomed
   database: UKHFD
   schema: '"SNOMED_Simplified_Model"'
-  description: UKHFD current SNOMED descendant-or-self hierarchy
+  description: UKHFD current SNOMED descendant-or-self hierarchy and descriptions
   tables:
   - name: dim_SCT_Transitive_Closures
     identifier: '"dim_SCT_Transitive_Closures"'
@@ -3420,3 +3420,18 @@ sources:
       data_type: NUMBER
     - name: SubtypeID
       data_type: NUMBER
+  - name: dim_SCT_Concept_Descriptions
+    identifier: '"dim_SCT_Concept_Descriptions"'
+    columns:
+    - name: Concept_ID
+      data_type: NUMBER
+    - name: Description_ID
+      data_type: NUMBER
+    - name: Term
+      data_type: TEXT
+    - name: Description_Type
+      data_type: TEXT
+    - name: Active_Description
+      data_type: BOOLEAN
+    - name: Created_Date
+      data_type: TIMESTAMP_NTZ
