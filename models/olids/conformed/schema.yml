@@ -14,7 +14,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -38,7 +38,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -79,7 +79,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -106,7 +106,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -128,7 +128,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -197,7 +197,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -236,7 +236,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -328,13 +328,14 @@ models:
       Filtered patient conformed view. Foundation for all patient-related filtering.
 
 
-      Excludes sensitive patients:
+      Excludes spine-sensitive and test patients:
 
       - is_spine_sensitive = FALSE
 
-      - is_confidential = FALSE
-
       - is_test_patient = FALSE
+
+
+      Confidential patients are kept; is_confidential passes through.
 
 
       Restricts to NCL practices (int_ncl_practices).
@@ -392,7 +393,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -412,7 +413,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
@@ -440,8 +441,8 @@ models:
       NULL lds_source_record_id.
 
 
-      Filtering: inherits NCL practice restriction and sensitive-patient
-      exclusions from conformed_patient.'
+      Filtering: inherits NCL practice restriction and spine-sensitive and
+      test patient exclusions from conformed_patient.'
     columns:
       - name: patient_id
         tests:
@@ -513,7 +514,7 @@ models:
 
       Applied filters:
 
-      - Patient filtering: Excludes sensitive patients (is_spine_sensitive=FALSE, is_confidential=FALSE, is_test_patient=FALSE)
+      - Patient filtering: Excludes spine-sensitive and test patients (is_spine_sensitive=FALSE, is_test_patient=FALSE)
 
       - Practice filtering: Restricts to NCL practices only
 
