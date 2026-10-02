@@ -1,0 +1,17 @@
+dbt_ok=true
+dbt_version=dbt-fusion 2.0.0-preview.218
+packages_ok=true
+profiles_ok=true
+sources_contract_ok=true
+sources_contract=Data_Store_OLIDS_WNL.OLIDS_PSEUDO tables=34
+snowflake_account_set=false
+snowflake_user_set=false
+snowflake_role_set=false
+snowflake_warehouse_set=false
+snowflake_target_database_set=false
+auth_material=missing
+debug_ok=false
+debug_detail=skipped
+project_ok=true
+warehouse_ok=false
+worth_driving=false
