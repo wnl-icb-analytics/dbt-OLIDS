@@ -26,10 +26,20 @@ eligible_codes AS (
     SELECT h.code, h.active_code, 'unambiguous_historical_successor' AS classification_basis
     FROM historical_successors AS h
     INNER JOIN current_codes AS c ON h.active_code = c.code
+),
+-- Fallback label for concepts UKHFD has loaded before the NHSD release catches up.
+-- UKHFD can hold several active preferred terms per concept; keep the newest.
+ukhfd_preferred_terms AS (
+    SELECT "Concept_ID" AS code, "Term" AS code_name
+    FROM {{ source('ukhfd_snomed', 'dim_SCT_Concept_Descriptions') }}
+    WHERE "Description_Type" = 'Preferred Term' AND "Active_Description"
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY "Concept_ID" ORDER BY "Created_Date" DESC, "Description_ID" DESC
+    ) = 1
 )
 SELECT
     c.code::VARCHAR AS code,
-    d."Term" AS code_name,
+    COALESCE(d."Term", u.code_name) AS code_name,
     c.active_code::VARCHAR AS active_code,
     c.classification_basis
 FROM eligible_codes AS c
@@ -37,3 +47,5 @@ LEFT JOIN {{ source('nhsd_snomed', 'SCT_Description') }} AS d
     ON c.code = d."ConceptId"
     AND d."Active" = TRUE
     AND d."DescriptionType" = 'P'
+LEFT JOIN ukhfd_preferred_terms AS u
+    ON c.code = u.code
