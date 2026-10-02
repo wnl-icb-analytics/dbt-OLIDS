@@ -6,7 +6,8 @@
 
 /*
 Conformed filtered patient view.
-Excludes sensitive, confidential and test patients, then restricts to NCL practices.
+Excludes spine-sensitive and test patients, then restricts to NCL practices.
+Confidential patients are kept; is_confidential passes through for consumers.
 
 sk_patient_id ownership: the feed can hand one sk to several persons. The PDS
 trace on PERSON (submitted vs matched NHS number) settles who owns it. Rows
@@ -113,7 +114,6 @@ patients AS (
         TRY_TO_NUMBER(src.sk_patient_id) IS NOT NULL
         -- strict = FALSE: rows with NULL flags are excluded (unknown sensitivity treated as sensitive)
         AND src.is_spine_sensitive = FALSE
-        AND src.is_confidential = FALSE
         AND src.is_test_patient = FALSE
     -- the feed occasionally ships exact duplicate patient rows; keep one deterministically
     QUALIFY ROW_NUMBER() OVER (

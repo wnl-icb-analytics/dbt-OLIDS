@@ -23,7 +23,7 @@ Builds two data layers:
 **Conformed Layer**
 Filtered views of OLIDS source tables applying:
 - NCL practice filtering
-- Sensitive patient exclusion
+- Spine-sensitive and test patient exclusion
 - Concept mapping for clinical codes
 
 **Stable Layer**
