@@ -221,7 +221,9 @@ sources:
     - name: is_primary
       data_type: NUMBER
     - name: last_updated_date
-      data_type: DATE
+      data_type: TIMESTAMP_NTZ
+    - name: present_in_terminology_server
+      data_type: NUMBER
   - name: DIAGNOSTIC_ORDER
     identifier: '"DIAGNOSTIC_ORDER"'
     columns:

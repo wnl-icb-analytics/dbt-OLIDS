@@ -131,7 +131,7 @@ missing_emis_mappings AS (
         TRUE AS is_primary,
         'emis-reference-backfill' AS equivalence,
         1 AS equivalence_rank,
-        NULL::DATE AS last_updated_date
+        NULL::TIMESTAMP_NTZ AS last_updated_date
     FROM emis_clinical AS emis_ref
     LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
         ON emis_ref.concept_id = cm.source_concept_id
@@ -173,7 +173,7 @@ local_backfills AS (
         TRUE AS is_primary,
         'local-backfill' AS equivalence,
         1 AS equivalence_rank,
-        NULL::DATE AS last_updated_date
+        NULL::TIMESTAMP_NTZ AS last_updated_date
     FROM {{ ref('landing_concept') }} AS src
     INNER JOIN (
         {% for m in local_mappings %}
@@ -319,7 +319,7 @@ unmapped_passthrough AS (
         TRUE AS is_primary,
         'unmapped-passthrough' AS equivalence,
         99 AS equivalence_rank,
-        NULL::DATE AS last_updated_date
+        NULL::TIMESTAMP_NTZ AS last_updated_date
     FROM {{ ref('landing_concept') }} AS src
     LEFT JOIN {{ ref('conformed_concept_map') }} AS cm
         ON src.concept_id = cm.source_concept_id
