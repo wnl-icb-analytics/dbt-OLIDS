@@ -1,0 +1,12 @@
+test_build_run_context_rejects_invalid_attempt (test_audit_history.AuditHistoryTests.test_build_run_context_rejects_invalid_attempt) ... ok
+test_build_run_context_uses_github_identity (test_audit_history.AuditHistoryTests.test_build_run_context_uses_github_identity) ... ok
+test_insert_attempt_history_is_idempotent_per_attempt (test_audit_history.AuditHistoryTests.test_insert_attempt_history_is_idempotent_per_attempt) ... ok
+test_find_unadvanced_requires_strictly_newer_watermarks (test_check_source_watermarks.SourceWatermarkTests.test_find_unadvanced_requires_strictly_newer_watermarks) ... ok
+test_matches_previous_requires_the_full_watermark_set (test_check_source_watermarks.SourceWatermarkTests.test_matches_previous_requires_the_full_watermark_set) ... ok
+test_raises_on_error_response (test_deploy_data_lake_views.CallProcedureTests.test_raises_on_error_response) ... ok
+test_returns_valid_response (test_deploy_data_lake_views.CallProcedureTests.test_returns_valid_response) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.000s
+
+OK
