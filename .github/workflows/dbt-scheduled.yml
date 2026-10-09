@@ -32,9 +32,7 @@ jobs:
       SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE__USERNAME }}
       SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: ${{ secrets.SNOWFLAKE__PASSPHRASE }}
       SNOWFLAKE_ROLE: DBT_ADMIN
-      # Adaptive warehouse: Snowflake sizes each query up to XL. Monthly full
-      # refreshes of the longitudinal models still switch to WH_WNL_OLIDS_L.
-      SNOWFLAKE_WAREHOUSE: WH_WNL_ENGINEERING_ADAPTIVE
+      SNOWFLAKE_WAREHOUSE: WH_WNL_OLIDS_L
       SNOWFLAKE_TARGET_DATABASE: OLIDS_ENGINEERING
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
