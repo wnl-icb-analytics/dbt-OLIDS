@@ -48,13 +48,6 @@ WITH new_counts AS (
 
     UNION ALL
 
-    SELECT 'EPISODE_OF_CARE_V2' AS table_name, publisher_organisation_code AS practice_code, COUNT(*) AS new_rows
-    FROM {TARGET_DATABASE}.LANDING."EPISODE_OF_CARE_V2"
-    WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
-    GROUP BY publisher_organisation_code
-
-    UNION ALL
-
     SELECT 'MEDICATION_ORDER' AS table_name, publisher_organisation_code AS practice_code, COUNT(*) AS new_rows
     FROM {TARGET_DATABASE}.LANDING."MEDICATION_ORDER"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
@@ -170,13 +163,6 @@ legacy_counts AS (
     UNION ALL
 
     SELECT 'EPISODE_OF_CARE' AS table_name, publisher_organisation_code AS practice_code, COUNT(*) AS legacy_rows
-    FROM "Data_Store_OLIDS"."OLIDS_COMMON"."EPISODE_OF_CARE"
-    WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
-    GROUP BY publisher_organisation_code
-
-    UNION ALL
-
-    SELECT 'EPISODE_OF_CARE_V2' AS table_name, publisher_organisation_code AS practice_code, COUNT(*) AS legacy_rows
     FROM "Data_Store_OLIDS"."OLIDS_COMMON"."EPISODE_OF_CARE"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
     GROUP BY publisher_organisation_code

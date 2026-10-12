@@ -45,13 +45,6 @@ WITH per_practice AS (
 
     UNION ALL
 
-    SELECT 'EPISODE_OF_CARE_V2' AS table_name, publisher_organisation_code AS practice_code, COUNT(*) AS row_count
-    FROM {TARGET_DATABASE}.LANDING."EPISODE_OF_CARE_V2"
-    WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL
-    GROUP BY publisher_organisation_code
-
-    UNION ALL
-
     SELECT 'MEDICATION_ORDER' AS table_name, publisher_organisation_code AS practice_code, COUNT(*) AS row_count
     FROM {TARGET_DATABASE}.LANDING."MEDICATION_ORDER"
     WHERE lds_is_deleted = FALSE AND publisher_organisation_code IS NOT NULL

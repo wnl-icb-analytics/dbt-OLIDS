@@ -429,49 +429,6 @@ sources:
       data_type: TEXT
     - name: lds_transform_datetime
       data_type: TIMESTAMP_LTZ
-  - name: EPISODE_OF_CARE_V2
-    identifier: '"EPISODE_OF_CARE_V2"'
-    columns:
-    - name: id
-      data_type: UUID
-    - name: lds_source_record_id
-      data_type: UUID
-    - name: patient_id
-      data_type: UUID
-    - name: person_id
-      data_type: UUID
-    - name: publisher_organisation_id
-      data_type: UUID
-    - name: managing_organisation_id
-      data_type: UUID
-    - name: author_organisation_id
-      data_type: UUID
-    - name: managing_organisation_code
-      data_type: TEXT
-    - name: usual_practitioner_in_role_id
-      data_type: UUID
-    - name: episode_of_care_start_date
-      data_type: DATE
-    - name: episode_of_care_end_date
-      data_type: DATE
-    - name: type
-      data_type: TEXT
-    - name: episode_type_source_concept_id
-      data_type: UUID
-    - name: status
-      data_type: TEXT
-    - name: episode_status_source_concept_id
-      data_type: UUID
-    - name: lds_is_deleted
-      data_type: BOOLEAN
-    - name: publisher_organisation_code
-      data_type: TEXT
-    - name: source_extraction_date
-      data_type: DATE
-    - name: lds_source_dataset
-      data_type: TEXT
-    - name: lds_transform_datetime
-      data_type: TIMESTAMP_LTZ
   - name: LOCATION
     identifier: '"LOCATION"'
     columns:

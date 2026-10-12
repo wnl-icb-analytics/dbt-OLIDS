@@ -24,7 +24,6 @@ data-to-data: no CURRENT_DATE. Table-level rollups live in FRESHNESS_SUMMARY.
     {'name': 'encounter', 'activity': 'clinical_effective_date'},
     {'name': 'appointment', 'activity': 'start_date'},
     {'name': 'episode_of_care', 'activity': 'episode_of_care_start_date'},
-    {'name': 'episode_of_care_v2', 'activity': 'episode_of_care_start_date'},
     {'name': 'referral_request', 'activity': 'clinical_effective_date'},
     {'name': 'procedure_request', 'activity': 'clinical_effective_date'},
     {'name': 'diagnostic_order', 'activity': 'clinical_effective_date'},
