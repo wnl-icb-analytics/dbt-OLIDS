@@ -58,7 +58,12 @@ source venv/Scripts/activate && python scripts/checks/compare_sources_to_informa
 
 Compares the `olids_pseudo` source in `models/sources.yml` against live
 `INFORMATION_SCHEMA`. Run it after upstream releases to spot contract drift, and
-regenerate `sources.yml` when it reports differences. Exits `1` on any difference.
+regenerate `sources.yml` when needed. Missing declared tables and column differences
+exit `1`. Undeclared live tables warn without blocking the build.
+
+The scheduled workflow opens one GitHub issue per undeclared table. It reuses an
+open issue without repeat comments. Issues stay open for review, even if the table
+later disappears. `--report-json <path>` writes the table list for issue reporting.
 
 ## Audit history
 

@@ -2,8 +2,8 @@
 """Compare the olids_pseudo dbt source contract with live Snowflake.
 
 Parses models/sources.yml, queries INFORMATION_SCHEMA for the same database/schema,
-and reports tables and columns that drift. Exit code 1 on any difference, so it can
-gate CI. Run after upstream releases; regenerate sources.yml when it reports drift.
+and reports tables and columns that drift. Undeclared tables warn; missing tables
+and column differences exit 1. Run after upstream releases to spot contract drift.
 
 Usage:
     python scripts/checks/compare_sources_to_information_schema.py
@@ -11,7 +11,9 @@ Usage:
 """
 
 import argparse
+import json
 import sys
+from pathlib import Path
 
 import yaml
 
@@ -67,6 +69,7 @@ def fetch_live(conn, database, schema):
 def main():
     parser = argparse.ArgumentParser(description='Compare sources.yml to live Snowflake schema')
     parser.add_argument('--verbose', action='store_true', help='Also list matching tables')
+    parser.add_argument('--report-json', type=Path, help='Write undeclared tables for issue reporting')
     args = parser.parse_args()
 
     database, schema, spec = parse_sources()
@@ -90,10 +93,21 @@ def main():
         for t in only_spec_tables:
             print(f'  - {t}')
     if only_live_tables:
-        diffs += len(only_live_tables)
-        print('\nTables live but not in sources.yml:')
+        print('\nWARNING: Tables live but not in sources.yml:')
         for t in only_live_tables:
             print(f'  - {t}')
+
+    if args.report_json:
+        args.report_json.parent.mkdir(parents=True, exist_ok=True)
+        args.report_json.write_text(
+            json.dumps({
+                'source': SOURCE_NAME,
+                'database': database,
+                'schema': schema,
+                'undeclared_tables': only_live_tables,
+            }, indent=2) + '\n',
+            encoding='utf-8',
+        )
 
     for t in shared:
         s_cols, l_cols = spec[t], live[t]
@@ -120,7 +134,7 @@ def main():
 
     print(f'\nSummary: {len(only_spec_tables)} spec-only table(s), '
           f'{len(only_live_tables)} live-only table(s), '
-          f'{len(shared)} shared table(s), {diffs} difference(s).')
+          f'{len(shared)} shared table(s), {diffs} blocking difference(s).')
     return 1 if diffs else 0
 
 

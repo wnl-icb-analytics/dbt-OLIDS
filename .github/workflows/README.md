@@ -25,6 +25,10 @@ workflow verifies that every stable object has one DPM-owned data-lake view.
 It then reconciles inherited object comments without replacing unchanged views.
 The watermark is recorded only after publication and verification succeed.
 
-The workflow fails before dbt when the live source schema differs from
-`models/sources.yml`. Scheduled failures create or update one GitHub issue and
-the next successful scheduled run closes it.
+Missing declared source tables and column differences fail the workflow before
+dbt. Undeclared upstream tables warn and open one GitHub issue per table, on both
+scheduled and manual runs. Existing open issues prevent repeat notifications.
+Issue reporting failures do not block dbt.
+
+Scheduled build failures create or update one separate GitHub issue. The next
+successful scheduled run closes that failure issue.

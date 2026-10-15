@@ -59,7 +59,15 @@ jobs:
           echo "SNOWFLAKE_PRIVATE_KEY_PATH=$HOME/.snowflake/rsa_key.p8" >> "$GITHUB_ENV"
 
       - name: Check source schema contract
-        run: python scripts/checks/compare_sources_to_information_schema.py
+        run: python scripts/checks/compare_sources_to_information_schema.py --report-json target/source_schema_report.json
+
+      - name: Report undeclared source tables
+        if: ${{ !cancelled() && hashFiles('target/source_schema_report.json') != '' }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python .github/scripts/report_undeclared_source_tables.py target/source_schema_report.json
 
       - name: Wait for a new source snapshot
         id: watermark
