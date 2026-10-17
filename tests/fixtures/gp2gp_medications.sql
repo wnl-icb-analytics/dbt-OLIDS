@@ -50,4 +50,11 @@ FROM VALUES
     ('00000000-0000-0000-0000-000000000037', -22, 'SYN_missing_concept_A', NULL, '2020-01-01', '2020-01-01', 56, FALSE, 'observation', 'SYN_PRACTICE'),
     ('00000000-0000-0000-0000-000000000038', -22, 'SYN_missing_concept_B', NULL, '2020-01-01', '2020-01-05', 56, FALSE, 'observation', 'SYN_PRACTICE'),
     ('00000000-0000-0000-0000-000000000039', -23, 'SYN_entity_boundary_A', 'SYN_entity_boundary', '2020-01-01', '2020-01-01', 0, FALSE, 'observation', 'SYN_PRACTICE'),
-    ('00000000-0000-0000-0000-000000000040', -23, 'SYN_entity_boundary_B', 'SYN_entity_boundary', '2020-01-01', '2020-01-05', 0, FALSE, 'allergy_intolerance', 'SYN_PRACTICE')
+    ('00000000-0000-0000-0000-000000000040', -23, 'SYN_entity_boundary_B', 'SYN_entity_boundary', '2020-01-01', '2020-01-05', 0, FALSE, 'allergy_intolerance', 'SYN_PRACTICE'),
+    ('00000000-0000-0000-0000-000000000041', -24, 'SYN_return_A', 'SYN_return', '2020-01-01', '2020-01-01', 56, FALSE, 'observation', 'SYN_PRACTICE'),
+    ('00000000-0000-0000-0000-000000000042', -24, 'SYN_return_B', 'SYN_return', '2020-01-01', '2020-01-05', 56, FALSE, 'observation', 'SYN_PRACTICE'),
+    ('00000000-0000-0000-0000-000000000043', -24, 'SYN_return_A', 'SYN_return', '2020-01-01', '2020-01-08', 56, FALSE, 'observation', 'SYN_PRACTICE'),
+    ('00000000-0000-0000-0000-000000000044', -25, 'SYN_null_value_A', 'SYN_null_value', '2020-01-01', '2020-01-01', NULL, FALSE, 'observation', 'SYN_PRACTICE'),
+    ('00000000-0000-0000-0000-000000000045', -25, 'SYN_null_value_B', 'SYN_null_value', '2020-01-01', '2020-01-05', NULL, FALSE, 'observation', 'SYN_PRACTICE'),
+    ('00000000-0000-0000-0000-000000000046', -26, 'SYN_start_day_A', 'SYN_start_day', '2020-02-01', '2020-02-01', 56, FALSE, 'observation', 'SYN_PRACTICE'),
+    ('00000000-0000-0000-0000-000000000047', -26, 'SYN_start_day_B', 'SYN_start_day', '2020-02-01', '2020-02-02', 56, FALSE, 'observation', 'SYN_PRACTICE')

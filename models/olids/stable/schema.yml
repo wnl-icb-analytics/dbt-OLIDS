@@ -151,6 +151,9 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
+          This flag is a timing signature, and a small share may be the practice's own
+          entries, such as new-patient intake checks dated just before registration
+          or entries on records re-registered at the same practice.
   - name: stable_national_data_opt_out
     description: Stable national_data_opt_out table. Due for retirement; use stable_patient_opt_out.
     columns:
@@ -221,6 +224,9 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
+          This flag is a timing signature, and a small share may be the practice's own
+          entries, such as new-patient intake checks dated just before registration
+          or entries on records re-registered at the same practice.
   - name: stable_organisation
     description: Stable organisation table.
     columns:

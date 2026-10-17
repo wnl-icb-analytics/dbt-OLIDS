@@ -77,7 +77,7 @@
         {{ gp2gp_registration_starts() }}
     ),
 
-    eligible_rows AS (
+    candidate_rows AS (
         SELECT
             src.id,
             src.person_id,
@@ -85,13 +85,59 @@
             src.mapped_concept_code,
             src.clinical_effective_date AS clinical_date,
             src.date_recorded,
-            src.{{ match_column }} AS match_value,
+            src.{{ match_column }} AS match_value
             {% for column in extra_partition_columns %}
-                src.{{ column }},
+                , src.{{ column }}
             {% endfor %}
-            r.registration_start_date
         FROM {{ ref(model) }} AS src
+        INNER JOIN multi_record_persons USING (person_id)
+        WHERE
+            NOT COALESCE(src.lds_is_deleted, FALSE)
+            AND src.clinical_effective_date IS NOT NULL
+            AND src.mapped_concept_code IS NOT NULL
+    ),
+
+    multi_record_keys AS (
+        -- Only partitions spanning patient records can contain a transfer copy.
+        SELECT
+            person_id, mapped_concept_code, clinical_date, match_value
+            {% for column in extra_partition_columns %}, {{ column }}{% endfor %}
+        FROM candidate_rows
+        GROUP BY
+            person_id, mapped_concept_code, clinical_date, match_value
+            {% for column in extra_partition_columns %}, {{ column }}{% endfor %}
+        HAVING MIN(patient_id) <> MAX(patient_id)
+    ),
+
+    window_rows AS (
+        SELECT c.*, r.registration_start_date
+        FROM candidate_rows AS c
+        INNER JOIN multi_record_keys AS k
+            ON
+                c.person_id = k.person_id
+                AND c.mapped_concept_code = k.mapped_concept_code
+                AND c.clinical_date = k.clinical_date
+                AND EQUAL_NULL(c.match_value, k.match_value)
+                {% for column in extra_partition_columns %}
+                    AND EQUAL_NULL(c.{{ column }}, k.{{ column }})
+                {% endfor %}
         LEFT JOIN registration_starts AS r
+            ON
+                c.patient_id = r.patient_id
+                AND c.date_recorded::DATE >= r.registration_start_date
+                AND c.date_recorded::DATE < r.next_registration_start_date
+    ),
+
+    copies AS (
+        {{ gp2gp_copy_flags('window_rows', extra_partition_columns) }}
+    ),
+
+    imports AS (
+        -- Inferred filing window, including records with no retained original.
+        -- A separate scan avoids buffering every eligible event for both branches.
+        SELECT src.id
+        FROM {{ ref(model) }} AS src
+        INNER JOIN registration_starts AS r
             ON
                 src.patient_id = r.patient_id
                 AND src.date_recorded::DATE >= r.registration_start_date
@@ -100,25 +146,8 @@
             NOT COALESCE(src.lds_is_deleted, FALSE)
             AND src.person_id IS NOT NULL
             AND src.clinical_effective_date IS NOT NULL
-    ),
-
-    multi_record_rows AS (
-        SELECT eligible_rows.*
-        FROM eligible_rows
-        INNER JOIN multi_record_persons USING (person_id)
-    ),
-
-    copies AS (
-        {{ gp2gp_copy_flags('multi_record_rows', extra_partition_columns) }}
-    ),
-
-    imports AS (
-        -- Inferred filing window, including records with no retained original.
-        SELECT id
-        FROM eligible_rows
-        WHERE
-            clinical_date < registration_start_date
-            AND date_recorded::DATE <= DATEADD('day', 30, registration_start_date)
+            AND src.clinical_effective_date < r.registration_start_date
+            AND src.date_recorded::DATE <= DATEADD('day', 30, r.registration_start_date)
     )
 
     SELECT

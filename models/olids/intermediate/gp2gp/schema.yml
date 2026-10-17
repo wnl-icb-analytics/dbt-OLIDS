@@ -100,6 +100,9 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
+          This flag is a timing signature, and a small share may be the practice's own
+          entries, such as new-patient intake checks dated just before registration
+          or entries on records re-registered at the same practice.
 
   - name: int_observation_gp2gp_flags
     description: >-
@@ -107,7 +110,8 @@ models:
       OLIDS patient spine. One row per flagged ID; unflagged IDs are absent. Live rows
       need a person and clinical date. Copies additionally need a mapped concept and
       multiple patient records per person. Matching uses person, mapped concept,
-      clinical date and result value and source entity, retaining null values as a matching group.
+      clinical date, result value and source entity, retaining null values
+      as a matching group.
       The first recorded timestamp wins, with patient ID and ID as tie-breakers.
       Copies require another patient record, strictly later non-null recording and
       either a lag over one day or an event before the record's latest Regular
@@ -150,3 +154,6 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
+          This flag is a timing signature, and a small share may be the practice's own
+          entries, such as new-patient intake checks dated just before registration
+          or entries on records re-registered at the same practice.

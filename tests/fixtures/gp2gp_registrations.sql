@@ -15,4 +15,5 @@ FROM VALUES
     ('SYN_day0_A', '2020-02-01', 'Regular', FALSE),
     ('SYN_day30_A', '2020-02-01', 'Regular', FALSE),
     ('SYN_event_on_start_A', '2020-02-01', 'Regular', FALSE),
-    ('SYN_before_start_A', '2020-02-01', 'Regular', FALSE)
+    ('SYN_before_start_A', '2020-02-01', 'Regular', FALSE),
+    ('SYN_start_day_B', '2020-02-01', 'Regular', FALSE)

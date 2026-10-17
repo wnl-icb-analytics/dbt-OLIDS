@@ -40,4 +40,10 @@ FROM VALUES
     ('SYN_missing_concept_A', -22),
     ('SYN_missing_concept_B', -22),
     ('SYN_entity_boundary_A', -23),
-    ('SYN_entity_boundary_B', -23)
+    ('SYN_entity_boundary_B', -23),
+    ('SYN_return_A', -24),
+    ('SYN_return_B', -24),
+    ('SYN_null_value_A', -25),
+    ('SYN_null_value_B', -25),
+    ('SYN_start_day_A', -26),
+    ('SYN_start_day_B', -26)
