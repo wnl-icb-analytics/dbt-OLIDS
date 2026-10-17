@@ -158,3 +158,48 @@ models:
             max_value: 30
           config:
             severity: warn
+
+  - name: audit_gp2gp
+    description: >-
+      Inferred GP2GP copy and import counts and percentages of all non-deleted rows
+      in each NCL EMIS conformed table, including rows without a person or date in
+      the denominator. One row per table_name and metric_name; practice_code,
+      value_text and value_date are null. Order exceptions count positive durations
+      other than 28 and non-zero costs on inferred imports; these values are retained.
+      Import counts cover all persons, including those with one patient record.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [table_name, metric_name]
+      - audit_metric_within_band:
+          arguments:
+            table_name: MEDICATION_ORDER
+            metric: gp2gp_copy_pct
+            min_value: 4
+            max_value: 14
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            table_name: MEDICATION_STATEMENT
+            metric: gp2gp_copy_pct
+            min_value: 4
+            max_value: 14
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            table_name: OBSERVATION
+            metric: gp2gp_copy_pct
+            min_value: 3
+            max_value: 10
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            table_name: MEDICATION_ORDER
+            metric: gp2gp_import_pct
+            min_value: 10
+            max_value: 30
+          config:
+            severity: warn

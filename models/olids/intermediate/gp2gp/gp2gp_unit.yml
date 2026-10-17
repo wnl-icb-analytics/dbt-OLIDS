@@ -1,0 +1,117 @@
+version: 2
+
+unit_tests:
+  - name: gp2gp_medication_order_chronology_registration_and_boundaries
+    description: >-
+      Synthetic lag, contemporaneous entry, registration-day filing, same-record
+      repeats, quantity conflicts, A to B to C, deletion and amendment, single-record
+      imports, ties, missing chronology, re-registration, same-practice ID changes,
+      temporary residents, missing concepts and inclusive day-zero/day-30 boundaries.
+      Observation source entities must not match each other.
+    model: int_medication_order_gp2gp_flags
+    given:
+      - input: ref('conformed_medication_order')
+        format: sql
+        fixture: gp2gp_medications
+      - input: ref('conformed_patient')
+        format: sql
+        fixture: gp2gp_patients
+      - input: ref('conformed_episode_of_care')
+        format: sql
+        fixture: gp2gp_registrations
+    expect:
+      rows:
+        - {id: '00000000-0000-0000-0000-000000000002', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000001', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000006', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000005', is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000012', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000011', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000013', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000011', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000016', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000026', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000028', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000027', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000030', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000029', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000031', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000032', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000040', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000039', is_gp2gp_import: false}
+  - name: gp2gp_medication_statement_chronology_registration_and_boundaries
+    description: >-
+      Synthetic lag, contemporaneous entry, registration-day filing, same-record
+      repeats, quantity conflicts, A to B to C, deletion and amendment, single-record
+      imports, ties, missing chronology, re-registration, same-practice ID changes,
+      temporary residents, missing concepts and inclusive day-zero/day-30 boundaries.
+      Observation source entities must not match each other.
+    model: int_medication_statement_gp2gp_flags
+    given:
+      - input: ref('conformed_medication_statement')
+        format: sql
+        fixture: gp2gp_medications
+      - input: ref('conformed_patient')
+        format: sql
+        fixture: gp2gp_patients
+      - input: ref('conformed_episode_of_care')
+        format: sql
+        fixture: gp2gp_registrations
+    expect:
+      rows:
+        - {id: '00000000-0000-0000-0000-000000000002', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000001', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000006', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000005', is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000012', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000011', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000013', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000011', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000016', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000026', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000028', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000027', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000030', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000029', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000031', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000032', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000040', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000039', is_gp2gp_import: false}
+  - name: gp2gp_observation_chronology_registration_and_boundaries
+    description: >-
+      Synthetic lag, contemporaneous entry, registration-day filing, same-record
+      repeats, quantity conflicts, A to B to C, deletion and amendment, single-record
+      imports, ties, missing chronology, re-registration, same-practice ID changes,
+      temporary residents, missing concepts and inclusive day-zero/day-30 boundaries.
+      Observation source entities must not match each other.
+    model: int_observation_gp2gp_flags
+    given:
+      - input: ref('conformed_observation')
+        format: sql
+        fixture: gp2gp_observation
+      - input: ref('conformed_patient')
+        format: sql
+        fixture: gp2gp_patients
+      - input: ref('conformed_episode_of_care')
+        format: sql
+        fixture: gp2gp_registrations
+    expect:
+      rows:
+        - {id: '00000000-0000-0000-0000-000000000002', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000001', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000006', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000005', is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000012', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000011', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000013', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000011', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000016', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000026', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000028', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000027', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000030', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000029', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000031', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000032', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+  - name: gp2gp_order_cleaning_preserves_sources_and_non_defaults
+    description: Synthetic non-positive durations, imported defaults, contradictory non-defaults, copy-only values and null source values.
+    model: stable_medication_order
+    given:
+      - input: ref('conformed_medication_order')
+        format: sql
+        fixture: gp2gp_order_values
+      - input: ref('int_medication_order_gp2gp_flags')
+        format: sql
+        fixture: gp2gp_order_value_flags
+    expect:
+      rows:
+        - {id: '00000000-0000-0000-0000-000000000001', duration_days: null, estimated_cost: 5, source_duration_days: 0, source_estimated_cost: 5, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000002', duration_days: null, estimated_cost: 5, source_duration_days: -7, source_estimated_cost: 5, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000003', duration_days: 56, estimated_cost: 5, source_duration_days: 56, source_estimated_cost: 5, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000004', duration_days: null, estimated_cost: null, source_duration_days: 28, source_estimated_cost: 0, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000005', duration_days: 56, estimated_cost: 5, source_duration_days: 56, source_estimated_cost: 5, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000006', duration_days: 28, estimated_cost: 0, source_duration_days: 28, source_estimated_cost: 0, is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000090', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000007', duration_days: null, estimated_cost: 5, source_duration_days: 0, source_estimated_cost: 5, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000008', duration_days: 400, estimated_cost: -5, source_duration_days: 400, source_estimated_cost: -5, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000009', duration_days: null, estimated_cost: null, source_duration_days: null, source_estimated_cost: null, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000010', duration_days: 56, estimated_cost: null, source_duration_days: 56, source_estimated_cost: 0, is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000090', is_gp2gp_import: true}
