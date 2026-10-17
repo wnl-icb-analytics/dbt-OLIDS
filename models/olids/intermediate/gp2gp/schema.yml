@@ -10,9 +10,9 @@ models:
       clinical date and quantity value, retaining null values as a matching group.
       The first recorded timestamp wins, with patient ID and ID as tie-breakers.
       Copies require another patient record, strictly later non-null recording and
-      either a lag over one day or an event before the record's latest Regular
+      either a lag over one day or an event before the latest Regular
       registration start on or before recording. Imports need an event before that
-      start and recording within 30 days, inclusive, on any person's record.
+      start and recording within 30 days, inclusive, on any record of a person.
       Episode ends are not used. Ties and undated rows cannot be copies. Same-practice
       record changes can qualify. Status and episodicity can differ; no fields are
       merged. Rewritten registrations, amended matching fields and retention can
@@ -60,9 +60,9 @@ models:
       clinical date and quantity value, retaining null values as a matching group.
       The first recorded timestamp wins, with patient ID and ID as tie-breakers.
       Copies require another patient record, strictly later non-null recording and
-      either a lag over one day or an event before the record's latest Regular
+      either a lag over one day or an event before the latest Regular
       registration start on or before recording. Imports need an event before that
-      start and recording within 30 days, inclusive, on any person's record.
+      start and recording within 30 days, inclusive, on any record of a person.
       Episode ends are not used. Ties and undated rows cannot be copies. Same-practice
       record changes can qualify. Status and episodicity can differ; no fields are
       merged. Rewritten registrations, amended matching fields and retention can
@@ -100,8 +100,8 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
-          This flag is a timing signature, and a small share may be the practice's own
-          entries, such as new-patient intake checks dated just before registration
+          This flag is a timing signature, and a small share may be entries made by the practice
+          itself, such as new-patient intake checks dated just before registration
           or entries on records re-registered at the same practice.
 
   - name: int_observation_gp2gp_flags
@@ -114,9 +114,9 @@ models:
       as a matching group.
       The first recorded timestamp wins, with patient ID and ID as tie-breakers.
       Copies require another patient record, strictly later non-null recording and
-      either a lag over one day or an event before the record's latest Regular
+      either a lag over one day or an event before the latest Regular
       registration start on or before recording. Imports need an event before that
-      start and recording within 30 days, inclusive, on any person's record.
+      start and recording within 30 days, inclusive, on any record of a person.
       Episode ends are not used. Ties and undated rows cannot be copies. Same-practice
       record changes can qualify. Status and episodicity can differ; no fields are
       merged. Rewritten registrations, amended matching fields and retention can
@@ -154,6 +154,6 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
-          This flag is a timing signature, and a small share may be the practice's own
-          entries, such as new-patient intake checks dated just before registration
+          This flag is a timing signature, and a small share may be entries made by the practice
+          itself, such as new-patient intake checks dated just before registration
           or entries on records re-registered at the same practice.

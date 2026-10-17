@@ -151,8 +151,8 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
-          This flag is a timing signature, and a small share may be the practice's own
-          entries, such as new-patient intake checks dated just before registration
+          This flag is a timing signature, and a small share may be entries made by
+          the practice itself, such as new-patient intake checks dated just before registration
           or entries on records re-registered at the same practice.
   - name: stable_national_data_opt_out
     description: Stable national_data_opt_out table. Due for retirement; use stable_patient_opt_out.
@@ -176,7 +176,7 @@ models:
       join the original entity table. Counts are source records, not deduplicated
       clinical actions. is_gp2gp_copy marks inferred transferred copies within the
       same source entity; mutable problem status and episodicity may differ from the
-      representative. Copy filtering keeps the representative's state. Allergy clinical
+      representative. Copy filtering keeps the state of the representative. Allergy clinical
       and verification status are unavailable.
       Missing fields retain nulls, including measurement fields on added records.
       The population follows conformed patient filtering and current NCL practices.
@@ -224,8 +224,8 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
-          This flag is a timing signature, and a small share may be the practice's own
-          entries, such as new-patient intake checks dated just before registration
+          This flag is a timing signature, and a small share may be entries made by
+          the practice itself, such as new-patient intake checks dated just before registration
           or entries on records re-registered at the same practice.
   - name: stable_organisation
     description: Stable organisation table.
