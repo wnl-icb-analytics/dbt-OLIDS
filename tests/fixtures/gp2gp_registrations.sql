@@ -16,4 +16,10 @@ FROM VALUES
     ('SYN_day30_A', '2020-02-01', 'Regular', FALSE),
     ('SYN_event_on_start_A', '2020-02-01', 'Regular', FALSE),
     ('SYN_before_start_A', '2020-02-01', 'Regular', FALSE),
-    ('SYN_start_day_B', '2020-02-01', 'Regular', FALSE)
+    ('SYN_start_day_B', '2020-02-01', 'Regular', FALSE),
+    ('SYN_DELETED_REG', '2020-02-01', 'Regular', TRUE),
+    ('SYN_IMPORT_NO_CONCEPT', '2020-02-01', 'Regular', FALSE),
+    ('SYN_IMPORT_NO_PERSON', '2020-02-01', 'Regular', FALSE),
+    ('SYN_IMPORT_NO_DATE', '2020-02-01', 'Regular', FALSE),
+    ('SYN_IMPORT_DELETED', '2020-02-01', 'Regular', FALSE),
+    ('SYN_IMPORT_NULL_DELETION', '2020-02-01', 'Regular', FALSE)

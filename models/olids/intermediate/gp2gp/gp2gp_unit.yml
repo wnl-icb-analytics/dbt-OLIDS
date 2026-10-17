@@ -9,6 +9,10 @@ unit_tests:
       temporary residents, missing concepts and inclusive day-zero/day-30 boundaries.
       A to B to A retains later entries on A; null values match across records;
       events on the registration day with a lag of one day are not copies.
+      Each copy-window key stays independent; tied representatives use patient ID
+      then event ID. Exact two-day lag qualifies without a registration.
+      Deleted registrations and missing person or date do not establish imports;
+      null concepts and null deletion flags remain eligible for imports.
       Observation source entities must not match each other.
     model: int_medication_order_gp2gp_flags
     given:
@@ -36,6 +40,18 @@ unit_tests:
         - {id: '00000000-0000-0000-0000-000000000040', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000039', is_gp2gp_import: false}
         - {id: '00000000-0000-0000-0000-000000000042', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000041', is_gp2gp_import: false}
         - {id: '00000000-0000-0000-0000-000000000045', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000044', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000102', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000101', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000104', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000103', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000106', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000105', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000108', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000107', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000110', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000109', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000112', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000111', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000114', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000113', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000116', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000115', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000124', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000121', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000126', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000125', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000128', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000132', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
   - name: gp2gp_medication_statement_chronology_registration_and_boundaries
     description: >-
       Synthetic lag, contemporaneous entry, registration-day filing, same-record
@@ -44,6 +60,10 @@ unit_tests:
       temporary residents, missing concepts and inclusive day-zero/day-30 boundaries.
       A to B to A retains later entries on A; null values match across records;
       events on the registration day with a lag of one day are not copies.
+      Each copy-window key stays independent; tied representatives use patient ID
+      then event ID. Exact two-day lag qualifies without a registration.
+      Deleted registrations and missing person or date do not establish imports;
+      null concepts and null deletion flags remain eligible for imports.
       Observation source entities must not match each other.
     model: int_medication_statement_gp2gp_flags
     given:
@@ -71,6 +91,18 @@ unit_tests:
         - {id: '00000000-0000-0000-0000-000000000040', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000039', is_gp2gp_import: false}
         - {id: '00000000-0000-0000-0000-000000000042', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000041', is_gp2gp_import: false}
         - {id: '00000000-0000-0000-0000-000000000045', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000044', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000102', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000101', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000104', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000103', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000106', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000105', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000108', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000107', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000110', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000109', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000112', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000111', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000114', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000113', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000116', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000115', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000124', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000121', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000126', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000125', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000128', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000132', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
   - name: gp2gp_observation_chronology_registration_and_boundaries
     description: >-
       Synthetic lag, contemporaneous entry, registration-day filing, same-record
@@ -79,6 +111,10 @@ unit_tests:
       temporary residents, missing concepts and inclusive day-zero/day-30 boundaries.
       A to B to A retains later entries on A; null values match across records;
       events on the registration day with a lag of one day are not copies.
+      Each copy-window key stays independent; tied representatives use patient ID
+      then event ID. Exact two-day lag qualifies without a registration.
+      Deleted registrations and missing person or date do not establish imports;
+      null concepts and null deletion flags remain eligible for imports.
       Observation source entities must not match each other.
     model: int_observation_gp2gp_flags
     given:
@@ -105,6 +141,18 @@ unit_tests:
         - {id: '00000000-0000-0000-0000-000000000032', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
         - {id: '00000000-0000-0000-0000-000000000042', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000041', is_gp2gp_import: false}
         - {id: '00000000-0000-0000-0000-000000000045', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000044', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000102', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000101', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000104', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000103', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000106', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000105', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000108', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000107', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000110', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000109', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000112', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000111', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000114', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000113', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000116', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000115', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000124', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000121', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000126', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000125', is_gp2gp_import: false}
+        - {id: '00000000-0000-0000-0000-000000000128', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000132', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
   - name: gp2gp_order_cleaning_preserves_sources_and_non_defaults
     description: Synthetic non-positive durations, imported defaults, contradictory non-defaults, copy-only values and null source values.
     model: stable_medication_order
@@ -127,3 +175,32 @@ unit_tests:
         - {id: '00000000-0000-0000-0000-000000000008', duration_days: 400, estimated_cost: -5, source_duration_days: 400, source_estimated_cost: -5, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
         - {id: '00000000-0000-0000-0000-000000000009', duration_days: null, estimated_cost: null, source_duration_days: null, source_estimated_cost: null, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: false}
         - {id: '00000000-0000-0000-0000-000000000010', duration_days: 56, estimated_cost: null, source_duration_days: 56, source_estimated_cost: 0, is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000090', is_gp2gp_import: true}
+        - {id: '00000000-0000-0000-0000-000000000011', duration_days: null, estimated_cost: 5, source_duration_days: 28, source_estimated_cost: 5, is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: true}
+  - name: gp2gp_medication_statement_retains_rows_flags_and_source_state
+    description: Synthetic flagged and unflagged rows retain their source state and original ID projection.
+    model: stable_medication_statement
+    given:
+      - input: ref('conformed_medication_statement')
+        format: sql
+        fixture: gp2gp_stable_medication_statement
+      - input: ref('int_medication_statement_gp2gp_flags')
+        format: sql
+        fixture: gp2gp_stable_flags
+    expect:
+      rows:
+        - {id: '00000000-0000-0000-0000-000000000181', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: false, is_active: true, expiry_date: '2021-01-01'}
+        - {id: '00000000-0000-0000-0000-000000000182', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000180', is_gp2gp_import: true, is_active: false, expiry_date: '2020-01-01'}
+  - name: gp2gp_observation_retains_rows_flags_and_source_state
+    description: Synthetic flagged and unflagged rows retain their source state and original ID projection.
+    model: stable_observation
+    given:
+      - input: ref('conformed_observation')
+        format: sql
+        fixture: gp2gp_stable_observation
+      - input: ref('int_observation_gp2gp_flags')
+        format: sql
+        fixture: gp2gp_stable_flags
+    expect:
+      rows:
+        - {id: '00000000-0000-0000-0000-000000000181', is_gp2gp_copy: false, gp2gp_original_id: null, is_gp2gp_import: false, is_problem: true, episodicity_source_concept_id: 'SYN_UNFLAGGED'}
+        - {id: '00000000-0000-0000-0000-000000000182', is_gp2gp_copy: true, gp2gp_original_id: '00000000-0000-0000-0000-000000000180', is_gp2gp_import: true, is_problem: false, episodicity_source_concept_id: 'SYN_FLAGGED'}
