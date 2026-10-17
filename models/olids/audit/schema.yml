@@ -158,3 +158,94 @@ models:
             max_value: 30
           config:
             severity: warn
+
+  - name: audit_gp2gp
+    description: >-
+      Inferred GP2GP copy and import counts and percentages of all non-deleted rows
+      in each NCL EMIS conformed table, including rows without a person or date in
+      the denominator. One row per table_name and metric_name; practice_code,
+      value_text and value_date are null. Order exceptions count positive durations
+      other than 28 and non-zero costs on inferred imports; these values are retained.
+      Import counts cover all persons, including those with one patient record.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [table_name, metric_name]
+      - audit_metric_within_band:
+          arguments:
+            table_name: MEDICATION_ORDER
+            metric: gp2gp_copy_pct
+            min_value: 4
+            max_value: 14
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            table_name: MEDICATION_STATEMENT
+            metric: gp2gp_copy_pct
+            min_value: 4
+            max_value: 14
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            table_name: OBSERVATION
+            metric: gp2gp_copy_pct
+            min_value: 3
+            max_value: 10
+          config:
+            severity: warn
+      - audit_metric_within_band:
+          arguments:
+            table_name: MEDICATION_ORDER
+            metric: gp2gp_import_pct
+            min_value: 10
+            max_value: 30
+          config:
+            severity: warn
+
+unit_tests:
+  - name: gp2gp_audit_live_denominators_flags_and_exceptions
+    description: Synthetic live and deleted rows test all 17 metrics, including unlinked undated rows in the live denominator.
+    model: audit_gp2gp
+    given:
+      - input: ref('conformed_medication_order')
+        rows:
+          - {id: '00000000-0000-0000-0000-000000000191', person_id: -18413, clinical_effective_date: '2020-01-01', duration_days: 56, estimated_cost: 5, lds_is_deleted: false}
+          - {id: '00000000-0000-0000-0000-000000000192', person_id: null, clinical_effective_date: null, duration_days: 28, estimated_cost: 0, lds_is_deleted: false}
+          - {id: '00000000-0000-0000-0000-000000000193', person_id: -18414, clinical_effective_date: '2020-01-01', duration_days: 56, estimated_cost: 5, lds_is_deleted: true}
+      - input: ref('int_medication_order_gp2gp_flags')
+        rows:
+          - {id: '00000000-0000-0000-0000-000000000191', is_gp2gp_copy: true, is_gp2gp_import: true}
+          - {id: '00000000-0000-0000-0000-000000000193', is_gp2gp_copy: true, is_gp2gp_import: true}
+      - input: ref('conformed_medication_statement')
+        rows:
+          - {id: '00000000-0000-0000-0000-000000000194', lds_is_deleted: false}
+      - input: ref('int_medication_statement_gp2gp_flags')
+        rows:
+          - {id: '00000000-0000-0000-0000-000000000194', is_gp2gp_copy: false, is_gp2gp_import: false}
+      - input: ref('conformed_observation')
+        rows:
+          - {id: '00000000-0000-0000-0000-000000000194', lds_is_deleted: false}
+      - input: ref('int_observation_gp2gp_flags')
+        rows:
+          - {id: '00000000-0000-0000-0000-000000000194', is_gp2gp_copy: false, is_gp2gp_import: false}
+    expect:
+      rows:
+        - {table_name: MEDICATION_ORDER, metric_name: live_rows, value_number: 2, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_ORDER, metric_name: gp2gp_copy_rows, value_number: 1, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_ORDER, metric_name: gp2gp_copy_pct, value_number: 50, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_ORDER, metric_name: gp2gp_import_rows, value_number: 1, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_ORDER, metric_name: gp2gp_import_pct, value_number: 50, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_ORDER, metric_name: import_non_default_duration_rows, value_number: 1, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_ORDER, metric_name: import_non_default_cost_rows, value_number: 1, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_STATEMENT, metric_name: live_rows, value_number: 1, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_STATEMENT, metric_name: gp2gp_copy_rows, value_number: 0, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_STATEMENT, metric_name: gp2gp_copy_pct, value_number: 0, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_STATEMENT, metric_name: gp2gp_import_rows, value_number: 0, practice_code: null, value_text: null, value_date: null}
+        - {table_name: MEDICATION_STATEMENT, metric_name: gp2gp_import_pct, value_number: 0, practice_code: null, value_text: null, value_date: null}
+        - {table_name: OBSERVATION, metric_name: live_rows, value_number: 1, practice_code: null, value_text: null, value_date: null}
+        - {table_name: OBSERVATION, metric_name: gp2gp_copy_rows, value_number: 0, practice_code: null, value_text: null, value_date: null}
+        - {table_name: OBSERVATION, metric_name: gp2gp_copy_pct, value_number: 0, practice_code: null, value_text: null, value_date: null}
+        - {table_name: OBSERVATION, metric_name: gp2gp_import_rows, value_number: 0, practice_code: null, value_text: null, value_date: null}
+        - {table_name: OBSERVATION, metric_name: gp2gp_import_pct, value_number: 0, practice_code: null, value_text: null, value_date: null}

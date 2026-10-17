@@ -69,21 +69,91 @@ models:
           - unique
           - not_null
   - name: stable_medication_order
-    description: Stable medication_order table.
+    description: >-
+      Published NCL EMIS medication order records, one row per source ID
+      in the filtered OLIDS patient spine. Every source row is retained; inferred
+      GP2GP copy and import flags support person-level and practice-activity analysis.
     columns:
       - name: id
         tests:
           - unique
           - not_null
       - name: clinical_system
+      - name: duration_days
+        description: >-
+          Supplied duration in days, null when zero or negative, or when an inferred
+          GP2GP import supplies the receiving system default of 28. Other positive
+          values, including those over 365 and those on copies, are retained.
+          The uncleaned value remains in source_duration_days.
+      - name: estimated_cost
+        description: >-
+          Supplied estimated cost in pounds, null when an inferred GP2GP import
+          supplies zero. Other values, including non-zero costs on imports and
+          copies, are retained. The uncleaned value remains in source_estimated_cost.
+      - name: source_duration_days
+        description: Duration in days supplied on the order before GP2GP default and non-positive value cleaning.
+      - name: source_estimated_cost
+        description: Estimated cost in pounds supplied on the order before GP2GP default cleaning.
+      - name: is_gp2gp_copy
+        description: >-
+          Inferred transfer copy on another patient record with the same person, mapped
+          concept, clinical date and value. The representative has a strictly earlier
+          non-null recorded timestamp. Ties and missing timestamps are not copies.
+          A copy was entered more than one day after the event, or the event predates
+          its latest Regular registration start on or before recording. Same-record
+          repeats are retained. Coverage is the NCL EMIS feed. Flags can change when
+          originals leave retention or registrations are rewritten.
+      - name: gp2gp_original_id
+        description: >-
+          ID of the first-recorded representative chosen at build time, ordered by
+          recorded timestamp, patient ID and ID. Null for non-copies. Several copies
+          may share a representative. This is inferred provenance, not a stable join
+          key; it can change as records leave retention or registrations are rewritten.
+      - name: is_gp2gp_import
+        description: >-
+          Inferred imported history, including rows without a retained original.
+          The event predates the latest non-deleted Regular registration start on
+          this patient record on or before recording, and recording is within 30 days
+          of that start, inclusive. False without a person, clinical date or matching
+          registration, or on a deleted row. Episode ends do not constrain this
+          heuristic. Re-registration and rewritten starts can change the flag.
   - name: stable_medication_statement
-    description: Stable medication_statement table.
+    description: >-
+      Published NCL EMIS medication statement records, one row per source ID
+      in the filtered OLIDS patient spine. Every source row is retained; inferred
+      GP2GP copy and import flags support person-level and practice-activity analysis.
     columns:
       - name: id
         tests:
           - unique
           - not_null
       - name: clinical_system
+      - name: is_gp2gp_copy
+        description: >-
+          Inferred transfer copy on another patient record with the same person, mapped
+          concept, clinical date and value. The representative has a strictly earlier
+          non-null recorded timestamp. Ties and missing timestamps are not copies.
+          A copy was entered more than one day after the event, or the event predates
+          its latest Regular registration start on or before recording. Same-record
+          repeats are retained. Coverage is the NCL EMIS feed. Flags can change when
+          originals leave retention or registrations are rewritten.
+      - name: gp2gp_original_id
+        description: >-
+          ID of the first-recorded representative chosen at build time, ordered by
+          recorded timestamp, patient ID and ID. Null for non-copies. Several copies
+          may share a representative. This is inferred provenance, not a stable join
+          key; it can change as records leave retention or registrations are rewritten.
+      - name: is_gp2gp_import
+        description: >-
+          Inferred imported history, including rows without a retained original.
+          The event predates the latest non-deleted Regular registration start on
+          this patient record on or before recording, and recording is within 30 days
+          of that start, inclusive. False without a person, clinical date or matching
+          registration, or on a deleted row. Episode ends do not constrain this
+          heuristic. Re-registration and rewritten starts can change the flag.
+          This flag is a timing signature, and a small share may be entries made by
+          the practice itself, such as new-patient intake checks dated just before registration
+          or entries on records re-registered at the same practice.
   - name: stable_national_data_opt_out
     description: Stable national_data_opt_out table. Due for retirement; use stable_patient_opt_out.
     columns:
@@ -104,7 +174,10 @@ models:
       source entity and source ID. Native observation IDs are unchanged; added
       entities use deterministic UUIDs. Use source_entity and source_record_id to
       join the original entity table. Counts are source records, not deduplicated
-      clinical actions. Allergy clinical and verification status are unavailable.
+      clinical actions. is_gp2gp_copy marks inferred transferred copies within the
+      same source entity; mutable problem status and episodicity may differ from the
+      representative. Copy filtering keeps the state of the representative. Allergy clinical
+      and verification status are unavailable.
       Missing fields retain nulls, including measurement fields on added records.
       The population follows conformed patient filtering and current NCL practices.
       Source entities identify delivery tables; clinical meaning follows the recorded code.
@@ -128,6 +201,32 @@ models:
           - not_null
       - name: allergy_medication_name
         description: Supplied medication name on an allergy record. This records allergy evidence; the feed does not populate clinical or verification status.
+      - name: is_gp2gp_copy
+        description: >-
+          Inferred transfer copy on another patient record with the same person, mapped
+          concept, clinical date and value. The representative has a strictly earlier
+          non-null recorded timestamp. Ties and missing timestamps are not copies.
+          A copy was entered more than one day after the event, or the event predates
+          its latest Regular registration start on or before recording. Same-record
+          repeats are retained. Coverage is the NCL EMIS feed. Flags can change when
+          originals leave retention or registrations are rewritten.
+      - name: gp2gp_original_id
+        description: >-
+          ID of the first-recorded representative chosen at build time, ordered by
+          recorded timestamp, patient ID and ID. Null for non-copies. Several copies
+          may share a representative. This is inferred provenance, not a stable join
+          key; it can change as records leave retention or registrations are rewritten.
+      - name: is_gp2gp_import
+        description: >-
+          Inferred imported history, including rows without a retained original.
+          The event predates the latest non-deleted Regular registration start on
+          this patient record on or before recording, and recording is within 30 days
+          of that start, inclusive. False without a person, clinical date or matching
+          registration, or on a deleted row. Episode ends do not constrain this
+          heuristic. Re-registration and rewritten starts can change the flag.
+          This flag is a timing signature, and a small share may be entries made by
+          the practice itself, such as new-patient intake checks dated just before registration
+          or entries on records re-registered at the same practice.
   - name: stable_organisation
     description: Stable organisation table.
     columns:

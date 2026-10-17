@@ -13,6 +13,9 @@ models:
     clinical clock times, and record-entry timestamps are not substituted. Encounter context
     requires a non-deleted encounter for the same person and retains its source date precision.
     Encounter-only changes reach existing deliveries at the monthly full refresh.
+    Medication duration remains supplied here. stable_medication_order exposes the supplied
+    duration and cost in source_duration_days and source_estimated_cost, alongside cleaned
+    duration_days and estimated_cost that null inferred imported defaults and non-positive durations.
   columns:
   - name: clinical_record_id
     description: Stable namespaced ID for this OLIDS clinical record, distinct across source record types.
@@ -94,7 +97,10 @@ models:
     description: Supplied medication order quantity unit. Null for observations or when absent.
   - name: medication_duration_days
     description: Duration in days supplied on the order. Source values can be zero or negative; this is not
-      a validated treatment duration. Null for observations or when absent.
+      a validated treatment duration. Null for observations or when absent. This remains the supplied
+      value; stable_medication_order.source_duration_days retains the same source value, while its
+      duration_days and estimated_cost columns null inferred imported defaults. Supplied cost remains
+      in stable_medication_order.source_estimated_cost.
   - name: medication_authorisation_type_code
     description: Source authorisation type code from the current non-deleted linked statement for the same
       person. Null without a valid match or for observations.
