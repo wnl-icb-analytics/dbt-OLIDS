@@ -117,6 +117,10 @@ models:
           of that start, inclusive. False without a person, clinical date or matching
           registration, or on a deleted row. Episode ends do not constrain this
           heuristic. Re-registration and rewritten starts can change the flag.
+          This flag is a timing signature. Almost all flagged orders carry the
+          28-day and zero-cost defaults, but a few may be entries made by the
+          practice itself. Duration and cost are set to null only when they hold
+          those defaults, so other supplied values are kept.
   - name: stable_medication_statement
     description: >-
       Published NCL EMIS medication statement records, one row per source ID
