@@ -54,7 +54,8 @@ temp/
 dbt_internal_packages/
 scripts/checks/output/
 
-# claude
-.claude/
+# claude (skills are shared; local settings and worktrees are not)
+.claude/*
+!.claude/skills/
 CLAUDE.md
 CLAUDE.md.save
