@@ -210,26 +210,63 @@ unit_tests:
     model: audit_gp2gp
     given:
       - input: ref('conformed_medication_order')
-        rows:
-          - {id: '00000000-0000-0000-0000-000000000191', person_id: -18413, clinical_effective_date: '2020-01-01', duration_days: 56, estimated_cost: 5, lds_is_deleted: false}
-          - {id: '00000000-0000-0000-0000-000000000192', person_id: null, clinical_effective_date: null, duration_days: 28, estimated_cost: 0, lds_is_deleted: false}
-          - {id: '00000000-0000-0000-0000-000000000193', person_id: -18414, clinical_effective_date: '2020-01-01', duration_days: 56, estimated_cost: 5, lds_is_deleted: true}
+        format: sql
+        rows: |
+          SELECT
+            column1::VARCHAR AS id,
+            column2::NUMBER AS person_id,
+            column3::DATE AS clinical_effective_date,
+            column4::NUMBER AS duration_days,
+            column5::NUMBER AS estimated_cost,
+            column6::BOOLEAN AS lds_is_deleted
+          FROM VALUES
+            ('00000000-0000-0000-0000-000000000191', -18413, '2020-01-01', 56, 5, FALSE),
+            ('00000000-0000-0000-0000-000000000192', NULL, NULL, 28, 0, FALSE),
+            ('00000000-0000-0000-0000-000000000193', -18414, '2020-01-01', 56, 5, TRUE)
       - input: ref('int_medication_order_gp2gp_flags')
-        rows:
-          - {id: '00000000-0000-0000-0000-000000000191', is_gp2gp_copy: true, is_gp2gp_import: true}
-          - {id: '00000000-0000-0000-0000-000000000193', is_gp2gp_copy: true, is_gp2gp_import: true}
+        format: sql
+        rows: |
+          SELECT
+            column1::VARCHAR AS id,
+            column2::BOOLEAN AS is_gp2gp_copy,
+            column3::BOOLEAN AS is_gp2gp_import
+          FROM VALUES
+            ('00000000-0000-0000-0000-000000000191', TRUE, TRUE),
+            ('00000000-0000-0000-0000-000000000193', TRUE, TRUE)
       - input: ref('conformed_medication_statement')
-        rows:
-          - {id: '00000000-0000-0000-0000-000000000194', lds_is_deleted: false}
+        format: sql
+        rows: |
+          SELECT
+            column1::VARCHAR AS id,
+            column2::BOOLEAN AS lds_is_deleted
+          FROM VALUES
+            ('00000000-0000-0000-0000-000000000194', FALSE)
       - input: ref('int_medication_statement_gp2gp_flags')
-        rows:
-          - {id: '00000000-0000-0000-0000-000000000194', is_gp2gp_copy: false, is_gp2gp_import: false}
+        format: sql
+        rows: |
+          SELECT
+            column1::VARCHAR AS id,
+            column2::BOOLEAN AS is_gp2gp_copy,
+            column3::BOOLEAN AS is_gp2gp_import
+          FROM VALUES
+            ('00000000-0000-0000-0000-000000000194', FALSE, FALSE)
       - input: ref('conformed_observation')
-        rows:
-          - {id: '00000000-0000-0000-0000-000000000194', lds_is_deleted: false}
+        format: sql
+        rows: |
+          SELECT
+            column1::VARCHAR AS id,
+            column2::BOOLEAN AS lds_is_deleted
+          FROM VALUES
+            ('00000000-0000-0000-0000-000000000194', FALSE)
       - input: ref('int_observation_gp2gp_flags')
-        rows:
-          - {id: '00000000-0000-0000-0000-000000000194', is_gp2gp_copy: false, is_gp2gp_import: false}
+        format: sql
+        rows: |
+          SELECT
+            column1::VARCHAR AS id,
+            column2::BOOLEAN AS is_gp2gp_copy,
+            column3::BOOLEAN AS is_gp2gp_import
+          FROM VALUES
+            ('00000000-0000-0000-0000-000000000194', FALSE, FALSE)
     expect:
       rows:
         - {table_name: MEDICATION_ORDER, metric_name: live_rows, value_number: 2, practice_code: null, value_text: null, value_date: null}
