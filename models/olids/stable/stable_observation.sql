@@ -60,7 +60,10 @@ SELECT
     src.allergy_medication_name,
     COALESCE(f.is_gp2gp_copy, FALSE) AS is_gp2gp_copy,
     f.gp2gp_original_id,
-    COALESCE(f.is_gp2gp_import, FALSE) AS is_gp2gp_import
+    COALESCE(f.is_gp2gp_import, FALSE) AS is_gp2gp_import,
+    COALESCE(h.is_result_header, FALSE) AS is_result_header
 FROM {{ ref('conformed_observation') }} AS src
 LEFT JOIN {{ ref('int_observation_gp2gp_flags') }} AS f
     ON src.id = f.id
+LEFT JOIN {{ ref('int_observation_result_headers') }} AS h
+    ON src.id = h.id

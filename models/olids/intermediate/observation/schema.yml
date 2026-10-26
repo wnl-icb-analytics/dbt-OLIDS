@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: int_observation_result_headers
+    description: >-
+      Empty observation result headers in the current filtered OLIDS patient spine,
+      one row per native observation ID. A non-deleted observation with neither a
+      numeric value nor result text must have a non-deleted, numerically valued
+      direct child on the same patient record and clinical calendar date.
+      Either the mapped concept code or the source code and source system must
+      match. Equal save times are not required: linked results can be saved or
+      amended later. Missing clinical dates do not establish a header.
+      Problem status does not determine whether a record is a header.
+      Unflagged observations are absent; STABLE supplies false for them.
+    columns:
+      - name: id
+        description: Native observation ID of the result header.
+        data_tests:
+          - unique
+          - not_null
+      - name: is_result_header
+        description: True for every retained header; never null.

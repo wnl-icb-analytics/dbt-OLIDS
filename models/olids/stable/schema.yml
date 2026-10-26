@@ -187,6 +187,17 @@ models:
       Source entities identify delivery tables; clinical meaning follows the recorded code.
 
     columns:
+      - name: is_result_header
+        description: >-
+          Empty native observation with a non-deleted numeric direct child on the
+          same patient record and clinical calendar date, matching either the
+          mapped concept code or source code and system. Both result_value and
+          result_text must be null on the header. Save times may differ. False
+          without such a child, including genuine result-less entries and added
+          allergy or referral records. The row remains available; result selectors
+          can exclude it before ranking. Never null.
+        data_tests:
+          - not_null
       - name: id
         tests:
           - unique
