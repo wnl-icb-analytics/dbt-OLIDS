@@ -15,6 +15,7 @@ def check_sql(model):
         'source_system': "'synthetic-system'",
         'source_entity': "'observation'",
         'lds_is_deleted': 'FALSE',
+        'is_problem': 'FALSE',
         'result_value': 'NULL::FLOAT',
         'result_text': 'NULL::VARCHAR',
     }
@@ -56,6 +57,10 @@ def check_sql(model):
         ])
     rows.append(defaults | {'id': uuid(41), 'parent_observation_id': uuid(25), 'result_value': '43'})
     rows.append(defaults | {'id': uuid(42), 'parent_observation_id': 'NULL::UUID'})
+    rows.extend([
+        defaults | {'id': uuid(43), 'parent_observation_id': 'NULL::UUID', 'is_problem': 'TRUE'},
+        defaults | {'id': uuid(44), 'parent_observation_id': uuid(43), 'result_value': '42::FLOAT'},
+    ])
     fixture = '\nUNION ALL\n'.join(
         'SELECT ' + ', '.join(f'{value} AS {key}' for key, value in row.items())
         for row in rows
@@ -66,7 +71,7 @@ def check_sql(model):
     )
     if replacements != 2:
         raise ValueError(f'Expected two conformed observation references, found {replacements}')
-    expected_ids = [1, 15, 17, 19, 25, 33, 39]
+    expected_ids = [1, 15, 17, 19, 25, 33, 39, 43]
     expected = ' UNION ALL '.join(f'SELECT {uuid(i)} AS id' for i in expected_ids)
     return f'''WITH fixture AS ({fixture}), actual AS ({model}), expected AS ({expected})
 SELECT (SELECT COUNT(*) FROM fixture) AS fixture_rows,

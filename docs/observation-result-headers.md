@@ -10,11 +10,10 @@ numeric `result_value`. Either their mapped concept codes match, or their source
 codes and source systems match. Missing dates or concepts do not establish a
 match. Problem status does not establish or prevent a match.
 
-Equal save times are not required. Profiling on 26 October 2026 found about
-8.07 million empty, same-concept parents with same-date numeric children.
-About 214,000 had a child saved in a different second. The explicit child link
-and matching clinical date retain these delayed or amended results while
-excluding cross-date links. A newer empty entry without a matching child remains
+Equal save times are not required. Most children share the header's save second;
+the rest were saved shortly after it. Requiring the same second would split one
+save sequence, so the rule uses the direct link and clinical date. Cross-date
+links stay unflagged. A newer empty entry without a matching child remains
 eligible, even when an older numeric result exists.
 
 The intermediate model has one row per flagged ID. STABLE joins by ID and defaults
@@ -24,7 +23,8 @@ the boolean to false. Added allergy and referral records are never headers.
 
 The synthetic fixture covers deletion, text, concept matching, patient and date
 boundaries, later saves, multiple children, missing fields and genuine empty
-entries. Fusion cannot infer native Snowflake UUID unit-test output schemas.
+entries. It also covers a problem-flagged empty parent with a valued child.
+Fusion cannot infer native Snowflake UUID unit-test output schemas.
 Run the compiled model against the fixture with
 `scripts/checks/check_result_header_fixtures.py` instead. It returns aggregate
 failure counts only.

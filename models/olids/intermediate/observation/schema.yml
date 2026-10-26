@@ -15,7 +15,7 @@ models:
     columns:
       - name: id
         description: Native observation ID of the result header.
-        data_tests:
+        tests:
           - unique
           - not_null
       - name: is_result_header

@@ -185,19 +185,10 @@ models:
       Missing fields retain nulls, including measurement fields on added records.
       The population follows conformed patient filtering and current NCL practices.
       Source entities identify delivery tables; clinical meaning follows the recorded code.
+      is_result_header identifies empty native observations whose numeric result
+      is held by a same-concept direct child on the same patient record and date.
 
     columns:
-      - name: is_result_header
-        description: >-
-          Empty native observation with a non-deleted numeric direct child on the
-          same patient record and clinical calendar date, matching either the
-          mapped concept code or source code and system. Both result_value and
-          result_text must be null on the header. Save times may differ. False
-          without such a child, including genuine result-less entries and added
-          allergy or referral records. The row remains available; result selectors
-          can exclude it before ranking. Never null.
-        data_tests:
-          - not_null
       - name: id
         tests:
           - unique
@@ -216,6 +207,17 @@ models:
           - not_null
       - name: allergy_medication_name
         description: Supplied medication name on an allergy record. This records allergy evidence; the feed does not populate clinical or verification status.
+      - name: is_result_header
+        description: >-
+          Empty native observation with a non-deleted numeric direct child on the
+          same patient record and clinical calendar date, matching either the
+          mapped concept code or source code and system. Both result_value and
+          result_text must be null on the header. Save times may differ. False
+          without such a child, including genuine result-less entries and added
+          allergy or referral records. The row remains available; result selectors
+          can exclude it before ranking. Never null.
+        tests:
+          - not_null
       - name: is_gp2gp_copy
         description: >-
           Inferred transfer copy on another patient record with the same person, mapped
