@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: stable_gp2gp_copy_link
+    description: >-
+      Inferred GP2GP links, one row per evidence_kind and copy_record_id for
+      observations, medication statements and medication orders in the filtered
+      NCL EMIS patient spine. Includes non-deleted copies whose original exists
+      in the same evidence table for the same person. Null deletion flags count
+      as non-deleted. Links use the existing GP2GP flag heuristic, not an
+      authoritative transfer identifier. Multiple copies can share an original
+      and holding patient record. This current snapshot has no registration,
+      clinical-date or recorded-date cutoff; links can change after refresh.
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - evidence_kind
+              - copy_record_id
+
+    columns:
+      - name: evidence_kind
+        description: Evidence table containing both the copy and its inferred original.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['observation', 'medication_statement', 'medication_order']
+      - name: copy_record_id
+        description: ID of the GP2GP copy in the named stable evidence table.
+        tests:
+          - not_null
+      - name: gp2gp_original_id
+        description: >-
+          ID of the first-recorded representative chosen by the GP2GP heuristic
+          in the same evidence table. Several copies can reference it. It can
+          change when records leave retention or registrations are rewritten.
+
+        tests:
+          - not_null
+      - name: person_id
+        description: Person shared by the copy and its inferred original.
+        tests:
+          - not_null
+      - name: patient_id
+        description: >-
+          Patient record holding the copy. This is the copy's patient_id,
+          which differs from the original's patient record.
+
+        tests:
+          - not_null
+      - name: publisher_organisation_id
+        description: Publishing organisation ID on the copy, not on the original.
+      - name: publisher_organisation_code
+        description: Publishing organisation ODS code on the copy, not on the original.
+      - name: clinical_effective_date
+        description: Clinical timestamp on the copy, for downstream evidence-date cutoffs.
+      - name: date_recorded
+        description: >-
+          Recorded timestamp on the copy, for downstream as-at cutoffs and
+          chronology. No cutoff is applied here. Consumers define how to treat nulls.
+
+      - name: lds_is_deleted
+        description: >-
+          Supplied deletion flag on the copy. True is excluded; false and null
+          are retained. The original's deletion flag is not projected.
