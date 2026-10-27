@@ -1,18 +1,22 @@
-# Runs before dbt-analytics, which starts at 04:00 UTC.
-# Current OLIDS snapshots finish by about 01:08 UTC. The 02:30 UTC start is
-# 03:30 BST and leaves 90 minutes before the downstream build.
+# Started by workflow_dispatch only. Snowflake task TASK_DISPATCH_DBT_OLIDS_DAILY
+# (Snowflake-Deployment: dbt Admin/dbt GitHub Actions Runs/dbt workflow
+# dispatch.sql) dispatches it at 04:00 Europe/London with scheduled=true;
+# GitHub cron started runs hours late. OLIDS snapshots finish by about 02:20
+# London; dbt-analytics follows at 06:00.
 
 name: dbt OLIDS Scheduled Run
 
 run-name: dbt OLIDS daily
 
 on:
-  schedule:
-    - cron: '30 2 * * *'
   workflow_dispatch:
     inputs:
       force:
         description: Run dbt even when the last successful watermark matches
+        type: boolean
+        default: false
+      scheduled:
+        description: Apply scheduled-run rules (wait for a new snapshot, report failures)
         type: boolean
         default: false
 
@@ -72,13 +76,13 @@ jobs:
       - name: Wait for a new source snapshot
         id: watermark
         env:
-          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULED: ${{ inputs.scheduled }}
           FORCE_BUILD: ${{ inputs.force || false }}
         run: |
           args=(--github-output "$GITHUB_OUTPUT")
           # Reconcile these outputs monthly even when the source snapshot is unchanged.
           if [ "$(date -u +%d)" = "01" ]; then args+=(--force); fi
-          if [ "$EVENT_NAME" = "schedule" ]; then
+          if [ "$SCHEDULED" = "true" ]; then
             args+=(--timeout-seconds 900 --poll-seconds 300)
             if [ "$(date -u +%d)" != "01" ]; then args+=(--wait-for-advance); fi
           fi
@@ -136,7 +140,7 @@ jobs:
             --verify-outcome "$VERIFY_OUTCOME"
 
       - name: Report or resolve failure issue
-        if: ${{ !cancelled() && github.event_name == 'schedule' }}
+        if: ${{ !cancelled() && inputs.scheduled }}
         env:
           GH_TOKEN: ${{ github.token }}
           JOB_OUTCOME: ${{ job.status }}

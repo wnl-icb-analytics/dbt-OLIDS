@@ -1,14 +1,17 @@
 # GitHub Actions workflows
 
-`dbt-scheduled.yml` starts at 02:30 UTC each day (03:30 BST). It waits for
-current OLIDS source snapshots, skips an already-processed batch, and runs dbt
-before the downstream `dbt-analytics` 04:00 UTC schedule.
+`dbt-scheduled.yml` runs only by `workflow_dispatch`. A Snowflake task
+(`ACCOUNT_ADMIN.DBT_MANAGEMENT.TASK_DISPATCH_DBT_OLIDS_DAILY`, defined in
+Snowflake-Deployment) dispatches it at 04:00 Europe/London with
+`scheduled: true`; GitHub cron started runs hours late. OLIDS snapshots finish
+by about 02:20 London. The run waits for current snapshots, skips an
+already-processed batch, and runs dbt before the downstream `dbt-analytics`
+06:00 run.
 
 Scheduled runs allow 15 minutes for every snapshot watermark to advance past
-the last successful build. This accepts a new daily snapshot when GitHub delays
-the cron job and waits for a partially published snapshot to finish. Manual
-dispatches use the latest available snapshot immediately; the `force` input
-also rebuilds an already-processed snapshot.
+the last successful build, which waits for a partially published snapshot to
+finish. Manual dispatches without `scheduled` use the latest available snapshot
+immediately; the `force` input also rebuilds an already-processed snapshot.
 
 No-op detection uses the source watermark set recorded after the last
 successful full build. A failed partial build is retried.
@@ -30,5 +33,5 @@ dbt. Undeclared upstream tables warn and open one GitHub issue per table, on bot
 scheduled and manual runs. Existing open issues prevent repeat notifications.
 Issue reporting failures do not block dbt.
 
-Scheduled build failures create or update one separate GitHub issue. The next
-successful scheduled run closes that failure issue.
+Scheduled build failures (`scheduled: true`) create or update one separate
+GitHub issue. The next successful scheduled run closes that failure issue.

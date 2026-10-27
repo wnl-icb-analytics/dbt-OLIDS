@@ -57,7 +57,7 @@ The conformed relationship is a view and its stable table clusters by
 appointment ID for drill-down. The separate person-clustered `clinical_record`
 and `healthcare_event` outputs are described in [OLIDS longitudinal outputs](olids-longitudinal-outputs.md).
 
-The OLIDS schedule starts at 02:30 UTC and analytics at 04:00 UTC. There is no
+The OLIDS run starts at 04:00 and analytics at 06:00 Europe/London. There is no
 cross-project completion dependency, and unchanged source watermarks can skip
 the OLIDS build. Publish the stable object before merging its analytics
 companion. A successful build and publication are required to verify the final

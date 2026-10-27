@@ -57,7 +57,7 @@ eFI2 rotation is included in our consolidated script.
 
 NOT YET EXECUTED.
 
-1. Freeze dbt-analytics runs and consumer writes that depend on OLIDS person ids.
+1. Freeze dbt-analytics runs (suspend the `ACCOUNT_ADMIN.DBT_MANAGEMENT.TASK_DISPATCH_%` tasks) and consumer writes that depend on OLIDS person ids.
 2. Confirm `OLIDS_ENGINEERING.PSEUDONYMISATION.person_id_crosswalk` exists and covers legacy archive ids.
 3. Back up every target relation listed in the migration README.
 4. Run `scripts/migration/run_all_rotations.sql` as DBT_ADMIN: zero-copy backups, all eight snapshot rotations, the AIC eFI2 rotation, and the verification queries in one pass. (The numbered per-table scripts remain for selective re-runs.)
@@ -65,7 +65,7 @@ NOT YET EXECUTED.
 6. Repoint dbt-analytics sources to the new OLIDS person ids.
 7. Rebuild dbt-analytics non-incremental models that carry `person_id`.
 8. Rebuild the two incremental models with `--full-refresh` (no in-place rotation needed).
-9. Resume scheduled runs.
+9. Resume scheduled runs (resume the `TASK_DISPATCH_%` tasks).
 10. Verify row counts, old-id count, duplicate keys, and representative person histories.
 
 ## Checks To Run At Cutover
